@@ -737,6 +737,14 @@
       <Project>{9C8D8B02-3B03-8927-E32E-644167A63DB0}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
+    <ProjectReference Include="AssetIcons-Editor.csproj">
+      <Project>{D9D1D100-55AE-8B20-6044-4EC9AED2C8C8}</Project>
+      <Name>AssetIcons-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="AssetIcons.csproj">
+      <Project>{8C349005-418D-0915-632A-56F3B1C6FB83}</Project>
+      <Name>AssetIcons</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

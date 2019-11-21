@@ -62,8 +62,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Item.cs" />
+    <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Prop.cs" />
+    <Compile Include="Assets\Scripts\Entities\Army.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
+    <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
+    <None Include="Assets\External\DawnLike\README.txt" />
+    <None Include="Assets\External\AssetIcons\Demo\Demos\Docs Demo\demo.txt.txt" />
+    <None Include="Assets\External\AssetIcons\Demo\Demos\Docs Demo\text.txt.txt" />
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/FlavProjects/FlavBattle/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -628,6 +636,14 @@
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{9C8D8B02-3B03-8927-E32E-644167A63DB0}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+    <ProjectReference Include="AssetIcons-Editor.csproj">
+      <Project>{D9D1D100-55AE-8B20-6044-4EC9AED2C8C8}</Project>
+      <Name>AssetIcons-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="AssetIcons.csproj">
+      <Project>{8C349005-418D-0915-632A-56F3B1C6FB83}</Project>
+      <Name>AssetIcons</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

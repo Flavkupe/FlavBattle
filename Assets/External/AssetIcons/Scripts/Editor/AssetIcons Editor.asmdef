@@ -1,0 +1,10 @@
+{
+    "name": "AssetIcons-Editor",
+    "references": [
+        "AssetIcons"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
