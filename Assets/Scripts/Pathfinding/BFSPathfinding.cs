@@ -5,35 +5,38 @@ using UnityEngine;
 
 public class TravelPath
 {
-    public Queue<TileNode> Nodes = new Queue<TileNode>();
+    public Queue<GridTile> Nodes = new Queue<GridTile>();
 }
 
-public class TileNode
-{
-    public TileNode(GridTile tile)
-    {
-        this.Tile = tile;
-    }
-
-    public GridTile Tile;
-    public int Cost = 0;
-    
-    // Best known path to get to given cost
-    public TileNode From;
-
-    public override string ToString()
-    {
-        if (this.Tile == null)
-        {
-            return null;
-        }
-
-        return $"{this.Tile.GridX},{this.Tile.GridY}";
-    }
-}
 
 public class BFSPathfinding
 {
+    private class TileNode
+    {
+        public TileNode(GridTile tile)
+        {
+            this.Tile = tile;
+        }
+
+        public GridTile Tile;
+        public float Cost = 0.0f;
+
+        // Best known path to get to given cost
+        public TileNode From;
+
+        public override string ToString()
+        {
+            if (this.Tile == null)
+            {
+                return null;
+            }
+
+            return $"{this.Tile.GridX},{this.Tile.GridY}";
+        }
+    }
+
+
+
     private Dictionary<string, TileNode> _visited = new Dictionary<string, TileNode>();
 
     private Queue<TileNode> _toCheck = new Queue<TileNode>();
@@ -61,22 +64,22 @@ public class BFSPathfinding
 
         var final = _visited[finalNode.ToString()];
 
-        var nodes = new List<TileNode>();
-        nodes.Add(final);
+        var nodes = new List<GridTile>();
+        nodes.Add(final.Tile);
         Debug.Log(final.ToString());
         var prev = final.From;
         while (prev != null)
         {
             Debug.Log(prev.ToString());
             
-            nodes.Add(prev);
+            nodes.Add(prev.Tile);
             prev = prev.From;
         }
 
         nodes.Reverse();
         var path = new TravelPath()
         {
-            Nodes = new Queue<TileNode>(nodes),   
+            Nodes = new Queue<GridTile>(nodes),
         };
 
         return path;
@@ -86,9 +89,18 @@ public class BFSPathfinding
     {
         foreach (var neighbor in map.GetNeighborTileData(node.Tile.GridX, node.Tile.GridY))
         {
-            var neighborNode = new TileNode(neighbor);
-            neighborNode.From = node;
-            neighborNode.Cost = node.Cost + neighborNode.Tile.Data.WalkCost;
+            var neighborNode = new TileNode(neighbor)
+            {
+                From = node
+            };
+
+            var neighborTile = neighborNode.Tile;
+            var dist = Vector2.Distance(
+                    new Vector2(node.Tile.GridX, node.Tile.GridY), 
+                    new Vector2(neighborTile.GridX, neighborTile.GridY)
+                );
+
+            neighborNode.Cost = node.Cost + (neighborTile.Data.WalkCost * dist);
             if (neighborNode.Tile.Data.Passable)
             {
                 this._toCheck.Enqueue(neighborNode);

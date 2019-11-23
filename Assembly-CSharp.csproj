@@ -64,11 +64,17 @@
   <ItemGroup>
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Item.cs" />
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Prop.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimatedSprite.cs" />
     <Compile Include="Assets\Scripts\Entities\Army.cs" />
+    <Compile Include="Assets\Scripts\Entities\ArmyInfo.cs" />
+    <Compile Include="Assets\Scripts\Entities\ArmyManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
+    <Compile Include="Assets\Scripts\Utils\Enums.cs" />
+    <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <None Include="Assets\External\DawnLike\README.txt" />
     <None Include="Assets\External\AssetIcons\Demo\Demos\Docs Demo\demo.txt.txt" />
     <None Include="Assets\External\AssetIcons\Demo\Demos\Docs Demo\text.txt.txt" />

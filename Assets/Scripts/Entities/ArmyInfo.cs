@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class TileData
+public class ArmyInfo
 {
-    public bool Passable;
-    public float WalkCost = 1.0f;
+    public UnitData TopLeft;
 }
