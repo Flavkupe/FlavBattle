@@ -10,6 +10,8 @@ public class ArmyClickedEventArgs : EventArgs
 
 public class Army : MonoBehaviour
 {
+    public Formation _formation = new Formation();
+
     public float MoveStep = 1.0f;
 
     public event EventHandler<ArmyClickedEventArgs> ArmyClicked;
@@ -22,6 +24,8 @@ public class Army : MonoBehaviour
     private bool _selected = false;
 
     private AnimatedSprite _sprite;
+
+    public Formation Formation => _formation;
 
     // Start is called before the first frame update
     void Start()

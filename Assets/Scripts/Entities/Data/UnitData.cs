@@ -11,4 +11,9 @@ public class UnitData : ScriptableObject
     public Sprite Sprite;
 
     public string Name;
+
+    public override string ToString()
+    {
+        return $"Unit_{Name}";
+    }
 }

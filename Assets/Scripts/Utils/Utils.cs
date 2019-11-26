@@ -10,4 +10,11 @@ public static class Utils
         point.z = 0;
         return point;
     }
+
+    public static TType MakeOfType<TType>(string name) where TType : MonoBehaviour
+    {
+        var obj = new GameObject(name ?? typeof(TType).Name);
+        var component = obj.AddComponent<TType>();
+        return component;
+    }
 }
