@@ -8,7 +8,7 @@ public class FormationPanel : MonoBehaviour
     private FormationPanelTile[] _tiles;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         this._tiles = this.GetComponentsInChildren<FormationPanelTile>();
     }
@@ -25,6 +25,16 @@ public class FormationPanel : MonoBehaviour
         {
             tile.SetUnit(null);
         }
+    }
+
+    public void Show()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        this.gameObject.SetActive(false);
     }
 
     public void SetFormation(Formation formation)

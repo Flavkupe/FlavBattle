@@ -1,61 +1,62 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ArmyManager : MonoBehaviour
 {
     public TilemapManager TileMap;
 
-    public Army DudeTemplate;
+    public Army ArmyTemplate;
 
     private UnitData[] _allUnitDataResources;
+    private FactionData[] _allFactionDataResources;
 
     private List<Army> _armies = new List<Army>();
 
     private Army _selected = null;
 
-    private bool _entityClicked = false;
+    private bool _clickProcessed = false;
 
-    private FormationPanel _formationPanel;
+    private UIManager _ui;
+
+    public FactionData PlayerFaction;
 
     // Start is called before the first frame update
     void Start()
     {
         TileMap.TileClicked += OnMapTileClicked;
 
-        _formationPanel = FindObjectOfType<FormationPanel>();
-        Debug.Assert(_formationPanel != null, "FormationPanel not found");
+        _ui = FindObjectOfType<UIManager>();
+        Debug.Assert(_ui != null, "UIManager not found");
 
-        _formationPanel.gameObject.SetActive(false);
+        _allUnitDataResources = Utils.LoadAssets<UnitData>("Units");
+        _allFactionDataResources = Utils.LoadAssets<FactionData>("Factions");
 
-        _allUnitDataResources = Resources.LoadAll<UnitData>("Units");
-        var assets = string.Join<UnitData>(", ", _allUnitDataResources);
-        Debug.Log($"Loaded assets {assets}");
-
-        CreateArmy(0, 0);
-
-        CreateArmy(-2, 0);
+        var enemyFaction = _allFactionDataResources.First(a => a.Faction != PlayerFaction.Faction);
+        CreateArmy(0, 0, PlayerFaction);
+        CreateArmy(-2, 0, enemyFaction);
     }
 
     // Update is called once per frame
     void Update()
     {
-        _entityClicked = false;
+        _clickProcessed = false;
     }
 
-    public void CreateArmy(int x, int y)
+    public void CreateArmy(int x, int y, FactionData faction)
     {
         var startTile = TileMap.GetGridTile(x, y);
-        var dude = Instantiate(DudeTemplate);
-        dude.SetMap(TileMap);
-        dude.PutOnTile(startTile);
-        dude.ArmyClicked += OnArmyClicked;
-
+        var army = Instantiate(ArmyTemplate);
+        army.SetMap(TileMap);
+        army.SetFaction(faction);
+        army.PutOnTile(startTile);
+        army.ArmyClicked += OnArmyClicked;
         var unit1 = this.MakeUnit(null);
         var unit2 = this.MakeUnit(null);
 
-        dude.Formation.PutUnit(unit1);
-        dude.Formation.PutUnit(unit2);
-        _armies.Add(dude);
+        army.Formation.PutUnit(unit1);
+        army.Formation.PutUnit(unit2);
+        _armies.Add(army);
     }
 
     public Unit MakeUnit(UnitData data)
@@ -85,11 +86,15 @@ public class ArmyManager : MonoBehaviour
             }
             else if (e.Button == MouseButton.LeftButton)
             {
-                if (!_entityClicked)
+                if (!_clickProcessed)
                 {
                     UnselectAll();
                 }
             }
+        }
+        else if (!_clickProcessed)
+        {
+            UnselectAll();
         }
     }
 
@@ -99,15 +104,28 @@ public class ArmyManager : MonoBehaviour
         {
             UnselectAll();
             _selected = args.Clicked;
-            _selected.Select();
-            _entityClicked = true;
-            _formationPanel.gameObject.SetActive(true);
-            _formationPanel.SetFormation(_selected.Formation);
+            _clickProcessed = true;
+            _ui.FormationPanel.Show();
+            _ui.FormationPanel.SetFormation(_selected.Formation);
+
+            if (IsPlayerArmy(_selected))
+            {
+                _selected.Select();
+            }
+            else
+            {
+                _selected = null;
+            }
         }
         else
         {
             UnselectAll();
         }
+    }
+
+    private bool IsPlayerArmy(Army army)
+    {
+        return army.Faction.Faction == this.PlayerFaction.Faction;
     }
 
     private void UnselectAll()
@@ -118,6 +136,6 @@ public class ArmyManager : MonoBehaviour
             army.Unselect();
         }
 
-        _formationPanel.gameObject.SetActive(false);
+        _ui.FormationPanel.Hide();
     }
 }

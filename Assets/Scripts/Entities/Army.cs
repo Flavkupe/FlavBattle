@@ -10,8 +10,6 @@ public class ArmyClickedEventArgs : EventArgs
 
 public class Army : MonoBehaviour
 {
-    public Formation _formation = new Formation();
-
     public float MoveStep = 1.0f;
 
     public event EventHandler<ArmyClickedEventArgs> ArmyClicked;
@@ -24,8 +22,10 @@ public class Army : MonoBehaviour
     private bool _selected = false;
 
     private AnimatedSprite _sprite;
+    public SpriteRenderer FactionFlag;
 
-    public Formation Formation => _formation;
+    public FactionData Faction { get; private set; }
+    public Formation Formation { get; } = new Formation();
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +67,28 @@ public class Army : MonoBehaviour
         }
     }
 
+    public void SetMap(TilemapManager map)
+    {
+        this._map = map;
+    }
+
+    public void SetFaction(FactionData faction)
+    {
+        this.Faction = faction;
+        this.FactionFlag.sprite = faction.Flag;
+    }
+
+    public void PutOnTile(GridTile tile)
+    {
+        this.transform.position = new Vector3(tile.WorldX, tile.WorldY, 0);
+    }
+
+    public void SetPath(TravelPath path)
+    {
+        this._destination = null;
+        this._path = path;
+    }
+
     private void PlotNextPath()
     {
         if (this._path != null)
@@ -86,15 +108,6 @@ public class Army : MonoBehaviour
         }
     }
 
-    public void SetMap(TilemapManager map)
-    {
-        this._map = map;
-    }
-
-    public void PutOnTile(GridTile tile)
-    {
-        this.transform.position = new Vector3(tile.WorldX, tile.WorldY, 0);
-    }
 
     private void MoveTowardsDestination()
     {
@@ -114,12 +127,6 @@ public class Army : MonoBehaviour
                 this._sprite.SetIdle(true);
             }
         }
-    }
-
-    public void SetPath(TravelPath path)
-    {
-        this._destination = null;
-        this._path = path;
     }
 
     private void SetDestination(Vector3? position)

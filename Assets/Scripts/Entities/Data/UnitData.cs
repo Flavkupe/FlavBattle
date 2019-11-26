@@ -12,6 +12,8 @@ public class UnitData : ScriptableObject
 
     public string Name;
 
+    public UnitStats BaseStats;
+
     public override string ToString()
     {
         return $"Unit_{Name}";

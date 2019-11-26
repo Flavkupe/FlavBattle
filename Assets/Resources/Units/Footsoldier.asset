@@ -15,3 +15,7 @@ MonoBehaviour:
   Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Sprite: {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Name: Foot Soldier
+  BaseStats:
+    HP: 10
+    Power: 3
+    Defense: 3

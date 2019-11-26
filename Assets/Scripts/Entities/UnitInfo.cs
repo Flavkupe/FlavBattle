@@ -7,6 +7,7 @@ using UnityEngine;
 public class UnitInfo
 {
     public UnitData Data { get; set; }
+    public UnitStats CurrentStats { get; }
 
     public UnitInfo()
     {
@@ -15,6 +16,6 @@ public class UnitInfo
     public UnitInfo(UnitData data)
     {
         this.Data = data;
+        this.CurrentStats = data.BaseStats.Clone();
     }
-    
 }
