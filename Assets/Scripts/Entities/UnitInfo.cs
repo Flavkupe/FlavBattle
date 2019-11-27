@@ -6,8 +6,8 @@ using UnityEngine;
 [Serializable]
 public class UnitInfo
 {
-    public UnitData Data { get; set; }
-    public UnitStats CurrentStats { get; }
+    public UnitData Data { get; private set; }
+    public UnitStats CurrentStats { get; private set; }
 
     public UnitInfo()
     {
@@ -16,6 +16,6 @@ public class UnitInfo
     public UnitInfo(UnitData data)
     {
         this.Data = data;
-        this.CurrentStats = data.BaseStats.Clone();
+        this.CurrentStats = data.RollStats();
     }
 }

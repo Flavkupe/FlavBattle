@@ -11,6 +11,11 @@ public class GridTile
     public int GridY;
     public float WorldX;
     public float WorldY;
+
+    public Vector3 ToWorldPos(float z = 0.0f)
+    {
+        return new Vector3(WorldX, WorldY, 0.0f);
+    }
 }
 
 public class TileClickedEventArgs : EventArgs

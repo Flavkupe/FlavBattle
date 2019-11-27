@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af06fcb51bd3cd04c9ac136281956420, type: 3}
   m_Name: Footsoldier
   m_EditorClassIdentifier: 
+  HP: {x: 20, y: 30}
+  Power: {x: 5, y: 10}
+  Defense: {x: 5, y: 10}
   Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Sprite: {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Name: Foot Soldier
-  BaseStats:
-    HP: 10
-    Power: 3
-    Defense: 3
