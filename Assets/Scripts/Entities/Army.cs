@@ -18,9 +18,6 @@ public class Army : MonoBehaviour
     private TravelPath _path = null;
     private TilemapManager _map = null;
 
-    private bool _clicked = false;
-    private bool _selected = false;
-
     private AnimatedSprite _sprite;
     public SpriteRenderer FactionFlag;
 

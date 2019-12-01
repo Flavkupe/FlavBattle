@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,19 +28,19 @@ public class TileClickedEventArgs : EventArgs
 
 public class TilemapManager : MonoBehaviour
 {
-    public Tilemap tilemap;
+    public Tilemap Tilemap;
 
     private BFSPathfinding _pathfinding = new BFSPathfinding();
 
+    private Bounds _worldBounds;
+
     public event EventHandler<TileClickedEventArgs> TileClicked;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        UpdateWorldBounds();
     }
 
-    // Update is called once per frame
     void Update()
     {
         var leftClick = Input.GetMouseButtonDown(0);
@@ -58,6 +59,7 @@ public class TilemapManager : MonoBehaviour
             }
         }
     }
+
     public TravelPath GetPath(GridTile start, GridTile end)
     {
         return GetPath(new Vector3Int(start.GridX, start.GridY, 0), new Vector3Int(end.GridX, end.GridY, 0));
@@ -74,19 +76,19 @@ public class TilemapManager : MonoBehaviour
 
     public GridTile GetGridTileAtWorldPos(float x, float y)
     {
-        var cell = tilemap.WorldToCell(new Vector3(x, y, 0));
+        var cell = Tilemap.WorldToCell(new Vector3(x, y, 0));
         return GetGridTile(cell.x, cell.y);
     }
 
     public GridTile GetGridTile(int x, int y)
     {
-        var tile = tilemap.GetTile<WorldTile>(new Vector3Int(x, y, 0));
+        var tile = Tilemap.GetTile<WorldTile>(new Vector3Int(x, y, 0));
         if (tile == null)
         {
             return null;
         }
 
-        Vector3 worldLoc = tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0));
+        Vector3 worldLoc = Tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0));
         return new GridTile()
         {
             Data = tile.TileData,
@@ -121,5 +123,17 @@ public class TilemapManager : MonoBehaviour
         }
 
         return items;
+    }
+
+    private void UpdateWorldBounds()
+    {
+        Tilemap.CompressBounds();
+        _worldBounds = Tilemap.GetComponent<TilemapRenderer>().bounds;
+
+        var follow = Camera.main.GetComponent<CameraFollow>();
+        if (follow != null)
+        {
+            follow.SetBounds(_worldBounds);
+        }
     }
 }
