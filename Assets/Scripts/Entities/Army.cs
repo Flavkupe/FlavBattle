@@ -8,11 +8,19 @@ public class ArmyClickedEventArgs : EventArgs
     public Army Clicked;
 }
 
-public class Army : MonoBehaviour
+public class ArmyEncounteredEventArgs : EventArgs
+{
+    public Army Initiator;
+    public Army Opponent;
+}
+
+public class Army : MonoBehaviour, IDetectable
 {
     public float MoveStep = 1.0f;
 
     public event EventHandler<ArmyClickedEventArgs> ArmyClicked;
+
+    public event EventHandler<ArmyEncounteredEventArgs> ArmyEncountered;
 
     private Vector3? _destination = null;
     private TravelPath _path = null;
@@ -24,10 +32,33 @@ public class Army : MonoBehaviour
     public FactionData Faction { get; private set; }
     public Formation Formation { get; } = new Formation();
 
+    public DetectableType Type => DetectableType.Army;
+
+    private Detector[] _detectors;
+    private bool _paused = false;
+
     // Start is called before the first frame update
     void Start()
     {
         _sprite = this.GetComponentInChildren<AnimatedSprite>();
+        _detectors = this.GetComponentsInChildren<Detector>();
+        foreach (var detector in _detectors)
+        {
+            detector.Detected += Detector_Detected;
+        }
+    }
+
+    private void Detector_Detected(object sender, GameObject e)
+    {
+        var other = e.GetComponent<Army>();
+        if (other != null)
+        {
+            ArmyEncountered?.Invoke(this, new ArmyEncounteredEventArgs
+            {
+                Initiator = this,
+                Opponent = other,
+            });
+        }
     }
 
     private void OnMouseDown()
@@ -54,6 +85,11 @@ public class Army : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_paused)
+        {
+            return;
+        }
+
         if (this._destination != null)
         {
             this.MoveTowardsDestination();
@@ -84,6 +120,11 @@ public class Army : MonoBehaviour
     {
         this._destination = null;
         this._path = path;
+    }
+
+    public void SetPaused(bool pause)
+    {
+        this._paused = pause;
     }
 
     private void PlotNextPath()
@@ -129,5 +170,10 @@ public class Army : MonoBehaviour
     private void SetDestination(Vector3? position)
     {
         this._destination = position;
+    }
+
+    public GameObject GetObject()
+    {
+        return this.gameObject;
     }
 }

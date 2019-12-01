@@ -2958,6 +2958,8 @@ MonoBehaviour:
   TileMap: {fileID: 489163872}
   ArmyTemplate: {fileID: 8828536160456971155, guid: df47d50954b567f449f73f9f8718e121,
     type: 3}
+  BattleIndicator: {fileID: 6925059649067335154, guid: 9c2ed94d2f5e31f41be70b515427efc9,
+    type: 3}
   PlayerFaction: {fileID: 11400000, guid: 34dfca740be53964488a04c4adc5022e, type: 2}
 --- !u!4 &1641806738
 Transform:

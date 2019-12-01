@@ -64,13 +64,16 @@
   <ItemGroup>
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Item.cs" />
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Prop.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSprite.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Components\Detector.cs" />
     <Compile Include="Assets\Scripts\Entities\Army.cs" />
     <Compile Include="Assets\Scripts\Entities\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
+    <Compile Include="Assets\Scripts\Entities\IDetectable.cs" />
     <Compile Include="Assets\Scripts\Entities\Unit.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />

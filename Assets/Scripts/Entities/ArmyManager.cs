@@ -7,11 +7,14 @@ public class ArmyManager : MonoBehaviour
     public TilemapManager TileMap;
 
     public Army ArmyTemplate;
+    public GameObject BattleIndicator;
 
     private UnitData[] _allUnitDataResources;
     private FactionData[] _allFactionDataResources;
 
     private List<Army> _armies = new List<Army>();
+
+    private bool _pauseAll = false;
 
     private Army _selected = null;
 
@@ -51,6 +54,7 @@ public class ArmyManager : MonoBehaviour
         army.SetFaction(faction);
         army.PutOnTile(startTile);
         army.ArmyClicked += OnArmyClicked;
+        army.ArmyEncountered += OnArmyEncountered;
         var unit1 = this.MakeUnit(null);
         var unit2 = this.MakeUnit(null);
 
@@ -123,9 +127,26 @@ public class ArmyManager : MonoBehaviour
         }
     }
 
+    private void OnArmyEncountered(object sender, ArmyEncounteredEventArgs e)
+    {
+        PauseAll(true);
+        var middle = (e.Initiator.transform.position + e.Opponent.transform.position) / 2;
+        middle.y += 0.25f;
+        var icon = Instantiate(BattleIndicator);
+        icon.transform.position = middle;
+    }
+
     private bool IsPlayerArmy(Army army)
     {
         return army.Faction.Faction == this.PlayerFaction.Faction;
+    }
+
+    private void PauseAll(bool pause)
+    {
+        foreach (var army in _armies)
+        {
+            army.SetPaused(pause);
+        }
     }
 
     private void UnselectAll()
