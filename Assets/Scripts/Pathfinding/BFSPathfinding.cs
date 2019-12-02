@@ -66,12 +66,9 @@ public class BFSPathfinding
 
         var nodes = new List<GridTile>();
         nodes.Add(final.Tile);
-        Debug.Log(final.ToString());
         var prev = final.From;
         while (prev != null)
-        {
-            Debug.Log(prev.ToString());
-            
+        { 
             nodes.Add(prev.Tile);
             prev = prev.From;
         }

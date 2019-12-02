@@ -24,6 +24,12 @@ public struct FormationPair
     public FormationColumn Col;
 }
 
+public struct FormationInfo
+{
+    public FormationPair FormationPair;
+    public Unit Unit;
+}
+
 public class Formation
 {
     public static FormationPair[] AllSquares =
@@ -96,6 +102,18 @@ public class Formation
     public IEnumerable<FormationPair> GetOccupiedPositions()
     {
         return AllSquares.ToList().Where(a => GetUnit(a.Row, a.Col) != null);
+    }
+
+    /// <summary>
+    /// Gets all info associated with occupied positions
+    /// </summary>
+    public IEnumerable<FormationInfo> GetOccupiedPositionInfo()
+    {
+        return GetOccupiedPositions().Select(a => new FormationInfo
+        {
+            FormationPair = a,
+            Unit = GetUnit(a.Row, a.Col)
+        });
     }
 
     private FormationPair? GetRandomEmpty()

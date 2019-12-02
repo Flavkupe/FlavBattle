@@ -12,8 +12,21 @@ public class UnitStats
 
     public int Defense;
 
+    public int Speed;
+
     public UnitStats Clone()
     {
         return this.MemberwiseClone() as UnitStats;
+    }
+
+    public UnitStats Combine(UnitStats other)
+    {
+        return new UnitStats()
+        {
+            HP = this.HP + other.HP,
+            Power = this.Power + other.Power,
+            Defense = this.Defense + other.Defense,
+            Speed = this.Speed + other.Speed,
+        };
     }
 }

@@ -37,4 +37,9 @@ public class CombatFormation : MonoBehaviour
             slot.SetUnit(combatUnit);
         }
     }
+
+    public CombatFormationSlot GetFormationSlot(FormationRow row, FormationColumn col)
+    {
+        return _slots.First(a => a.Row == row && a.Col == col);
+    }
 }

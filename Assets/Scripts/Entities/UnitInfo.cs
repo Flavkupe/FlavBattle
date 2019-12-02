@@ -13,9 +13,9 @@ public class UnitInfo
     {
     }
 
-    public UnitInfo(UnitData data)
+    public UnitInfo(UnitData data, int level = 1)
     {
         this.Data = data;
-        this.CurrentStats = data.RollStats();
+        this.CurrentStats = data.RollStats(level);
     }
 }

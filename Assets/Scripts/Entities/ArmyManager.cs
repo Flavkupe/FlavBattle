@@ -20,6 +20,7 @@ public class ArmyManager : MonoBehaviour
     private Army _selected = null;
 
     private bool _clickProcessed = false;
+    private bool _combatProcessed = false;
 
     private UIManager _ui;
     private GameEventManager _gameEvents;
@@ -42,8 +43,14 @@ public class ArmyManager : MonoBehaviour
         _allFactionDataResources = Utils.LoadAssets<FactionData>("Factions");
 
         var enemyFaction = _allFactionDataResources.First(a => a.Faction != PlayerFaction.Faction);
-        CreateArmy(0, 0, PlayerFaction);
-        CreateArmy(-2, 0, enemyFaction);
+        var playerArmy = CreateArmy(0, 0, PlayerFaction);
+        var enemyArmy = CreateArmy(-2, 0, enemyFaction);
+
+        // TODO: TEMP
+        playerArmy.Formation.PutUnit(this.MakeUnit(null, 4));
+        playerArmy.Formation.PutUnit(this.MakeUnit(null, 4));
+        enemyArmy.Formation.PutUnit(this.MakeUnit(null));
+        enemyArmy.Formation.PutUnit(this.MakeUnit(null));
     }
 
     // Update is called once per frame
@@ -52,7 +59,7 @@ public class ArmyManager : MonoBehaviour
         _clickProcessed = false;
     }
 
-    public void CreateArmy(int x, int y, FactionData faction)
+    public Army CreateArmy(int x, int y, FactionData faction)
     {
         var startTile = TileMap.GetGridTile(x, y);
         var army = Instantiate(ArmyTemplate);
@@ -61,15 +68,11 @@ public class ArmyManager : MonoBehaviour
         army.PutOnTile(startTile);
         army.ArmyClicked += OnArmyClicked;
         army.ArmyEncountered += OnArmyEncountered;
-        var unit1 = this.MakeUnit(null);
-        var unit2 = this.MakeUnit(null);
-
-        army.Formation.PutUnit(unit1);
-        army.Formation.PutUnit(unit2);
         _armies.Add(army);
+        return army;
     }
 
-    public Unit MakeUnit(UnitData data)
+    public Unit MakeUnit(UnitData data, int level = 1)
     {
         if (data == null)
         {
@@ -79,7 +82,7 @@ public class ArmyManager : MonoBehaviour
         var unit = new Unit()
         {
             Data = data,
-            Info = new UnitInfo(data)
+            Info = new UnitInfo(data, level)
         };
 
         return unit;
@@ -138,6 +141,13 @@ public class ArmyManager : MonoBehaviour
 
     private void OnArmyEncountered(object sender, ArmyEncounteredEventArgs e)
     {
+        if (_combatProcessed)
+        {
+            return;
+        }
+
+        // TODO: combat end
+        _combatProcessed = true;
         var player = IsPlayerArmy(e.Initiator) ? e.Initiator : e.Opponent;
         var other = IsPlayerArmy(e.Initiator) ? e.Opponent : e.Initiator;
         StartCoroutine(StartCombat(player, other));

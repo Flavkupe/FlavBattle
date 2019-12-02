@@ -11,7 +11,7 @@ public static class ExtensionFunctions
             return null;
         }
 
-        var random = Random.Range(0, list.Count - 1);
+        var random = Random.Range(0, list.Count);
         return list[random];
     }
 
@@ -44,5 +44,41 @@ public static class ExtensionFunctions
     public static Vector3 SetZ(this Vector3 vector, float z)
     {
         return new Vector3(vector.x, vector.y, z);
+    }
+
+    public static IEnumerator MoveBy(this MonoBehaviour obj, Vector3 movement, float speed)
+    {
+        var target = obj.transform.position + movement;
+        var distLeft = movement.magnitude;
+        while (distLeft > 0.0f)
+        {
+            var step = speed * Time.deltaTime;
+            distLeft -= step;
+            obj.transform.position = Vector3.MoveTowards(obj.transform.position, target, step);
+            yield return null;
+        }
+
+        obj.transform.position = target;
+    }
+
+    public static IEnumerator FlashColor(this SpriteRenderer sprite, Color color, float speed = 8.0f)
+    {
+        var starting = sprite.color;
+        var progress = 0.0f;
+        while (progress < 1.0f)
+        {
+            progress += speed * Time.deltaTime;
+            sprite.color = Color.Lerp(sprite.color, color, progress);
+            yield return null;
+        }
+
+        progress = 0.0f;
+        while (progress < 1.0f)
+        {
+            progress += speed * Time.deltaTime;
+            sprite.color = Color.Lerp(sprite.color, starting, progress);
+        }
+
+        sprite.color = starting;
     }
 }

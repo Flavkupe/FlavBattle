@@ -15,6 +15,21 @@ public class UnitData : ScriptableObject
     [MinMaxSlider(1.0f, 200.0f)]
     public Vector2 Defense;
 
+    [MinMaxSlider(1.0f, 200.0f)]
+    public Vector2 Speed;
+
+    [MinMaxSlider(1.0f, 20.0f)]
+    public Vector2 HPScaling;
+
+    [MinMaxSlider(1.0f, 20.0f)]
+    public Vector2 PowerScaling;
+
+    [MinMaxSlider(1.0f, 20.0f)]
+    public Vector2 DefenseScaling;
+
+    [MinMaxSlider(1.0f, 20.0f)]
+    public Vector2 SpeedScaling;
+
     [AssetIcon]
     public Sprite Icon;
 
@@ -31,12 +46,30 @@ public class UnitData : ScriptableObject
     /// Roll unit stats from the possible base props
     /// </summary>
     /// <returns></returns>
-    public UnitStats RollStats()
+    public UnitStats RollStats(int level)
     {
         var stats = new UnitStats();
         stats.HP = GenerateStat(HP);
         stats.Power = GenerateStat(Power);
         stats.Defense = GenerateStat(Defense);
+        stats.Speed = GenerateStat(Speed);
+
+        for (int i = 1; i < level; i++)
+        {
+            var levelup = RollLevel();
+            stats = stats.Combine(levelup);
+        }
+
+        return stats;
+    }
+
+    public UnitStats RollLevel()
+    {
+        var stats = new UnitStats();
+        stats.HP = GenerateStat(HPScaling);
+        stats.Power = GenerateStat(PowerScaling);
+        stats.Defense = GenerateStat(DefenseScaling);
+        stats.Speed = GenerateStat(SpeedScaling);
         return stats;
     }
 
