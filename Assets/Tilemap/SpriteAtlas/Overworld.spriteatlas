@@ -31,16 +31,24 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: b2911f599bced4d4b8cb225ec2b8c2f3, type: 3}
-    totalSpriteSurfaceArea: 3145728
+    totalSpriteSurfaceArea: 3149824
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: e158764228ff5194fa693e11eb884233, type: 3}
   - {fileID: 21300000, guid: 8dbf8a44206fbaf4d8376d485052b917, type: 3}
   - {fileID: 21300000, guid: f9cbd9167fa16864b96c259434e506aa, type: 3}
+  - {fileID: -2464099594667407422, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
+  - {fileID: -5016430902054153369, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
+  - {fileID: 841623118389204737, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
+  - {fileID: 1766183139497562430, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   m_PackedSpriteNamesToIndex:
   - isometric_0087
   - isometric_0056
   - isometric_0064
+  - RustyLand_0
+  - RustyLand_1
+  - RustyLand_2
+  - RustyLand_3
   m_Tag: Overworld
   m_IsVariant: 0

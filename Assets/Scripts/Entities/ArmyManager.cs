@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class ArmyManager : MonoBehaviour
     public TilemapManager TileMap;
 
     public Army ArmyTemplate;
-    public GameObject BattleIndicator;
+    public AnimatedSpin BattleIndicator;
 
     private UnitData[] _allUnitDataResources;
     private FactionData[] _allFactionDataResources;
@@ -21,6 +22,8 @@ public class ArmyManager : MonoBehaviour
     private bool _clickProcessed = false;
 
     private UIManager _ui;
+    private GameEventManager _gameEvents;
+    private BattleManager _battleManager;
 
     public FactionData PlayerFaction;
 
@@ -31,6 +34,9 @@ public class ArmyManager : MonoBehaviour
 
         _ui = FindObjectOfType<UIManager>();
         Debug.Assert(_ui != null, "UIManager not found");
+
+        _gameEvents = FindObjectOfType<GameEventManager>();
+        _battleManager = FindObjectOfType<BattleManager>();
 
         _allUnitDataResources = Utils.LoadAssets<UnitData>("Units");
         _allFactionDataResources = Utils.LoadAssets<FactionData>("Factions");
@@ -70,9 +76,12 @@ public class ArmyManager : MonoBehaviour
             data = _allUnitDataResources.GetRandom();
         }
 
-        var unit = Utils.MakeOfType<Unit>(data.Name);
-        unit.Data = data;
-        unit.Info = new UnitInfo(data);
+        var unit = new Unit()
+        {
+            Data = data,
+            Info = new UnitInfo(data)
+        };
+
         return unit;
     }
 
@@ -129,11 +138,21 @@ public class ArmyManager : MonoBehaviour
 
     private void OnArmyEncountered(object sender, ArmyEncounteredEventArgs e)
     {
+        var player = IsPlayerArmy(e.Initiator) ? e.Initiator : e.Opponent;
+        var other = IsPlayerArmy(e.Initiator) ? e.Opponent : e.Initiator;
+        StartCoroutine(StartCombat(player, other));
+    }
+
+    private IEnumerator StartCombat(Army player, Army enemy)
+    {
         PauseAll(true);
-        var middle = (e.Initiator.transform.position + e.Opponent.transform.position) / 2;
+        var middle = (player.transform.position + enemy.transform.position) / 2;
         middle.y += 0.25f;
         var icon = Instantiate(BattleIndicator);
         icon.transform.position = middle;
+        _gameEvents.TriggerMapEvent(MapEventType.MapPaused);
+        yield return icon.SpinAround();
+        yield return _battleManager.StartCombat(player, enemy);
     }
 
     private bool IsPlayerArmy(Army army)

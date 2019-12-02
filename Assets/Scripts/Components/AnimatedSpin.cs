@@ -22,12 +22,17 @@ public class AnimatedSpin : MonoBehaviour
         SpinAround(Axis, Times, Speed);
     }
 
-    public void SpinAround(Vector3 axis, int times, float speed)
+    public Coroutine SpinAround()
     {
-        StartCoroutine(SpinAroundCoroutine(axis, times, speed));   
+        return SpinAround(Axis, Times, Speed);
     }
 
-    private IEnumerator SpinAroundCoroutine(Vector3 axis, int times, float speed)
+    public Coroutine SpinAround(Vector3 axis, int times, float speed)
+    {
+        return StartCoroutine(SpinAroundInternal(axis, times, speed));   
+    }
+
+    private IEnumerator SpinAroundInternal(Vector3 axis, int times, float speed)
     {
         var angle = 0.0f;
         while (times > 0)

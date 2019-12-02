@@ -13,7 +13,7 @@ public class CameraFollow : MonoBehaviour
 
     private Bounds _bounds;
     private bool _boundsSet = false;
-
+    private bool _paused = false;
 
     public void SetBounds(Bounds bounds)
     {
@@ -24,10 +24,30 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         _cam = GetComponent<Camera>();
+        var events = FindObjectOfType<GameEventManager>();
+        events.MapEvent += Events_MapEvent;
+    }
+
+    private void Events_MapEvent(object sender, MapEventType e)
+    {
+        switch (e)
+        {
+            case MapEventType.MapPaused:
+                _paused = true;
+                return;
+            case MapEventType.MapUnpaused:
+                _paused = false;
+                return;
+        }
     }
 
     void Update()
     {
+        if (_paused)
+        {
+            return;
+        }
+
         var xPercent = Input.mousePosition.x / Screen.width;
         var yPercent = Input.mousePosition.y / Screen.height;
 

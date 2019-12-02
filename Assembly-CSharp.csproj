@@ -64,6 +64,11 @@
   <ItemGroup>
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Item.cs" />
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Prop.cs" />
+    <Compile Include="Assets\Scripts\Combat\BattleDisplay.cs" />
+    <Compile Include="Assets\Scripts\Combat\BattleManager.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatFormationSlot.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSprite.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
@@ -78,6 +83,7 @@
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
+    <Compile Include="Assets\Scripts\State\GameEventManager.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />

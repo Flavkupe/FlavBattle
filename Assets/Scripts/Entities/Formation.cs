@@ -93,6 +93,11 @@ public class Formation
         return _units[rowIndex, columnIndex];
     }
 
+    public IEnumerable<FormationPair> GetOccupiedPositions()
+    {
+        return AllSquares.ToList().Where(a => GetUnit(a.Row, a.Col) != null);
+    }
+
     private FormationPair? GetRandomEmpty()
     {
         var randomSquares = AllSquares.ToList().GetShuffled();
