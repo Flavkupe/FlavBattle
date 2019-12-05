@@ -26,6 +26,8 @@ public class BattleManager : MonoBehaviour
         public Unit Unit;
         public FormationColumn Col;
         public FormationRow Row;
+        public CombatFormation CombatFormation;
+        public CombatFormationSlot CombatFormationSlot;
     }
 
     private State _state = State.NotInCombat;
@@ -56,14 +58,15 @@ public class BattleManager : MonoBehaviour
             if (winner != Winner.None)
             {
                 _state = State.ShowWinner;
-                // TODO: winner
+                StartCoroutine(ShowWinner(winner));
                 return;
             }
 
-            if (_turnQueue.Count > 0)
+            var current = GetNextCombatant();
+            if (current != null)
             {
-                _state = State.TurnInProgress;
-                StartCoroutine(DoTurn(_turnQueue.Dequeue()));
+                _state = State.TurnInProgress;   
+                StartCoroutine(DoTurn(current));
             }
             else
             {
@@ -76,6 +79,14 @@ public class BattleManager : MonoBehaviour
     public Coroutine StartCombat(Army player, Army enemy)
     {
         return StartCoroutine(StartCombatInternal(player, enemy));
+    }
+
+    private IEnumerator ShowWinner(Winner winner)
+    {
+        var victory = winner == Winner.Left;
+        yield return BattleDisplay.ShowCombatEndSign(victory);
+        yield return BattleDisplay.HideCombatScene();
+        _state = State.NotInCombat;
     }
 
     private IEnumerator StartCombatInternal(Army player, Army enemy)
@@ -92,18 +103,35 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerable<Combatant> GetCombatants(Army army, bool left)
     {
+        var combatFormation = left ? BattleDisplay.LeftFormation : BattleDisplay.RightFormation;
         return army.Formation.GetOccupiedPositionInfo().Select(a => new Combatant
         {
             Left = left,
             Unit = a.Unit,
             Row = a.FormationPair.Row,
             Col = a.FormationPair.Col,
+            CombatFormation = combatFormation,
+            CombatFormationSlot = combatFormation.GetFormationSlot(a.FormationPair.Row, a.FormationPair.Col)
         });
+    }
+
+    private Combatant GetNextCombatant()
+    {
+        while (_turnQueue.Count > 0)
+        {
+            var current = _turnQueue.Dequeue();
+            if (!current.Unit.IsDead())
+            {
+                return current;
+            }
+        }
+
+        return null;
     }
 
     private void ArrangeTurns()
     {
-        foreach(var item in _combatants.OrderBy(a => a.Unit.Info.CurrentStats.Speed).Reverse())
+        foreach (var item in _combatants.OrderBy(a => a.Unit.Info.CurrentStats.Speed).Reverse())
         {
             _turnQueue.Enqueue(item);
         }
@@ -112,11 +140,7 @@ public class BattleManager : MonoBehaviour
     private IEnumerator DoTurn(Combatant combatant)
     {
         Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name}'s turn!");
-        var unitFormation = combatant.Left ? BattleDisplay.LeftFormation : BattleDisplay.RightFormation;
-        var opponentFormation = combatant.Left ? BattleDisplay.RightFormation: BattleDisplay.LeftFormation;
         var targets = FindTargets(combatant);
-
-        var currentUnitSlot = unitFormation.GetFormationSlot(combatant.Row, combatant.Col);
 
         if (targets.Count() == 0)
         {
@@ -125,19 +149,36 @@ public class BattleManager : MonoBehaviour
             yield break;
         }
 
-        yield return currentUnitSlot.CurrentUnit.AnimateAttack();
+        yield return combatant.CombatFormationSlot.CurrentUnit.AnimateAttack();
         var damageRoll = combatant.Unit.Info.CurrentStats.Power;
         Debug.Log($"Damage roll for {damageRoll}!");
         foreach (var target in targets)
         {
-            var slot = opponentFormation.GetFormationSlot(target.Row, target.Col);
-            Debug.Log($"{target.Unit.Info.Name} of {target.Unit.Info.Faction} is hit for {damageRoll}!");
-            yield return slot.CurrentUnit.TakeDamage(damageRoll);
+            yield return AttackTarget(combatant, target, damageRoll);
         }
 
         yield return new WaitForSeconds(0.5f);
 
         _state = State.AwaitingTurn;
+    }
+
+    private IEnumerator AttackTarget(Combatant attacker, Combatant target, int damageRoll)
+    {
+        var slot = target.CombatFormationSlot;
+        Debug.Log($"{target.Unit.Info.Name} of {target.Unit.Info.Faction} is hit for {damageRoll}!");
+        yield return slot.CurrentUnit.TakeDamage(damageRoll);
+
+        if (slot.CurrentUnit.Unit.IsDead())
+        {
+            yield return slot.CurrentUnit.AnimateDeath();
+            ClearCombatant(target);
+        }
+    }
+
+    private void ClearCombatant(Combatant combatant)
+    {
+        combatant.CombatFormationSlot.ClearContents();
+        _combatants.Remove(combatant);
     }
 
     private Winner CheckWinner()

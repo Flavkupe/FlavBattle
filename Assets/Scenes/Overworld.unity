@@ -515,6 +515,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LeftFormation: {fileID: 864874613}
   RightFormation: {fileID: 746630575}
+  VictorySign: {fileID: 5961252036890904646, guid: e3ed923275dc2044481389d6bfe576f3,
+    type: 3}
+  DefeatSign: {fileID: 9125948387556857407, guid: 19a9e4c4d7e744843954b7547af46333,
+    type: 3}
   BackdropShiftSpeed: 10
 --- !u!1 &254511878
 GameObject:

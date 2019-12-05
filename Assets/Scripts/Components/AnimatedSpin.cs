@@ -38,7 +38,6 @@ public class AnimatedSpin : MonoBehaviour
         {
             var rate = speed * Time.deltaTime;
             angle += rate;
-            Debug.Log(angle);
             this.transform.Rotate(axis, rate);
             if (angle > 360.0f)
             {

@@ -18,12 +18,6 @@ public class CombatUnit : MonoBehaviour
         _healthBar = GetComponentInChildren<HealthBar>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetUnit(Unit unit, bool facingLeft)
     {
         this.Unit = unit;
@@ -38,24 +32,7 @@ public class CombatUnit : MonoBehaviour
 
     public Coroutine TakeDamage(int damage)
     {
-        var info = Unit.Info;
-
-        this.CreateDamageTextOverHead(damage.ToString());
-
-        info.CurrentStats.HP -= damage;
-        if (info.CurrentStats.HP < 0)
-        {
-            // TODO: die
-            Debug.Log($"{Unit.Info.Name} of {Unit.Info.Faction} has died!");
-        }
-        else
-        {
-            var percent = (float)info.CurrentStats.HP / (float)info.MaxStats.HP;
-            percent = Mathf.Clamp(percent, 0.0f, 1.0f);
-            _healthBar.SetPercent(percent);
-        }
-
-        return AnimateDamaged();
+        return StartCoroutine(TakeDamageInternal(damage));
     }
 
     public Coroutine AnimateDamaged()
@@ -69,6 +46,33 @@ public class CombatUnit : MonoBehaviour
         return StartCoroutine(AnimateAttackInternal());
     }
 
+    public Coroutine AnimateDeath()
+    {
+        return StartCoroutine(AnimateDeathInternal());
+    }
+
+    private IEnumerator TakeDamageInternal(int damage)
+    {
+        var info = Unit.Info;
+
+        this.CreateDamageTextOverHead(damage.ToString());
+
+        info.CurrentStats.HP -= damage;
+        if (info.CurrentStats.HP < 0)
+        {
+            Debug.Log($"{Unit.Info.Name} of {Unit.Info.Faction} has died!");
+            yield break;
+        }
+        else
+        {
+            var percent = (float)info.CurrentStats.HP / (float)info.MaxStats.HP;
+            percent = Mathf.Clamp(percent, 0.0f, 1.0f);
+            _healthBar.SetPercent(percent);
+        }
+
+        yield return AnimateDamaged();
+    }
+
     private IEnumerator AnimateAttackInternal()
     {
         var startPos = transform.position;
@@ -79,6 +83,13 @@ public class CombatUnit : MonoBehaviour
         transform.position = startPos;
     }
 
+    private IEnumerator AnimateDeathInternal()
+    {
+        var renderer = this.GetComponent<SpriteRenderer>();
+        yield return renderer.FadeAway(2.0f);
+    }
+
+
     private void CreateDamageTextOverHead(string text)
     {
         var currentY = this.transform.position.y;
@@ -86,4 +97,6 @@ public class CombatUnit : MonoBehaviour
         damageNumber.SetText(text);
         damageNumber.transform.position = this.transform.position.SetY(currentY + 0.25f);
     }
+
+    
 }

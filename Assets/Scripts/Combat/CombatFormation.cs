@@ -12,15 +12,9 @@ public class CombatFormation : MonoBehaviour
 
     private Army _army;
 
-    // Start is called before the first frame update
     void Awake()
     {
         _slots = GetComponentsInChildren<CombatFormationSlot>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     public void InitArmy(Army army)
@@ -35,6 +29,15 @@ public class CombatFormation : MonoBehaviour
             combatUnit.name = unit.Data.Name;
             combatUnit.SetUnit(unit, FacingLeft);
             slot.SetUnit(combatUnit);
+        }
+    }
+
+    public void ClearArmy()
+    {
+        _army = null;
+        foreach(var slot in _slots)
+        {
+            slot.ClearContents();
         }
     }
 

@@ -46,6 +46,11 @@ public static class ExtensionFunctions
         return new Vector3(vector.x, vector.y, z);
     }
 
+    public static Color SetAlpha(this Color color, float a)
+    {
+        return new Color(color.r, color.g, color.b, a);
+    }
+
     public static IEnumerator MoveBy(this MonoBehaviour obj, Vector3 movement, float speed)
     {
         var target = obj.transform.position + movement;
@@ -80,5 +85,16 @@ public static class ExtensionFunctions
         }
 
         sprite.color = starting;
+    }
+
+    public static IEnumerator FadeAway(this SpriteRenderer sprite, float speed = 1.0f)
+    {
+        var starting = sprite.color;
+        while (sprite.color.a > 0.0f)
+        {
+            var newAlpha = sprite.color.a - (speed * Time.deltaTime);
+            sprite.color = sprite.color.SetAlpha(newAlpha);
+            yield return null;
+        }
     }
 }

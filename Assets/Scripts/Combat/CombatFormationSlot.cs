@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,5 +24,14 @@ public class CombatFormationSlot : MonoBehaviour
         CurrentUnit = unit;
         unit.transform.SetParent(this.transform);
         unit.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
+    }
+
+    public void ClearContents()
+    {
+        if (CurrentUnit != null)
+        {
+            Destroy(CurrentUnit.gameObject);
+            CurrentUnit = null;
+        }
     }
 }

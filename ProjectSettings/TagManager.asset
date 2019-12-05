@@ -59,3 +59,6 @@ TagManager:
   - name: BattleForeground
     uniqueID: 143904315
     locked: 0
+  - name: BattleUI
+    uniqueID: 3631178937
+    locked: 0
