@@ -47,10 +47,10 @@ public class ArmyManager : MonoBehaviour
         var enemyArmy = CreateArmy(-2, 0, enemyFaction);
 
         // TODO: TEMP
-        playerArmy.Formation.PutUnit(this.MakeUnit(null, 4));
-        playerArmy.Formation.PutUnit(this.MakeUnit(null, 4));
-        enemyArmy.Formation.PutUnit(this.MakeUnit(null));
-        enemyArmy.Formation.PutUnit(this.MakeUnit(null));
+        playerArmy.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
+        playerArmy.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
+        enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
+        enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
     }
 
     // Update is called once per frame
@@ -72,7 +72,7 @@ public class ArmyManager : MonoBehaviour
         return army;
     }
 
-    public Unit MakeUnit(UnitData data, int level = 1)
+    public Unit MakeUnit(UnitData data, Faction faction, int level = 1)
     {
         if (data == null)
         {
@@ -82,7 +82,7 @@ public class ArmyManager : MonoBehaviour
         var unit = new Unit()
         {
             Data = data,
-            Info = new UnitInfo(data, level)
+            Info = new UnitInfo(data, faction, level)
         };
 
         return unit;

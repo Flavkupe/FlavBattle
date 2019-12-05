@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Footsoldier
   m_EditorClassIdentifier: 
   HP: {x: 20, y: 30}
-  Power: {x: 5, y: 10}
-  Defense: {x: 5, y: 10}
-  Speed: {x: 5, y: 10}
-  HPScaling: {x: 3, y: 6}
-  PowerScaling: {x: 1, y: 3}
-  DefenseScaling: {x: 1, y: 3}
+  Power: {x: 3, y: 6}
+  Defense: {x: 3, y: 6}
+  Speed: {x: 3, y: 6}
+  HPScaling: {x: 4, y: 8}
+  PowerScaling: {x: 1, y: 2}
+  DefenseScaling: {x: 1, y: 2}
   SpeedScaling: {x: 1, y: 1}
   Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Sprite: {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}

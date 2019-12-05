@@ -19,7 +19,6 @@ public class AnimatedSpin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpinAround(Axis, Times, Speed);
     }
 
     public Coroutine SpinAround()
@@ -39,6 +38,7 @@ public class AnimatedSpin : MonoBehaviour
         {
             var rate = speed * Time.deltaTime;
             angle += rate;
+            Debug.Log(angle);
             this.transform.Rotate(axis, rate);
             if (angle > 360.0f)
             {

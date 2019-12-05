@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22c3ff8bad8aca45882f44fc6cbf3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 600
+  Speed: 800
   Times: 2
   Axis: {x: 0, y: 1, z: 0}
   SlowdownBase: 2.5

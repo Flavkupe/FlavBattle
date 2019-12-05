@@ -73,6 +73,11 @@ public class UnitData : ScriptableObject
         return stats;
     }
 
+    public string RollName()
+    {
+        return this.Name;
+    }
+
     private int GenerateStat(Vector2 stat)
     {
         return (int)Mathf.Round(Utils.MathUtils.RandomNormalBetween(stat.x, stat.y));

@@ -111,6 +111,7 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator DoTurn(Combatant combatant)
     {
+        Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name}'s turn!");
         var unitFormation = combatant.Left ? BattleDisplay.LeftFormation : BattleDisplay.RightFormation;
         var opponentFormation = combatant.Left ? BattleDisplay.RightFormation: BattleDisplay.LeftFormation;
         var targets = FindTargets(combatant);
@@ -120,15 +121,18 @@ public class BattleManager : MonoBehaviour
         if (targets.Count() == 0)
         {
             // TODO
+            Debug.Log("No more targets!");
             yield break;
         }
 
         yield return currentUnitSlot.CurrentUnit.AnimateAttack();
-
+        var damageRoll = combatant.Unit.Info.CurrentStats.Power;
+        Debug.Log($"Damage roll for {damageRoll}!");
         foreach (var target in targets)
         {
             var slot = opponentFormation.GetFormationSlot(target.Row, target.Col);
-            yield return slot.CurrentUnit.AnimateDamaged();
+            Debug.Log($"{target.Unit.Info.Name} of {target.Unit.Info.Faction} is hit for {damageRoll}!");
+            yield return slot.CurrentUnit.TakeDamage(damageRoll);
         }
 
         yield return new WaitForSeconds(0.5f);
