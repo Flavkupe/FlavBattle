@@ -9,9 +9,17 @@ public enum MapEventType
     MapUnpaused,
 }
 
+public class CombatEndedEventArgs
+{
+    public Army Winner { get; set; }
+    public Army Loser { get; set; }
+}
+
 public class GameEventManager : MonoBehaviour
 {
     public event EventHandler<MapEventType> MapEvent;
+
+    public event EventHandler<CombatEndedEventArgs> CombatEndedEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -26,5 +34,14 @@ public class GameEventManager : MonoBehaviour
     public void TriggerMapEvent(MapEventType mapEvent)
     {
         MapEvent?.Invoke(this, mapEvent);
+    }
+
+    public void TriggerCombatEndedEvent(Army winner, Army loser)
+    {
+        CombatEndedEvent?.Invoke(this, new CombatEndedEventArgs
+        {
+            Winner = winner,
+            Loser = loser,
+        });
     }
 }

@@ -100,6 +100,11 @@ public class Army : MonoBehaviour, IDetectable
         }
     }
 
+    public Coroutine Vanish()
+    {
+        return StartCoroutine(VanishInternal());
+    }
+
     public void SetMap(TilemapManager map)
     {
         this._map = map;
@@ -125,6 +130,11 @@ public class Army : MonoBehaviour, IDetectable
     public void SetPaused(bool pause)
     {
         this._paused = pause;
+    }
+
+    private IEnumerator VanishInternal()
+    {
+        yield return _sprite.FadeAway();
     }
 
     private void PlotNextPath()

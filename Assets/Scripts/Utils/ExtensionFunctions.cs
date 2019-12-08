@@ -51,10 +51,10 @@ public static class ExtensionFunctions
         return new Color(color.r, color.g, color.b, a);
     }
 
-    public static IEnumerator MoveBy(this MonoBehaviour obj, Vector3 movement, float speed)
+    public static IEnumerator MoveTo(this MonoBehaviour obj, Vector3 target, float speed = 10.0f)
     {
-        var target = obj.transform.position + movement;
-        var distLeft = movement.magnitude;
+        var distLeft = Vector3.Distance(obj.transform.position, target);
+        target = target.SetZ(obj.transform.position.z);
         while (distLeft > 0.0f)
         {
             var step = speed * Time.deltaTime;
@@ -64,6 +64,12 @@ public static class ExtensionFunctions
         }
 
         obj.transform.position = target;
+    }
+
+    public static IEnumerator MoveBy(this MonoBehaviour obj, Vector3 movement, float speed = 10.0f)
+    {
+        var target = obj.transform.position + movement;
+        yield return MoveTo(obj, target, speed);
     }
 
     public static IEnumerator FlashColor(this SpriteRenderer sprite, Color color, float speed = 8.0f)
@@ -85,6 +91,18 @@ public static class ExtensionFunctions
         }
 
         sprite.color = starting;
+    }
+
+    public static IEnumerator FadeAway(this MonoBehaviour obj, float speed = 1.0f)
+    {
+        var renderer = obj.GetComponent<SpriteRenderer>();
+        if (renderer == null)
+        {
+            Debug.LogWarning("No renderer! Can't fade away");
+            yield break;
+        }
+
+        yield return FadeAway(renderer, speed);
     }
 
     public static IEnumerator FadeAway(this SpriteRenderer sprite, float speed = 1.0f)

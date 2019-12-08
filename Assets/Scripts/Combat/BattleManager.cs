@@ -35,13 +35,14 @@ public class BattleManager : MonoBehaviour
     private Army _other;
     private List<Combatant> _combatants = new List<Combatant>();
     private Queue<Combatant> _turnQueue = new Queue<Combatant>();
-
+    private GameEventManager _gameEventManager;
 
     public BattleDisplay BattleDisplay;
 
     // Start is called before the first frame update
     void Start()
     {
+        _gameEventManager = FindObjectOfType<GameEventManager>();
     }
 
     // Update is called once per frame
@@ -86,6 +87,9 @@ public class BattleManager : MonoBehaviour
         var victory = winner == Winner.Left;
         yield return BattleDisplay.ShowCombatEndSign(victory);
         yield return BattleDisplay.HideCombatScene();
+        var winningArmy = victory ? _player : _other;
+        var losingArmy = victory ? _other : _player;
+        _gameEventManager.TriggerCombatEndedEvent(winningArmy, losingArmy);
         _state = State.NotInCombat;
     }
 

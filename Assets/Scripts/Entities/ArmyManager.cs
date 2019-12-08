@@ -25,6 +25,7 @@ public class ArmyManager : MonoBehaviour
     private UIManager _ui;
     private GameEventManager _gameEvents;
     private BattleManager _battleManager;
+    private CameraMain _camera;
 
     public FactionData PlayerFaction;
 
@@ -38,6 +39,7 @@ public class ArmyManager : MonoBehaviour
 
         _gameEvents = FindObjectOfType<GameEventManager>();
         _battleManager = FindObjectOfType<BattleManager>();
+        _camera = FindObjectOfType<CameraMain>();
 
         _allUnitDataResources = Utils.LoadAssets<UnitData>("Units");
         _allFactionDataResources = Utils.LoadAssets<FactionData>("Factions");
@@ -51,6 +53,8 @@ public class ArmyManager : MonoBehaviour
         playerArmy.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
         enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
         enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
+
+        _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;        
     }
 
     // Update is called once per frame
@@ -153,9 +157,24 @@ public class ArmyManager : MonoBehaviour
         StartCoroutine(StartCombat(player, other));
     }
 
+    private void HandleCombatEndedEvent(object sender, CombatEndedEventArgs e)
+    {
+        StartCoroutine(CombatEnded(e.Winner, e.Loser));
+    }
+
+    private IEnumerator CombatEnded(Army winner, Army loser)
+    {
+        _armies.Remove(loser);
+        yield return loser.Vanish();
+        Destroy(loser.gameObject);
+        _combatProcessed = false;
+        PauseAll(false);
+    }
+
     private IEnumerator StartCombat(Army player, Army enemy)
     {
         PauseAll(true);
+        yield return _camera.PanTo(player.transform.position);
         var middle = (player.transform.position + enemy.transform.position) / 2;
         middle.y += 0.25f;
         var icon = Instantiate(BattleIndicator);
