@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -8,12 +9,15 @@ public class ClipperWindow : EditorWindow
 {
     private Rect _imgRect;
     private Rect _newImgRect;
+    private Rect _scrollAreaRect;
     private Texture2D _newTexture;
 
     private Texture2D _sourceTexture;
     private int _selectionWidth = 32;
     private int _selectionHeight = 32;
+
     private int _textureCount = 5;
+    private int _prevTextureCount = 5;
     private int _currentTexture = 0;
     private int _xOffset = 0;
     private int _yOffset = 0;
@@ -25,6 +29,7 @@ public class ClipperWindow : EditorWindow
     private int _controlHeight = 15;
 
     private Vector2 _scrollPos = Vector2.zero;
+    private Vector2 _scrollPrev = Vector2.zero;
 
     private ImageEncoding _encoding = ImageEncoding.Png;
 
@@ -53,10 +58,15 @@ public class ClipperWindow : EditorWindow
     private void Init(Texture2D selected)
     {
         _currentPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(selected));
-        _imgRect = new Rect(_paddingLeft, _controlHeight * 4 + _selectionHeight + _paddingBottom, selected.width, selected.height);
+
+        // _imgRect is relative to scrollbar
+        _imgRect = new Rect(0, 0, selected.width, selected.height);
         _sourceTexture = selected;
-        _newTexture = new Texture2D((int)_newImgRect.width, (int)_newImgRect.height);
+        _newTexture = new Texture2D(_selectionWidth * _textureCount, _selectionHeight);
         _currentTexture = 0;
+        _scrollPos = Vector2.zero;
+        _scrollPrev = Vector2.zero;
+        _prevTextureCount = _textureCount;
     }
 
     void OnGUI()
@@ -74,7 +84,11 @@ public class ClipperWindow : EditorWindow
 
             if (Event.current.type == EventType.MouseUp)
             {
-                TryTransferImage();
+                if (TryTransferImage())
+                {
+                    Repaint();
+                    return;
+                }
             }
 
             var widthLabel = new Rect(_paddingLeft, 5, 50, _controlHeight);
@@ -90,13 +104,17 @@ public class ClipperWindow : EditorWindow
 
             var columnsLabel = ToRightOf(xOffsetLabel, 100, 50, _controlHeight);
             _textureCount = DrawLabelAndInput(columnsLabel, "Num Textures", _textureCount, 2, 10);
+            if (_textureCount != _prevTextureCount)
+            {
+                Reset();
+            }
 
             _encoding = (ImageEncoding)EditorGUI.EnumPopup(Underneath(columnsLabel, 5, 80, _controlHeight), _encoding);
 
             var resetButton = ToRightOf(columnsLabel, 100, 50, _controlHeight);
             if (GUI.Button(resetButton, "Reset"))
             {
-                Init(_sourceTexture);
+                Reset();
             }
 
             var saveButton = Underneath(resetButton, 5, 50, _controlHeight);
@@ -109,12 +127,14 @@ public class ClipperWindow : EditorWindow
             _newImgRect = Underneath(heightLabel, 15, _selectionWidth * _textureCount, _selectionHeight);
             EditorGUI.DrawTextureTransparent(_newImgRect, _newTexture);
 
-            // Header stuff
-            GUILayout.Space(_controlHeight * 2 + _selectionHeight + 30);
+            _scrollAreaRect = Underneath(_newImgRect, 15, 500, 500);
+            var scrollViewport = new Rect(0, 0, _imgRect.width + _selectionWidth, _imgRect.height + _selectionHeight);
 
-
-            // TODO: fix scrolling
-            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, false, false);
+            // Adjust scrollbar
+            _scrollPos = AdjustScrollbar(_selectionWidth, _selectionHeight);
+            _scrollPrev = _scrollPos;
+            _scrollPos = GUI.BeginScrollView(_scrollAreaRect, _scrollPos, scrollViewport, false, false);
+            
 
             EditorGUI.DrawTextureTransparent(_imgRect, _sourceTexture);
 
@@ -124,10 +144,7 @@ public class ClipperWindow : EditorWindow
                 EditorGUI.DrawRect(imgCursor.Value, Color.red.SetAlpha(0.3f));
             }
 
-            // pretend to take up this space
-            GUILayout.Space(_imgRect.height + 15);
-
-            EditorGUILayout.EndScrollView();
+            GUI.EndScrollView(true);
 
             if (Event.current.type == EventType.MouseMove)
             {
@@ -136,23 +153,50 @@ public class ClipperWindow : EditorWindow
         }
     }
 
+    private void Reset()
+    {
+        Init(_sourceTexture);
+    }
+
     private int DrawLabelAndInput(Rect labelRect, string labelText, int inputValue, int valueMin, int valueMax)
     {
         EditorGUI.LabelField(labelRect, labelText);
         return (int)Mathf.Clamp(EditorGUI.IntField(ToRightOf(labelRect, 5, 30, _controlHeight), inputValue), valueMin, valueMax);
     }
 
-    private void TryTransferImage()
+    private Vector2 AdjustScrollbar(int xIncrement, int yIncrement)
+    {
+        if (_scrollPos.x > _scrollPrev.x)
+        {
+            _scrollPos.x = _scrollPrev.x + xIncrement;
+        }
+        else if (_scrollPos.y > _scrollPrev.y)
+        {
+            _scrollPos.y = _scrollPrev.y + xIncrement;
+        }
+        else if (_scrollPos.x < _scrollPrev.x)
+        {
+            _scrollPos.x = _scrollPrev.x - yIncrement;
+        }
+        else if (_scrollPos.y < _scrollPrev.y)
+        {
+            _scrollPos.y = _scrollPrev.y - yIncrement;
+        }
+
+        return _scrollPos;
+    }
+
+    private bool TryTransferImage()
     {
         if (_currentTexture == _textureCount)
         {
-            return;
+            return false;
         }
 
-        var cursorVal = this.GetMouseSelectionFromTarget(_imgRect, false);
+        var cursorVal = this.GetMouseSelectionFromTarget(_scrollAreaRect, false);
         if (!cursorVal.HasValue)
         {
-            return;
+            return false;
         }
 
         var cursor = cursorVal.Value;
@@ -161,6 +205,12 @@ public class ClipperWindow : EditorWindow
         var y = (int)cursor.y;
         var width = (int)cursor.width;
         var height = (int)cursor.height;
+
+        // Adjust for scroll
+        var scrollAdjustX = SnapToNearestFactor((int)_scrollPos.x, _selectionWidth);
+        var scrollAdjustY = SnapToNearestFactor((int)_scrollPos.y, _selectionHeight);
+        x += scrollAdjustX;
+        y += scrollAdjustY;
 
         var workingHeight = FloorToFactor((int)_imgRect.height, _selectionHeight);
         var lowestY = _imgRect.height - workingHeight;
@@ -177,6 +227,7 @@ public class ClipperWindow : EditorWindow
         _newTexture.SetPixels(currentTextureX, 0, width, height, pixels);
         _newTexture.Apply();
         _currentTexture++;
+        return true;
     }
 
     private Rect? GetMouseSelectionFromTarget(Rect target, bool global = true)
@@ -247,5 +298,12 @@ public class ClipperWindow : EditorWindow
     private int FloorToFactor(int value, int factor)
     {
         return value = (value / factor) * factor;
+    }
+
+    private int SnapToNearestFactor(int value, int factor)
+    {
+        var floor = (value / factor) * factor;
+        var roof = ((value / factor) + 1) * factor;
+        return Math.Abs(value - floor) > Math.Abs(value - roof) ? roof : floor;
     }
 }
