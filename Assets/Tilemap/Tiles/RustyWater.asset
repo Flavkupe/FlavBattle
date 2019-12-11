@@ -38,4 +38,5 @@ MonoBehaviour:
   TileData:
     Passable: 0
     WalkCost: 1
-  Icon: {fileID: 0}
+    OverridePassable: 0
+  Icon: {fileID: 1766183139497562430, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}

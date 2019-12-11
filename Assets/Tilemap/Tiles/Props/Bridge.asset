@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be08e5a62398046438550d9ecf5f8654, type: 3}
-  m_Name: RustyGrass
+  m_Script: {fileID: 11500000, guid: cde37ce7d2a5a8344928968ba35fd4f5, type: 3}
+  m_Name: Bridge
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -5016430902054153369, guid: 575bc90800c6f614b8f2d33681e7a2e5,
+  m_Sprite: {fileID: -1870876656750283219, guid: c9e0f8c1950cf734fb9cf6d273d0846f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
@@ -37,6 +37,6 @@ MonoBehaviour:
   m_ColliderType: 1
   TileData:
     Passable: 1
-    WalkCost: 1
-    OverridePassable: 0
-  Icon: {fileID: -5016430902054153369, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
+    WalkCost: -3
+    OverridePassable: 1
+  Icon: {fileID: -1870876656750283219, guid: c9e0f8c1950cf734fb9cf6d273d0846f, type: 3}

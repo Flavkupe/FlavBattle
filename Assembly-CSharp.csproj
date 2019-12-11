@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
     <Compile Include="Assets\Scripts\State\GameEventManager.cs" />
+    <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />

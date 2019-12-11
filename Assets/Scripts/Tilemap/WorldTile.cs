@@ -12,10 +12,5 @@ public class WorldTile : Tile
 
     [AssetIcon]
     public Sprite Icon;
-
-    public void DoShit()
-    {
-        this.color = Color.red;
-    }
 }
 

@@ -97,7 +97,8 @@ public class BFSPathfinding
                     new Vector2(neighborTile.GridX, neighborTile.GridY)
                 );
 
-            neighborNode.Cost = node.Cost + (neighborTile.Data.WalkCost * dist);
+            var cost = Math.Max(1, neighborTile.Data.WalkCost);
+            neighborNode.Cost = node.Cost + (cost * dist);
             if (neighborNode.Tile.Data.Passable)
             {
                 this._toCheck.Enqueue(neighborNode);

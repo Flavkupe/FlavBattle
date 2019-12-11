@@ -156,7 +156,6 @@ public class Army : MonoBehaviour, IDetectable
         }
     }
 
-
     private void MoveTowardsDestination()
     {
         if (this._destination != null)

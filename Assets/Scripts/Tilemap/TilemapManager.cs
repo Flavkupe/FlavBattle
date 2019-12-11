@@ -29,6 +29,7 @@ public class TileClickedEventArgs : EventArgs
 public class TilemapManager : MonoBehaviour
 {
     public Tilemap Tilemap;
+    public Tilemap[] PropsTilemaps;
 
     private BFSPathfinding _pathfinding = new BFSPathfinding();
 
@@ -88,10 +89,21 @@ public class TilemapManager : MonoBehaviour
             return null;
         }
 
+        var data = tile.TileData;
+        foreach (var propMap in PropsTilemaps)
+        {
+            // Get all props data
+            var propsTile = propMap.GetTile<PropsTile>(new Vector3Int(x, y, 0));
+            if (propsTile != null)
+            {
+                data = data.Combine(propsTile.TileData);
+            }
+        }
+
         Vector3 worldLoc = Tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0));
         return new GridTile()
         {
-            Data = tile.TileData,
+            Data = data,
             GridX = x,
             GridY = y,
             WorldX = worldLoc.x,
