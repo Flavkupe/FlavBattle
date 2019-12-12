@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    private FormationPanel _formationPanel;
-    public FormationPanel FormationPanel => _formationPanel;
+    public FormationPanel FormationPanel { get; private set; }
+
+    public ArmyPanel ArmyPanel { get; private set; }
 
     void Start()
     {
-        _formationPanel = FindObjectOfType<FormationPanel>();
-        Debug.Assert(_formationPanel != null, "FormationPanel not found");
-        _formationPanel.Hide();
+        FormationPanel = FindObjectOfType<FormationPanel>();
+        Debug.Assert(FormationPanel != null, "FormationPanel not found");
+        FormationPanel.Hide();
+
+        ArmyPanel = FindObjectOfType<ArmyPanel>();
+        Debug.Assert(ArmyPanel != null, "ArmyPanel not found");
+        ArmyPanel.Hide();
+    }
+
+    public void ToggleArmyPanel()
+    {
+        ArmyPanel.ToggleActive();
     }
 }

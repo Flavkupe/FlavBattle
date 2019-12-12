@@ -46,14 +46,19 @@ public class ArmyManager : MonoBehaviour
 
         var enemyFaction = _allFactionDataResources.First(a => a.Faction != PlayerFaction.Faction);
         var playerArmy = CreateArmy(0, 0, PlayerFaction);
+        var playerArmy2 = CreateArmy(0, -2, PlayerFaction);
         var enemyArmy = CreateArmy(-2, 0, enemyFaction);
 
         // TODO: TEMP
         playerArmy.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
         playerArmy.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
+        playerArmy2.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
+        playerArmy2.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
         enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
         enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
 
+        _ui.ArmyPanel.UpdatePanelContents();
+        _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
         _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;        
     }
 
@@ -68,11 +73,12 @@ public class ArmyManager : MonoBehaviour
         var startTile = TileMap.GetGridTile(x, y);
         var army = Instantiate(ArmyTemplate);
         army.SetMap(TileMap);
-        army.SetFaction(faction);
+        army.SetFaction(faction, faction == PlayerFaction);
         army.PutOnTile(startTile);
         army.ArmyClicked += OnArmyClicked;
         army.ArmyEncountered += OnArmyEncountered;
         _armies.Add(army);
+        _gameEvents.TriggerArmyCreatedEvent(army);
         return army;
     }
 
@@ -206,5 +212,10 @@ public class ArmyManager : MonoBehaviour
         }
 
         _ui.FormationPanel.Hide();
+    }
+
+    private void HandleArmyClickedFromPanel(object source, Army army)
+    {
+        Camera.main.transform.position = army.transform.position.SetZ(Camera.main.transform.position.z);
     }
 }

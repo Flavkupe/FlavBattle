@@ -115,4 +115,29 @@ public static class ExtensionFunctions
             yield return null;
         }
     }
+
+    public static bool Matches(this IFormationGridSlot slot, FormationPair pair)
+    {
+        return slot.Col == pair.Col && slot.Row == pair.Row;
+    }
+
+    public static bool Matches(this IFormationGridSlot slot, FormationRow row, FormationColumn col)
+    {
+        return slot.Col == col && slot.Row == row;
+    }
+
+    public static void Show(this MonoBehaviour obj)
+    {
+        obj.gameObject.SetActive(true);
+    }
+
+    public static void Hide(this MonoBehaviour obj)
+    {
+        obj.gameObject.SetActive(false);
+    }
+
+    public static void ToggleActive(this MonoBehaviour obj)
+    {
+        obj.gameObject.SetActive(!obj.gameObject.activeInHierarchy);
+    }
 }

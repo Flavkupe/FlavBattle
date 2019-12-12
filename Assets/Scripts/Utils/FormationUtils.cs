@@ -103,8 +103,6 @@ public static class FormationUtils
 
 public interface IFormationGridSlot
 {
-    // Sprite SlotSprite { get; }
-
     MonoBehaviour Instance { get; }
 
     FormationRow Row { get; set; }

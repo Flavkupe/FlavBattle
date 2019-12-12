@@ -32,6 +32,8 @@ public class Army : MonoBehaviour, IDetectable
     public FactionData Faction { get; private set; }
     public Formation Formation { get; } = new Formation();
 
+    public bool IsPlayerArmy { get; private set; }
+
     public DetectableType Type => DetectableType.Army;
 
     private Detector[] _detectors;
@@ -110,10 +112,11 @@ public class Army : MonoBehaviour, IDetectable
         this._map = map;
     }
 
-    public void SetFaction(FactionData faction)
+    public void SetFaction(FactionData faction, bool isPlayerFaction)
     {
         this.Faction = faction;
         this.FactionFlag.sprite = faction.Flag;
+        IsPlayerArmy = isPlayerFaction;
     }
 
     public void PutOnTile(GridTile tile)

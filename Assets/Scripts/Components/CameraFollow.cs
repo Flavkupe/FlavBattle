@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [Range(0.75f, 0.95f)]
-    public float EdgeThreshold = 0.9f;
+    public float EdgeThreshold = 0.95f;
 
     public float Speed = 3.0f;
 
