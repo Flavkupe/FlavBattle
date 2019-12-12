@@ -4,26 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FormationRow
-{
-    Front = 0,
-    Middle = 1,
-    Back = 2,
-}
-
-public enum FormationColumn
-{
-    Left = 0,
-    Middle = 1,
-    Right = 2,
-}
-
-public struct FormationPair
-{
-    public FormationRow Row;
-    public FormationColumn Col;
-}
-
 public struct FormationInfo
 {
     public FormationPair FormationPair;
@@ -32,19 +12,6 @@ public struct FormationInfo
 
 public class Formation
 {
-    public static FormationPair[] AllSquares =
-    {
-        new FormationPair { Row = FormationRow.Front, Col = FormationColumn.Left },
-        new FormationPair { Row = FormationRow.Front, Col = FormationColumn.Middle },
-        new FormationPair { Row = FormationRow.Front, Col = FormationColumn.Right },
-        new FormationPair { Row = FormationRow.Middle, Col = FormationColumn.Left },
-        new FormationPair { Row = FormationRow.Middle, Col = FormationColumn.Middle },
-        new FormationPair { Row = FormationRow.Middle, Col = FormationColumn.Right },
-        new FormationPair { Row = FormationRow.Back, Col = FormationColumn.Left },
-        new FormationPair { Row = FormationRow.Back, Col = FormationColumn.Middle },
-        new FormationPair { Row = FormationRow.Back, Col = FormationColumn.Right },
-    };
-
     private Unit[,] _units = new Unit[3,3];
 
     public IEnumerable<Unit> GetUnits()
@@ -101,7 +68,7 @@ public class Formation
 
     public IEnumerable<FormationPair> GetOccupiedPositions()
     {
-        return AllSquares.ToList().Where(a => GetUnit(a.Row, a.Col) != null);
+        return FormationUtils.AllSquares.ToList().Where(a => GetUnit(a.Row, a.Col) != null);
     }
 
     /// <summary>
@@ -118,7 +85,7 @@ public class Formation
 
     private FormationPair? GetRandomEmpty()
     {
-        var randomSquares = AllSquares.ToList().GetShuffled();
+        var randomSquares = FormationUtils.AllSquares.ToList().GetShuffled();
         foreach (var square in randomSquares)
         {
             if (GetUnit(square.Row, square.Col) == null)

@@ -3,26 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FormationPanelTile : MonoBehaviour
+public class UIFormationGridTile : MonoBehaviour, IFormationGridSlot
 {
-    public FormationColumn Column;
-    public FormationRow Row;
-
     public Image UnitImage;
 
     private Unit _unit;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public MonoBehaviour Instance => this;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public FormationRow Row { get; set; }
+    public FormationColumn Col { get; set; }
 
     public void SetUnit(Unit unit)
     {

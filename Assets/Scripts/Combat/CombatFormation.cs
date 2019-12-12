@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class CombatFormation : MonoBehaviour
+public class CombatFormation : MonoBehaviour, IFormationGrid
 {
     public CombatUnit CombatUnitTemplate;
-    private CombatFormationSlot[] _slots;
+    private List<CombatFormationSlot> _slots = new List<CombatFormationSlot>();
+
+    public CombatFormationSlot SlotTemplate;
+
+    public IFormationGridSlot CreateSlot()
+    {
+        var slot = Instantiate(SlotTemplate);
+        _slots.Add(slot);
+        return slot;
+    }
 
     public bool FacingLeft = false;
 
@@ -14,7 +23,8 @@ public class CombatFormation : MonoBehaviour
 
     void Awake()
     {
-        _slots = GetComponentsInChildren<CombatFormationSlot>();
+        var orientation = FacingLeft ? FormationOrientation.BottomLeft : FormationOrientation.BottomRight;
+        FormationUtils.PopulateFormationGrid(this, orientation, 2.0f);
     }
 
     public void InitArmy(Army army)

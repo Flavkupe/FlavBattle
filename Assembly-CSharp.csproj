@@ -92,11 +92,13 @@
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
-    <Compile Include="Assets\Scripts\UI\FormationPanel\FormationPanel.cs" />
-    <Compile Include="Assets\Scripts\UI\FormationPanel\FormationPanelTile.cs" />
+    <Compile Include="Assets\Scripts\UI\Formation\FormationPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Formation\UIFormationGrid.cs" />
+    <Compile Include="Assets\Scripts\UI\Formation\UIFormationGridTile.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\Utils\Enums.cs" />
     <Compile Include="Assets\Scripts\Utils\ExtensionFunctions.cs" />
+    <Compile Include="Assets\Scripts\Utils\FormationUtils.cs" />
     <Compile Include="Assets\Scripts\Utils\Models.cs" />
     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />

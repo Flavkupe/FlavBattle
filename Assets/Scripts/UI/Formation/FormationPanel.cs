@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class FormationPanel : MonoBehaviour
 {
-    private FormationPanelTile[] _tiles;
+    private UIFormationGridTile[] _tiles;
+
+    public UIFormationGrid Grid;
 
     // Start is called before the first frame update
     void Awake()
     {
-        this._tiles = this.GetComponentsInChildren<FormationPanelTile>();
+        FormationUtils.PopulateFormationGrid(Grid, FormationOrientation.BottomRight, 50.0f);
+        this._tiles = Grid.Slots.ToArray();
     }
 
     // Update is called once per frame
@@ -48,7 +51,7 @@ public class FormationPanel : MonoBehaviour
                 continue;
             }
 
-            var tile = this._tiles.FirstOrDefault(item => item.Row == unit.Formation.Row && item.Column == unit.Formation.Col);
+            var tile = this._tiles.FirstOrDefault(item => item.Row == unit.Formation.Row && item.Col == unit.Formation.Col);
             Debug.Assert(tile != null, "No tile found for unit formation");
             if (tile != null)
             {

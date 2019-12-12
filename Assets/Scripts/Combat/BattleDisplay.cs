@@ -7,6 +7,9 @@ public class BattleDisplay : MonoBehaviour
     public CombatFormation LeftFormation;
     public CombatFormation RightFormation;
 
+    public GameObject LeftSide;
+    public GameObject RightSide;
+
     public AnimatedSpin VictorySign;
     public AnimatedSpin DefeatSign;
 
@@ -18,8 +21,8 @@ public class BattleDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LeftFormation.gameObject.SetActive(false);
-        RightFormation.gameObject.SetActive(false);
+        LeftSide.gameObject.SetActive(false);
+        RightSide.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -48,36 +51,36 @@ public class BattleDisplay : MonoBehaviour
         RightFormation.InitArmy(right);
 
         this.transform.position = Camera.main.transform.position.SetZ(0.0f);
-        LeftFormation.gameObject.SetActive(true);
-        RightFormation.gameObject.SetActive(true);
+        LeftSide.gameObject.SetActive(true);
+        RightSide.gameObject.SetActive(true);
 
-        LeftFormation.transform.localPosition = LeftFormation.transform.localPosition.SetY(_backdropMinY);
-        RightFormation.transform.localPosition = RightFormation.transform.localPosition.SetY(_backdropMaxY);
+        LeftSide.transform.localPosition = LeftSide.transform.localPosition.SetY(_backdropMinY);
+        RightSide.transform.localPosition = RightSide.transform.localPosition.SetY(_backdropMaxY);
 
-        while (LeftFormation.transform.localPosition.y < -0.1f ||
-            RightFormation.transform.localPosition.y > 0.1f)
+        while (LeftSide.transform.localPosition.y < -0.1f ||
+            RightSide.transform.localPosition.y > 0.1f)
         {
-            LeftFormation.transform.localPosition += Vector3.up * Time.deltaTime * BackdropShiftSpeed;
-            RightFormation.transform.localPosition += Vector3.up * Time.deltaTime * -BackdropShiftSpeed;
+            LeftSide.transform.localPosition += Vector3.up * Time.deltaTime * BackdropShiftSpeed;
+            RightSide.transform.localPosition += Vector3.up * Time.deltaTime * -BackdropShiftSpeed;
             yield return null;
         }
 
-        LeftFormation.transform.localPosition = LeftFormation.transform.localPosition.SetY(0.0f);
-        RightFormation.transform.localPosition = RightFormation.transform.localPosition.SetY(0.0f);
+        LeftSide.transform.localPosition = LeftSide.transform.localPosition.SetY(0.0f);
+        RightSide.transform.localPosition = RightSide.transform.localPosition.SetY(0.0f);
     }
 
     private IEnumerator HideCombatSceneInternal()
     {
-        while (LeftFormation.transform.localPosition.y > _backdropMinY ||
-            RightFormation.transform.localPosition.y < _backdropMaxY)
+        while (LeftSide.transform.localPosition.y > _backdropMinY ||
+            RightSide.transform.localPosition.y < _backdropMaxY)
         {
-            LeftFormation.transform.localPosition -= Vector3.up * Time.deltaTime * BackdropShiftSpeed;
-            RightFormation.transform.localPosition -= Vector3.up * Time.deltaTime * -BackdropShiftSpeed;
+            LeftSide.transform.localPosition -= Vector3.up * Time.deltaTime * BackdropShiftSpeed;
+            RightSide.transform.localPosition -= Vector3.up * Time.deltaTime * -BackdropShiftSpeed;
             yield return null;
         }
 
-        LeftFormation.transform.localPosition = LeftFormation.transform.localPosition.SetY(_backdropMinY);
-        RightFormation.transform.localPosition = RightFormation.transform.localPosition.SetY(_backdropMaxY);
+        LeftSide.transform.localPosition = LeftSide.transform.localPosition.SetY(_backdropMinY);
+        RightSide.transform.localPosition = RightSide.transform.localPosition.SetY(_backdropMaxY);
         yield return new WaitForSeconds(1.0f);
 
         LeftFormation.ClearArmy();

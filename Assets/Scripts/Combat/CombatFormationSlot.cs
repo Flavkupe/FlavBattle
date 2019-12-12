@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatFormationSlot : MonoBehaviour
+public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 {
-    public FormationRow Row;
-    public FormationColumn Col;
+    public FormationRow Row { get; set; }
+    public FormationColumn Col { get; set; }
 
     public CombatUnit CurrentUnit { get; private set; }
+
+    public MonoBehaviour Instance => this;
 
     public FormationPair GetFormation()
     {
