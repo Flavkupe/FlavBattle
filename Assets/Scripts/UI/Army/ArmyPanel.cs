@@ -16,6 +16,8 @@ public class ArmyPanel : MonoBehaviour
 
     public event EventHandler<Army> ArmyClicked;
 
+    public GameObject ScrollContent;
+
     public void UpdatePanelContents()
     {
         foreach (var grid in _grids)
@@ -37,7 +39,7 @@ public class ArmyPanel : MonoBehaviour
         {
             _playerArmies.Add(e);
             var grid = FormationUtils.CreateFormationGrid(ArmyGridTemplate, FormationOrientation.BottomRight, 50.0f);
-            grid.transform.SetParent(this.transform);
+            grid.transform.SetParent(ScrollContent.transform);
             grid.SetArmy(e);
             grid.GridClicked += HandleGridClicked;
             _grids.Add(grid);

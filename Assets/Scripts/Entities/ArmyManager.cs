@@ -124,24 +124,29 @@ public class ArmyManager : MonoBehaviour
         }
     }
 
+    private void SelectArmy(Army army)
+    {
+        UnselectAll();
+        _selected = army;
+        _ui.FormationPanel.Show();
+        _ui.FormationPanel.SetFormation(_selected.Formation);
+
+        if (IsPlayerArmy(_selected))
+        {
+            _selected.Select();
+        }
+        else
+        {
+            _selected = null;
+        }
+    }
+
     private void OnArmyClicked(object sender, ArmyClickedEventArgs args)
     {
         if (args.Clicked != _selected)
         {
-            UnselectAll();
-            _selected = args.Clicked;
             _clickProcessed = true;
-            _ui.FormationPanel.Show();
-            _ui.FormationPanel.SetFormation(_selected.Formation);
-
-            if (IsPlayerArmy(_selected))
-            {
-                _selected.Select();
-            }
-            else
-            {
-                _selected = null;
-            }
+            SelectArmy(args.Clicked);
         }
         else
         {
@@ -156,7 +161,11 @@ public class ArmyManager : MonoBehaviour
             return;
         }
 
-        // TODO: combat end
+        if (e.Initiator.Faction == e.Opponent.Faction)
+        {
+            return;
+        }
+
         _combatProcessed = true;
         var player = IsPlayerArmy(e.Initiator) ? e.Initiator : e.Opponent;
         var other = IsPlayerArmy(e.Initiator) ? e.Opponent : e.Initiator;
@@ -217,5 +226,6 @@ public class ArmyManager : MonoBehaviour
     private void HandleArmyClickedFromPanel(object source, Army army)
     {
         Camera.main.transform.position = army.transform.position.SetZ(Camera.main.transform.position.z);
+        SelectArmy(army);
     }
 }

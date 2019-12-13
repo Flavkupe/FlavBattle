@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [Range(0.75f, 0.95f)]
+    [Range(0.75f, 1.00f)]
     public float EdgeThreshold = 0.95f;
 
     public float Speed = 3.0f;
+
+    [Tooltip("Amount of padding for scroll limits, past outermost extents of tilemap (in world units)")]
+    public float EdgePadding = 1.0f;
 
     Camera _cam;
 
@@ -59,8 +62,15 @@ public class CameraFollow : MonoBehaviour
             transform.position += new Vector3(xTravel, yTravel, 0.0f);
             if (_boundsSet)
             {
-                var x = Mathf.Clamp(transform.position.x, _bounds.min.x, _bounds.max.x);
-                var y = Mathf.Clamp(transform.position.y, _bounds.min.y, _bounds.max.y);
+                var camHeight = _cam.orthographicSize;
+                var camWidth = _cam.aspect * camHeight;
+
+                var minX = _bounds.min.x + camWidth - EdgePadding;
+                var maxX = _bounds.max.x - camWidth + EdgePadding;
+                var minY = _bounds.min.y + camHeight - EdgePadding;
+                var maxY = _bounds.max.y - camHeight + EdgePadding;
+                var x = Mathf.Clamp(transform.position.x, minX, maxX);
+                var y = Mathf.Clamp(transform.position.y, minY, maxY);
                 transform.position = new Vector3(x, y, transform.position.z);
             }
         }
