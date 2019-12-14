@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9139655288152276804}
   - component: {fileID: 7892386459960095062}
   m_Layer: 5
-  m_Name: UIFormationGridSmall
+  m_Name: ArmyPanelGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -16,6 +16,8 @@ public class ArmyPanel : MonoBehaviour
 
     public event EventHandler<Army> ArmyClicked;
 
+    public event EventHandler<Army> ArmyEditRequested;
+
     public GameObject ScrollContent;
 
     public void UpdatePanelContents()
@@ -42,10 +44,16 @@ public class ArmyPanel : MonoBehaviour
             grid.transform.SetParent(ScrollContent.transform);
             grid.SetArmy(e);
             grid.GridClicked += HandleGridClicked;
+            grid.GridRightClicked += HandleGridRightClicked;
             _grids.Add(grid);
         }
     }
-    
+
+    private void HandleGridRightClicked(object sender, UIFormationGrid grid)
+    {
+        ArmyEditRequested?.Invoke(this, grid.Army);
+    }
+
     private void HandleGridClicked(object source, UIFormationGrid grid)
     {
         ArmyClicked?.Invoke(this, grid.Army);

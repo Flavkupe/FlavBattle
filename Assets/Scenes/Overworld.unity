@@ -517,6 +517,95 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d78813c6759ce749b44c4acf45009b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &351885351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 351885352}
+  - component: {fileID: 351885354}
+  - component: {fileID: 351885353}
+  - component: {fileID: 351885355}
+  m_Layer: 5
+  m_Name: ArmyEditWindow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &351885352
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351885351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1305484442}
+  m_Father: {fileID: 1032700886}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -4.5999756, y: 1.3999939}
+  m_SizeDelta: {x: -35.4, y: -27}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &351885353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351885351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 3a55403f94f368b42ac608b403808598, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &351885354
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351885351}
+  m_CullTransparentMesh: 0
+--- !u!114 &351885355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351885351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3d8d0dd46ef4e340bb547acd46af915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grid: {fileID: 1305484443}
 --- !u!224 &352842285 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9139655288152276807, guid: 35b2c2cdd4ec2784d93d3076586b6acd,
@@ -2806,8 +2895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d177888f3bf742e4889b1dbcd007c896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
-    type: 3}
   SlotTemplate: {fileID: 8502142653311525639, guid: 81cfa84d12db34e49b568eed36c92f04,
     type: 3}
   FacingLeft: 1
@@ -3146,8 +3233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d177888f3bf742e4889b1dbcd007c896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
-    type: 3}
   SlotTemplate: {fileID: 8502142653311525639, guid: 81cfa84d12db34e49b568eed36c92f04,
     type: 3}
   FacingLeft: 0
@@ -3353,6 +3438,7 @@ RectTransform:
   - {fileID: 277066395}
   - {fileID: 1653890641}
   - {fileID: 1937999487}
+  - {fileID: 351885352}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3862,6 +3948,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba4fb8a851eb1c4fb08f3ffd982ba84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1305484441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1305484442}
+  - component: {fileID: 1305484445}
+  - component: {fileID: 1305484443}
+  m_Layer: 5
+  m_Name: DraggableGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1305484442
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305484441}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 351885352}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 156.5, y: 134}
+  m_SizeDelta: {x: 137.2, y: 105.6}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1305484443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305484441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48fd3915b9467a043a1df3bcbee2068c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TileTemplate: {fileID: 485117517145566275, guid: cdbeb38ad34da4a4b981bafa5dd41d9e,
+    type: 3}
+--- !u!222 &1305484445
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305484441}
+  m_CullTransparentMesh: 0
 --- !u!1 &1377099772
 GameObject:
   m_ObjectHideFlags: 0
@@ -4849,5 +4994,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9139655288152276804, guid: 35b2c2cdd4ec2784d93d3076586b6acd,
+        type: 3}
+      propertyPath: TileTemplate
+      value: 
+      objectReference: {fileID: 4331080706682306616, guid: 79c64fd78c6bfb44fb26c40563e59c00,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35b2c2cdd4ec2784d93d3076586b6acd, type: 3}

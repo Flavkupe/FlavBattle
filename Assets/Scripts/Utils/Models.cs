@@ -18,6 +18,12 @@ public struct FormationPair
     public FormationRow Row;
     public FormationColumn Col;
 
+    public FormationPair(FormationRow row, FormationColumn col)
+    {
+        Row = row;
+        Col = col;
+    }
+
     public override int GetHashCode()
     {
         return (int)Row * 10 + (int)Col;

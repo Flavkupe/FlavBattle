@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 {
+    public CombatUnit CombatUnitTemplate;
+
+    public bool FacingLeft { get; set; }
+
     public FormationRow Row { get; set; }
     public FormationColumn Col { get; set; }
 
@@ -21,11 +25,14 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
         };
     }
 
-    public void SetUnit(CombatUnit unit)
+    public void SetUnit(Unit unit)
     {
-        CurrentUnit = unit;
-        unit.transform.SetParent(this.transform);
-        unit.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
+        var combatUnit = Instantiate(CombatUnitTemplate);
+        combatUnit.name = unit.Data.Name;
+        combatUnit.SetUnit(unit, FacingLeft);
+        CurrentUnit = combatUnit;
+        combatUnit.transform.SetParent(this.transform);
+        combatUnit.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
     }
 
     public void ClearContents()

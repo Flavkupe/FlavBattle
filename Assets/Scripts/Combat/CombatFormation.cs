@@ -5,7 +5,6 @@ using System.Linq;
 
 public class CombatFormation : MonoBehaviour, IFormationGrid
 {
-    public CombatUnit CombatUnitTemplate;
     private List<CombatFormationSlot> _slots = new List<CombatFormationSlot>();
 
     public CombatFormationSlot SlotTemplate;
@@ -14,6 +13,7 @@ public class CombatFormation : MonoBehaviour, IFormationGrid
     {
         var slot = Instantiate(SlotTemplate);
         _slots.Add(slot);
+        slot.FacingLeft = FacingLeft;
         return slot;
     }
 
@@ -35,10 +35,7 @@ public class CombatFormation : MonoBehaviour, IFormationGrid
         {
             var unit = army.Formation.GetUnit(formation.Row, formation.Col);
             var slot = _slots.First(a => a.Col == formation.Col && a.Row == formation.Row);
-            var combatUnit = Instantiate(CombatUnitTemplate);
-            combatUnit.name = unit.Data.Name;
-            combatUnit.SetUnit(unit, FacingLeft);
-            slot.SetUnit(combatUnit);
+            slot.SetUnit(unit);
         }
     }
 

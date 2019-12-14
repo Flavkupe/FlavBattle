@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This is the non-interactive UIFormationGridTile
+/// </summary>
 public class UIFormationGridTile : MonoBehaviour, IFormationGridSlot
 {
-    public Image UnitImage;
-
-    private Unit _unit;
-
     public MonoBehaviour Instance => this;
 
     public FormationRow Row { get; set; }
     public FormationColumn Col { get; set; }
+
+    public Image UnitImage;
+
+    private Unit _unit;
 
     public void SetUnit(Unit unit)
     {

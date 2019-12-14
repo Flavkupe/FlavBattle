@@ -59,7 +59,13 @@ public class ArmyManager : MonoBehaviour
 
         _ui.ArmyPanel.UpdatePanelContents();
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
+        _ui.ArmyPanel.ArmyEditRequested += OnEditArmy;
         _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;        
+    }
+
+    private void OnEditArmy(object sender, Army army)
+    {
+        _ui.ShowArmyEditWindow(army);
     }
 
     // Update is called once per frame
@@ -129,7 +135,7 @@ public class ArmyManager : MonoBehaviour
         UnselectAll();
         _selected = army;
         _ui.FormationPanel.Show();
-        _ui.FormationPanel.SetFormation(_selected.Formation);
+        _ui.FormationPanel.SetArmy(army);
 
         if (IsPlayerArmy(_selected))
         {

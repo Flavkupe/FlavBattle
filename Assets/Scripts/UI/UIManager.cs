@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
 
     public ArmyPanel ArmyPanel { get; private set; }
 
+    public ArmyEditWindow ArmyEditWindow { get; private set; }
+
     void Start()
     {
         FormationPanel = FindObjectOfType<FormationPanel>();
@@ -17,10 +19,20 @@ public class UIManager : MonoBehaviour
         ArmyPanel = FindObjectOfType<ArmyPanel>();
         Debug.Assert(ArmyPanel != null, "ArmyPanel not found");
         ArmyPanel.Hide();
+
+        ArmyEditWindow = FindObjectOfType<ArmyEditWindow>();
+        Debug.Assert(ArmyPanel != null, "ArmyEditWindow not found");
+        ArmyEditWindow.Hide();
     }
 
     public void ToggleArmyPanel()
     {
         ArmyPanel.ToggleActive();
+    }
+
+    public void ShowArmyEditWindow(Army army)
+    {
+        ArmyEditWindow.Show();
+        ArmyEditWindow.SetArmy(army);
     }
 }

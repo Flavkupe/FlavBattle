@@ -45,6 +45,11 @@ public class Formation
         return true;
     }
 
+    public Unit PutUnit(Unit unit, FormationPair pair)
+    {
+        return PutUnit(unit, pair.Row, pair.Col);
+    }
+
     /// <summary>
     /// Puts the unit in Row/Column. Returns the unit that was in that
     /// square, or null if no unit was in that square.
@@ -55,7 +60,11 @@ public class Formation
         var columnIndex = (int)column;
         var current = _units[rowIndex, columnIndex];
         _units[rowIndex, columnIndex] = unit;
-        unit.Formation = new FormationPair { Row = row, Col = column };
+        if (unit != null)
+        {
+            unit.Formation = new FormationPair { Row = row, Col = column };
+        }
+
         return current;
     }
 
@@ -64,6 +73,22 @@ public class Formation
         var rowIndex = (int)row;
         var columnIndex = (int)column;
         return _units[rowIndex, columnIndex];
+    }
+
+    /// <summary>
+    /// Puts unit in destination. If there was something
+    /// in destination, that thing is swapped with the current unit.
+    /// Returns whatever was in the destination, or null if nothing
+    /// was there.
+    /// </summary>
+    public Unit MoveUnit(Unit unit, FormationPair destination)
+    {
+        var source = unit.Formation;
+        var current = PutUnit(unit, destination);
+
+        // Note: even if current is null, this will do the right thing
+        PutUnit(current, source);
+        return current;
     }
 
     public IEnumerable<FormationPair> GetOccupiedPositions()

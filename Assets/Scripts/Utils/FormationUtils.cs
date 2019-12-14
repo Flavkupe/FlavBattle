@@ -108,6 +108,8 @@ public interface IFormationGridSlot
     FormationRow Row { get; set; }
 
     FormationColumn Col { get; set; }
+
+    void SetUnit(Unit unit);
 }
 
 public interface IFormationGrid
