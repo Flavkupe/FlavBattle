@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class Draggable : MonoBehaviour, IDraggable
 {
+    public static Draggable DraggedObject { get; private set; }
+
     public MonoBehaviour Instance => this;
 
     private Vector3 _startPos;
@@ -32,6 +35,8 @@ public class Draggable : MonoBehaviour, IDraggable
         transform.SetAsLastSibling();
 
         this.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        DraggedObject = this;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -48,5 +53,7 @@ public class Draggable : MonoBehaviour, IDraggable
         }
 
         this.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        DraggedObject = null;
     }
 }

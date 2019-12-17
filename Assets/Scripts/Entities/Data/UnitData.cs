@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,10 @@ public class UnitData : ScriptableObject
     public Sprite Icon;
 
     public Sprite Sprite;
+
+    public Sprite[] Portraits;
+
+    public Sprite[] Animations;
 
     public string Name;
 
@@ -71,6 +76,17 @@ public class UnitData : ScriptableObject
         stats.Defense = GenerateStat(DefenseScaling);
         stats.Speed = GenerateStat(SpeedScaling);
         return stats;
+    }
+
+    public Sprite RollPortrait()
+    {
+        if (this.Portraits.Length == 0)
+        {
+            Debug.LogWarning($"No portraits for unit {this.ToString()}!");
+            return null;
+        }
+
+        return Portraits.GetRandom();
     }
 
     public string RollName()

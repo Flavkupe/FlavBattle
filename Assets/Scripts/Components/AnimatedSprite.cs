@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class AnimatedSprite : MonoBehaviour
 {
     public Sprite[] Animations;
@@ -29,26 +29,52 @@ public class AnimatedSprite : MonoBehaviour
         if (idle)
         {
             _currentFrame = 0;
-            _spriteRenderer.sprite = Animations[0];
+            SetSprite(Animations[0]);
         }
+    }
+
+    public void SetAnimations(Sprite[] animations)
+    {
+        Animations = animations;
     }
 
     public void SetColor(Color color)
     {
-        _spriteRenderer.color = color;
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = color;
+        }
+        else if (_image)
+        {
+            _image.color = color;
+        }
     }
 
     private SpriteRenderer _spriteRenderer;
+    private Image _image;
     private int _currentFrame = 0;
     private bool _idle = true;
     private float _modifier = 1.0f;
     private float _timeout = 60.0f;
 
+    private void SetSprite(Sprite sprite)
+    {
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.sprite = sprite;
+        }
+        else if (_image)
+        {
+            _image.sprite = sprite;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        _spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
-        _spriteRenderer.sprite = Animations[0];
+        _spriteRenderer = this.GetComponent<SpriteRenderer>() ?? this.GetComponentInChildren<SpriteRenderer>();
+        _image = this.GetComponent<Image>() ?? this.GetComponentInChildren<Image>();
+        this.SetSprite(Animations[0]);
     }
 
     // Update is called once per frame
@@ -69,7 +95,7 @@ public class AnimatedSprite : MonoBehaviour
                 _currentFrame = 0;
             }
 
-            _spriteRenderer.sprite = Animations[_currentFrame]; 
+            this.SetSprite(Animations[_currentFrame]);
         }
     }
 }

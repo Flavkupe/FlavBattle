@@ -12,6 +12,8 @@ public class UnitInfo
 
     public Faction Faction { get; private set; }
 
+    public Sprite Portrait { get; private set; }
+
     public string Name { get; private set; }
 
     public UnitInfo()
@@ -24,6 +26,7 @@ public class UnitInfo
         this.MaxStats = data.RollStats(level);
         this.CurrentStats = this.MaxStats.Clone();
         this.Name = data.RollName();
+        this.Portrait = data.RollPortrait();
         this.Faction = faction;
     }
 }

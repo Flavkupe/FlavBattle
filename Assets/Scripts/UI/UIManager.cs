@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class UIManager : MonoBehaviour
     public ArmyPanel ArmyPanel { get; private set; }
 
     public ArmyEditWindow ArmyEditWindow { get; private set; }
+
+    public event EventHandler<Army> ArmyModified;
 
     void Start()
     {
@@ -21,8 +24,16 @@ public class UIManager : MonoBehaviour
         ArmyPanel.Hide();
 
         ArmyEditWindow = FindObjectOfType<ArmyEditWindow>();
-        Debug.Assert(ArmyPanel != null, "ArmyEditWindow not found");
+        Debug.Assert(ArmyEditWindow != null, "ArmyEditWindow not found");
         ArmyEditWindow.Hide();
+
+        ArmyEditWindow.ArmyModified += HandleArmyModified;
+    }
+
+    private void HandleArmyModified(object sender, Army e)
+    {
+        ArmyModified?.Invoke(this, e);
+        ArmyPanel.UpdatePanelContents();
     }
 
     public void ToggleArmyPanel()
@@ -33,6 +44,12 @@ public class UIManager : MonoBehaviour
     public void ShowArmyEditWindow(Army army)
     {
         ArmyEditWindow.Show();
+        ArmyPanel.Hide();
         ArmyEditWindow.SetArmy(army);
+    }
+
+    public void HideArmyEditWindow()
+    {
+        ArmyEditWindow.Hide();
     }
 }

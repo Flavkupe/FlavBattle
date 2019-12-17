@@ -65,6 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e6a6f4e9d0e7d438e0a6c8f9a94329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DragHoverColor: {r: 0.6320754, g: 0.636404, b: 1, a: 1}
+  ChangeColorOnHover: 1
 --- !u!222 &6731001748128152837
 CanvasRenderer:
   m_ObjectHideFlags: 0

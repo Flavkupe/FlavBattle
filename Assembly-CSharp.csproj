@@ -94,6 +94,9 @@
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyEditWindow.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Army\UnitStatsPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Components\FacePortrait.cs" />
+    <Compile Include="Assets\Scripts\UI\Components\IconLabelPair.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Draggable.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\DropTarget.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Models.cs" />
