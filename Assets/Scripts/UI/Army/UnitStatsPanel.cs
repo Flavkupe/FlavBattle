@@ -7,6 +7,7 @@ public class UnitStatsPanel : MonoBehaviour
 {
     public FacePortrait Portrait;
 
+    public IconLabelPair Level;
     public IconLabelPair Class;
     public IconLabelPair HP;
     public IconLabelPair Power;
@@ -16,6 +17,7 @@ public class UnitStatsPanel : MonoBehaviour
     public void SetUnit(Unit unit)
     {
         this.Portrait.SetUnit(unit);
+        this.Level.SetText($"Level {unit.Info.MaxStats.Level}");
         this.HP.SetText($"{unit.Info.CurrentStats.HP} / {unit.Info.MaxStats.HP}");
         this.Power.SetText($"{unit.Info.MaxStats.Power}");
         this.Def.SetText($"{unit.Info.MaxStats.Defense}");

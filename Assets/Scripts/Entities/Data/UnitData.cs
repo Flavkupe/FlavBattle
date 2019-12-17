@@ -54,6 +54,7 @@ public class UnitData : ScriptableObject
     public UnitStats RollStats(int level)
     {
         var stats = new UnitStats();
+        stats.Level = level;
         stats.HP = GenerateStat(HP);
         stats.Power = GenerateStat(Power);
         stats.Defense = GenerateStat(Defense);
