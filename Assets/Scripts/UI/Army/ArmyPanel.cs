@@ -8,15 +8,13 @@ public class ArmyPanel : MonoBehaviour
 {
     public UIFormationGrid ArmyGridTemplate;
 
-    private List<Army> _playerArmies = new List<Army>();
-
-    private GameEventManager _gameEvents;
+    private List<IArmy> _armies = new List<IArmy>();
 
     private List<UIFormationGrid> _grids = new List<UIFormationGrid>();
 
-    public event EventHandler<Army> ArmyClicked;
+    public event EventHandler<IArmy> ArmyClicked;
 
-    public event EventHandler<Army> ArmyEditRequested;
+    public event EventHandler<IArmy> ArmyEditRequested;
 
     public GameObject ScrollContent;
 
@@ -24,29 +22,19 @@ public class ArmyPanel : MonoBehaviour
     {
         foreach (var grid in _grids)
         {
-            grid.UpdateArmy();
+            grid.UpdateFormation();
         }
     }
 
-    // Start is called before the first frame update
-    void Awake()
+    public void AddArmy(IArmy army)
     {
-        _gameEvents = FindObjectOfType<GameEventManager>();
-        _gameEvents.ArmyCreatedEvent += HandleArmyCreatedEvent;
-    }
-
-    private void HandleArmyCreatedEvent(object sender, Army e)
-    {
-        if (e.IsPlayerArmy)
-        {
-            _playerArmies.Add(e);
-            var grid = FormationUtils.CreateFormationGrid(ArmyGridTemplate, FormationOrientation.BottomRight, 50.0f);
-            grid.transform.SetParent(ScrollContent.transform);
-            grid.SetArmy(e);
-            grid.GridClicked += HandleGridClicked;
-            grid.GridRightClicked += HandleGridRightClicked;
-            _grids.Add(grid);
-        }
+        _armies.Add(army);
+        var grid = FormationUtils.CreateFormationGrid(ArmyGridTemplate, FormationOrientation.BottomRight, 50.0f);
+        grid.transform.SetParent(ScrollContent.transform);
+        grid.SetArmy(army);
+        grid.GridClicked += HandleGridClicked;
+        grid.GridRightClicked += HandleGridRightClicked;
+        _grids.Add(grid);
     }
 
     private void HandleGridRightClicked(object sender, UIFormationGrid grid)

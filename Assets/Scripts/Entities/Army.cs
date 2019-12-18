@@ -14,7 +14,7 @@ public class ArmyEncounteredEventArgs : EventArgs
     public Army Opponent;
 }
 
-public class Army : MonoBehaviour, IDetectable
+public class Army : MonoBehaviour, IDetectable, IArmy
 {
     public float MoveStep = 1.0f;
 
@@ -31,6 +31,8 @@ public class Army : MonoBehaviour, IDetectable
 
     public FactionData Faction { get; private set; }
     public Formation Formation { get; } = new Formation();
+
+    public string ID { get; private set; } = new Guid().ToString();
 
     public bool IsPlayerArmy { get; private set; }
 

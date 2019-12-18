@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 
     public ArmyEditWindow ArmyEditWindow { get; private set; }
 
-    public event EventHandler<Army> ArmyModified;
+    public event EventHandler<IArmy> ArmyModified;
 
     void Start()
     {
@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
         ArmyEditWindow.ArmyModified += HandleArmyModified;
     }
 
-    private void HandleArmyModified(object sender, Army e)
+    private void HandleArmyModified(object sender, IArmy e)
     {
         ArmyModified?.Invoke(this, e);
         ArmyPanel.UpdatePanelContents();
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
         ArmyPanel.ToggleActive();
     }
 
-    public void ShowArmyEditWindow(Army army)
+    public void ShowArmyEditWindow(IArmy army)
     {
         ArmyEditWindow.Show();
         ArmyPanel.Hide();
@@ -51,5 +51,17 @@ public class UIManager : MonoBehaviour
     public void HideArmyEditWindow()
     {
         ArmyEditWindow.Hide();
+    }
+
+    /// <summary>
+    /// Handles all necessary events resulting from an
+    /// army being created and deployed.
+    /// </summary>
+    public void ArmyCreated(Army army)
+    {
+        if (army.IsPlayerArmy)
+        {
+            ArmyPanel.AddArmy(army);
+        }
     }
 }

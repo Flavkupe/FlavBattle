@@ -63,7 +63,7 @@ public class ArmyManager : MonoBehaviour
         _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;        
     }
 
-    private void OnEditArmy(object sender, Army army)
+    private void OnEditArmy(object sender, IArmy army)
     {
         _ui.ShowArmyEditWindow(army);
     }
@@ -72,6 +72,11 @@ public class ArmyManager : MonoBehaviour
     void Update()
     {
         _clickProcessed = false;
+    }
+
+    public IEnumerable<Army> GetPlayerArmies()
+    {
+        return this._armies.Where(a => a.IsPlayerArmy);
     }
 
     public Army CreateArmy(int x, int y, FactionData faction)
@@ -84,7 +89,10 @@ public class ArmyManager : MonoBehaviour
         army.ArmyClicked += OnArmyClicked;
         army.ArmyEncountered += OnArmyEncountered;
         _armies.Add(army);
-        _gameEvents.TriggerArmyCreatedEvent(army);
+
+        // Update UI
+        _ui.ArmyCreated(army);
+
         return army;
     }
 
@@ -229,8 +237,9 @@ public class ArmyManager : MonoBehaviour
         _ui.FormationPanel.Hide();
     }
 
-    private void HandleArmyClickedFromPanel(object source, Army army)
+    private void HandleArmyClickedFromPanel(object source, IArmy clickedArmy)
     {
+        var army = _armies.First(a => a.ID == clickedArmy.ID);
         Camera.main.transform.position = army.transform.position.SetZ(Camera.main.transform.position.z);
         SelectArmy(army);
     }

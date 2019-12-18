@@ -18,7 +18,7 @@ public class FormationPanel : MonoBehaviour
         Grid.SetArmy(null);
     }
 
-    public void SetArmy(Army army)
+    public void SetArmy(IArmy army)
     {
         Grid.SetArmy(army);
     }

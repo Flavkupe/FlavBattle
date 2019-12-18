@@ -21,8 +21,6 @@ public class GameEventManager : MonoBehaviour
 
     public event EventHandler<CombatEndedEventArgs> CombatEndedEvent;
 
-    public event EventHandler<Army> ArmyCreatedEvent;
-
     // Start is called before the first frame update
     void Start()
     {   
@@ -45,10 +43,5 @@ public class GameEventManager : MonoBehaviour
             Winner = winner,
             Loser = loser,
         });
-    }
-
-    public void TriggerArmyCreatedEvent(Army army)
-    {
-        ArmyCreatedEvent?.Invoke(this, army);
     }
 }

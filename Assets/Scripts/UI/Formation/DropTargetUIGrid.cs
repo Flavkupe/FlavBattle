@@ -14,7 +14,7 @@ public class DropTargetUIGrid : UIUnitGridBase
 
     public event EventHandler<Unit> UnitClicked;
 
-    public event EventHandler<Army> ArmyModified;
+    public event EventHandler<IArmy> ArmyModified;
 
     protected override IFormationGridSlot OnCreateSlot()
     {
@@ -37,6 +37,6 @@ public class DropTargetUIGrid : UIUnitGridBase
     {
         Army.Formation.MoveUnit(e.Unit.Unit, e.EndingPos);
         ArmyModified?.Invoke(this, Army);
-        UpdateArmy();
+        UpdateFormation();
     }
 }

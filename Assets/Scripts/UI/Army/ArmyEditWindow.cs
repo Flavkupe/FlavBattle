@@ -9,7 +9,7 @@ public class ArmyEditWindow : MonoBehaviour
 
     public UnitStatsPanel UnitStats;
 
-    public event EventHandler<Army> ArmyModified;
+    public event EventHandler<IArmy> ArmyModified;
 
     public void Awake()
     {
@@ -18,7 +18,7 @@ public class ArmyEditWindow : MonoBehaviour
         Grid.ArmyModified += HandleArmyModified; ;
     }
 
-    private void HandleArmyModified(object sender, Army e)
+    private void HandleArmyModified(object sender, IArmy e)
     {
         ArmyModified?.Invoke(this, e);
     }
@@ -29,7 +29,7 @@ public class ArmyEditWindow : MonoBehaviour
         UnitStats.SetUnit(e);
     }
 
-    public void SetArmy(Army army)
+    public void SetArmy(IArmy army)
     {
         Grid.SetArmy(army);
     }

@@ -5,9 +5,10 @@ using UnityEngine;
 
 public abstract class UIUnitGridBase : MonoBehaviour, IFormationGrid
 {
-    public Army Army { get; private set; }
-
     private List<IFormationGridSlot> _slots = new List<IFormationGridSlot>();
+    
+
+    public IArmy Army { get; private set; }
 
     public IFormationGridSlot CreateSlot()
     {
@@ -22,7 +23,7 @@ public abstract class UIUnitGridBase : MonoBehaviour, IFormationGrid
     {
     }
 
-    public void UpdateArmy()
+    public void UpdateFormation()
     {
         foreach (var slot in _slots)
         {
@@ -31,7 +32,6 @@ public abstract class UIUnitGridBase : MonoBehaviour, IFormationGrid
 
         if (Army == null)
         {
-            OnAfterArmyUpdated();
             return;
         }
 
@@ -50,9 +50,12 @@ public abstract class UIUnitGridBase : MonoBehaviour, IFormationGrid
         OnAfterArmyUpdated();
     }
 
-    public void SetArmy(Army army)
+    /// <summary>
+    /// Sets the Grid to an active army with a formation.
+    /// </summary>
+    public void SetArmy(IArmy army)
     {
         Army = army;
-        UpdateArmy();
+        UpdateFormation();
     }
 }
