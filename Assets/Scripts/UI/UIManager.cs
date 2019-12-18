@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public FormationPanel FormationPanel { get; private set; }
 
-    public ArmyPanel ArmyPanel { get; private set; }
+    public ArmyPanel ArmyPanel;
 
     public ArmyEditWindow ArmyEditWindow { get; private set; }
 
@@ -18,10 +18,6 @@ public class UIManager : MonoBehaviour
         FormationPanel = FindObjectOfType<FormationPanel>();
         Debug.Assert(FormationPanel != null, "FormationPanel not found");
         FormationPanel.Hide();
-
-        ArmyPanel = FindObjectOfType<ArmyPanel>();
-        Debug.Assert(ArmyPanel != null, "ArmyPanel not found");
-        ArmyPanel.Hide();
 
         ArmyEditWindow = FindObjectOfType<ArmyEditWindow>();
         Debug.Assert(ArmyEditWindow != null, "ArmyEditWindow not found");
@@ -43,9 +39,25 @@ public class UIManager : MonoBehaviour
 
     public void ShowArmyEditWindow(IArmy army)
     {
-        ArmyEditWindow.Show();
-        ArmyPanel.Hide();
-        ArmyEditWindow.SetArmy(army);
+        if (!ArmyEditWindow.IsShowing())
+        {
+            ArmyEditWindow.Show();
+            ArmyPanel.Hide();
+            ArmyEditWindow.SetMode(ArmyEditWindow.Mode.DeployedArmy);
+            ArmyEditWindow.SetArmy(army);
+        }
+    }
+
+    public void ShowGarrisonWindow(IArmy[] storedArmies)
+    {
+        if (!ArmyEditWindow.IsShowing())
+        {
+            ArmyEditWindow.Show();
+            ArmyPanel.Hide();
+            ArmyEditWindow.SetMode(ArmyEditWindow.Mode.Garrison);
+            ArmyEditWindow.SetArmy(null);
+            ArmyEditWindow.SetArmyPanelContents(storedArmies);
+        }
     }
 
     public void HideArmyEditWindow()

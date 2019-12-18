@@ -26,6 +26,26 @@ public class ArmyPanel : MonoBehaviour
         }
     }
 
+    public void Clear()
+    {
+        foreach (var grid in _grids)
+        {
+            Destroy(grid.gameObject);
+        }
+
+        _grids.Clear();
+        _armies.Clear();
+    }
+
+    public void SetArmies(IArmy[] armies)
+    {
+        Clear();
+        foreach (var army in armies)
+        {
+            AddArmy(army);
+        }
+    }
+
     public void AddArmy(IArmy army)
     {
         _armies.Add(army);

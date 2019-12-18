@@ -84,7 +84,9 @@
     <Compile Include="Assets\Scripts\Entities\GarrisonManager.cs" />
     <Compile Include="Assets\Scripts\Entities\IArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\IDetectable.cs" />
+    <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\Unit.cs" />
+    <Compile Include="Assets\Scripts\Entities\UnitGenerator.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Assets\Scripts\Utils\ExtensionFunctions.cs" />
     <Compile Include="Assets\Scripts\Utils\FormationUtils.cs" />
     <Compile Include="Assets\Scripts\Utils\Models.cs" />
+    <Compile Include="Assets\Scripts\Utils\ResourceHelper.cs" />
     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />

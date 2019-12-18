@@ -131,6 +131,11 @@ public static class ExtensionFunctions
         obj.gameObject.SetActive(true);
     }
 
+    public static bool IsShowing(this MonoBehaviour obj)
+    {
+        return obj.gameObject.activeInHierarchy;
+    }
+
     public static void Hide(this MonoBehaviour obj)
     {
         obj.gameObject.SetActive(false);

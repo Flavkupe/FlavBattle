@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0190bcad3bcef41a6c4f08c0d1dc6d, type: 3}
   m_Name: Rebels
   m_EditorClassIdentifier: 
+  IsPlayerFaction: 1
   Faction: 1
   Flag: {fileID: -407368442477547055, guid: 7a1ecb4b576771d4284f47586bded533, type: 3}
   Name: Rebels

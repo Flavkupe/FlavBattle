@@ -10,9 +10,6 @@ public class ArmyManager : MonoBehaviour
     public Army ArmyTemplate;
     public AnimatedSpin BattleIndicator;
 
-    private UnitData[] _allUnitDataResources;
-    private FactionData[] _allFactionDataResources;
-
     private List<Army> _armies = new List<Army>();
 
     private bool _pauseAll = false;
@@ -22,12 +19,13 @@ public class ArmyManager : MonoBehaviour
     private bool _clickProcessed = false;
     private bool _combatProcessed = false;
 
+    private FactionData _playerFaction;
     private UIManager _ui;
     private GameEventManager _gameEvents;
     private BattleManager _battleManager;
     private CameraMain _camera;
 
-    public FactionData PlayerFaction;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -41,21 +39,19 @@ public class ArmyManager : MonoBehaviour
         _battleManager = FindObjectOfType<BattleManager>();
         _camera = FindObjectOfType<CameraMain>();
 
-        _allUnitDataResources = Utils.LoadAssets<UnitData>("Units");
-        _allFactionDataResources = Utils.LoadAssets<FactionData>("Factions");
-
-        var enemyFaction = _allFactionDataResources.First(a => a.Faction != PlayerFaction.Faction);
-        var playerArmy = CreateArmy(0, 0, PlayerFaction);
-        var playerArmy2 = CreateArmy(0, -2, PlayerFaction);
+        var enemyFaction = ResourceHelper.Factions.First(a => !a.IsPlayerFaction);
+        _playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
+        var playerArmy = CreateArmy(0, 0, _playerFaction);
+        var playerArmy2 = CreateArmy(0, -2, _playerFaction);
         var enemyArmy = CreateArmy(-2, 0, enemyFaction);
 
         // TODO: TEMP
-        playerArmy.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
-        playerArmy.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
-        playerArmy2.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
-        playerArmy2.Formation.PutUnit(this.MakeUnit(null, PlayerFaction.Faction, 4));
-        enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
-        enemyArmy.Formation.PutUnit(this.MakeUnit(null, enemyFaction.Faction));
+        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
+        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
+        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
+        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
+        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, enemyFaction.Faction));
+        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, enemyFaction.Faction));
 
         _ui.ArmyPanel.UpdatePanelContents();
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
@@ -84,7 +80,7 @@ public class ArmyManager : MonoBehaviour
         var startTile = TileMap.GetGridTile(x, y);
         var army = Instantiate(ArmyTemplate);
         army.SetMap(TileMap);
-        army.SetFaction(faction, faction == PlayerFaction);
+        army.SetFaction(faction, faction == _playerFaction);
         army.PutOnTile(startTile);
         army.ArmyClicked += OnArmyClicked;
         army.ArmyEncountered += OnArmyEncountered;
@@ -96,21 +92,7 @@ public class ArmyManager : MonoBehaviour
         return army;
     }
 
-    public Unit MakeUnit(UnitData data, Faction faction, int level = 1)
-    {
-        if (data == null)
-        {
-            data = _allUnitDataResources.GetRandom();
-        }
 
-        var unit = new Unit()
-        {
-            Data = data,
-            Info = new UnitInfo(data, faction, level)
-        };
-
-        return unit;
-    }
 
     private void OnMapTileClicked(object sender, TileClickedEventArgs e)
     {
@@ -215,7 +197,7 @@ public class ArmyManager : MonoBehaviour
 
     private bool IsPlayerArmy(Army army)
     {
-        return army.Faction.Faction == this.PlayerFaction.Faction;
+        return army.Faction.Faction == this._playerFaction.Faction;
     }
 
     private void PauseAll(bool pause)
