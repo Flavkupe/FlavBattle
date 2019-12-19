@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyEditWindow.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitStatsPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Components\FacePortrait.cs" />
     <Compile Include="Assets\Scripts\UI\Components\IconLabelPair.cs" />

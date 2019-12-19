@@ -21,6 +21,8 @@ public class GameEventManager : MonoBehaviour
 
     public event EventHandler<CombatEndedEventArgs> CombatEndedEvent;
 
+    public event EventHandler<Unit> UnitDeployed;
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -34,6 +36,11 @@ public class GameEventManager : MonoBehaviour
     public void TriggerMapEvent(MapEventType mapEvent)
     {
         MapEvent?.Invoke(this, mapEvent);
+    }
+
+    public void TriggerUnitDeployed(Unit unit)
+    {
+        UnitDeployed?.Invoke(this, unit);
     }
 
     public void TriggerCombatEndedEvent(Army winner, Army loser)

@@ -7,6 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasGroup))]
 public class Draggable : MonoBehaviour, IDraggable
 {
+    /// <summary>
+    /// Current object set at the top of the draw stack to ensure this draws on top of everything
+    /// </summary>
+    public static GameObject TopLevelDrag { get; set; }
+
     public static Draggable DraggedObject { get; private set; }
 
     public MonoBehaviour Instance => this;
@@ -30,9 +35,17 @@ public class Draggable : MonoBehaviour, IDraggable
         _startPos = this.transform.position;
         _startParent = this.transform.parent;
 
-        // Must place as sibling so that draw order appears above all else
-        transform.SetParent(transform.parent.parent);
-        transform.SetAsLastSibling();
+        
+        if (TopLevelDrag == null)
+        {
+            // Must place as sibling so that draw order appears above all else
+            transform.SetParent(transform.parent.parent);
+            transform.SetAsLastSibling();
+        }
+        else
+        {
+            transform.SetParent(TopLevelDrag.transform); 
+        }
 
         this.GetComponent<CanvasGroup>().blocksRaycasts = false;
 

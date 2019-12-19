@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
 
     public event EventHandler<IArmy> ArmyModified;
 
+    public event EventHandler<Unit> UnitReplaced;
+
     void Start()
     {
         FormationPanel = FindObjectOfType<FormationPanel>();
@@ -24,6 +26,12 @@ public class UIManager : MonoBehaviour
         ArmyEditWindow.Hide();
 
         ArmyEditWindow.ArmyModified += HandleArmyModified;
+        ArmyEditWindow.UnitReplaced += HandleUnitReplaced;
+    }
+
+    private void HandleUnitReplaced(object sender, Unit e)
+    {
+        UnitReplaced?.Invoke(this, e);
     }
 
     private void HandleArmyModified(object sender, IArmy e)
@@ -48,7 +56,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowGarrisonWindow(IArmy[] storedArmies)
+    public void ShowGarrisonWindow(IArmy[] storedArmies, Unit[] storedUnits)
     {
         if (!ArmyEditWindow.IsShowing())
         {
@@ -57,6 +65,7 @@ public class UIManager : MonoBehaviour
             ArmyEditWindow.SetMode(ArmyEditWindow.Mode.Garrison);
             ArmyEditWindow.SetArmy(null);
             ArmyEditWindow.SetArmyPanelContents(storedArmies);
+            ArmyEditWindow.SetUnitPanelContents(storedUnits);
         }
     }
 

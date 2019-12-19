@@ -63,6 +63,7 @@ public class Formation
         if (unit != null)
         {
             unit.Formation = new FormationPair { Row = row, Col = column };
+            unit.IsInFormation = true;
         }
 
         return current;
@@ -83,11 +84,21 @@ public class Formation
     /// </summary>
     public Unit MoveUnit(Unit unit, FormationPair destination)
     {
+        var fromFormation = unit.IsInFormation;
         var source = unit.Formation;
         var current = PutUnit(unit, destination);
 
-        // Note: even if current is null, this will do the right thing
-        PutUnit(current, source);
+        // If not in formation, do not swap
+        if (fromFormation)
+        {
+            // Note: even if current is null, this will do the right thing
+            PutUnit(current, source);
+        }
+        else if (current != null)
+        {
+            current.IsInFormation = false;
+        }
+
         return current;
     }
 

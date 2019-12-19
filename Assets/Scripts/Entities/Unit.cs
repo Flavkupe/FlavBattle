@@ -10,6 +10,8 @@ public class Unit
 
     public UnitInfo Info;
 
+    public bool IsInFormation;
+
     public bool IsDead()
     {
         return this.Info.CurrentStats.HP <= 0;

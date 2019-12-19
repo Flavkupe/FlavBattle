@@ -35,10 +35,15 @@ public class DropTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             {
                 ObjectDropped?.Invoke(this, draggable);
                 draggable.DropOnTarget(this.gameObject);
+
             }
         }
     }
     
+    protected virtual void OnAfterDroppedTarget(IDraggable target)
+    {
+    }
+
     private void SetColor(Color color)
     {
         if (_image != null)

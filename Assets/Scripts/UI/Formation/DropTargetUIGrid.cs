@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class DropTargetUIGrid : UIUnitGridBase
 {
+
     public DropTargetUIGridTile TileTemplate;
 
     private List<DropTargetUIGridTile> _tiles = new List<DropTargetUIGridTile>();
@@ -15,6 +16,10 @@ public class DropTargetUIGrid : UIUnitGridBase
     public event EventHandler<Unit> UnitClicked;
 
     public event EventHandler<IArmy> ArmyModified;
+
+    public event EventHandler<Unit> UnitReplaced;
+
+    public event EventHandler<Unit> UnitDeployed;
 
     protected override IFormationGridSlot OnCreateSlot()
     {
@@ -35,7 +40,21 @@ public class DropTargetUIGrid : UIUnitGridBase
 
     private void HandleUnitDropped(object sender, DropTargetUIGridTile.DropUnitEventArgs e)
     {
-        Army.Formation.MoveUnit(e.Unit.Unit, e.EndingPos);
+        var fromFormation = e.Unit.Unit.IsInFormation;
+        var other = Army.Formation.MoveUnit(e.Unit.Unit, e.EndingPos);
+        if (other != null && !other.IsInFormation)
+        {
+            // Dropped over other unit which is no longer
+            // in army formation
+            UnitReplaced?.Invoke(this, other);
+        }
+
+        if (!fromFormation)
+        {
+            // Unit removed from garrison
+            UnitDeployed?.Invoke(this, e.Unit.Unit);
+        }
+
         ArmyModified?.Invoke(this, Army);
         UpdateFormation();
     }
