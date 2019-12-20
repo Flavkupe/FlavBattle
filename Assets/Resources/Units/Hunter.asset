@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af06fcb51bd3cd04c9ac136281956420, type: 3}
+  m_Name: Hunter
+  m_EditorClassIdentifier: 
+  HP: {x: 10, y: 20}
+  Power: {x: 4, y: 7}
+  Defense: {x: 2, y: 4}
+  Speed: {x: 5, y: 8}
+  HPScaling: {x: 1, y: 3}
+  PowerScaling: {x: 2, y: 3}
+  DefenseScaling: {x: 1, y: 2}
+  SpeedScaling: {x: 1, y: 2}
+  Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
+  Sprite: {fileID: 807448920738025961, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
+  Portraits:
+  - {fileID: 21300000, guid: 94a13421e84754816bf53257ade2b30a, type: 3}
+  - {fileID: 21300000, guid: a5301e1eb821f4c1285b39d42f859e9f, type: 3}
+  - {fileID: 21300000, guid: d32f1b7f4fcab4b55b0c5d1cf0672ed6, type: 3}
+  Animations:
+  - {fileID: -6278177606702991857, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
+  - {fileID: 7173849240055794619, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
+  Name: Hunter
