@@ -14,7 +14,7 @@ public class DraggableUIUnit : Draggable, IPointerClickHandler
 
     public Unit Unit { get; private set; }
 
-    public event EventHandler<Unit> UnitClicked;
+    public event EventHandler<DraggableUIUnit> UnitClicked;
 
     private void Update()
     {
@@ -28,7 +28,7 @@ public class DraggableUIUnit : Draggable, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        UnitClicked?.Invoke(this, Unit);
+        UnitClicked?.Invoke(this, this);
         _isSelected = true;
         Selected = this;
         SetIdle(false);

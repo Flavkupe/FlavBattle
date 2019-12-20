@@ -8,54 +8,26 @@ using UnityEngine.EventSystems;
 
 public class DropTargetUIGrid : UIUnitGridBase
 {
+    public DraggableUnitProvider DraggableProvider;
 
     public DropTargetUIGridTile TileTemplate;
 
     private List<DropTargetUIGridTile> _tiles = new List<DropTargetUIGridTile>();
 
-    public event EventHandler<Unit> UnitClicked;
-
-    public event EventHandler<IArmy> ArmyModified;
-
-    public event EventHandler<Unit> UnitReplaced;
-
-    public event EventHandler<Unit> UnitDeployed;
+    public event EventHandler<DropUnitEventArgs> UnitDropped;
 
     protected override IFormationGridSlot OnCreateSlot()
     {
         var tile = Instantiate(TileTemplate);
         _tiles.Add(tile);
         tile.UnitDropped += HandleUnitDropped;
+        tile.DraggableProvider = DraggableProvider;
         return tile;
     }
 
-    protected override void OnAfterArmyUpdated()
+    private void HandleUnitDropped(object sender, DropUnitEventArgs e)
     {
-        var draggableUnits = GetComponentsInChildren<DraggableUIUnit>();
-        foreach (var unit in draggableUnits)
-        {
-            unit.UnitClicked += UnitClicked;
-        }
-    }
-
-    private void HandleUnitDropped(object sender, DropTargetUIGridTile.DropUnitEventArgs e)
-    {
-        var fromFormation = e.Unit.Unit.IsInFormation;
-        var other = Army.Formation.MoveUnit(e.Unit.Unit, e.EndingPos);
-        if (other != null && !other.IsInFormation)
-        {
-            // Dropped over other unit which is no longer
-            // in army formation
-            UnitReplaced?.Invoke(this, other);
-        }
-
-        if (!fromFormation)
-        {
-            // Unit removed from garrison
-            UnitDeployed?.Invoke(this, e.Unit.Unit);
-        }
-
-        ArmyModified?.Invoke(this, Army);
-        UpdateFormation();
+        e.Army = this.Army;
+        UnitDropped?.Invoke(this, e);
     }
 }

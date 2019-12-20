@@ -5,44 +5,44 @@ using UnityEngine;
 
 public class UnitPanel : DropTarget
 {
-    public DraggableUIUnit DraggableUnitTemplate;
+    public DraggableUnitProvider DraggableProvider;
 
     public GameObject Contents;
 
     private List<Unit> _units = new List<Unit>();
 
+    public event EventHandler<Unit> UnitDropped;
+
+    public event EventHandler<Unit> UnitClicked;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        var dropTarget = GetComponent<DropTarget>();
+        if (dropTarget != null)
+        {
+            dropTarget.ObjectDropped += ObjectDroppedIn;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DropUnit(DraggableUIUnit draggable)
     {
-        
+        draggable.transform.SetParent(Contents.transform);
+        if (!_units.Contains(draggable.Unit))
+        {
+            _units.Add(draggable.Unit);
+        }
     }
 
     public void AddUnit(Unit unit)
     {
-        var draggable = Instantiate(DraggableUnitTemplate);
-        draggable.SetUnit(unit);
+        var draggable = DraggableProvider.GetOrCreateDraggableForUnit(unit);
         draggable.transform.SetParent(Contents.transform);
         _units.Add(unit);
     }
 
-    public void Refresh()
-    {
-
-    }
-
     public void SetUnits(Unit[] units)
     {
-        foreach (var unit in GetComponentsInChildren<DraggableUIUnit>())
-        {
-            Destroy(unit.gameObject);
-        }
-
         _units.Clear();
 
         foreach (var unit in units)
@@ -51,8 +51,18 @@ public class UnitPanel : DropTarget
         }
     }
 
-    protected override void OnAfterDroppedTarget(IDraggable target)
+    public void ObjectDroppedIn(object source, IDraggable draggable)
     {
-        base.OnAfterDroppedTarget(target);
+        var unit = draggable.Instance.GetComponent<DraggableUIUnit>();
+        if (unit != null)
+        {
+            UnitDropped?.Invoke(this, unit.Unit);
+            DropUnit(unit);
+        }
+    }
+
+    public void RemoveUnit(Unit unit)
+    {
+        _units.Remove(unit);
     }
 }

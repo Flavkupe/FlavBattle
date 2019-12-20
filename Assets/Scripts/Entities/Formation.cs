@@ -65,8 +65,22 @@ public class Formation
             unit.Formation = new FormationPair { Row = row, Col = column };
             unit.IsInFormation = true;
         }
+        else if (current != null)
+        {
+            // Unit replaced with null; it is no longer in formation
+            current.IsInFormation = false;
+        }
 
         return current;
+    }
+
+    public void RemoveUnit(Unit e)
+    {
+        Debug.Assert(e.IsInFormation, "Attempting to remove unit not flagged for formation!");
+        var row = e.Formation.Row;
+        var col = e.Formation.Col;
+        var current = PutUnit(null, row, col);
+        Debug.Assert(e == current, "Attempting to remove unit not in this formation!");
     }
 
     public Unit GetUnit(FormationRow row, FormationColumn column)
@@ -91,6 +105,9 @@ public class Formation
         // If not in formation, do not swap
         if (fromFormation)
         {
+            // Make room for incoming swap first
+            _units[(int)source.Row, (int)source.Col] = null;
+
             // Note: even if current is null, this will do the right thing
             PutUnit(current, source);
         }

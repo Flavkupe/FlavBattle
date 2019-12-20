@@ -20,12 +20,11 @@ public class Draggable : MonoBehaviour, IDraggable
     private Transform _startParent;
     private bool _foundTarget = false;
 
-    public void DropOnTarget(GameObject gameObj)
+    public void DroppedOnTarget(DropTarget target)
     {
-        if (gameObj != null) {
+        if (target != null && target.gameObject != null)
+        {
             _foundTarget = true;
-            transform.SetParent(gameObj.transform);
-            transform.localPosition = Vector3.zero;
         }
     }
 

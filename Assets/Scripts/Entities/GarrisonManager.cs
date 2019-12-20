@@ -32,6 +32,15 @@ public class GarrisonManager : MonoBehaviour
 
         _gameEvents = FindObjectOfType<GameEventManager>();
         _gameEvents.UnitDeployed += HandleUnitDeployed;
+        _gameEvents.UnitGarrisoned += HandleUnitGarrisoned;
+    }
+
+    private void HandleUnitGarrisoned(object sender, Unit e)
+    {
+        if (!_garrisonedUnits.Contains(e))
+        {
+            _garrisonedUnits.Add(e);
+        }
     }
 
     private void HandleUnitDeployed(object sender, Unit e)

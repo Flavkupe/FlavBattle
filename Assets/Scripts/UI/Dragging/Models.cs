@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public interface IDraggable : IDragHandler, IBeginDragHandler, IEndDragHandler
 {
-    void DropOnTarget(GameObject gameObj);
+    void DroppedOnTarget(DropTarget gameObj);
 
     MonoBehaviour Instance { get; }
 }

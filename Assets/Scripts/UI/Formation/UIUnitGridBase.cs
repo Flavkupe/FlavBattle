@@ -19,10 +19,6 @@ public abstract class UIUnitGridBase : MonoBehaviour, IFormationGrid
 
     protected abstract IFormationGridSlot OnCreateSlot();
 
-    protected virtual void OnAfterArmyUpdated()
-    {
-    }
-
     public void UpdateFormation()
     {
         foreach (var slot in _slots)
@@ -46,8 +42,6 @@ public abstract class UIUnitGridBase : MonoBehaviour, IFormationGrid
 
             slot.SetUnit(unit);
         }
-
-        OnAfterArmyUpdated();
     }
 
     /// <summary>

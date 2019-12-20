@@ -23,6 +23,8 @@ public class GameEventManager : MonoBehaviour
 
     public event EventHandler<Unit> UnitDeployed;
 
+    public event EventHandler<Unit> UnitGarrisoned;
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -50,5 +52,9 @@ public class GameEventManager : MonoBehaviour
             Winner = winner,
             Loser = loser,
         });
+    }
+    public void TriggerUnitGarrisoned(Unit e)
+    {
+        UnitGarrisoned?.Invoke(this, e);
     }
 }

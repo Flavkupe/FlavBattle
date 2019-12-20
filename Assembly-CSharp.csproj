@@ -106,9 +106,11 @@
     <Compile Include="Assets\Scripts\UI\Dragging\DropTarget.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Models.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DraggableUIUnit.cs" />
+    <Compile Include="Assets\Scripts\UI\Formation\DraggableUnitProvider.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DropTargetUIGrid.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DropTargetUIGridTile.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\FormationPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Formation\Models.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGrid.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGridTile.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIUnitGridBase.cs" />
