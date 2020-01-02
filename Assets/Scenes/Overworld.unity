@@ -794,7 +794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &177499275
 Transform:
   m_ObjectHideFlags: 0
@@ -4177,7 +4177,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.37249947, y: -1.3500004}
+  m_AnchoredPosition: {x: 0.37249756, y: -1.3500061}
   m_SizeDelta: {x: -50.745, y: -53.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &670893895
@@ -6767,6 +6767,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArmyPanel: {fileID: 1937999488}
+  MapUI:
+  - {fileID: 1937999489}
+  - {fileID: 1653890643}
 --- !u!224 &1541864025 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9096913746660914147, guid: b17cb63dc471d0c44bdaad5133b26dcc,

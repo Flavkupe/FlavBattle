@@ -9,11 +9,15 @@ public class UIManager : MonoBehaviour
 
     public ArmyPanel ArmyPanel;
 
+    public MonoBehaviour[] MapUI;
+
     public ArmyEditWindow ArmyEditWindow { get; private set; }
 
     public event EventHandler<IArmy> ArmyModified;
 
     public event EventHandler<Unit> UnitReplaced;
+
+    private GameEventManager _gameEvents;
 
     void Start()
     {
@@ -27,6 +31,37 @@ public class UIManager : MonoBehaviour
 
         ArmyEditWindow.ArmyModified += HandleArmyModified;
         ArmyEditWindow.UnitReplaced += HandleUnitReplaced;
+
+        _gameEvents = FindObjectOfType<GameEventManager>();
+        _gameEvents.CombatStartedEvent += HandleCombatStartedEvent;
+        _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;
+    }
+
+    private void HandleCombatEndedEvent(object sender, CombatEndedEventArgs e)
+    {
+        ShowMapUI();
+    }
+
+    private void HandleCombatStartedEvent(object sender, CombatStartedEventArgs e)
+    {
+        HideMapUI();
+    }
+
+    private void HideMapUI()
+    {
+        FormationPanel.Hide();
+        foreach (var ui in MapUI)
+        {
+            ui.Hide();
+        }
+    }
+
+    private void ShowMapUI()
+    {
+        foreach (var ui in MapUI)
+        {
+            ui.Show();
+        }
     }
 
     private void HandleUnitReplaced(object sender, Unit e)

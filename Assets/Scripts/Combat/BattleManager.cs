@@ -95,13 +95,15 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator StartCombatInternal(Army player, Army enemy)
     {
+        _gameEventManager.TriggerCombatStartedEvent(player, enemy);
+
         _player = player;
         _other = enemy;
         _combatants.Clear();
         _turnQueue.Clear();
+        yield return BattleDisplay.InitializeCombatScene(player, enemy);
         _combatants.AddRange(GetCombatants(_player, true));
         _combatants.AddRange(GetCombatants(_other, false));
-        yield return BattleDisplay.InitializeCombatScene(player, enemy);
         _state = State.AwaitingTurn;
     }
 

@@ -92,3 +92,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5e3d0d581133341bd2fdedb29589d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
+    type: 3}

@@ -15,11 +15,19 @@ public class CombatEndedEventArgs
     public Army Loser { get; set; }
 }
 
+public class CombatStartedEventArgs
+{
+    public Army Player { get; set; }
+    public Army Enemy { get; set; }
+}
+
 public class GameEventManager : MonoBehaviour
 {
     public event EventHandler<MapEventType> MapEvent;
 
     public event EventHandler<CombatEndedEventArgs> CombatEndedEvent;
+
+    public event EventHandler<CombatStartedEventArgs> CombatStartedEvent;
 
     public event EventHandler<Unit> UnitDeployed;
 
@@ -43,6 +51,15 @@ public class GameEventManager : MonoBehaviour
     public void TriggerUnitDeployed(Unit unit)
     {
         UnitDeployed?.Invoke(this, unit);
+    }
+
+    public void TriggerCombatStartedEvent(Army player, Army enemy)
+    {
+        CombatStartedEvent?.Invoke(this, new CombatStartedEventArgs
+        {
+            Player = player,
+            Enemy = enemy
+        });
     }
 
     public void TriggerCombatEndedEvent(Army winner, Army loser)
