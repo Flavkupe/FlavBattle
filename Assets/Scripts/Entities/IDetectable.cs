@@ -6,8 +6,9 @@ using UnityEngine;
 [Flags]
 public enum DetectableType
 {
+    None = 0,
     Army = 1,
-    Town = 2,
+    Tile = 2,
 }
 
 public interface IDetectable

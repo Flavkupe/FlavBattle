@@ -48,19 +48,36 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         _detectors = this.GetComponentsInChildren<Detector>();
         foreach (var detector in _detectors)
         {
-            detector.Detected += Detector_Detected;
+            if (detector.Detects.HasFlag(DetectableType.Army))
+            {
+                detector.Detected += ArmyDetectorDetected;
+            }
+
+            if (detector.Detects.HasFlag(DetectableType.Tile))
+            {
+                detector.Detected += TileDetectorDetected;
+            }
         }
     }
 
-    private void Detector_Detected(object sender, GameObject e)
+    private void TileDetectorDetected(object sender, GameObject e)
     {
-        var other = e.GetComponent<Army>();
-        if (other != null)
+        var tile = e.GetComponent<IDetectable>();
+        if (tile != null && tile.Type == DetectableType.Tile)
+        {
+
+        }
+    }
+
+    private void ArmyDetectorDetected(object sender, GameObject e)
+    {
+        var otherArmy = e.GetComponent<Army>();
+        if (otherArmy != null)
         {
             ArmyEncountered?.Invoke(this, new ArmyEncounteredEventArgs
             {
                 Initiator = this,
-                Opponent = other,
+                Opponent = otherArmy,
             });
         }
     }

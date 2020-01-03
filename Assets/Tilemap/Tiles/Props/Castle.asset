@@ -32,10 +32,13 @@ MonoBehaviour:
     e31: 0
     e32: 0
     e33: 1
-  m_InstancedGameObject: {fileID: 0}
+  m_InstancedGameObject: {fileID: 8475245983484200914, guid: 0db4adb84af1a0b4ea22ae2440a9acf6,
+    type: 3}
   m_Flags: 1
-  m_ColliderType: 0
+  m_ColliderType: 2
   TileData:
-    Passable: 0
+    Passable: 1
     WalkCost: 1
+    SpecialProperty: 1
+    OverridePassable: 0
   Icon: {fileID: 7265313343042191254, guid: c9e0f8c1950cf734fb9cf6d273d0846f, type: 3}

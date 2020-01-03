@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
+    <Compile Include="Assets\Scripts\Entities\Garrison.cs" />
     <Compile Include="Assets\Scripts\Entities\GarrisonManager.cs" />
     <Compile Include="Assets\Scripts\Entities\IArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\IDetectable.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
+    <Compile Include="Assets\Scripts\UI\Army\ActionButtonsPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyEditWindow.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
