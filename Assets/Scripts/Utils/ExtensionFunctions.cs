@@ -145,4 +145,9 @@ public static class ExtensionFunctions
     {
         obj.gameObject.SetActive(!obj.gameObject.activeInHierarchy);
     }
+
+    public static bool HasComponent<T>(this GameObject obj) where T : MonoBehaviour
+    {
+        return obj.GetComponent<T>();
+    }
 }

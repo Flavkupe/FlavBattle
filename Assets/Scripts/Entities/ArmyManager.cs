@@ -1,7 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+public class ArmyEnteredGarrisonEventArgs : EventArgs
+{
+    public Army Initiator;
+    public Garrison Garrison;
+}
+
+public class ArmyLeftGarrisonEventArgs : EventArgs
+{
+    public Army Initiator;
+    public Garrison Garrison;
+}
 
 public class ArmyManager : MonoBehaviour
 {
@@ -21,23 +34,33 @@ public class ArmyManager : MonoBehaviour
 
     private FactionData _playerFaction;
     private UIManager _ui;
+    private GarrisonManager _garrisonManager;
     private GameEventManager _gameEvents;
     private BattleManager _battleManager;
     private CameraMain _camera;
 
-    
+    /// <summary>
+    /// Event indicating that the Army has reached a specific garrison
+    /// </summary>
+    public event EventHandler<ArmyEnteredGarrisonEventArgs> ArmyEnteredGarrison;
 
-    // Start is called before the first frame update
-    void Start()
+    public event EventHandler<ArmyLeftGarrisonEventArgs> ArmyLeftGarrison;
+
+    void Awake()
     {
-        TileMap.TileClicked += OnMapTileClicked;
-
         _ui = FindObjectOfType<UIManager>();
         Debug.Assert(_ui != null, "UIManager not found");
 
         _gameEvents = FindObjectOfType<GameEventManager>();
         _battleManager = FindObjectOfType<BattleManager>();
         _camera = FindObjectOfType<CameraMain>();
+        _garrisonManager = FindObjectOfType<GarrisonManager>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        TileMap.TileClicked += OnMapTileClicked;
 
         var enemyFaction = ResourceHelper.Factions.First(a => !a.IsPlayerFaction);
         _playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
@@ -56,7 +79,7 @@ public class ArmyManager : MonoBehaviour
         _ui.ArmyPanel.UpdatePanelContents();
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
         _ui.ArmyPanel.ArmyEditRequested += OnEditArmy;
-        _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;        
+        _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;
     }
 
     private void OnEditArmy(object sender, IArmy army)
@@ -82,8 +105,10 @@ public class ArmyManager : MonoBehaviour
         army.SetMap(TileMap);
         army.SetFaction(faction, faction == _playerFaction);
         army.PutOnTile(startTile);
-        army.ArmyClicked += OnArmyClicked;
-        army.ArmyEncountered += OnArmyEncountered;
+        army.ArmyClicked += HandleArmyClicked;
+        army.ArmyEncountered += HandleArmyEncountered;
+        army.EnterTile += HandleArmyEnterTile;
+        army.ExitTile += HandleArmyExitTile;
         _armies.Add(army);
 
         // Update UI
@@ -92,7 +117,33 @@ public class ArmyManager : MonoBehaviour
         return army;
     }
 
+    private void HandleArmyExitTile(object sender, ExitTileEventArgs e)
+    {
+        Utils.LogTrace("Army exited tile", this);
+        var garrison = e.Tile.GetComponent<Garrison>();
+        if (garrison != null)
+        {
+            ArmyLeftGarrison?.Invoke(this, new ArmyLeftGarrisonEventArgs()
+            {
+                Initiator = e.Initiator,
+                Garrison = garrison
+            });
+        }
+    }
 
+    private void HandleArmyEnterTile(object sender, EnterTileEventArgs e)
+    {
+        Utils.LogTrace("Army entered tile", this);
+        var garrison = e.Tile.GetComponent<Garrison>();
+        if (garrison != null)
+        {
+            ArmyEnteredGarrison?.Invoke(this, new ArmyEnteredGarrisonEventArgs()
+            {
+                Initiator = e.Initiator,
+                Garrison = garrison
+            });
+        }
+    }
 
     private void OnMapTileClicked(object sender, TileClickedEventArgs e)
     {
@@ -124,8 +175,8 @@ public class ArmyManager : MonoBehaviour
     {
         UnselectAll();
         _selected = army;
-        _ui.FormationPanel.Show();
-        _ui.FormationPanel.SetArmy(army);
+
+        UpdateSelectedArmyUI(army);
 
         if (IsPlayerArmy(_selected))
         {
@@ -137,7 +188,7 @@ public class ArmyManager : MonoBehaviour
         }
     }
 
-    private void OnArmyClicked(object sender, ArmyClickedEventArgs args)
+    private void HandleArmyClicked(object sender, ArmyClickedEventArgs args)
     {
         if (args.Clicked != _selected)
         {
@@ -150,7 +201,7 @@ public class ArmyManager : MonoBehaviour
         }
     }
 
-    private void OnArmyEncountered(object sender, ArmyEncounteredEventArgs e)
+    private void HandleArmyEncountered(object sender, ArmyEncounteredEventArgs e)
     {
         if (_combatProcessed)
         {
@@ -216,7 +267,12 @@ public class ArmyManager : MonoBehaviour
             army.Unselect();
         }
 
-        _ui.FormationPanel.Hide();
+        UpdateSelectedArmyUI(null);
+    }
+
+    private void UpdateSelectedArmyUI(Army army)
+    {
+        _ui.UpdateSelectedArmyUI(army);
     }
 
     private void HandleArmyClickedFromPanel(object source, IArmy clickedArmy)

@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Entities\UnitGenerator.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />
+    <Compile Include="Assets\Scripts\Instances.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
     <Compile Include="Assets\Scripts\State\GameEventManager.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />

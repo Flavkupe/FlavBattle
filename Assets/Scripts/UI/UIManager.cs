@@ -5,36 +5,36 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public FormationPanel FormationPanel { get; private set; }
+    public FormationPanel FormationPanel;
 
     public ArmyPanel ArmyPanel;
+    public ActionButtonsPanel ActionButtonsPanel;
+    public ArmyEditWindow ArmyEditWindow;
 
     public MonoBehaviour[] MapUI;
 
-    public ArmyEditWindow ArmyEditWindow { get; private set; }
-
     public event EventHandler<IArmy> ArmyModified;
-
     public event EventHandler<Unit> UnitReplaced;
 
     private GameEventManager _gameEvents;
 
+    private void Awake()
+    {
+        
+    }
+
     void Start()
     {
-        FormationPanel = FindObjectOfType<FormationPanel>();
-        Debug.Assert(FormationPanel != null, "FormationPanel not found");
-        FormationPanel.Hide();
-
-        ArmyEditWindow = FindObjectOfType<ArmyEditWindow>();
-        Debug.Assert(ArmyEditWindow != null, "ArmyEditWindow not found");
         ArmyEditWindow.Hide();
 
         ArmyEditWindow.ArmyModified += HandleArmyModified;
         ArmyEditWindow.UnitReplaced += HandleUnitReplaced;
 
-        _gameEvents = FindObjectOfType<GameEventManager>();
+        _gameEvents = Instances.Current.Managers.GameEvents;
         _gameEvents.CombatStartedEvent += HandleCombatStartedEvent;
         _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;
+
+        UpdateSelectedArmyUI(null);
     }
 
     private void HandleCombatEndedEvent(object sender, CombatEndedEventArgs e)
@@ -118,6 +118,23 @@ public class UIManager : MonoBehaviour
         if (army.IsPlayerArmy)
         {
             ArmyPanel.AddArmy(army);
+        }
+    }
+
+    public void UpdateSelectedArmyUI(Army selected)
+    {
+        if (selected == null)
+        {
+            this.FormationPanel.Hide();
+            this.ActionButtonsPanel.Hide();
+        }
+        else
+        {
+            this.FormationPanel.Show();
+            this.FormationPanel.SetArmy(selected);
+
+            this.ActionButtonsPanel.Show();
+            this.ActionButtonsPanel.SetArmy(selected);
         }
     }
 }

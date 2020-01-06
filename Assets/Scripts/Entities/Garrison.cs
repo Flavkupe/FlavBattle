@@ -10,9 +10,4 @@ public class Garrison : MonoBehaviour, IDetectable
     {
         return this.gameObject;
     }
-
-    void Start()
-    {
-        this.transform.position = this.transform.position - new Vector3(0.0f, 0.25f);
-    }
 }

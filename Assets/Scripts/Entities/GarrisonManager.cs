@@ -11,6 +11,8 @@ public class GarrisonManager : MonoBehaviour
 
     private List<Unit> _garrisonedUnits = new List<Unit>();
 
+    private List<Army> _armiesOnGarrisonTile = new List<Army>();
+
     private FactionData _playerFaction;
 
     private ArmyManager _armyManager;
@@ -33,6 +35,9 @@ public class GarrisonManager : MonoBehaviour
         _gameEvents = FindObjectOfType<GameEventManager>();
         _gameEvents.UnitDeployed += HandleUnitDeployed;
         _gameEvents.UnitGarrisoned += HandleUnitGarrisoned;
+
+
+        
     }
 
     private void HandleUnitGarrisoned(object sender, Unit e)

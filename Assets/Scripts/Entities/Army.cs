@@ -14,6 +14,18 @@ public class ArmyEncounteredEventArgs : EventArgs
     public Army Opponent;
 }
 
+public class EnterTileEventArgs : EventArgs
+{
+    public Army Initiator;
+    public GameObject Tile;
+}
+
+public class ExitTileEventArgs : EventArgs
+{
+    public Army Initiator;
+    public GameObject Tile;
+}
+
 public class Army : MonoBehaviour, IDetectable, IArmy
 {
     public float MoveStep = 1.0f;
@@ -21,6 +33,10 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public event EventHandler<ArmyClickedEventArgs> ArmyClicked;
 
     public event EventHandler<ArmyEncounteredEventArgs> ArmyEncountered;
+
+    public event EventHandler<EnterTileEventArgs> EnterTile;
+
+    public event EventHandler<ExitTileEventArgs> ExitTile;
 
     private Vector3? _destination = null;
     private TravelPath _path = null;
@@ -35,6 +51,8 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public string ID { get; private set; } = new Guid().ToString();
 
     public bool IsPlayerArmy { get; private set; }
+
+    public bool IsOnGarrison { get; private set; }
 
     public DetectableType Type => DetectableType.Army;
 
@@ -55,17 +73,47 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
             if (detector.Detects.HasFlag(DetectableType.Tile))
             {
-                detector.Detected += TileDetectorDetected;
+                detector.Detected += TileDetectorEntered;
+                detector.Exited += TileDetectorExited;
             }
         }
     }
 
-    private void TileDetectorDetected(object sender, GameObject e)
+    private void TileDetectorExited(object sender, GameObject e)
     {
         var tile = e.GetComponent<IDetectable>();
         if (tile != null && tile.Type == DetectableType.Tile)
         {
+            ExitTile?.Invoke(this, new ExitTileEventArgs()
+            {
+                Initiator = this,
+                Tile = e
+            });
 
+            // Leaving garrison tile
+            if (e.HasComponent<Garrison>())
+            {
+                this.IsOnGarrison = false;
+            }
+        }
+    }
+
+    private void TileDetectorEntered(object sender, GameObject e)
+    {
+        var tile = e.GetComponent<IDetectable>();
+        if (tile != null && tile.Type == DetectableType.Tile)
+        {
+            EnterTile?.Invoke(this, new EnterTileEventArgs()
+            {
+                Initiator = this,
+                Tile = e
+            });
+
+            // Entering garrison tile
+            if (e.HasComponent<Garrison>())
+            {
+                this.IsOnGarrison = true;
+            }
         }
     }
 

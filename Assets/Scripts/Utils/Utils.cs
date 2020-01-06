@@ -6,6 +6,28 @@ using System;
 
 public static class Utils
 {
+    public static bool TraceEnabled = false;
+
+    public static void LogTrace(string message, UnityEngine.Object context)
+    {
+        if (TraceEnabled)
+        {
+            if (context == null)
+            {
+                Debug.Log(message);
+            }
+            else
+            {
+                Debug.Log(message, context);
+            }
+        }
+    }
+
+    public static void LogTrace(string message)
+    {
+        LogTrace(message, null);
+    }
+
     public static Vector3 MouseToWorldPoint()
     {
         var point = Camera.main.ScreenToWorldPoint(Input.mousePosition);

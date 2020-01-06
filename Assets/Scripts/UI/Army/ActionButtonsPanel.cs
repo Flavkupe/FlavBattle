@@ -1,18 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionButtonsPanel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject GarrisonButton;
+
+    private Army _army;
+
+    private void Update()
     {
-        
+        if (_army != null)
+        {
+            GarrisonButton.SetActive(_army.IsOnGarrison);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetArmy(Army selected)
     {
-        
+        _army = selected;
     }
 }

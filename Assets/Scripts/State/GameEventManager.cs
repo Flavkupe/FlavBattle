@@ -23,6 +23,8 @@ public class CombatStartedEventArgs
 
 public class GameEventManager : MonoBehaviour
 {
+    public bool DebugTrace = false;
+
     public event EventHandler<MapEventType> MapEvent;
 
     public event EventHandler<CombatEndedEventArgs> CombatEndedEvent;
@@ -40,7 +42,8 @@ public class GameEventManager : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {    
+    {
+        Utils.TraceEnabled = DebugTrace;
     }
 
     public void TriggerMapEvent(MapEventType mapEvent)
