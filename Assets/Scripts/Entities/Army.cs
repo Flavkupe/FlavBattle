@@ -46,9 +46,9 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public SpriteRenderer FactionFlag;
 
     public FactionData Faction { get; private set; }
-    public Formation Formation { get; } = new Formation();
+    public Formation Formation { get; private set; } = new Formation();
 
-    public string ID { get; private set; } = new Guid().ToString();
+    public string ID { get; private set; }
 
     public bool IsPlayerArmy { get; private set; }
 
@@ -58,6 +58,14 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     private Detector[] _detectors;
     private bool _paused = false;
+
+    void Awake()
+    {
+        if (ID == null)
+        {
+            ID = Guid.NewGuid().ToString();
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -151,6 +159,13 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         _sprite.SetColor(Color.white);
     }
 
+    public void CopyFrom(IArmy army)
+    {
+        ID = army.ID;
+        Formation = army.Formation;
+        SetFaction(army.Faction);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -179,11 +194,11 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         this._map = map;
     }
 
-    public void SetFaction(FactionData faction, bool isPlayerFaction)
+    public void SetFaction(FactionData faction)
     {
         this.Faction = faction;
         this.FactionFlag.sprite = faction.Flag;
-        IsPlayerArmy = isPlayerFaction;
+        IsPlayerArmy = faction.IsPlayerFaction;
     }
 
     public void PutOnTile(GridTile tile)

@@ -98,13 +98,28 @@ public class ArmyManager : MonoBehaviour
         return this._armies.Where(a => a.IsPlayerArmy);
     }
 
-    public Army CreateArmy(int x, int y, FactionData faction)
+    public Army CreateArmy(int gridX, int gridY, FactionData faction)
     {
-        var startTile = TileMap.GetGridTile(x, y);
+        var startTile = TileMap.GetGridTile(gridX, gridY);
         var army = Instantiate(ArmyTemplate);
-        army.SetMap(TileMap);
-        army.SetFaction(faction, faction == _playerFaction);
+        army.SetFaction(faction);
+        InitArmy(army);
         army.PutOnTile(startTile);
+        return army;
+
+    }
+
+    public Army CreateArmy(IArmy army)
+    {
+        var newArmy = Instantiate(ArmyTemplate);
+        newArmy.CopyFrom(army);
+        InitArmy(newArmy);
+        return newArmy;
+    }
+
+    private void InitArmy(Army army)
+    {
+        army.SetMap(TileMap);
         army.ArmyClicked += HandleArmyClicked;
         army.ArmyEncountered += HandleArmyEncountered;
         army.EnterTile += HandleArmyEnterTile;
@@ -113,8 +128,18 @@ public class ArmyManager : MonoBehaviour
 
         // Update UI
         _ui.ArmyCreated(army);
+    }
 
-        return army;
+    public void GarrisonSelectedArmy()
+    {
+        if (_selected != null)
+        {
+            var army = _selected;
+            this.UnselectAll();
+            _garrisonManager.GarrisonArmy(army);
+            Destroy(army.gameObject);
+            _armies.Remove(army);
+        }
     }
 
     private void HandleArmyExitTile(object sender, ExitTileEventArgs e)

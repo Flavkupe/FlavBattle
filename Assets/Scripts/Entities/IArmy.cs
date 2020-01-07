@@ -7,4 +7,6 @@ public interface IArmy
     string ID { get; }
 
     Formation Formation { get; }
+
+    FactionData Faction { get; }
 }

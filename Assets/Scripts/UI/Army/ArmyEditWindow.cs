@@ -16,10 +16,13 @@ public class ArmyEditWindow : MonoBehaviour
 
     public UnitStatsPanel UnitStats;
 
+    public GameObject DeployButton;
+
     public GameObject TopLevelDrag;
 
     public event EventHandler<IArmy> ArmyModified;
     public event EventHandler<Unit> UnitReplaced;
+    public event EventHandler<IArmy> ArmyDeployed;
 
     public DraggableUnitProvider DraggableUnitProvider;
 
@@ -151,6 +154,16 @@ public class ArmyEditWindow : MonoBehaviour
     {
         _currentArmy = army;
         Grid.SetArmy(army);
+
+        DeployButton.SetActive(army != null);
+    }
+
+    public void HandleDeployButtonClicked()
+    {
+        if (_currentArmy != null)
+        {
+            ArmyDeployed?.Invoke(this, _currentArmy);
+        }
     }
 
     public void SetMode(Mode mode = Mode.DeployedArmy)

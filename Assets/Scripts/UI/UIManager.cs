@@ -15,12 +15,13 @@ public class UIManager : MonoBehaviour
 
     public event EventHandler<IArmy> ArmyModified;
     public event EventHandler<Unit> UnitReplaced;
+    public event EventHandler<IArmy> ArmyDeployed;
 
     private GameEventManager _gameEvents;
 
     private void Awake()
     {
-        
+
     }
 
     void Start()
@@ -29,12 +30,18 @@ public class UIManager : MonoBehaviour
 
         ArmyEditWindow.ArmyModified += HandleArmyModified;
         ArmyEditWindow.UnitReplaced += HandleUnitReplaced;
+        ArmyEditWindow.ArmyDeployed += HandleArmyDeployed;
 
         _gameEvents = Instances.Current.Managers.GameEvents;
         _gameEvents.CombatStartedEvent += HandleCombatStartedEvent;
         _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;
 
         UpdateSelectedArmyUI(null);
+    }
+
+    private void HandleArmyDeployed(object sender, IArmy army)
+    {
+        ArmyDeployed?.Invoke(this, army);
     }
 
     private void HandleCombatEndedEvent(object sender, CombatEndedEventArgs e)
@@ -99,10 +106,16 @@ public class UIManager : MonoBehaviour
             ArmyPanel.Hide();
             ArmyEditWindow.SetMode(ArmyEditWindow.Mode.Garrison);
             ArmyEditWindow.SetArmy(null);
-            ArmyEditWindow.SetArmyPanelContents(storedArmies);
-            ArmyEditWindow.SetUnitPanelContents(storedUnits);
+            UpdateGarrisonWindow(storedArmies, storedUnits);
         }
     }
+
+    public void UpdateGarrisonWindow(IArmy[] storedArmies, Unit[] storedUnits)
+    {
+        ArmyEditWindow.SetArmyPanelContents(storedArmies);
+        ArmyEditWindow.SetUnitPanelContents(storedUnits);
+    }
+
 
     public void HideArmyEditWindow()
     {

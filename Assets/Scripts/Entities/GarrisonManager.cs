@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +22,8 @@ public class GarrisonManager : MonoBehaviour
 
     private GameEventManager _gameEvents;
 
+    public Garrison _garrison;
+
     private void Awake()
     {
         if (IsCombatMap)
@@ -31,13 +34,21 @@ public class GarrisonManager : MonoBehaviour
 
         _ui = FindObjectOfType<UIManager>();
         _ui.UnitReplaced += HandleUnitReplaced;
+        _ui.ArmyDeployed += HandleArmyDeployed;
 
         _gameEvents = FindObjectOfType<GameEventManager>();
         _gameEvents.UnitDeployed += HandleUnitDeployed;
         _gameEvents.UnitGarrisoned += HandleUnitGarrisoned;
 
+        _garrison = FindObjectOfType<Garrison>();
+        Debug.Assert(_garrison != null, "No garrison found!");
+    }
 
-        
+    private void HandleArmyDeployed(object sender, IArmy army)
+    {
+        var stored = _garrisonedArmies.FirstOrDefault(a => a.ID == army.ID);
+        Debug.Assert(stored != null, "Expected army not in garrison!");
+        this.DeployArmy(stored);
     }
 
     private void HandleUnitGarrisoned(object sender, Unit e)
@@ -68,8 +79,9 @@ public class GarrisonManager : MonoBehaviour
         // TEMP
         for (var i = 0; i < 8; i++)
         {
-            var army1 = new StoredArmy();            
-            var rand = Random.Range(1, 5);
+            var army1 = new StoredArmy(_playerFaction);
+            
+            var rand = UnityEngine.Random.Range(1, 5);
             for (var j = 0; j < rand; j++)
             {
                 army1.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, rand));
@@ -80,7 +92,7 @@ public class GarrisonManager : MonoBehaviour
 
         for (var i = 0; i < 4; i++)
         {
-            var rand = Random.Range(1, 5);
+            var rand = UnityEngine.Random.Range(1, 5);
             var unit = UnitGenerator.MakeUnit(null, _playerFaction.Faction, rand);
             _garrisonedUnits.Add(unit);
         }
@@ -89,5 +101,23 @@ public class GarrisonManager : MonoBehaviour
     public void EditGarrison()
     {
         _ui.ShowGarrisonWindow(_garrisonedArmies.ToArray(), _garrisonedUnits.ToArray());
+    }
+
+    /// <summary>
+    /// Adds the army to the garrison, creating a record of it.
+    /// Does NOT destroy the Army object.
+    /// </summary>
+    public void GarrisonArmy(Army army)
+    {
+        _garrisonedArmies.Add(new StoredArmy(army));
+    }
+
+    public void DeployArmy(StoredArmy army)
+    {
+        var pos = _garrison.transform.position;
+        var newArmy = _armyManager.CreateArmy(army);
+        newArmy.transform.position = pos.ShiftY(-0.25f);
+        _garrisonedArmies.Remove(army);
+        _ui.UpdateGarrisonWindow(_garrisonedArmies.ToArray(), _garrisonedUnits.ToArray());
     }
 }

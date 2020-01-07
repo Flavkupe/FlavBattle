@@ -9,15 +9,27 @@ public class StoredArmy : IArmy
 
     public Formation Formation { get; private set; }
 
-    public StoredArmy(string id, Formation formation)
+    public FactionData Faction { get; private set; }
+
+    public StoredArmy(Army army)
+    {
+        ID = army.ID;
+        Formation = army.Formation;
+        Faction = army.Faction;
+    }
+
+    public StoredArmy(string id, Formation formation, FactionData faction)
     {
         ID = id;
         Formation = formation;
+        Faction = faction;
     }
 
-    public StoredArmy()
+    public StoredArmy(FactionData faction)
     {
-        ID = new Guid().ToString();
+        
+        ID = Guid.NewGuid().ToString();
         Formation = new Formation();
+        Faction = faction;
     }
 }
