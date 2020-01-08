@@ -41,7 +41,13 @@ public class GarrisonManager : MonoBehaviour
         _gameEvents.UnitGarrisoned += HandleUnitGarrisoned;
 
         _garrison = FindObjectOfType<Garrison>();
+        _garrison.RightClicked += HandleGarrisonRightClicked;
         Debug.Assert(_garrison != null, "No garrison found!");
+    }
+
+    private void HandleGarrisonRightClicked(object sender, EventArgs e)
+    {
+        this.EditGarrison();
     }
 
     private void HandleArmyDeployed(object sender, IArmy army)
@@ -100,6 +106,7 @@ public class GarrisonManager : MonoBehaviour
 
     public void EditGarrison()
     {
+        _gameEvents.TriggerMapEvent(MapEventType.MapPaused);
         _ui.ShowGarrisonWindow(_garrisonedArmies.ToArray(), _garrisonedUnits.ToArray());
     }
 

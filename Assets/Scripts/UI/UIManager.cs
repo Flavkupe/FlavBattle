@@ -120,6 +120,7 @@ public class UIManager : MonoBehaviour
     public void HideArmyEditWindow()
     {
         ArmyEditWindow.Hide();
+        _gameEvents.TriggerMapEvent(MapEventType.MapUnpaused);
     }
 
     /// <summary>

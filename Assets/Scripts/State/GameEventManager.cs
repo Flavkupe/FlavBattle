@@ -21,6 +21,15 @@ public class CombatStartedEventArgs
     public Army Enemy { get; set; }
 }
 
+/// <summary>
+/// Helper for state shortcuts, such as checking if
+/// game is paused
+/// </summary>
+public static class GameState
+{
+    public static bool IsMapPaused => GameEventManager.IsMapPaused;
+}
+
 public class GameEventManager : MonoBehaviour
 {
     public bool DebugTrace = false;
@@ -35,6 +44,11 @@ public class GameEventManager : MonoBehaviour
 
     public event EventHandler<Unit> UnitGarrisoned;
 
+    /// <summary>
+    /// Whether or not the map is paused (for example, Armies should not move)
+    /// </summary>
+    public static bool IsMapPaused { get; private set; }
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -48,6 +62,15 @@ public class GameEventManager : MonoBehaviour
 
     public void TriggerMapEvent(MapEventType mapEvent)
     {
+        if (mapEvent == MapEventType.MapPaused)
+        {
+            IsMapPaused = true;
+        }
+        else if (mapEvent == MapEventType.MapUnpaused)
+        {
+            IsMapPaused = false;
+        }
+
         MapEvent?.Invoke(this, mapEvent);
     }
 

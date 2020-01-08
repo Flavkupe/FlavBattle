@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public static class ExtensionFunctions
 {
     public static TValue GetRandom<TValue>(this IList<TValue> list) where TValue : class
@@ -159,5 +159,10 @@ public static class ExtensionFunctions
     public static bool HasComponent<T>(this GameObject obj) where T : MonoBehaviour
     {
         return obj.GetComponent<T>();
+    }
+
+    public static Vector3 ToVector3(this Vector2 vect)
+    {
+        return new Vector3(vect.x, vect.y);
     }
 }

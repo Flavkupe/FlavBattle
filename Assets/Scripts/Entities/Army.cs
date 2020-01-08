@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ArmyClickedEventArgs : EventArgs
@@ -142,10 +143,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (ArmyClicked != null)
-            {
-                ArmyClicked.Invoke(this, new ArmyClickedEventArgs() { Clicked = this });
-            }
+            ArmyClicked?.Invoke(this, new ArmyClickedEventArgs() { Clicked = this });
         }
     }
 
@@ -169,7 +167,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     // Update is called once per frame
     void Update()
     {
-        if (_paused)
+        if (_paused || GameState.IsMapPaused)
         {
             return;
         }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8475245983484200916}
   - component: {fileID: 8475245983484200915}
   - component: {fileID: 1567883725248337546}
+  - component: {fileID: 68192718}
   m_Layer: 0
   m_Name: Garrison
   m_TagString: Untagged
@@ -58,9 +59,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.2}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.3
 --- !u!212 &1567883725248337546
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -95,8 +96,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -409180027
-  m_SortingLayer: 4
+  m_SortingLayerID: -574437645
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7265313343042191254, guid: c9e0f8c1950cf734fb9cf6d273d0846f,
     type: 3}
@@ -110,3 +111,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &68192718
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475245983484200914}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
