@@ -4,11 +4,11 @@ using UnityEngine;
 using System.Linq;
 public static class ExtensionFunctions
 {
-    public static TValue GetRandom<TValue>(this IList<TValue> list) where TValue : class
+    public static TValue GetRandom<TValue>(this IList<TValue> list)
     {
         if (list.Count == 0)
         {
-            return null;
+            return default(TValue);
         }
 
         var random = Random.Range(0, list.Count);

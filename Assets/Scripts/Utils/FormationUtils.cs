@@ -2,6 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FormationGroup
+{
+    All,
+    Front,
+    MidRow,
+    Back,
+    Left,
+    Right,
+    MidCol,
+    FourCorners,
+    FourSides,
+}
+
 public static class FormationUtils
 {
     public static FormationPair FL = new FormationPair { Row = FormationRow.Front, Col = FormationColumn.Left };
@@ -29,6 +42,32 @@ public static class FormationUtils
     public static FormationPair[] RightColSquares = { FR, MR, BR };
     public static FormationPair[] FourCorners = { FR, FL, BR, BL };
     public static FormationPair[] FourSides = { MR, ML, FM, BM };
+
+    public static FormationPair[] GetFormationPairs(FormationGroup group)
+    {
+        switch (group)
+        {
+            case FormationGroup.Front:
+                return FrontRowSquares;
+            case FormationGroup.MidRow:
+                return MiddleRowSquares;
+            case FormationGroup.Back:
+                return BackRowSquares;
+            case FormationGroup.Left:
+                return LeftColSquares;
+            case FormationGroup.Right:
+                return RightColSquares;
+            case FormationGroup.MidCol:
+                return MiddleColSquares;
+            case FormationGroup.FourCorners:
+                return FourCorners;
+            case FormationGroup.FourSides:
+                return FourSides;
+            case FormationGroup.All:
+            default:
+                return AllSquares;
+        }
+    }
 
     /// <summary>
     /// Orientation is clockwise, from top-most square (north of center).

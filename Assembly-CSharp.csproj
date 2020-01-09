@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormationSlot.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
+    <Compile Include="Assets\Scripts\Combat\Data\CombatAbilityData.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSprite.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGridTile.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIUnitGridBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Utils\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\Utils\Enums.cs" />
     <Compile Include="Assets\Scripts\Utils\ExtensionFunctions.cs" />
     <Compile Include="Assets\Scripts\Utils\FormationUtils.cs" />
