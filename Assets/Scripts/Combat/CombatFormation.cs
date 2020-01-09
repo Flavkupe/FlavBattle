@@ -24,7 +24,7 @@ public class CombatFormation : MonoBehaviour, IFormationGrid
     void Awake()
     {
         var orientation = FacingLeft ? FormationOrientation.BottomLeft : FormationOrientation.BottomRight;
-        FormationUtils.PopulateFormationGrid(this, orientation, 2.0f);
+        FormationUtils.PopulateFormationGrid(this, orientation, 1.5f, 0.375f);
     }
 
     public void InitArmy(Army army)

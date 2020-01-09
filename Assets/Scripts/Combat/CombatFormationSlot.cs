@@ -27,12 +27,14 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 
     public void SetUnit(Unit unit)
     {
+        // Put it in the .25f mark, adjusting for scale of slot
+        var yPos = 0.25f / transform.localScale.y;
         var combatUnit = Instantiate(CombatUnitTemplate);
         combatUnit.name = unit.Data.Name;
         combatUnit.SetUnit(unit, FacingLeft);
         CurrentUnit = combatUnit;
         combatUnit.transform.SetParent(this.transform);
-        combatUnit.transform.localPosition = new Vector3(0.0f, 0.25f, 0.0f);
+        combatUnit.transform.localPosition = new Vector3(0.0f, yPos, 0.0f);
     }
 
     public void ClearContents()

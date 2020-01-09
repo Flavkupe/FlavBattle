@@ -70,7 +70,11 @@ public static class FormationUtils
     {
         var xGap = gap * 0.75f;
         var yGap = gap * 0.5f;
+        return PopulateFormationGrid(grid, orientation, xGap, yGap);
+    }
 
+    public static TObjectType PopulateFormationGrid<TObjectType>(TObjectType grid, FormationOrientation orientation, float xGap, float yGap) where TObjectType : MonoBehaviour, IFormationGrid
+    {
         var orientations = Orientations[orientation];
 
         var tv = new Vector3(0.0f, yGap);
