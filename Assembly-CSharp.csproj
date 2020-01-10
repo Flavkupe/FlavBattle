@@ -66,10 +66,12 @@
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Prop.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleDisplay.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleManager.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormationSlot.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
     <Compile Include="Assets\Scripts\Combat\Data\CombatAbilityData.cs" />
+    <Compile Include="Assets\Scripts\Combat\TestingAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSprite.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />

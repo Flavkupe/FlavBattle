@@ -12,5 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
+  Name: 
   Target: 0
-  Effect: 0
+  ValidTargets: 0
+  PreferredTargets: 3
+  VisualEffect: 0
+  ProjectileEffect: 1
+  ArcHeight: {x: 1, y: 4}
+  ProjectileSpeed: 20
+  ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
+    type: 3}
+  Effect: 1
+  Damage: {x: 8, y: 12}
+  MoraleDamage: 0

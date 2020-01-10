@@ -38,26 +38,59 @@ public class CombatAbilityData : ScriptableObject
 {
     public string Name;
 
+    /***** Targets ******/
+
+    [BoxGroup("Targets")]
     public CombatAbilityTarget Target;
 
+    [BoxGroup("Targets")]
     public FormationGroup ValidTargets;
 
+    [BoxGroup("Targets")]
     public FormationGroup PreferredTargets;
 
+    /***** Visuals ******/
+
+    [BoxGroup("Visuals")]
     public CombatAbilityVisual VisualEffect;
 
+    /** Projectile **/
+
+    [BoxGroup("Visuals")]
     [ShowIf("ShowProjectileVisualEffect")]
     public CombatAbilityProjectileEffect ProjectileEffect;
 
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowProjectileArcProps")]
+    [MinMaxSlider(-10.0f, 10.0f)]
+    public Vector2 ArcHeight = new Vector2(0.0f, 0.0f);
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowProjectileVisualEffect")]
+    public float ProjectileSpeed;
+
+    [ShowAssetPreview]
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowProjectileVisualEffect")]
+    public GameObject ProjectileObject;
+
+
+    /***** Effect ******/
+
+    [BoxGroup("Effect")]
     [EnumFlags]
     public CombatAbilityEffect Effect;
 
+    [BoxGroup("Effect")]
     [ShowIf("ShowDamage")]
     [MinMaxSlider(0.0f, 100.0f)]
     public Vector2 Damage;
 
+    [BoxGroup("Effect")]
     [ShowIf("ShowMoraleDamage")]
     public int MoraleDamage;
+
+    public bool IsTargetedAbility => VisualEffect == CombatAbilityVisual.Projectile;
 
     private bool ShowDamage()
     {
@@ -67,6 +100,12 @@ public class CombatAbilityData : ScriptableObject
     private bool ShowMoraleDamage()
     {
         return Effect.HasFlag(CombatAbilityEffect.MoraleDown);
+    }
+
+    private bool ShowProjectileArcProps()
+    {
+        return VisualEffect == CombatAbilityVisual.Projectile &&
+            ProjectileEffect == CombatAbilityProjectileEffect.Arc;
     }
 
     private bool ShowProjectileVisualEffect()
