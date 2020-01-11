@@ -66,6 +66,11 @@ public class CombatAbilityData : ScriptableObject
     public Vector2 ArcHeight = new Vector2(0.0f, 0.0f);
 
     [BoxGroup("Visuals")]
+    [ShowIf("ShowProjectileArcProps")]
+    [Tooltip("Whether the projectile changes its direction along the arc")]
+    public bool TraceDirection = false;
+
+    [BoxGroup("Visuals")]
     [ShowIf("ShowProjectileVisualEffect")]
     public float ProjectileSpeed;
 

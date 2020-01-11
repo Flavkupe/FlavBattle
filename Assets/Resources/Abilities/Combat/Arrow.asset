@@ -18,8 +18,9 @@ MonoBehaviour:
   PreferredTargets: 3
   VisualEffect: 0
   ProjectileEffect: 1
-  ArcHeight: {x: 1, y: 4}
-  ProjectileSpeed: 20
+  ArcHeight: {x: 3, y: 5}
+  TraceDirection: 1
+  ProjectileSpeed: 1
   ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
     type: 3}
   Effect: 1

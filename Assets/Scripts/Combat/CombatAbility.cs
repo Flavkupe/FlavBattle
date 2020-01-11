@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CombatAbility : MonoBehaviour
@@ -29,38 +30,64 @@ public class CombatAbility : MonoBehaviour
         var projectile = Instantiate(_data.ProjectileObject);
         projectile.transform.position = sourcePos;
         var dist = Vector3.Distance(targetPos, sourcePos);
-        var travelled = 0.0f;
 
-        Vector3? arcPoint = null; 
-        if (_data.ProjectileEffect == CombatAbilityProjectileEffect.Arc)
+        if (_data.ProjectileEffect == CombatAbilityProjectileEffect.Straight)
         {
-            var height = UnityEngine.Random.Range(_data.ArcHeight.x, _data.ArcHeight.y);
-            arcPoint = (targetPos + sourcePos) / 2.0f;
-            arcPoint += Vector3.up * height;
+            yield return FireProjectileStraight(sourcePos, targetPos, projectile, dist);
+        }
+        else if (_data.ProjectileEffect == CombatAbilityProjectileEffect.Arc)
+        {
+            yield return FireProjectileArc(sourcePos, targetPos, projectile, dist);
         }
 
+        Destroy(projectile.gameObject);
+        Destroy(this.gameObject);
+    }
+
+    private IEnumerator FireProjectileArc(Vector3 source, Vector3 target, GameObject projectile, float dist)
+    {
+        
+        var height = UnityEngine.Random.Range(_data.ArcHeight.x, _data.ArcHeight.y);
+        Vector3 arcPoint = (source + target) / 2.0f;
+        arcPoint += Vector3.up * height;
+
+        var p0 = source;
+        var p1 = arcPoint;
+        var p2 = target;
+        var bezier = new Bezier(p0, p1, p2);
+
+        var travelled = 0.0f;
+        var starting = projectile.transform.rotation;
         while (dist > 0 && travelled < dist)
         {
             var speed = _data.ProjectileSpeed * Time.deltaTime;
             travelled += speed;
 
-            if (_data.ProjectileEffect == CombatAbilityProjectileEffect.Straight)
+            var t = travelled / dist;
+            projectile.transform.position = bezier.GetPoint(t);
+
+            if (_data.TraceDirection)
             {
-                projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, targetPos, speed);
-            }
-            else if (_data.ProjectileEffect == CombatAbilityProjectileEffect.Arc)
-            {
-                var p0 = sourcePos;
-                var p1 = arcPoint.Value;
-                var p2 = targetPos;
-                var t = travelled / dist;
-                projectile.transform.position = Vector3.Lerp(Vector3.Lerp(p0, p1, t), Vector3.Lerp(p1, p2, t), t);
+                // var direction = bezier.GetDirection(projectile.transform, t);
+                var direction = bezier.GetDirection(t);
+                // var direction = bezier.GetFirstDerivative(t);
+                Debug.Log(direction);
+                projectile.transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
             }
 
             yield return null;
         }
+    }
 
-        Destroy(projectile.gameObject);
-        Destroy(this.gameObject);
+    private IEnumerator FireProjectileStraight(Vector3 source, Vector3 target, GameObject projectile, float dist)
+    {
+        var travelled = 0.0f;
+        while (dist > 0 && travelled < dist)
+        {
+            var speed = _data.ProjectileSpeed * Time.deltaTime;
+            travelled += speed;
+            projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, target, speed);
+            yield return null;
+        }
     }
 }
