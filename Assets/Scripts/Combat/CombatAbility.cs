@@ -46,7 +46,6 @@ public class CombatAbility : MonoBehaviour
 
     private IEnumerator FireProjectileArc(Vector3 source, Vector3 target, GameObject projectile, float dist)
     {
-        
         var height = UnityEngine.Random.Range(_data.ArcHeight.x, _data.ArcHeight.y);
         Vector3 arcPoint = (source + target) / 2.0f;
         arcPoint += Vector3.up * height;
@@ -58,6 +57,7 @@ public class CombatAbility : MonoBehaviour
 
         var travelled = 0.0f;
         var starting = projectile.transform.rotation;
+
         while (dist > 0 && travelled < dist)
         {
             var speed = _data.ProjectileSpeed * Time.deltaTime;
@@ -68,11 +68,12 @@ public class CombatAbility : MonoBehaviour
 
             if (_data.TraceDirection)
             {
-                // var direction = bezier.GetDirection(projectile.transform, t);
                 var direction = bezier.GetDirection(t);
-                // var direction = bezier.GetFirstDerivative(t);
-                Debug.Log(direction);
-                projectile.transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
+                var targetPt = projectile.transform.position + direction;
+
+                projectile.transform.LookAt(targetPt, Vector3.up);
+                // WHYYYYYYY????? This seems to be required for this to work
+                projectile.transform.Rotate(0, 90, 180);
             }
 
             yield return null;
