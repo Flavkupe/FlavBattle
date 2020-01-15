@@ -33,6 +33,18 @@ public enum CombatAbilityProjectileEffect
     Arc
 }
 
+public enum CombatAbilityCharacterMoveEffect
+{
+    Teleport,
+    Straight,
+    Arc
+}
+
+public enum CombatAbilityCharacterMoveTarget
+{
+    Front,
+}
+
 [CreateAssetMenu(fileName = "Combat Ability Data", menuName = "Custom/Abilities/Combat Ability Data", order = 1)]
 public class CombatAbilityData : ScriptableObject
 {
@@ -79,6 +91,44 @@ public class CombatAbilityData : ScriptableObject
     [ShowIf("ShowProjectileVisualEffect")]
     public GameObject ProjectileObject;
 
+    /***** Movement Effect ******/
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowAnimationProps")]
+    public bool CharacterMove;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowCharacterMoveProps")]
+    public CombatAbilityCharacterMoveEffect CharacterMoveToEffect;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowCharacterMoveProps")]
+    public CombatAbilityCharacterMoveEffect CharacterMoveBackEffect;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowCharacterMoveProps")]
+    [Tooltip("Where to move relative to target")]
+    public CombatAbilityCharacterMoveTarget CharacterMoveTarget;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowCharacterMoveArcProps")]
+    public float CharacterMoveArcHeight;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowCharacterMoveProps")]
+    public float CharacterMoveSpeed;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowAnimationProps")]
+    public CombatAnimation ComabtAnimation;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowAnimationProps")]
+    public float CombatAnimationSpeed = 1.0f;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowAnimationProps")]
+    public float CombatAnimationRepeats = 1.0f;
 
     /***** Effect ******/
 
@@ -96,6 +146,23 @@ public class CombatAbilityData : ScriptableObject
     public int MoraleDamage;
 
     public bool IsTargetedAbility => VisualEffect == CombatAbilityVisual.Projectile;
+
+    private bool ShowAnimationProps()
+    {
+        return VisualEffect == CombatAbilityVisual.Animation;
+    }
+
+    private bool ShowCharacterMoveProps()
+    {
+        return CharacterMove;
+    }
+
+    private bool ShowCharacterMoveArcProps()
+    {
+        return ShowCharacterMoveProps() &&
+            (CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Arc ||
+            CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Arc);
+    }
 
     private bool ShowDamage()
     {

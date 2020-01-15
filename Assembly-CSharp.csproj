@@ -67,6 +67,7 @@
     <Compile Include="Assets\Scripts\Combat\BattleDisplay.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormationSlot.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />

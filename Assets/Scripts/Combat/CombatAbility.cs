@@ -19,8 +19,70 @@ public class CombatAbility : MonoBehaviour
         {
             return StartCoroutine(FireProjectile(source, target));
         }
+        else if (_data.VisualEffect == CombatAbilityVisual.Animation)
+        {
+            return StartCoroutine(DoAnimation(source, target));
+        }
 
         return null;
+    }
+
+    private IEnumerator DoAnimation(GameObject source, GameObject target)
+    {
+        var sourcePos = source.transform.position;
+        var targetPos = GetTargetPos(target, _data.CharacterMoveTarget, 0.5f);
+
+        // Move there
+        if (_data.CharacterMove)
+        {
+            if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Arc)
+            {
+                yield return MoveInArc(sourcePos, targetPos, source, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+            }
+            else if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Straight)
+            {
+                // TODO
+            }
+            else
+            {
+                // Teleport
+                source.transform.position = targetPos;
+            }
+        }
+
+        // Animate
+        if (_data.ComabtAnimation != null)
+        {
+            for (int i = 0; i < _data.CombatAnimationRepeats; i++)
+            {
+                var animation = Instantiate(_data.ComabtAnimation);
+                animation.Speed = _data.CombatAnimationSpeed;
+                animation.transform.SetParent(source.transform);
+                animation.transform.position = source.transform.position;
+                yield return animation.PlayToCompletion();
+                Destroy(animation.gameObject);
+            }    
+        }
+
+        // Move back
+        if (_data.CharacterMove)
+        {
+            if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Arc)
+            {
+                yield return MoveInArc(targetPos, sourcePos, source, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+            }
+            else if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Straight)
+            {
+                // TODO
+            }
+            else
+            {
+                // Teleport
+                source.transform.position = sourcePos;
+            }
+        }
+
+        Destroy(this.gameObject);
     }
 
     private IEnumerator FireProjectile(GameObject source, GameObject target)
@@ -29,59 +91,71 @@ public class CombatAbility : MonoBehaviour
         var sourcePos = source.transform.position;
         var projectile = Instantiate(_data.ProjectileObject);
         projectile.transform.position = sourcePos;
-        var dist = Vector3.Distance(targetPos, sourcePos);
 
         if (_data.ProjectileEffect == CombatAbilityProjectileEffect.Straight)
         {
-            yield return FireProjectileStraight(sourcePos, targetPos, projectile, dist);
+            yield return FireProjectileStraight(sourcePos, targetPos, projectile);
         }
         else if (_data.ProjectileEffect == CombatAbilityProjectileEffect.Arc)
         {
-            yield return FireProjectileArc(sourcePos, targetPos, projectile, dist);
+            yield return FireProjectileArc(sourcePos, targetPos, projectile);
         }
 
         Destroy(projectile.gameObject);
         Destroy(this.gameObject);
     }
 
-    private IEnumerator FireProjectileArc(Vector3 source, Vector3 target, GameObject projectile, float dist)
+    private IEnumerator FireProjectileArc(Vector3 source, Vector3 target, GameObject projectile)
     {
         var height = UnityEngine.Random.Range(_data.ArcHeight.x, _data.ArcHeight.y);
-        Vector3 arcPoint = (source + target) / 2.0f;
-        arcPoint += Vector3.up * height;
+        yield return MoveInArc(source, target, projectile, _data.ProjectileSpeed, height, _data.TraceDirection);
+    }
 
-        var p0 = source;
-        var p1 = arcPoint;
-        var p2 = target;
-        var bezier = new Bezier(p0, p1, p2);
+    private IEnumerator MoveInArc(Vector3 source, Vector3 target, GameObject obj, float speed, float arcHeight, bool traceDirection = false)
+    {
+        var dist = Vector3.Distance(target, source);
+        var height = arcHeight;
+        var bezier = GetArc(height, source, target);
 
         var travelled = 0.0f;
-        var starting = projectile.transform.rotation;
+        var starting = obj.transform.rotation;
 
         while (dist > 0 && travelled < dist)
         {
-            var speed = _data.ProjectileSpeed * Time.deltaTime;
-            travelled += speed;
+            var step = speed * Time.deltaTime;
+            travelled += step;
 
             var t = travelled / dist;
-            projectile.transform.position = bezier.GetPoint(t);
+            obj.transform.position = bezier.GetPoint(t);
 
-            if (_data.TraceDirection)
+            if (traceDirection)
             {
                 var direction = bezier.GetDirection(t);
-                var targetPt = projectile.transform.position + direction;
+                var targetPt = obj.transform.position + direction;
 
-                projectile.transform.LookAt(targetPt, Vector3.up);
+                obj.transform.LookAt(targetPt, Vector3.up);
                 // WHYYYYYYY????? This seems to be required for this to work
-                projectile.transform.Rotate(0, 90, 180);
+                obj.transform.Rotate(0, 90, 180);
             }
 
             yield return null;
         }
     }
 
-    private IEnumerator FireProjectileStraight(Vector3 source, Vector3 target, GameObject projectile, float dist)
+    private Bezier GetArc(float height, Vector3 source, Vector3 target)
     {
+        Vector3 arcPoint = (source + target) / 2.0f;
+        arcPoint += Vector3.up * height;
+
+        var p0 = source;
+        var p1 = arcPoint;
+        var p2 = target;
+        return new Bezier(p0, p1, p2);
+    }
+
+    private IEnumerator FireProjectileStraight(Vector3 source, Vector3 target, GameObject projectile)
+    {
+        var dist = Vector3.Distance(target, source);
         var travelled = 0.0f;
         while (dist > 0 && travelled < dist)
         {
@@ -90,5 +164,17 @@ public class CombatAbility : MonoBehaviour
             projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, target, speed);
             yield return null;
         }
+    }
+
+    private Vector3 GetTargetPos(GameObject target, CombatAbilityCharacterMoveTarget targetPos, float distance)
+    {
+        if (targetPos == CombatAbilityCharacterMoveTarget.Front)
+        {
+            // TODO
+        }
+
+        // TEMP
+        var direction = (target.transform.right * -1);
+        return  target.transform.position + (direction * distance);
     }
 }
