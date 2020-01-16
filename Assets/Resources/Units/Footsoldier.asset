@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af06fcb51bd3cd04c9ac136281956420, type: 3}
   m_Name: Footsoldier
   m_EditorClassIdentifier: 
+  Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
+  Name: Foot Soldier
   HP: {x: 20, y: 30}
   Power: {x: 3, y: 6}
   Defense: {x: 3, y: 6}
@@ -20,7 +22,6 @@ MonoBehaviour:
   PowerScaling: {x: 1, y: 2}
   DefenseScaling: {x: 1, y: 2}
   SpeedScaling: {x: 1, y: 1}
-  Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Sprite: {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Portraits:
   - {fileID: 21300000, guid: 7db494f2b8a3349149bf86e1af776854, type: 3}
@@ -31,4 +32,6 @@ MonoBehaviour:
   Animations:
   - {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   - {fileID: 6265214865827592138, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
-  Name: Foot Soldier
+  DefaultStrategy: {fileID: 11400000, guid: 52e9656d2ad99404b8f87689154ba6f0, type: 2}
+  StartingAbilities:
+  - {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}

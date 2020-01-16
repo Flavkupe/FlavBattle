@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum FormationGroup
@@ -67,6 +68,11 @@ public static class FormationUtils
             default:
                 return AllSquares;
         }
+    }
+
+    public static bool IncludesRow(FormationGroup group, FormationRow row)
+    {
+        return GetFormationPairs(group).Any(a => a.Row == row);
     }
 
     /// <summary>

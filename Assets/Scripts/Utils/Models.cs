@@ -24,6 +24,11 @@ public struct FormationPair
         Col = col;
     }
 
+    public bool Equals(FormationPair other)
+    {
+        return Row == other.Row && Col == other.Col;
+    }
+
     public override int GetHashCode()
     {
         return (int)Row * 10 + (int)Col;

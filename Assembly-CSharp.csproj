@@ -70,8 +70,10 @@
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormationSlot.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatStrategy.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
     <Compile Include="Assets\Scripts\Combat\Data\CombatAbilityData.cs" />
+    <Compile Include="Assets\Scripts\Combat\Data\CombatStrategyData.cs" />
     <Compile Include="Assets\Scripts\Combat\TestingAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSprite.cs" />

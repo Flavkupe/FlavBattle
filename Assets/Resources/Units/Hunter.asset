@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af06fcb51bd3cd04c9ac136281956420, type: 3}
   m_Name: Hunter
   m_EditorClassIdentifier: 
+  Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
+  Name: Hunter
   HP: {x: 10, y: 20}
   Power: {x: 4, y: 7}
   Defense: {x: 2, y: 4}
@@ -20,7 +22,6 @@ MonoBehaviour:
   PowerScaling: {x: 2, y: 3}
   DefenseScaling: {x: 1, y: 2}
   SpeedScaling: {x: 1, y: 2}
-  Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   Sprite: {fileID: 807448920738025961, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   Portraits:
   - {fileID: 21300000, guid: 94a13421e84754816bf53257ade2b30a, type: 3}
@@ -29,4 +30,6 @@ MonoBehaviour:
   Animations:
   - {fileID: -6278177606702991857, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   - {fileID: 7173849240055794619, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
-  Name: Hunter
+  DefaultStrategy: {fileID: 11400000, guid: 8010bf353205325439b582df9bdfb3b0, type: 2}
+  StartingAbilities:
+  - {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}

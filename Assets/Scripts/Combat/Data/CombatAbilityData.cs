@@ -5,6 +5,12 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+public enum CombatAbilityType
+{
+    Attack,
+    Defense
+}
+
 public enum CombatAbilityTarget
 {
     AllEnemies,
@@ -45,10 +51,12 @@ public enum CombatAbilityCharacterMoveTarget
     Front,
 }
 
-[CreateAssetMenu(fileName = "Combat Ability Data", menuName = "Custom/Abilities/Combat Ability Data", order = 1)]
+[CreateAssetMenu(fileName = "Ability", menuName = "Custom/Abilities/Combat Ability Data", order = 1)]
 public class CombatAbilityData : ScriptableObject
 {
     public string Name;
+
+    public CombatAbilityType Type = CombatAbilityType.Attack;
 
     /***** Targets ******/
 

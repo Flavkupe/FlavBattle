@@ -14,6 +14,8 @@ public class UnitInfo
 
     public Sprite Portrait { get; private set; }
 
+    public List<CombatAbilityData> Abilities { get; } = new List<CombatAbilityData>();
+
     public string Name { get; private set; }
 
     public UnitInfo()
@@ -28,5 +30,14 @@ public class UnitInfo
         this.Name = data.RollName();
         this.Portrait = data.RollPortrait();
         this.Faction = faction;
+        this.Abilities.AddRange(data.StartingAbilities);
+    }
+
+    public void LearnAbility(CombatAbilityData data)
+    {
+        if (!Abilities.Contains(data))
+        {
+            Abilities.Add(data);
+        }
     }
 }
