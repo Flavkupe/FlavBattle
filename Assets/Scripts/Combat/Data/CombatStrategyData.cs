@@ -15,9 +15,12 @@ public enum CombatTargetPriority
 {
     Random,
     Closest,
+
+    // Prefers back two rows over front row
     BackFirst,
+
+    // Prefers front row over back two rows
     FrontFirst,
-    MiddleFirst,
     Weakest,
     Strongest,
 }

@@ -19,7 +19,7 @@ public class CombatFormation : MonoBehaviour, IFormationGrid
 
     public bool FacingLeft = false;
 
-    private Army _army;
+    private IArmy _army;
 
     void Awake()
     {
@@ -27,7 +27,7 @@ public class CombatFormation : MonoBehaviour, IFormationGrid
         FormationUtils.PopulateFormationGrid(this, orientation, 1.5f, 0.375f);
     }
 
-    public void InitArmy(Army army)
+    public void InitArmy(IArmy army)
     {
         _army = army;
 

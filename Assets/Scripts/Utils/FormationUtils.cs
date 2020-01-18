@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -39,6 +40,12 @@ public static class FormationUtils
     public static FormationPair[] MiddleRowSquares = { ML, MM, MR };
     public static FormationPair[] BackRowSquares = { BL, BM, BR };
     public static FormationPair[] LeftColSquares = { FL, ML, BL };
+
+    internal static List<FormationPair> GetIntersection(IEnumerable<FormationPair> a, IEnumerable<FormationPair> b)
+    {
+        return a.Intersect(b, EqualityComparer<FormationPair>.Default).ToList();
+    }
+
     public static FormationPair[] MiddleColSquares = { FM, MM, BM };
     public static FormationPair[] RightColSquares = { FR, MR, BR };
     public static FormationPair[] FourCorners = { FR, FL, BR, BL };
@@ -145,7 +152,7 @@ public static class FormationUtils
 
     public static TObjectType CreateFormationGrid<TObjectType>(TObjectType template, FormationOrientation orientation = FormationOrientation.BottomRight, float gap = 2.0f) where TObjectType : MonoBehaviour, IFormationGrid
     {
-        var grid = Object.Instantiate(template);
+        var grid = UnityEngine.Object.Instantiate(template);
         return PopulateFormationGrid(grid, orientation, gap);
     }
 }

@@ -35,7 +35,7 @@ public class BattleDisplay : MonoBehaviour
         return StartCoroutine(ShowCombatEndSignInternal(victory));
     }
 
-    public Coroutine InitializeCombatScene(Army left, Army right)
+    public Coroutine InitializeCombatScene(IArmy left, IArmy right)
     {
         return StartCoroutine(InitializeCombatSceneInternal(left, right));
     }
@@ -45,7 +45,7 @@ public class BattleDisplay : MonoBehaviour
         return StartCoroutine(HideCombatSceneInternal());
     }
 
-    private IEnumerator InitializeCombatSceneInternal(Army left, Army right)
+    private IEnumerator InitializeCombatSceneInternal(IArmy left, IArmy right)
     {
         LeftFormation.InitArmy(left);
         RightFormation.InitArmy(right);

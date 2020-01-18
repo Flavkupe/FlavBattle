@@ -14,11 +14,26 @@ public class Formation
 {
     private Unit[,] _units = new Unit[3,3];
 
-    public IEnumerable<Unit> GetUnits()
+    public List<Unit> GetUnits()
     {
         var list = new List<Unit>();
         foreach (var unit in this._units)
         {
+            if (unit != null)
+            {
+                list.Add(unit);
+            }
+        }
+
+        return list;
+    }
+
+    public List<Unit> GetUnits(IEnumerable<FormationPair> pairs)
+    {
+        var list = new List<Unit>();
+        foreach (var pair in pairs)
+        {
+            var unit = GetUnit(pair.Row, pair.Col);
             if (unit != null)
             {
                 list.Add(unit);
@@ -34,6 +49,11 @@ public class Formation
     /// </summary>
     public bool PutUnit(Unit unit)
     {
+        if (unit == null)
+        {
+            return false;
+        }
+
         var square = GetRandomEmpty();
         if (!square.HasValue)
         {

@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Entities\IArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\IDetectable.cs" />
     <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
+    <Compile Include="Assets\Scripts\Entities\TestArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\Unit.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitGenerator.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SwordSlash
   m_EditorClassIdentifier: 
   Name: 
+  Type: 0
   Target: 0
   ValidTargets: 0
   PreferredTargets: 3
@@ -34,5 +35,5 @@ MonoBehaviour:
   CombatAnimationSpeed: 3
   CombatAnimationRepeats: 2
   Effect: 1
-  Damage: {x: 8, y: 12}
+  Damage: {x: 2, y: 4}
   MoraleDamage: 0

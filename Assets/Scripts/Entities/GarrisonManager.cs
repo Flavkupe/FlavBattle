@@ -90,7 +90,7 @@ public class GarrisonManager : MonoBehaviour
             var rand = UnityEngine.Random.Range(1, 5);
             for (var j = 0; j < rand; j++)
             {
-                army1.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, rand));
+                army1.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, rand));
             }
 
             _garrisonedArmies.Add(army1);
@@ -99,7 +99,7 @@ public class GarrisonManager : MonoBehaviour
         for (var i = 0; i < 4; i++)
         {
             var rand = UnityEngine.Random.Range(1, 5);
-            var unit = UnitGenerator.MakeUnit(null, _playerFaction.Faction, rand);
+            var unit = UnitGenerator.MakeUnit(_playerFaction.Faction, rand);
             _garrisonedUnits.Add(unit);
         }
     }

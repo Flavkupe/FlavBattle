@@ -11,14 +11,14 @@ public enum MapEventType
 
 public class CombatEndedEventArgs
 {
-    public Army Winner { get; set; }
-    public Army Loser { get; set; }
+    public IArmy Winner { get; set; }
+    public IArmy Loser { get; set; }
 }
 
 public class CombatStartedEventArgs
 {
-    public Army Player { get; set; }
-    public Army Enemy { get; set; }
+    public IArmy Player { get; set; }
+    public IArmy Enemy { get; set; }
 }
 
 /// <summary>
@@ -79,7 +79,7 @@ public class GameEventManager : MonoBehaviour
         UnitDeployed?.Invoke(this, unit);
     }
 
-    public void TriggerCombatStartedEvent(Army player, Army enemy)
+    public void TriggerCombatStartedEvent(IArmy player, IArmy enemy)
     {
         CombatStartedEvent?.Invoke(this, new CombatStartedEventArgs
         {
@@ -88,7 +88,7 @@ public class GameEventManager : MonoBehaviour
         });
     }
 
-    public void TriggerCombatEndedEvent(Army winner, Army loser)
+    public void TriggerCombatEndedEvent(IArmy winner, IArmy loser)
     {
         CombatEndedEvent?.Invoke(this, new CombatEndedEventArgs
         {

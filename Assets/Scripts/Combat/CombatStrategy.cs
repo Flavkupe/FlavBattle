@@ -41,8 +41,9 @@ public class CombatStrategy
             };
         }
 
-        var ability = PickAbility(validStrats[0]);
-
+        // TODO: pick the best strat
+        var chosenStrat = validStrats[0];
+        var ability = PickAbility(chosenStrat);
         var targets = PickTargets(ability);
         return new CombatStrategyDecision
         {
@@ -54,7 +55,17 @@ public class CombatStrategy
 
     private List<Unit> PickTargets(CombatAbilityData ability)
     {
-        // TODO
+        // TODO: pick best targets based on other things
+        var preferred = FormationUtils.GetFormationPairs(ability.PreferredTargets);
+        var enemyPositions = _enemies.Formation.GetOccupiedPositions();
+        var targets = FormationUtils.GetIntersection(preferred, enemyPositions);
+        if (targets.Count == 0)
+        {
+            var valid = FormationUtils.GetFormationPairs(ability.ValidTargets);
+            targets = FormationUtils.GetIntersection(valid, enemyPositions);
+        }
+
+        return _enemies.Formation.GetUnits(targets);
     }
 
     private bool CanUseStrategy(CombatActionStrategy strategy)
@@ -154,19 +165,25 @@ public class CombatStrategy
         {
             // TODO
         }
-        else if (priority == CombatTargetPriority.FrontFirst)
+        else if (priority == CombatTargetPriority.FrontFirst ||
+            priority == CombatTargetPriority.BackFirst)
         {
-            ability = abilities.FirstOrDefault(a => FormationUtils.IncludesRow(a.PreferredTargets, FormationRow.Front));
-        }
-        else if (priority == CombatTargetPriority.MiddleFirst)
-        {
-            ability = abilities.FirstOrDefault(a => FormationUtils.IncludesRow(a.PreferredTargets, FormationRow.Middle));
-        }
-        else if (priority == CombatTargetPriority.BackFirst)
-        {
-            ability = abilities.FirstOrDefault(a => FormationUtils.IncludesRow(a.PreferredTargets, FormationRow.Back));
+            ability = abilities.Where(a => PreferredTargetMatchesPriority(a.PreferredTargets, priority)).ToList().GetRandom();
         }
 
         return ability;
+    }
+
+    private bool PreferredTargetMatchesPriority(FormationGroup preferredTarget, CombatTargetPriority priority)
+    {
+        switch (priority)
+        {
+            case CombatTargetPriority.BackFirst:
+                return FormationUtils.GetFormationPairs(preferredTarget).Any(a => a.Row == FormationRow.Back || a.Row == FormationRow.Middle);
+            case CombatTargetPriority.FrontFirst:
+                return FormationUtils.GetFormationPairs(preferredTarget).Any(a => a.Row == FormationRow.Front);
+            default:
+                return false;
+        }
     }
 }

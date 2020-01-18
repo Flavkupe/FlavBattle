@@ -31,8 +31,8 @@ public class BattleManager : MonoBehaviour
     }
 
     private State _state = State.NotInCombat;
-    private Army _player;
-    private Army _other;
+    private IArmy _player;
+    private IArmy _other;
     private List<Combatant> _combatants = new List<Combatant>();
     private Queue<Combatant> _turnQueue = new Queue<Combatant>();
     private GameEventManager _gameEventManager;
@@ -77,7 +77,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public Coroutine StartCombat(Army player, Army enemy)
+    public Coroutine StartCombat(IArmy player, IArmy enemy)
     {
         return StartCoroutine(StartCombatInternal(player, enemy));
     }
@@ -93,7 +93,7 @@ public class BattleManager : MonoBehaviour
         _state = State.NotInCombat;
     }
 
-    private IEnumerator StartCombatInternal(Army player, Army enemy)
+    private IEnumerator StartCombatInternal(IArmy player, IArmy enemy)
     {
         _gameEventManager.TriggerCombatStartedEvent(player, enemy);
 
@@ -107,7 +107,7 @@ public class BattleManager : MonoBehaviour
         _state = State.AwaitingTurn;
     }
 
-    private IEnumerable<Combatant> GetCombatants(Army army, bool left)
+    private IEnumerable<Combatant> GetCombatants(IArmy army, bool left)
     {
         var combatFormation = left ? BattleDisplay.LeftFormation : BattleDisplay.RightFormation;
         return army.Formation.GetOccupiedPositionInfo().Select(a => new Combatant
@@ -155,17 +155,39 @@ public class BattleManager : MonoBehaviour
             yield break;
         }
 
-        yield return combatant.CombatFormationSlot.CurrentUnit.AnimateAttack();
         var damageRoll = combatant.Unit.Info.CurrentStats.Power;
-        Debug.Log($"Damage roll for {damageRoll}!");
+
+        var ability = combatant.Unit.Info.Abilities.FirstOrDefault();
+        if (ability == null)
+        {
+            yield return combatant.CombatFormationSlot.CurrentUnit.AnimateAttack();
+        }
+        
         foreach (var target in targets)
         {
-            yield return AttackTarget(combatant, target, damageRoll);
+            var damage = damageRoll;
+            if (ability != null)
+            {
+                damage += ability.Damage.RandomBetween();
+                yield return AnimateAbility(combatant, target, ability);
+            }
+
+            Debug.Log($"Damage roll for {damage}!");
+            yield return AttackTarget(combatant, target, damage);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        // yield return new WaitForSeconds(0.5f);
 
         _state = State.AwaitingTurn;
+    }
+
+    private IEnumerator AnimateAbility(Combatant attacker, Combatant target, CombatAbilityData abilityData)
+    {
+        var obj = new GameObject("Ability");
+        var ability = obj.AddComponent<CombatAbility>();
+
+        ability.InitData(abilityData);
+        yield return ability.StartTargetedAbility(attacker.CombatFormationSlot.CurrentUnit.gameObject, target.CombatFormationSlot.CurrentUnit.gameObject);
     }
 
     private IEnumerator AttackTarget(Combatant attacker, Combatant target, int damageRoll)

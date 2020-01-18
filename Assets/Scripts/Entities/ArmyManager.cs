@@ -69,12 +69,12 @@ public class ArmyManager : MonoBehaviour
         var enemyArmy = CreateArmy(-2, 0, enemyFaction);
 
         // TODO: TEMP
-        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
-        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
-        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
-        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(null, _playerFaction.Faction, 4));
-        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, enemyFaction.Faction));
-        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(null, enemyFaction.Faction));
+        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
+        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
+        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
+        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
+        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
+        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
 
         _ui.ArmyPanel.UpdatePanelContents();
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
@@ -249,13 +249,18 @@ public class ArmyManager : MonoBehaviour
         StartCoroutine(CombatEnded(e.Winner, e.Loser));
     }
 
-    private IEnumerator CombatEnded(Army winner, Army loser)
+    private IEnumerator CombatEnded(IArmy winner, IArmy loser)
     {
-        _armies.Remove(loser);
-        yield return loser.Vanish();
-        Destroy(loser.gameObject);
-        _combatProcessed = false;
-        PauseAll(false);
+        var loserArmy = _armies.FirstOrDefault(a => a.ID == loser.ID);
+        Debug.Assert(loserArmy != null);
+        if (loserArmy != null)
+        {
+            _armies.Remove(loserArmy);
+            yield return loserArmy.Vanish();
+            Destroy(loserArmy.gameObject);
+            _combatProcessed = false;
+            PauseAll(false);
+        }
     }
 
     private IEnumerator StartCombat(Army player, Army enemy)

@@ -165,4 +165,9 @@ public static class ExtensionFunctions
     {
         return new Vector3(vect.x, vect.y);
     }
+
+    public static int RandomBetween(this Vector2 range)
+    {
+        return Random.Range((int)range.x, (int)range.y);
+    }
 }

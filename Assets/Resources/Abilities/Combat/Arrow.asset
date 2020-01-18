@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Arrow
   m_EditorClassIdentifier: 
   Name: 
+  Type: 0
   Target: 0
   ValidTargets: 0
   PreferredTargets: 3
@@ -23,6 +24,15 @@ MonoBehaviour:
   ProjectileSpeed: 15
   ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
     type: 3}
+  CharacterMove: 0
+  CharacterMoveToEffect: 0
+  CharacterMoveBackEffect: 0
+  CharacterMoveTarget: 0
+  CharacterMoveArcHeight: 0
+  CharacterMoveSpeed: 0
+  ComabtAnimation: {fileID: 0}
+  CombatAnimationSpeed: 1
+  CombatAnimationRepeats: 1
   Effect: 1
-  Damage: {x: 8, y: 12}
+  Damage: {x: 2, y: 4}
   MoraleDamage: 0
