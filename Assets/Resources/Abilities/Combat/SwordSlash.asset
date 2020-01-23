@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   Type: 0
-  Target: 0
+  Target: 1
   ValidTargets: 0
-  PreferredTargets: 3
+  PreferredTargets: 1
   VisualEffect: 1
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}

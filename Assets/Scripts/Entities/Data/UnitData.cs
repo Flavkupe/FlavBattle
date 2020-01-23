@@ -13,6 +13,8 @@ public class UnitData : ScriptableObject
 
     public string Name;
 
+    public string ClassName;
+
     // CombatStrategyData
     [BoxGroup("Base Stats")]
     [MinMaxSlider(1.0f, 200.0f)]

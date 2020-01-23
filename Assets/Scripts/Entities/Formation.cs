@@ -139,9 +139,15 @@ public class Formation
         return current;
     }
 
-    public IEnumerable<FormationPair> GetOccupiedPositions()
+    public IEnumerable<FormationPair> GetOccupiedPositions(bool liveOnly = false)
     {
-        return FormationUtils.AllSquares.ToList().Where(a => GetUnit(a.Row, a.Col) != null);
+        var pairs = FormationUtils.AllSquares.ToList().Where(a => GetUnit(a.Row, a.Col) != null);
+        if (liveOnly)
+        {
+            return pairs.Where(a => !GetUnit(a.Row, a.Col).IsDead());
+        }
+
+        return pairs;
     }
 
     /// <summary>

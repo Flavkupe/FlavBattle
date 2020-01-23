@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba4fb8a851eb1c4fb08f3ffd982ba84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugTrace: 0
+  DebugTrace: 1
 --- !u!4 &971212823
 Transform:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21c589c120790b48adcd2b651e2817d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArmyMode: 0
+  ArmyMode: 1
   Left: {fileID: 731195046}
   Right: {fileID: 1171478143}
   AbilityData: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
@@ -756,21 +756,21 @@ MonoBehaviour:
     FR: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     ML: {fileID: 0}
     MM: {fileID: 0}
-    MR: {fileID: 0}
-    BL: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
-    BM: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
+    MR: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
+    BL: {fileID: 0}
+    BM: {fileID: 0}
     BR: {fileID: 0}
   RightArmyConfig:
     Level: 1
     FL: {fileID: 0}
     FM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     FR: {fileID: 0}
-    ML: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
+    ML: {fileID: 0}
     MM: {fileID: 0}
-    MR: {fileID: 0}
+    MR: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
     BL: {fileID: 0}
-    BM: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
-    BR: {fileID: 0}
+    BM: {fileID: 0}
+    BR: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
   BattleManager: {fileID: 1811466395}
 --- !u!4 &1315068696
 Transform:
@@ -867,7 +867,7 @@ PrefabInstance:
     - target: {fileID: 6104582357145907552, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6104582357145907553, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}

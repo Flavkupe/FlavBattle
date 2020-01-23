@@ -271,7 +271,6 @@ public class ArmyManager : MonoBehaviour
         middle.y += 0.25f;
         var icon = Instantiate(BattleIndicator);
         icon.transform.position = middle;
-        _gameEvents.TriggerMapEvent(MapEventType.MapPaused);
         yield return icon.SpinAround();
         yield return _battleManager.StartCombat(player, enemy);
     }
@@ -286,6 +285,15 @@ public class ArmyManager : MonoBehaviour
         foreach (var army in _armies)
         {
             army.SetPaused(pause);
+        }
+
+        if (pause)
+        {
+            _gameEvents.TriggerMapEvent(MapEventType.MapPaused);
+        } 
+        else
+        {
+            _gameEvents.TriggerMapEvent(MapEventType.MapUnpaused);
         }
     }
 

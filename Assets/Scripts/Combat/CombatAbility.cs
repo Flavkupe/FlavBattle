@@ -30,7 +30,8 @@ public class CombatAbility : MonoBehaviour
     private IEnumerator DoAnimation(GameObject source, GameObject target)
     {
         var sourcePos = source.transform.position;
-        var targetPos = GetTargetPos(target, _data.CharacterMoveTarget, 0.5f);
+        var targetIsLeft = source.transform.position.x > target.transform.position.x;
+        var targetPos = GetTargetPos(target, _data.CharacterMoveTarget, 0.5f, targetIsLeft);
 
         // Move there
         if (_data.CharacterMove)
@@ -166,7 +167,7 @@ public class CombatAbility : MonoBehaviour
         }
     }
 
-    private Vector3 GetTargetPos(GameObject target, CombatAbilityCharacterMoveTarget targetPos, float distance)
+    private Vector3 GetTargetPos(GameObject target, CombatAbilityCharacterMoveTarget targetPos, float distance, bool targetIsLeft)
     {
         if (targetPos == CombatAbilityCharacterMoveTarget.Front)
         {
@@ -174,7 +175,7 @@ public class CombatAbility : MonoBehaviour
         }
 
         // TEMP
-        var direction = (target.transform.right * -1);
+        var direction = targetIsLeft ? target.transform.right : (target.transform.right * -1);
         return  target.transform.position + (direction * distance);
     }
 }

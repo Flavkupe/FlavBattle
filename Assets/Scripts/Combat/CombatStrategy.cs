@@ -13,12 +13,12 @@ public struct CombatStrategyDecision
 
 public class CombatStrategy
 {
-    private CombatStrategyData _data;
+    private ICombatStrategy _data;
     private Unit _unit;
-    private Army _allies;
-    private Army _enemies;
+    private IArmy _allies;
+    private IArmy _enemies;
 
-    public CombatStrategy(CombatStrategyData data, Unit unit, Army allies, Army enemies)
+    public CombatStrategy(ICombatStrategy data, Unit unit, IArmy allies, IArmy enemies)
     {
         _data = data;
         _unit = unit;
@@ -28,7 +28,7 @@ public class CombatStrategy
 
     public CombatStrategyDecision Decide()
     {
-        var validStrats = _data.DefaultStrategy.Where(a => CanUseStrategy(a)).ToList();
+        var validStrats = _data.Strategies.Where(a => CanUseStrategy(a)).ToList();
 
         if (validStrats.Count == 0)
         {
@@ -47,7 +47,7 @@ public class CombatStrategy
         var targets = PickTargets(ability);
         return new CombatStrategyDecision
         {
-            Ability = null,
+            Ability = ability,
             Source = _unit,
             Targets = targets,
         };
@@ -57,7 +57,7 @@ public class CombatStrategy
     {
         // TODO: pick best targets based on other things
         var preferred = FormationUtils.GetFormationPairs(ability.PreferredTargets);
-        var enemyPositions = _enemies.Formation.GetOccupiedPositions();
+        var enemyPositions = _enemies.Formation.GetOccupiedPositions(true);
         var targets = FormationUtils.GetIntersection(preferred, enemyPositions);
         if (targets.Count == 0)
         {
@@ -65,7 +65,20 @@ public class CombatStrategy
             targets = FormationUtils.GetIntersection(valid, enemyPositions);
         }
 
-        return _enemies.Formation.GetUnits(targets);
+        var units = _enemies.Formation.GetUnits(targets);
+
+        if (units.Count == 0)
+        {
+            return units;
+        }
+
+        switch(ability.Target) {
+            case CombatAbilityTarget.RandomEnemy:
+            case CombatAbilityTarget.RandomAlly:
+                return new List<Unit> { units.GetRandom() };
+            default:
+                return units;
+        }
     }
 
     private bool CanUseStrategy(CombatActionStrategy strategy)
@@ -107,7 +120,7 @@ public class CombatStrategy
         }
 
         // Attack
-        var priorities = _data.DefaultTargetPriority;
+        var priorities = _data.TargetPriorities;
         abilities = FilterPossibleAbilities(abilities);
         foreach (var priority in priorities)
         {

@@ -13,6 +13,8 @@ public enum FormationGroup
     Left,
     Right,
     MidCol,
+    BackAndMid,
+    FrontAndMid,
     FourCorners,
     FourSides,
 }
@@ -67,6 +69,10 @@ public static class FormationUtils
                 return RightColSquares;
             case FormationGroup.MidCol:
                 return MiddleColSquares;
+            case FormationGroup.BackAndMid:
+                return BackRowSquares.Concat(MiddleRowSquares).ToArray();
+            case FormationGroup.FrontAndMid:
+                return FrontRowSquares.Concat(MiddleRowSquares).ToArray();
             case FormationGroup.FourCorners:
                 return FourCorners;
             case FormationGroup.FourSides:

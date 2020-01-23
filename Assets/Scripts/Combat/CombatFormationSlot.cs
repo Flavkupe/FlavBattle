@@ -16,6 +16,9 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 
     public MonoBehaviour Instance => this;
 
+    private SpriteRenderer _sprite;
+    private Color _startColor;
+
     public FormationPair GetFormation()
     {
         return new FormationPair
@@ -23,6 +26,15 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
             Row = this.Row,
             Col = this.Col
         };
+    }
+
+    private void Start()
+    {
+        _sprite = GetComponent<SpriteRenderer>();
+        if (_sprite != null)
+        {
+            _startColor = _sprite.color;
+        }
     }
 
     public void SetUnit(Unit unit)
@@ -43,6 +55,22 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
         {
             Destroy(CurrentUnit.gameObject);
             CurrentUnit = null;
+        }
+    }
+
+    public void Highlight()
+    {
+        if (_sprite != null)
+        {
+            _sprite.color = Color.red;
+        }
+    }
+
+    public void ResetColor()
+    {
+        if (_sprite != null)
+        {
+            _sprite.color = _startColor;
         }
     }
 }

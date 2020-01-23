@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   Name: Hunter
+  ClassName: Hunter
   HP: {x: 10, y: 20}
   Power: {x: 4, y: 7}
   Defense: {x: 2, y: 4}

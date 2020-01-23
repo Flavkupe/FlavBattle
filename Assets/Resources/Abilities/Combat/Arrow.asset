@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   Type: 0
-  Target: 0
-  ValidTargets: 0
+  Target: 1
+  ValidTargets: 7
   PreferredTargets: 3
   VisualEffect: 0
   ProjectileEffect: 1

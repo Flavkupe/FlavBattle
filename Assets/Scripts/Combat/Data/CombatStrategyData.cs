@@ -25,8 +25,15 @@ public enum CombatTargetPriority
     Strongest,
 }
 
+public interface ICombatStrategy
+{
+    CombatActionStrategy[] Strategies { get; }
+    CombatTargetPriority[] TargetPriorities { get; }
+
+}
+
 [CreateAssetMenu(fileName = "Strategy", menuName = "Custom/Strategies/Combat Strategy Data", order = 1)]
-public class CombatStrategyData : ScriptableObject
+public class CombatStrategyData : ScriptableObject, ICombatStrategy
 {
     [ReorderableList]
     public CombatActionStrategy[] DefaultStrategy = new CombatActionStrategy[] {
@@ -40,4 +47,8 @@ public class CombatStrategyData : ScriptableObject
     public CombatTargetPriority[] DefaultTargetPriority = new CombatTargetPriority[] {
         CombatTargetPriority.Random
     };
+
+    public CombatActionStrategy[] Strategies => DefaultStrategy;
+
+    public CombatTargetPriority[] TargetPriorities => DefaultTargetPriority;
 }

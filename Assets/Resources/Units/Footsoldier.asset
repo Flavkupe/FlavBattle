@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   Name: Foot Soldier
+  ClassName: Foot Soldier
   HP: {x: 20, y: 30}
   Power: {x: 3, y: 6}
   Defense: {x: 3, y: 6}

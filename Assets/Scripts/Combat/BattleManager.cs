@@ -28,6 +28,9 @@ public class BattleManager : MonoBehaviour
         public FormationRow Row;
         public CombatFormation CombatFormation;
         public CombatFormationSlot CombatFormationSlot;
+
+        public IArmy Enemies;
+        public IArmy Allies;
     }
 
     private State _state = State.NotInCombat;
@@ -102,22 +105,24 @@ public class BattleManager : MonoBehaviour
         _combatants.Clear();
         _turnQueue.Clear();
         yield return BattleDisplay.InitializeCombatScene(player, enemy);
-        _combatants.AddRange(GetCombatants(_player, true));
-        _combatants.AddRange(GetCombatants(_other, false));
+        _combatants.AddRange(GetCombatants(_player, _other, true));
+        _combatants.AddRange(GetCombatants(_other, _player, false));
         _state = State.AwaitingTurn;
     }
 
-    private IEnumerable<Combatant> GetCombatants(IArmy army, bool left)
+    private IEnumerable<Combatant> GetCombatants(IArmy allies, IArmy enemies, bool left)
     {
         var combatFormation = left ? BattleDisplay.LeftFormation : BattleDisplay.RightFormation;
-        return army.Formation.GetOccupiedPositionInfo().Select(a => new Combatant
+        return allies.Formation.GetOccupiedPositionInfo().Select(a => new Combatant
         {
             Left = left,
             Unit = a.Unit,
             Row = a.FormationPair.Row,
             Col = a.FormationPair.Col,
             CombatFormation = combatFormation,
-            CombatFormationSlot = combatFormation.GetFormationSlot(a.FormationPair.Row, a.FormationPair.Col)
+            CombatFormationSlot = combatFormation.GetFormationSlot(a.FormationPair.Row, a.FormationPair.Col),
+            Allies = allies,
+            Enemies = enemies
         });
     }
 
@@ -145,26 +150,40 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator DoTurn(Combatant combatant)
     {
+        var stratData = combatant.Unit.GetStrategy();
+        var strat = new CombatStrategy(stratData, combatant.Unit, combatant.Allies, combatant.Enemies);
+        var decision = strat.Decide();
+
+        var ability = decision.Ability;
+        var targets = GetCombatants(decision.Targets);
+
         Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name}'s turn!");
-        var targets = FindTargets(combatant);
 
         if (targets.Count() == 0)
         {
             // TODO
             Debug.Log("No more targets!");
+            _state = State.AwaitingTurn;
             yield break;
         }
 
+        Debug.Log($"Targets: {string.Join(", ", targets.Select(a => a.Unit.Data.ClassName)) }");
+
         var damageRoll = combatant.Unit.Info.CurrentStats.Power;
 
-        var ability = combatant.Unit.Info.Abilities.FirstOrDefault();
         if (ability == null)
         {
-            yield return combatant.CombatFormationSlot.CurrentUnit.AnimateAttack();
+            Debug.Log("No viable attack!");
+            // yield return combatant.CombatFormationSlot.CurrentUnit.AnimateAttack();
+            _state = State.AwaitingTurn;
+            yield break;
         }
         
         foreach (var target in targets)
         {
+            var slot = target.CombatFormationSlot;
+            slot.Highlight();
+
             var damage = damageRoll;
             if (ability != null)
             {
@@ -174,6 +193,7 @@ public class BattleManager : MonoBehaviour
 
             Debug.Log($"Damage roll for {damage}!");
             yield return AttackTarget(combatant, target, damage);
+            slot.ResetColor();
         }
 
         // yield return new WaitForSeconds(0.5f);
@@ -229,5 +249,15 @@ public class BattleManager : MonoBehaviour
         // Single attack
         var enemy = enemies.ToList().GetRandom();
         return enemy == null ? new List<Combatant>() : new List<Combatant>() { enemy };
+    }
+
+    private List<Combatant> GetCombatants(List<Unit> units)
+    {
+        if (_combatants.Any(a => a.Unit == null) || units.Any(a => a == null))
+        {
+            //
+        }
+
+        return _combatants.Where(a => units.Any(b => a.Unit.ID == b.ID)).ToList();
     }
 }
