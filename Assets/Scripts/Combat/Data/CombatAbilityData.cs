@@ -126,10 +126,6 @@ public class CombatAbilityData : ScriptableObject
     [ShowIf("IsTargetedAbility")]
     public FormationGroup ValidTargets;
 
-    [BoxGroup("Targets")]
-    [ShowIf("IsTargetedAbility")]
-    public FormationGroup PreferredTargets;
-
     /***** Visuals ******/
 
     [BoxGroup("Visuals")]
@@ -264,5 +260,10 @@ public class CombatAbilityData : ScriptableObject
     private bool ShowProjectileVisualEffect()
     {
         return VisualEffect == CombatAbilityVisual.Projectile;
+    }
+
+    public bool MatchesStrat(CombatActionStrategy strat)
+    {
+        return strat == CombatActionStrategy.Any || this.Type.ToString() == strat.ToString();
     }
 }

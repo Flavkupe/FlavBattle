@@ -28,22 +28,8 @@ public class CombatStrategy
 
     public CombatStrategyDecision Decide()
     {
-        var validStrats = _data.Strategies.Where(a => CanUseStrategy(a)).ToList();
-
-        if (validStrats.Count == 0)
-        {
-            // TODO
-            return new CombatStrategyDecision
-            {
-                Ability = null,
-                Source = _unit,
-                Targets = new List<Unit>(),
-            };
-        }
-
-        // TODO: pick the best strat
-        var chosenStrat = validStrats[0];
-        var ability = PickAbility(chosenStrat);
+        // TODO: pick the strat based on commands
+        var ability = PickAbility(_unit.Info.Abilities.ToList(), _data.Strategies, _data.TargetPriority);
         var targets = PickTargets(ability);
         return new CombatStrategyDecision
         {
@@ -55,26 +41,26 @@ public class CombatStrategy
 
     private List<Unit> PickTargets(CombatAbilityData ability)
     {
+        var empty = new List<Unit>();
         if (ability == null || !ability.IsTargetedAbility())
         {
-            return new List<Unit>();
+            return empty;
         }
 
         // TODO: pick best targets based on other things
-        var preferred = FormationUtils.GetFormationPairs(ability.PreferredTargets);
         var enemyPositions = _enemies.Formation.GetOccupiedPositions(true);
-        var targets = FormationUtils.GetIntersection(preferred, enemyPositions);
+        var valid = FormationUtils.GetFormationPairs(ability.ValidTargets);
+        var targets = FormationUtils.GetIntersection(valid, enemyPositions);
         if (targets.Count == 0)
         {
-            var valid = FormationUtils.GetFormationPairs(ability.ValidTargets);
-            targets = FormationUtils.GetIntersection(valid, enemyPositions);
+            return empty;
         }
 
         var units = _enemies.Formation.GetUnits(targets);
 
         if (units.Count == 0)
         {
-            return units;
+            return empty;
         }
 
         switch(ability.Target) {
@@ -86,81 +72,17 @@ public class CombatStrategy
         }
     }
 
-    private bool CanUseStrategy(CombatActionStrategy strategy)
-    {
-        if (strategy == CombatActionStrategy.Idle)
-        {
-            return true;
-        }
-
-        if (strategy == CombatActionStrategy.Flee)
-        {
-            // TODO
-            return false;
-        }
-
-        return _unit.Info.Abilities.Any(a => a.Type.ToString() == strategy.ToString());
-    }
-
-    private CombatAbilityData PickAbility(CombatActionStrategy strategy)
-    {
-        var abilities = _unit.Info.Abilities.Where(a => a.Type.ToString() == strategy.ToString()).ToList();
-
-        if (abilities.Count == 0)
-        {
-            // No abilities, pick default
-            // TODO: check if default can actually be used
-            Debug.Log("No abilities to pick from! Picking default");
-            return _data.DefaultAbility;
-        }
-
-        // Defense
-        if (strategy == CombatActionStrategy.Defend)
-        {
-            // TODO
-            return abilities.GetRandom();
-        }
-
-        // Attack
-        var priorities = _data.TargetPriorities;
-        abilities = FilterPossibleAbilities(abilities);
-
-        if (abilities.Count == 0)
-        {
-            Debug.Log("No possible abilities! Picking default");
-            return _data.DefaultAbility;
-        }
-
-        // Sort by priority and pick attacks
-        abilities.OrderByDescending(a => (int)a.Priority);
-
-        foreach (var priority in priorities)
-        {
-            var attack = PickPreferredAttack(abilities, priority);
-            if (attack != null)
-            {
-                return attack;
-            }
-        }
-
-        var maxPriority = abilities.Select(a => a.Priority).Max();
-
-        // No preferred choice; choose randomly, of highest priority items
-        return abilities.Where(a => a.Priority == maxPriority).ToList().GetRandom();
-    }
-
     /// <summary>
     /// Filters abilities by those that can target enemy formation
     /// </summary>
     private List<CombatAbilityData> FilterPossibleAbilities(List<CombatAbilityData> abilities)
     {
-        var enemyPositions = _enemies.Formation.GetOccupiedPositions();
+        var enemyPositions = _enemies.Formation.GetOccupiedPositions(true);
         List<CombatAbilityData> possible = new List<CombatAbilityData>();
         foreach (var ability in abilities)
         {
             // Check if any enemy position matches a valid position
-            var validPositions = FormationUtils.GetFormationPairs(ability.ValidTargets);
-            if (enemyPositions.Any(a => validPositions.Any(b => a.Equals(b))))
+            if (CanAbilityHitPositions(ability, enemyPositions))
             {
                 possible.Add(ability);
             }
@@ -169,46 +91,134 @@ public class CombatStrategy
         return possible;
     }
 
+    private bool CanAbilityHitUnits(CombatAbilityData ability, IArmy army)
+    {
+        var positions = army.Formation.GetOccupiedPositions();
+        return CanAbilityHitPositions(ability, positions);
+
+    }
+
+    private bool CanAbilityHitPositions(CombatAbilityData ability, IEnumerable<FormationPair> positions)
+    {
+        var validPositions = FormationUtils.GetFormationPairs(ability.ValidTargets);
+        return positions.Any(a => validPositions.Any(b => a.Equals(b)));
+    }
+
+    private List<CombatAbilityPriority> GetPriorityValuesReversed()
+    {
+        var list = new List<CombatAbilityPriority>();
+        foreach (CombatAbilityPriority priority in Enum.GetValues(typeof(CombatAbilityPriority)))
+        {
+            list.Add(priority);
+        }
+
+        list.Reverse();
+        return list;
+    }
+
     /// <summary>
     /// Picks an attack by priority, if one exists. If not, then returns null
     /// (meaning there is no preference).
     /// </summary>
-    private CombatAbilityData PickPreferredAttack(List<CombatAbilityData> abilities, CombatTargetPriority priority)
+    private CombatAbilityData PickAbility(List<CombatAbilityData> abilities, CombatActionStrategy[] strats, CombatTargetPriority targetPriority)
     {
-        CombatAbilityData ability = null;
+        /**
+         * The rules for attack presedence:
+         * 
+         * 0) Group abilities by strategy priority first
+         * 1) For those groups, further group them by priority, from highest priority to lowest
+         * 2) For each priority, see if an attack matches target priorities first. Pick those.
+         * 3) If nothing matches preferred priority, pick any random valid attack for that group.
+         * 4) If no attacks are valid for that group, check the next group.
+         * 5) If no attack is preferred, pick unit's default.
+         */
+
+        // First filter by possible attacks, and return default if none are possible.
+        abilities = FilterPossibleAbilities(abilities);
+
+        if (abilities.Count == 0)
+        {
+            Debug.Log("No valid abilities! Picking default");
+            return _data.DefaultAbility;
+        }
+
+        foreach (var strat in strats)
+        {
+            var stratGroup = abilities.Where(a => a.MatchesStrat(strat)).ToList();
+            foreach (CombatAbilityPriority priority in GetPriorityValuesReversed())
+            {
+                var abilityGroup = stratGroup.Where(a => a.Priority == priority).ToList();
+                if (abilityGroup.Count == 0)
+                {
+                    continue;
+                }
+
+                // First check if an attack is preferred based on target priority
+                var pickedAbility = PickPreferredAttackByTargetPriority(abilityGroup, targetPriority);
+                if (pickedAbility != null)
+                {
+                    // If an attack is preferred based on priority, pick that one
+                    return pickedAbility;
+                }
+
+                // If no preference due to priority, pick a random attack from this tier
+                return abilityGroup.GetRandom();
+            }
+        }
+
+        // nothing found, so use default. This shouldn't happen but is a fallback
+        Debug.LogWarning("No preferred abilities! Picking default; note: this shouldn't happen");
+        return _data.DefaultAbility;
+    }
+
+    /// <summary>
+    /// Given a filtered set of attacks, picks one based only on targetPriority
+    /// </summary>
+    /// <returns></returns>
+    private CombatAbilityData PickPreferredAttackByTargetPriority(List<CombatAbilityData> abilities, CombatTargetPriority priority)
+    {
         if (priority == CombatTargetPriority.Random)
         {
+            // Random priority just gets a random attack
             return abilities.GetRandom();
         }
         else if (priority == CombatTargetPriority.Closest)
         {
             // TODO
+            return abilities.GetRandom();
         }
         else if (priority == CombatTargetPriority.Strongest)
         {
             // TODO
+            return abilities.GetRandom();
         }
         else if (priority == CombatTargetPriority.Weakest)
         {
             // TODO
+            return abilities.GetRandom();
         }
         else if (priority == CombatTargetPriority.FrontFirst ||
             priority == CombatTargetPriority.BackFirst)
         {
-            ability = abilities.Where(a => PreferredTargetMatchesPriority(a.PreferredTargets, priority)).ToList().GetRandom();
+            var ability = abilities.Where(a => ValidTargetsMatchesPriority(a.ValidTargets, priority)).ToList().GetRandom();
+            if (ability != null)
+            {
+                return ability;
+            }
         }
 
-        return ability;
+        // No preference on current priority
+        return null;
     }
 
-    private bool PreferredTargetMatchesPriority(FormationGroup preferredTarget, CombatTargetPriority priority)
+    private bool ValidTargetsMatchesPriority(FormationGroup validTargets, CombatTargetPriority priority)
     {
         switch (priority)
         {
             case CombatTargetPriority.BackFirst:
-                return FormationUtils.GetFormationPairs(preferredTarget).Any(a => a.Row == FormationRow.Back || a.Row == FormationRow.Middle);
+                return FormationUtils.GetFormationPairs(validTargets).Any(a => a.Row == FormationRow.Back || a.Row == FormationRow.Middle);
             case CombatTargetPriority.FrontFirst:
-                return FormationUtils.GetFormationPairs(preferredTarget).Any(a => a.Row == FormationRow.Front);
+                return FormationUtils.GetFormationPairs(validTargets).Any(a => a.Row == FormationRow.Front);
             default:
                 return false;
         }

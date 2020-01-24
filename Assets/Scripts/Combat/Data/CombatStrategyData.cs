@@ -9,6 +9,7 @@ public enum CombatActionStrategy
     Defend,
     Flee,
     Idle,
+    Any,
 }
 
 public enum CombatTargetPriority
@@ -28,7 +29,7 @@ public enum CombatTargetPriority
 public interface ICombatStrategy
 {
     CombatActionStrategy[] Strategies { get; }
-    CombatTargetPriority[] TargetPriorities { get; }
+    CombatTargetPriority TargetPriority { get; }
 
     /// <summary>
     /// An ability that happens when nothing else can happen, such
@@ -49,14 +50,11 @@ public class CombatStrategyData : ScriptableObject, ICombatStrategy
         CombatActionStrategy.Idle
     };
 
-    [ReorderableList]
-    public CombatTargetPriority[] DefaultTargetPriority = new CombatTargetPriority[] {
-        CombatTargetPriority.Random
-    };
+    public CombatTargetPriority DefaultTargetPriority = CombatTargetPriority.Random;
 
     public CombatActionStrategy[] Strategies => DefaultStrategy;
 
-    public CombatTargetPriority[] TargetPriorities => DefaultTargetPriority;
+    public CombatTargetPriority TargetPriority => DefaultTargetPriority;
 
     [SerializeField]
     [Required]
