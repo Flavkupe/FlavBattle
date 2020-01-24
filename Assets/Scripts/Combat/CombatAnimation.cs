@@ -4,23 +4,21 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Animation))]
-public class CombatAnimation : MonoBehaviour
+public class CombatAnimation : PlayableAnimation
 {
     private Animation _animation;
-
-    public float Speed = 1.0f;
 
     private void Awake()
     {
         _animation = GetComponent<Animation>();
     }
 
-    public void PlayAnimation()
+    public override void PlayAnimation()
     {
         _animation.Play();
     }
 
-    public IEnumerator PlayToCompletion()
+    public override IEnumerator PlayToCompletion()
     {
         foreach (AnimationState state in _animation)
         {
@@ -35,15 +33,4 @@ public class CombatAnimation : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

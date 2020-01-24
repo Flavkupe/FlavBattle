@@ -36,3 +36,4 @@ MonoBehaviour:
   DefaultStrategy: {fileID: 11400000, guid: 52e9656d2ad99404b8f87689154ba6f0, type: 2}
   StartingAbilities:
   - {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
+  - {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}

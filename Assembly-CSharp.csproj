@@ -80,8 +80,10 @@
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Components\CameraMain.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
+    <Compile Include="Assets\Scripts\Components\FloatingIcon.cs" />
     <Compile Include="Assets\Scripts\Components\FloatingText.cs" />
     <Compile Include="Assets\Scripts\Components\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Components\IPlayableAnimation.cs" />
     <Compile Include="Assets\Scripts\Entities\Army.cs" />
     <Compile Include="Assets\Scripts\Entities\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: SwordSlash
   m_EditorClassIdentifier: 
-  Name: 
+  Name: Slash
   Type: 0
+  Priority: 2
   Target: 1
   ValidTargets: 0
   PreferredTargets: 1
@@ -34,6 +35,14 @@ MonoBehaviour:
     type: 3}
   CombatAnimationSpeed: 3
   CombatAnimationRepeats: 2
+  PreAttackAnimations:
+    Type: 0
+    WaitForCompletion: 0
+    Animations: []
+  PostAttackAnimations:
+    Type: 0
+    WaitForCompletion: 0
+    Animations: []
   Effect: 1
   Damage: {x: 2, y: 4}
   MoraleDamage: 0

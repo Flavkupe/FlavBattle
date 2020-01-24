@@ -27,6 +27,17 @@ public class CombatAbility : MonoBehaviour
         return null;
     }
 
+    public Coroutine StartUntargetedAbility(GameObject source)
+    {
+        return StartCoroutine(DoFullSelfCombatAnimation(source));
+    }
+
+    private IEnumerator DoFullSelfCombatAnimation(GameObject source)
+    {
+        yield return AnimateSelf(source);
+        Destroy(this.gameObject);
+    }
+
     private IEnumerator DoAnimation(GameObject source, GameObject target)
     {
         var sourcePos = source.transform.position;
@@ -51,19 +62,8 @@ public class CombatAbility : MonoBehaviour
             }
         }
 
-        // Animate
-        if (_data.ComabtAnimation != null)
-        {
-            for (int i = 0; i < _data.CombatAnimationRepeats; i++)
-            {
-                var animation = Instantiate(_data.ComabtAnimation);
-                animation.Speed = _data.CombatAnimationSpeed;
-                animation.transform.SetParent(source.transform);
-                animation.transform.position = source.transform.position;
-                yield return animation.PlayToCompletion();
-                Destroy(animation.gameObject);
-            }    
-        }
+        // Animate the character
+        yield return AnimateSelf(source);
 
         // Move back
         if (_data.CharacterMove)
@@ -84,6 +84,23 @@ public class CombatAbility : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+    }
+
+    private IEnumerator AnimateSelf(GameObject source)
+    {
+        if (_data.ComabtAnimation != null)
+        {
+            for (int i = 0; i < _data.CombatAnimationRepeats; i++)
+            {
+                var instance = Instantiate(_data.ComabtAnimation.Instance);
+                var animation = instance.GetComponent<IPlayableAnimation>();
+                animation.Speed *= _data.CombatAnimationSpeed;
+                instance.transform.SetParent(source.transform);
+                instance.transform.position = source.transform.position;
+                yield return animation.PlayToCompletion();
+                Destroy(instance);
+            }
+        }
     }
 
     private IEnumerator FireProjectile(GameObject source, GameObject target)

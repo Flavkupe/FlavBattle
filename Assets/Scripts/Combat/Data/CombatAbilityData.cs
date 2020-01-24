@@ -8,7 +8,8 @@ using System;
 public enum CombatAbilityType
 {
     Attack,
-    Defense
+    Defense,
+    Idle,
 }
 
 public enum CombatAbilityTarget
@@ -16,7 +17,7 @@ public enum CombatAbilityTarget
     AllEnemies,
     RandomEnemy,
     AllAllies,
-    RandomAlly
+    RandomAlly,
 }
 
 [Flags]
@@ -51,6 +52,61 @@ public enum CombatAbilityCharacterMoveTarget
     Front,
 }
 
+public enum CombatAbilityPriority
+{
+    LastResort = 0,
+    Low = 1,
+    Medium = 2,
+    High = 3,
+    Top = 4,
+}
+
+public enum CombatAnimationType
+{
+    None,
+    Serial,
+    Parallel,
+    PickRandom,
+}
+
+public enum CombatAnimationDurationType
+{
+    OneCycle,
+    Duration,
+}
+
+[Serializable]
+public class CombatCharacterAnimations
+{
+    public CombatAnimationType Type;
+
+    public bool WaitForCompletion;
+
+    [ShowIf("ShowProps")]
+    public Props[] Animations;
+
+    private bool ShowProps()
+    {
+        return Type != CombatAnimationType.None;
+    }
+
+    [Serializable]
+    public class Props
+    {
+        public IPlayableAnimation Animation;
+
+        public CombatAnimationDurationType DurationType;
+
+        [ShowIf("ShowDuration")]
+        public float Duration;
+
+        private bool ShowDuration()
+        {
+            return DurationType == CombatAnimationDurationType.Duration;
+        }
+    }
+}
+
 [CreateAssetMenu(fileName = "Ability", menuName = "Custom/Abilities/Combat Ability Data", order = 1)]
 public class CombatAbilityData : ScriptableObject
 {
@@ -58,15 +114,20 @@ public class CombatAbilityData : ScriptableObject
 
     public CombatAbilityType Type = CombatAbilityType.Attack;
 
+    public CombatAbilityPriority Priority = CombatAbilityPriority.Medium;
+
     /***** Targets ******/
 
     [BoxGroup("Targets")]
+    [ShowIf("IsTargetedAbility")]
     public CombatAbilityTarget Target;
 
     [BoxGroup("Targets")]
+    [ShowIf("IsTargetedAbility")]
     public FormationGroup ValidTargets;
 
     [BoxGroup("Targets")]
+    [ShowIf("IsTargetedAbility")]
     public FormationGroup PreferredTargets;
 
     /***** Visuals ******/
@@ -128,15 +189,24 @@ public class CombatAbilityData : ScriptableObject
 
     [BoxGroup("Visuals")]
     [ShowIf("ShowAnimationProps")]
-    public CombatAnimation ComabtAnimation;
+    public PlayableAnimation ComabtAnimation;
 
     [BoxGroup("Visuals")]
     [ShowIf("ShowAnimationProps")]
+    [Tooltip("An additional multiplier over the animation's existing speed.")]
     public float CombatAnimationSpeed = 1.0f;
 
     [BoxGroup("Visuals")]
     [ShowIf("ShowAnimationProps")]
     public float CombatAnimationRepeats = 1.0f;
+
+    /***** Character Animation ******/
+
+    [BoxGroup("Visuals")]
+    public CombatCharacterAnimations PreAttackAnimations;
+
+    [BoxGroup("Visuals")]
+    public CombatCharacterAnimations PostAttackAnimations;
 
     /***** Effect ******/
 
@@ -153,7 +223,10 @@ public class CombatAbilityData : ScriptableObject
     [ShowIf("ShowMoraleDamage")]
     public int MoraleDamage;
 
-    public bool IsTargetedAbility => VisualEffect == CombatAbilityVisual.Projectile;
+    public bool IsTargetedAbility()
+    {
+        return Type != CombatAbilityType.Idle;
+    }
 
     private bool ShowAnimationProps()
     {

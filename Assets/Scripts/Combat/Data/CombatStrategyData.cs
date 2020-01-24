@@ -30,6 +30,12 @@ public interface ICombatStrategy
     CombatActionStrategy[] Strategies { get; }
     CombatTargetPriority[] TargetPriorities { get; }
 
+    /// <summary>
+    /// An ability that happens when nothing else can happen, such
+    /// as an idle wait.
+    /// </summary>
+    CombatAbilityData DefaultAbility { get; }
+
 }
 
 [CreateAssetMenu(fileName = "Strategy", menuName = "Custom/Strategies/Combat Strategy Data", order = 1)]
@@ -51,4 +57,10 @@ public class CombatStrategyData : ScriptableObject, ICombatStrategy
     public CombatActionStrategy[] Strategies => DefaultStrategy;
 
     public CombatTargetPriority[] TargetPriorities => DefaultTargetPriority;
+
+    [SerializeField]
+    [Required]
+    private CombatAbilityData _defaultAbility;
+
+    public CombatAbilityData DefaultAbility => _defaultAbility;
 }

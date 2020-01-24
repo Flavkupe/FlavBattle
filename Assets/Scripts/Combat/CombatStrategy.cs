@@ -55,6 +55,11 @@ public class CombatStrategy
 
     private List<Unit> PickTargets(CombatAbilityData ability)
     {
+        if (ability == null || !ability.IsTargetedAbility())
+        {
+            return new List<Unit>();
+        }
+
         // TODO: pick best targets based on other things
         var preferred = FormationUtils.GetFormationPairs(ability.PreferredTargets);
         var enemyPositions = _enemies.Formation.GetOccupiedPositions(true);
@@ -99,17 +104,14 @@ public class CombatStrategy
 
     private CombatAbilityData PickAbility(CombatActionStrategy strategy)
     {
-        if (strategy != CombatActionStrategy.Attack && strategy != CombatActionStrategy.Defend)
-        {
-            return null;
-        }
-
         var abilities = _unit.Info.Abilities.Where(a => a.Type.ToString() == strategy.ToString()).ToList();
 
         if (abilities.Count == 0)
         {
-            // No abilities
-            return null;
+            // No abilities, pick default
+            // TODO: check if default can actually be used
+            Debug.Log("No abilities to pick from! Picking default");
+            return _data.DefaultAbility;
         }
 
         // Defense
@@ -122,6 +124,16 @@ public class CombatStrategy
         // Attack
         var priorities = _data.TargetPriorities;
         abilities = FilterPossibleAbilities(abilities);
+
+        if (abilities.Count == 0)
+        {
+            Debug.Log("No possible abilities! Picking default");
+            return _data.DefaultAbility;
+        }
+
+        // Sort by priority and pick attacks
+        abilities.OrderByDescending(a => (int)a.Priority);
+
         foreach (var priority in priorities)
         {
             var attack = PickPreferredAttack(abilities, priority);
@@ -131,8 +143,10 @@ public class CombatStrategy
             }
         }
 
-        // No preferred choice; choose randomly
-        return abilities.GetRandom();
+        var maxPriority = abilities.Select(a => a.Priority).Max();
+
+        // No preferred choice; choose randomly, of highest priority items
+        return abilities.Where(a => a.Priority == maxPriority).ToList().GetRandom();
     }
 
     /// <summary>
@@ -152,7 +166,7 @@ public class CombatStrategy
             }
         }
 
-        return abilities;
+        return possible;
     }
 
     /// <summary>

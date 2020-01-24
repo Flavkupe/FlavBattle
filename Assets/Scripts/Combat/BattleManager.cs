@@ -159,41 +159,45 @@ public class BattleManager : MonoBehaviour
 
         Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name}'s turn!");
 
-        if (targets.Count() == 0)
-        {
-            // TODO
-            Debug.Log("No more targets!");
-            _state = State.AwaitingTurn;
-            yield break;
-        }
-
-        Debug.Log($"Targets: {string.Join(", ", targets.Select(a => a.Unit.Data.ClassName)) }");
-
-        var damageRoll = combatant.Unit.Info.CurrentStats.Power;
-
         if (ability == null)
         {
-            Debug.Log("No viable attack!");
-            // yield return combatant.CombatFormationSlot.CurrentUnit.AnimateAttack();
+            Debug.Log("No ability available!");
             _state = State.AwaitingTurn;
             yield break;
         }
-        
-        foreach (var target in targets)
+        else
         {
-            var slot = target.CombatFormationSlot;
-            slot.Highlight();
+            Debug.Log($"Using ability {ability.Name}");
+        }
 
-            var damage = damageRoll;
-            if (ability != null)
+        if (targets.Count > 0)
+        {
+            // Attack targets
+            Debug.Log($"Targets: {string.Join(", ", targets.Select(a => a.Unit.Data.ClassName)) }");
+
+            var damageRoll = combatant.Unit.Info.CurrentStats.Power;
+
+            foreach (var target in targets)
             {
-                damage += ability.Damage.RandomBetween();
-                yield return AnimateAbility(combatant, target, ability);
-            }
+                var slot = target.CombatFormationSlot;
+                slot.Highlight();
 
-            Debug.Log($"Damage roll for {damage}!");
-            yield return AttackTarget(combatant, target, damage);
-            slot.ResetColor();
+                var damage = damageRoll;
+                if (ability != null)
+                {
+                    damage += ability.Damage.RandomBetween();
+                    yield return AnimateAbility(combatant, target, ability);
+                }
+
+                Debug.Log($"Damage roll for {damage}!");
+                yield return AttackTarget(combatant, target, damage);
+                slot.ResetColor();
+            }
+        }
+        else
+        {
+            Debug.Log("Running ability with no target");
+            yield return AnimateAbility(combatant, ability);
         }
 
         // yield return new WaitForSeconds(0.5f);
@@ -201,13 +205,26 @@ public class BattleManager : MonoBehaviour
         _state = State.AwaitingTurn;
     }
 
-    private IEnumerator AnimateAbility(Combatant attacker, Combatant target, CombatAbilityData abilityData)
+    private IEnumerator AnimateAbility(Combatant source, CombatAbilityData abilityData)
+    {
+        yield return AnimateAbility(source, null, abilityData);
+    }
+
+    private IEnumerator AnimateAbility(Combatant source, Combatant target, CombatAbilityData abilityData)
     {
         var obj = new GameObject("Ability");
         var ability = obj.AddComponent<CombatAbility>();
 
         ability.InitData(abilityData);
-        yield return ability.StartTargetedAbility(attacker.CombatFormationSlot.CurrentUnit.gameObject, target.CombatFormationSlot.CurrentUnit.gameObject);
+
+        if (target != null)
+        {
+            yield return ability.StartTargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject, target.CombatFormationSlot.CurrentUnit.gameObject);
+        }
+        else
+        {
+            yield return ability.StartUntargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject);
+        }
     }
 
     private IEnumerator AttackTarget(Combatant attacker, Combatant target, int damageRoll)
@@ -253,11 +270,6 @@ public class BattleManager : MonoBehaviour
 
     private List<Combatant> GetCombatants(List<Unit> units)
     {
-        if (_combatants.Any(a => a.Unit == null) || units.Any(a => a == null))
-        {
-            //
-        }
-
         return _combatants.Where(a => units.Any(b => a.Unit.ID == b.ID)).ToList();
     }
 }

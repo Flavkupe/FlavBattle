@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultStrategy: 00000000010000000200000003000000
   DefaultTargetPriority: 03000000
+  _defaultAbility: {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}

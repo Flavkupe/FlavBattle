@@ -103,7 +103,7 @@ public class ClipperWindow : EditorWindow
             _yOffset = DrawLabelAndInput(yOffsetLabel, "Y Offset", _yOffset, 0, (int)_imgRect.height);
 
             var columnsLabel = ToRightOf(xOffsetLabel, 100, 50, _controlHeight);
-            _textureCount = DrawLabelAndInput(columnsLabel, "Num Textures", _textureCount, 2, 10);
+            _textureCount = DrawLabelAndInput(columnsLabel, "Num Textures", _textureCount, 2, 20);
             if (_textureCount != _prevTextureCount)
             {
                 Reset();
