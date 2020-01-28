@@ -26,7 +26,7 @@ public class CombatUnit : MonoBehaviour
         _facingLeft = facingLeft;
         if (facingLeft)
         {
-            renderer.flipX = true;
+            this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
         }
     }
 

@@ -27,7 +27,7 @@ public class CombatAnimation : PlayableAnimation
 
         _animation.Play();
 
-        while(_animation.isPlaying)
+        while (_animation.isPlaying)
         {
             yield return null;
         }

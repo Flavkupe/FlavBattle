@@ -559,7 +559,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 604789536130081544, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
+  m_Sprite: {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -577,13 +578,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171478143}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 4.58, y: -0.47, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1309760772
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,27 +746,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21c589c120790b48adcd2b651e2817d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArmyMode: 1
+  ArmyMode: 0
   Left: {fileID: 731195046}
   Right: {fileID: 1171478143}
   AbilityData: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
+  RightToLeft: 1
   LeftArmyConfig:
     Level: 1
     FL: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
-    FM: {fileID: 0}
+    FM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     FR: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
     ML: {fileID: 0}
     MM: {fileID: 0}
-    MR: {fileID: 0}
+    MR: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     BL: {fileID: 0}
-    BM: {fileID: 0}
+    BM: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
     BR: {fileID: 0}
   RightArmyConfig:
     Level: 1
     FL: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
-    FM: {fileID: 0}
+    FM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     FR: {fileID: 0}
-    ML: {fileID: 0}
+    ML: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     MM: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
     MR: {fileID: 0}
     BL: {fileID: 0}

@@ -41,8 +41,7 @@ public class CombatAbility : MonoBehaviour
     private IEnumerator DoAnimation(GameObject source, GameObject target)
     {
         var sourcePos = source.transform.position;
-        var targetIsLeft = source.transform.position.x > target.transform.position.x;
-        var targetPos = GetTargetPos(target, _data.CharacterMoveTarget, 0.5f, targetIsLeft);
+        var targetPos = GetTargetPos(target, _data.CharacterMoveTarget, 0.5f);
 
         // Move there
         if (_data.CharacterMove)
@@ -184,15 +183,16 @@ public class CombatAbility : MonoBehaviour
         }
     }
 
-    private Vector3 GetTargetPos(GameObject target, CombatAbilityCharacterMoveTarget targetPos, float distance, bool targetIsLeft)
+    private Vector3 GetTargetPos(GameObject target, CombatAbilityCharacterMoveTarget targetPos, float distance)
     {
         if (targetPos == CombatAbilityCharacterMoveTarget.Front)
         {
-            // TODO
+            // Note: since left-facing units are flipped, this should still work since "right" is
+            // facing towards *their* right.
+            return target.transform.position + (target.transform.right * distance);
         }
 
         // TEMP
-        var direction = targetIsLeft ? target.transform.right : (target.transform.right * -1);
-        return  target.transform.position + (direction * distance);
+        return  target.transform.position + (target.transform.right * distance);
     }
 }

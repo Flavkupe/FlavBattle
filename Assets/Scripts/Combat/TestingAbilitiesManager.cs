@@ -36,6 +36,9 @@ public class TestingAbilitiesManager : MonoBehaviour
     [HideIf("ArmyMode")]
     public CombatAbilityData AbilityData;
 
+    [HideIf("ArmyMode")]
+    public bool RightToLeft;
+
     [ShowIf("ArmyMode")]
     public TestArmyConfiguration LeftArmyConfig;
 
@@ -51,18 +54,23 @@ public class TestingAbilitiesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (ArmyMode) {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    private void InitArmy()
+    {
+        if (ArmyMode)
+        {
             var enemyFaction = ResourceHelper.Factions.First(a => !a.IsPlayerFaction).Faction;
             var playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction).Faction;
 
             _leftArmy = MakeArmy(LeftArmyConfig, playerFaction);
             _rightArmy = MakeArmy(RightArmyConfig, enemyFaction);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 
     private TestArmy MakeArmy(TestArmyConfiguration config, Faction faction)
@@ -89,10 +97,19 @@ public class TestingAbilitiesManager : MonoBehaviour
             var ability = obj.AddComponent<CombatAbility>();
 
             ability.InitData(AbilityData);
-            ability.StartTargetedAbility(Left, Right);
+            if (RightToLeft)
+            {
+                ability.StartTargetedAbility(Right, Left);
+            }
+            else
+            {
+                ability.StartTargetedAbility(Left, Right);
+            }
+            
         }
         else
         {
+            InitArmy();
             BattleManager.StartCombat(_leftArmy, _rightArmy);
         }
     }
