@@ -30,4 +30,22 @@ public class DropTargetUIGrid : UIUnitGridBase
         e.Army = this.Army;
         UnitDropped?.Invoke(this, e);
     }
+
+    public void SetUnitSelected(Unit unit)
+    {
+        if (unit == null)
+        {
+            return;
+        }
+
+        foreach (var tile in _tiles)
+        {
+            var tileUnit = tile?.DraggableUnit?.Unit;
+            if (tileUnit != null && tileUnit.Equals(unit))
+            {
+                tile.SelectUnit();
+                return;
+            }
+        }
+    }
 }

@@ -33,6 +33,11 @@ public class AnimatedSprite : MonoBehaviour
         }
     }
 
+    public void SetFlipped(bool flipped)
+    {
+        this._spriteRenderer.flipX = flipped;
+    }
+
     public void SetAnimations(Sprite[] animations)
     {
         Animations = animations;

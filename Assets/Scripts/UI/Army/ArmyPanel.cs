@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class ArmyPanel : MonoBehaviour
 {
@@ -54,7 +55,27 @@ public class ArmyPanel : MonoBehaviour
         grid.SetArmy(army);
         grid.GridClicked += HandleGridClicked;
         grid.GridRightClicked += HandleGridRightClicked;
+        grid.SetSelected(false);
         _grids.Add(grid);
+    }
+
+    public void SetSelectedArmy(IArmy army)
+    {
+        if (army == null)
+        {
+            this.SetSelected(null);
+        }
+        else
+        {
+            var grid = _grids.FirstOrDefault(a => a.Army.ID == army.ID);
+            if (grid == null)
+            {
+                Debug.LogWarning("No grid to match army in ArmyPanel!");
+                return;
+            }
+
+            this.SetSelected(grid);
+        }
     }
 
     private void HandleGridRightClicked(object sender, UIFormationGrid grid)
@@ -65,5 +86,20 @@ public class ArmyPanel : MonoBehaviour
     private void HandleGridClicked(object source, UIFormationGrid grid)
     {
         ArmyClicked?.Invoke(this, grid.Army);
+        SetSelected(grid);
+    }
+
+    private void SetSelected(UIFormationGrid selected)
+    {
+        foreach (var grid in _grids)
+        {
+            // Unselect all other armies first
+            grid.SetSelected(false);
+        }
+
+        if (selected != null)
+        {
+            selected.SetSelected(true);
+        }
     }
 }

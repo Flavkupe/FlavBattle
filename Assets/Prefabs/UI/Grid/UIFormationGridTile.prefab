@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6147168843245014148}
   - component: {fileID: 4331080706682306616}
   m_Layer: 5
-  m_Name: FormationUnitTile
+  m_Name: UIFormationGridTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

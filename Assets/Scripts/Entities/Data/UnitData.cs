@@ -11,8 +11,6 @@ public class UnitData : ScriptableObject
     [AssetIcon]
     public Sprite Icon;
 
-    public string Name;
-
     public string ClassName;
 
     // CombatStrategyData
@@ -63,9 +61,11 @@ public class UnitData : ScriptableObject
     [BoxGroup("Abilities")]
     public CombatAbilityData[] StartingAbilities;
 
+    private string _name = "Unnamed";
+
     public override string ToString()
     {
-        return $"Unit_{Name}";
+        return $"Unit_{_name}";
     }
 
     /// <summary>
@@ -111,9 +111,22 @@ public class UnitData : ScriptableObject
         return Portraits.GetRandom();
     }
 
+    /// <summary>
+    /// Sets a name
+    /// </summary>
     public string RollName()
     {
-        return this.Name;
+        // TODO: Data-driven names
+        var _name = new List<string>
+        {
+            "Flavio",
+            "Bob",
+            "Blerb",
+            "Bork",
+            "Blahb"
+        }.GetRandom();
+
+        return _name;
     }
 
     private int GenerateStat(Vector2 stat)

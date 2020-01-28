@@ -32,6 +32,14 @@ public class DropTargetUIGridTile : MonoBehaviour, IFormationGridSlot
         }
     }
 
+    public void SelectUnit()
+    {
+        if (DraggableUnit != null)
+        {
+            DraggableUnit.SelectUnit();
+        }
+    }
+
     public void SetUnit(Unit unit)
     {
         if (DraggableUnit != null)

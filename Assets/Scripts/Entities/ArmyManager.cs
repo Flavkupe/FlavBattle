@@ -215,14 +215,24 @@ public class ArmyManager : MonoBehaviour
 
     private void HandleArmyClicked(object sender, ArmyClickedEventArgs args)
     {
-        if (args.Clicked != _selected)
+        if (args.Button == MouseButton.LeftButton)
         {
-            _clickProcessed = true;
-            SelectArmy(args.Clicked);
+            if (args.Clicked != _selected)
+            {
+                _clickProcessed = true;
+                SelectArmy(args.Clicked);
+            }
+            else
+            {
+                UnselectAll();
+            }
         }
-        else
+        else if (args.Button == MouseButton.RightButton)
         {
-            UnselectAll();
+            if (args.Clicked != null)
+            {
+                _ui.ShowArmyEditWindow(args.Clicked);
+            }
         }
     }
 

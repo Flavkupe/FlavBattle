@@ -17,6 +17,8 @@ public class UnitStatsPanel : MonoBehaviour
     public void SetUnit(Unit unit)
     {
         this.Portrait.SetUnit(unit);
+        this.Class.SetIcon(unit.Data.Icon);
+        this.Class.SetText(unit.Data.ClassName);
         this.Level.SetText($"Level {unit.Info.MaxStats.Level}");
         this.HP.SetText($"{unit.Info.CurrentStats.HP} / {unit.Info.MaxStats.HP}");
         this.Power.SetText($"{unit.Info.MaxStats.Power}");

@@ -14,6 +14,10 @@ public class UIFormationGrid : UIUnitGridBase, IPointerClickHandler
 
     public event EventHandler<UIFormationGrid> GridRightClicked;
 
+    public GameObject SelectionFrame;
+
+    private bool _selected;
+
     protected override IFormationGridSlot OnCreateSlot()
     {
         return Instantiate(TileTemplate);
@@ -28,6 +32,15 @@ public class UIFormationGrid : UIUnitGridBase, IPointerClickHandler
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             GridRightClicked?.Invoke(this, this);
+        }
+    }
+
+    public void SetSelected(bool selected)
+    {
+        _selected = selected;
+        if (SelectionFrame != null)
+        {
+            SelectionFrame.SetActive(selected);
         }
     }
 }

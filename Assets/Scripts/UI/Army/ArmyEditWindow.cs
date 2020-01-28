@@ -18,6 +18,8 @@ public class ArmyEditWindow : MonoBehaviour
 
     public GameObject DeployButton;
 
+    public GameObject PanelControlButtons;
+
     public GameObject TopLevelDrag;
 
     public event EventHandler<IArmy> ArmyModified;
@@ -62,8 +64,7 @@ public class ArmyEditWindow : MonoBehaviour
 
     private void HandleDraggableUnitClicked(object sender, DraggableUIUnit e)
     {
-        UnitStats.Show();
-        UnitStats.SetUnit(e.Unit);
+        SetUnitSelected(e.Unit);
     }
 
     private void HandleUnitDroppedIntoUnitPanel(object sender, Unit e)
@@ -155,7 +156,34 @@ public class ArmyEditWindow : MonoBehaviour
         _currentArmy = army;
         Grid.SetArmy(army);
 
-        DeployButton.SetActive(army != null);
+        DeployButton.SetActive(army != null && _mode == Mode.Garrison);
+
+        if (army != null)
+        {
+            // select first unit
+            var units = army.Formation.GetUnits();
+            Debug.Assert(units.Count > 0, "No units in army!");
+            if (units.Count > 0)
+            {
+                SetUnitSelected(units[0]);
+            }
+        }
+    }
+
+    private void SetUnitSelected(Unit unit)
+    {
+        if (unit == null)
+        {
+            UnitStats.Hide();
+            UnitStats.SetUnit(null);
+        }
+        else
+        {
+            UnitStats.Show();
+            UnitStats.SetUnit(unit);
+        }
+
+        Grid.SetUnitSelected(unit);
     }
 
     public void HandleDeployButtonClicked()
@@ -169,6 +197,12 @@ public class ArmyEditWindow : MonoBehaviour
     public void SetMode(Mode mode = Mode.DeployedArmy)
     {
         _mode = mode;
+        var showGarrisonPanels = mode == Mode.Garrison;
+        _armyPanel.SetActive(showGarrisonPanels);
+        _unitPanel.SetActive(showGarrisonPanels);
+        DeployButton.SetActive(showGarrisonPanels);
+        PanelControlButtons.SetActive(showGarrisonPanels);
+        
     }
 
     public void SetArmyPanelContents(IArmy[] armies)

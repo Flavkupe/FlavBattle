@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         ArmyEditWindow.Hide();
+        ArmyPanel.Hide();
 
         ArmyEditWindow.ArmyModified += HandleArmyModified;
         ArmyEditWindow.UnitReplaced += HandleUnitReplaced;
@@ -150,5 +151,7 @@ public class UIManager : MonoBehaviour
             this.ActionButtonsPanel.Show();
             this.ActionButtonsPanel.SetArmy(selected);
         }
+
+        this.ArmyPanel.SetSelectedArmy(selected);
     }
 }

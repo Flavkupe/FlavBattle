@@ -7,6 +7,7 @@ using UnityEngine;
 public class ArmyClickedEventArgs : EventArgs
 {
     public Army Clicked;
+    public MouseButton Button;
 }
 
 public class ArmyEncounteredEventArgs : EventArgs
@@ -71,7 +72,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     // Start is called before the first frame update
     void Start()
     {
-        _sprite = this.GetComponentInChildren<AnimatedSprite>();
+           _sprite = this.GetComponentInChildren<AnimatedSprite>();
         _detectors = this.GetComponentsInChildren<Detector>();
         foreach (var detector in _detectors)
         {
@@ -139,11 +140,15 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ArmyClicked?.Invoke(this, new ArmyClickedEventArgs() { Clicked = this });
+            ArmyClicked?.Invoke(this, new ArmyClickedEventArgs() { Clicked = this, Button = MouseButton.LeftButton });
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            ArmyClicked?.Invoke(this, new ArmyClickedEventArgs() { Clicked = this, Button = MouseButton.RightButton });
         }
     }
 
@@ -174,7 +179,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
         if (this._destination != null)
         {
-            this.MoveTowardsDestination();
+            this.StepTowardsDestination();
         }
         else if (this._path != null)
         {
@@ -235,11 +240,13 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 var tile = this._path.Nodes.Dequeue();
                 this._sprite.SetIdle(false);
                 this._destination = new Vector3(tile.WorldX, tile.WorldY, 0);
+                var facingLeft = tile.WorldX < this.transform.position.x;
+                this._sprite.SetFlipped(facingLeft);
             }
         }
     }
 
-    private void MoveTowardsDestination()
+    private void StepTowardsDestination()
     {
         if (this._destination != null)
         {

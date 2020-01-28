@@ -42,7 +42,7 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
         // Put it in the .25f mark, adjusting for scale of slot
         var yPos = 0.25f / transform.localScale.y;
         var combatUnit = Instantiate(CombatUnitTemplate);
-        combatUnit.name = unit.Data.Name;
+        combatUnit.name = unit.Info.Name;
         combatUnit.SetUnit(unit, FacingLeft);
         CurrentUnit = combatUnit;
         combatUnit.transform.SetParent(this.transform);

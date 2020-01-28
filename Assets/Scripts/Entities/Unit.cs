@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit
+public class Unit : IEquatable<Unit>
 {
     public FormationPair Formation;
 
@@ -29,5 +29,10 @@ public class Unit
     {
         // TODO: need some arg to decide which to pick
         return Data.DefaultStrategy;
+    }
+
+    public bool Equals(Unit other)
+    {
+        return this == other || this.ID == other.ID;
     }
 }

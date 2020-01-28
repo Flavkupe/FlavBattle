@@ -151,6 +151,11 @@ public static class ExtensionFunctions
         obj.gameObject.SetActive(false);
     }
 
+    public static void SetActive(this MonoBehaviour obj, bool active)
+    {
+        obj.gameObject.SetActive(active);
+    }
+
     public static void ToggleActive(this MonoBehaviour obj)
     {
         obj.gameObject.SetActive(!obj.gameObject.activeInHierarchy);
