@@ -88,5 +88,29 @@ public static class Utils
             double randNormal = mean + stdDev * randStdNormal; //random normal(mean,stdDev^2)
             return randNormal;
         }
+
+        public static Vector2 RandomFurthestPointAway(Vector2 center, Vector2[] otherPoints, float radius, int trials)
+        {
+            var points = new List<Vector2>();
+            for (var i = 0; i < trials; i++)
+            {
+                var randomDirection = UnityEngine.Random.insideUnitCircle * radius;
+                points.Add(center + randomDirection);
+            }
+
+            var maxDist = 0.0f;
+            Vector2 maxPoint = center;
+            foreach (var point in points)
+            {
+                var sum = otherPoints.Sum(other => Vector2.Distance(point, other));
+                if (sum > maxDist)
+                {
+                    maxPoint = point;
+                    maxDist = sum;
+                }
+            }
+
+            return maxPoint;
+        }
     }
 }

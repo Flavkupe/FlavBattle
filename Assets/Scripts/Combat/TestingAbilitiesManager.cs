@@ -45,6 +45,9 @@ public class TestingAbilitiesManager : MonoBehaviour
     [ShowIf("ArmyMode")]
     public TestArmyConfiguration RightArmyConfig;
 
+
+    public GameObject Thing;
+
     private TestArmy _leftArmy;
 
     private TestArmy _rightArmy;
@@ -91,6 +94,12 @@ public class TestingAbilitiesManager : MonoBehaviour
 
     public void DoAbility()
     {
+
+        // TEMP
+        //var positions = this.transform.GetComponentsInChildren<Transform>().Select(a => new Vector2(a.transform.position.x, a.transform.position.y)).ToArray();
+        //var furthest = Utils.MathUtils.RandomFurthestPointAway(this.Thing.transform.position, positions, 2.0f, 10);
+        //this.Thing.transform.position = furthest;
+
         if (!ArmyMode)
         {
             var obj = new GameObject("Ability");

@@ -46,6 +46,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     private AnimatedSprite _sprite;
     public SpriteRenderer FactionFlag;
+    public SpriteRenderer FactionMarker;
 
     public FactionData Faction { get; private set; }
     public Formation Formation { get; private set; } = new Formation();
@@ -202,6 +203,15 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         this.Faction = faction;
         this.FactionFlag.sprite = faction.Flag;
         IsPlayerArmy = faction.IsPlayerFaction;
+
+        if (IsPlayerArmy)
+        {
+            this.FactionMarker.color = Color.blue;
+        }
+        else
+        {
+            this.FactionMarker.color = Color.red;
+        }
     }
 
     public void PutOnTile(GridTile tile)
@@ -231,6 +241,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         {
             if (this._path.Nodes.Count == 0)
             {
+                AdjustForCollisions();
                 this._path = null;
                 this._sprite.SetIdle(true);
                 return;
@@ -243,6 +254,23 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 var facingLeft = tile.WorldX < this.transform.position.x;
                 this._sprite.SetFlipped(facingLeft);
             }
+        }
+    }
+
+    /// <summary>
+    /// Uses a very rough Monte-Carlo heuristic to find a good spot to
+    /// re-adjust if there are other units within range.
+    /// </summary>
+    private void AdjustForCollisions()
+    {
+        var collisions = Physics2D.OverlapCircleAll(this.transform.position, 0.1f)
+                    .Where(a => a.gameObject != this.gameObject && a.gameObject.HasComponent<Army>()).ToList();
+
+        if (collisions.Count > 0)
+        {
+            var points = collisions.Select(a => a.transform.position.ToVector2()).ToArray();
+            var furthest = Utils.MathUtils.RandomFurthestPointAway(this.transform.position, points, 0.1f, 10);
+            this.transform.position = furthest;
         }
     }
 

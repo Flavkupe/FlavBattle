@@ -66,15 +66,20 @@ public class ArmyManager : MonoBehaviour
         _playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
         var playerArmy = CreateArmy(0, 0, _playerFaction);
         var playerArmy2 = CreateArmy(0, -2, _playerFaction);
-        var enemyArmy = CreateArmy(-2, 0, enemyFaction);
+        var playerArmy3 = CreateArmy(0, -1, _playerFaction);
+        var playerArmy4 = CreateArmy(0, -3, _playerFaction);
+        var playerArmy5 = CreateArmy(-1, 0, _playerFaction);
+        var playerArmy6 = CreateArmy(-1, -1, _playerFaction);
+        // var enemyArmy = CreateArmy(-2, 0, enemyFaction);
 
         // TODO: TEMP
         playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
         playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
         playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
         playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
-        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
-        enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
+
+        // enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
+        // enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
 
         _ui.ArmyPanel.UpdatePanelContents();
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
@@ -180,7 +185,6 @@ public class ArmyManager : MonoBehaviour
                 var start = TileMap.GetGridTileAtWorldPos(_selected.transform.position);
                 var path = TileMap.GetPath(start, e.Tile);
                 _selected.SetPath(path);
-                UnselectAll();
             }
             else if (e.Button == MouseButton.LeftButton)
             {

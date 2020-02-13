@@ -773,6 +773,7 @@ MonoBehaviour:
     BL: {fileID: 0}
     BM: {fileID: 0}
     BR: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
+  Thing: {fileID: 0}
   BattleManager: {fileID: 1811466395}
 --- !u!4 &1315068696
 Transform:
