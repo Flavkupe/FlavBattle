@@ -88,7 +88,7 @@ public class GarrisonManager : MonoBehaviour
     {
         _playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
 
-        // TEMP
+        // TEMP: generate some starting armies
         for (var i = 0; i < 8; i++)
         {
             var army1 = new StoredArmy(_playerFaction);

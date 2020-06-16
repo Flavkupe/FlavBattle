@@ -14,6 +14,8 @@ public class DropTargetUIGridTile : MonoBehaviour, IFormationGridSlot
 
     public DraggableUIUnit DraggableUnit { get; private set; }
 
+    public Image OfficerRing;
+
     public MonoBehaviour Instance => this;
 
     public FormationRow Row { get; set; }
@@ -48,10 +50,21 @@ public class DropTargetUIGridTile : MonoBehaviour, IFormationGridSlot
             DraggableUnit = null;
         }
 
+        
         if (unit != null)
         {
             var draggableUnit = DraggableProvider.GetOrCreateDraggableForUnit(unit);
             AttachUnit(draggableUnit);
+        }
+
+        // If an officer ring is available, set based on officer status
+        if (OfficerRing != null)
+        {
+            OfficerRing.Hide();
+            if (unit != null && unit.IsOfficer)
+            {
+                OfficerRing.Show();
+            }
         }
     }
 
@@ -77,7 +90,7 @@ public class DropTargetUIGridTile : MonoBehaviour, IFormationGridSlot
     public void AttachUnit(DraggableUIUnit unit)
     {
         DraggableUnit = unit;
-        unit.transform.SetParent(this.transform);
+        unit.transform.SetParent(this.transform, false);
         unit.transform.localPosition = Vector3.zero;
     }
 }

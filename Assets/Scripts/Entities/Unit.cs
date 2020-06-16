@@ -15,6 +15,8 @@ public class Unit : IEquatable<Unit>
 
     public string ID { get; private set; }
 
+    public bool IsOfficer => Info.IsOfficer;
+
     public Unit()
     {
         ID = Guid.NewGuid().ToString();

@@ -51,6 +51,7 @@ public class ArmyEditWindow : MonoBehaviour
         DraggableUnitProvider.DraggableCreated += HandleDraggableUnitCreated;
 
         FormationUtils.PopulateFormationGrid(Grid, FormationOrientation.BottomRight, 96.0f);
+        Grid.transform.localScale = new Vector3(2, 2, 1);
         Grid.UnitDropped += HandleUnitDroppedIntoGrid;
         _unitPanel.Hide();
         _unitPanel.UnitDropped += HandleUnitDroppedIntoUnitPanel;
@@ -103,6 +104,8 @@ public class ArmyEditWindow : MonoBehaviour
         }
 
         OnArmyModified(e.Army);
+
+        SetUnitSelected(e.Unit.Unit);
     }
 
     private void OnEnable()
@@ -160,12 +163,15 @@ public class ArmyEditWindow : MonoBehaviour
 
         if (army != null)
         {
-            // select first unit
+            // select officer or first unit by default
             var units = army.Formation.GetUnits();
             Debug.Assert(units.Count > 0, "No units in army!");
             if (units.Count > 0)
             {
-                SetUnitSelected(units[0]);
+                var unit = units.FirstOrDefault(a => a.IsOfficer);
+                Debug.Assert(unit != null, "No officer in army!");
+                unit = unit ?? units[0];
+                SetUnitSelected(unit);
             }
         }
     }
@@ -201,8 +207,7 @@ public class ArmyEditWindow : MonoBehaviour
         _armyPanel.SetActive(showGarrisonPanels);
         _unitPanel.SetActive(showGarrisonPanels);
         DeployButton.SetActive(showGarrisonPanels);
-        PanelControlButtons.SetActive(showGarrisonPanels);
-        
+        PanelControlButtons.SetActive(showGarrisonPanels);        
     }
 
     public void SetArmyPanelContents(IArmy[] armies)

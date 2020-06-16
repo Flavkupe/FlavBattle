@@ -16,13 +16,15 @@ public class UnitInfo
 
     public List<CombatAbilityData> Abilities { get; } = new List<CombatAbilityData>();
 
+    public bool IsOfficer { get; private set; } = false;
+
     public string Name { get; private set; }
 
     public UnitInfo()
     {
     }
 
-    public UnitInfo(UnitData data, Faction faction, int level = 1)
+    public UnitInfo(UnitData data, Faction faction, int level = 1, bool isOfficer = false)
     {
         this.Data = data;
         this.MaxStats = data.RollStats(level);
@@ -31,6 +33,7 @@ public class UnitInfo
         this.Portrait = data.RollPortrait();
         this.Faction = faction;
         this.Abilities.AddRange(data.StartingAbilities);
+        this.IsOfficer = isOfficer;
     }
 
     public void LearnAbility(CombatAbilityData data)

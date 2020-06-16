@@ -66,20 +66,12 @@ public class ArmyManager : MonoBehaviour
 
         var enemyFaction = ResourceHelper.Factions.First(a => !a.IsPlayerFaction);
         _playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
-        var playerArmy = CreateArmy(0, 0, _playerFaction);
-        var playerArmy2 = CreateArmy(0, -2, _playerFaction);
-        var playerArmy3 = CreateArmy(0, -1, _playerFaction);
-        var playerArmy4 = CreateArmy(0, -3, _playerFaction);
-        var playerArmy5 = CreateArmy(-1, 0, _playerFaction);
-        var playerArmy6 = CreateArmy(-1, -1, _playerFaction);
-        // var enemyArmy = CreateArmy(-2, 0, enemyFaction);
 
         // TODO: TEMP
-        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
-        playerArmy.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
-        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
-        playerArmy2.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, 4));
+        var playerArmy = CreateArmyWithUnits(0, 0, _playerFaction, 4, 4);
+        var playerArmy2 = CreateArmyWithUnits(0, -2, _playerFaction, 3, 4);
 
+        // var enemyArmy = CreateArmy(-2, 0, enemyFaction);
         // enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
         // enemyArmy.Formation.PutUnit(UnitGenerator.MakeUnit(enemyFaction.Faction));
 
@@ -113,7 +105,21 @@ public class ArmyManager : MonoBehaviour
         InitArmy(army);
         army.PutOnTile(startTile);
         return army;
+    }
 
+    public Army CreateArmyWithUnits(int gridX, int gridY, FactionData faction, int numUnits, int unitLevel)
+    {
+        var army = CreateArmy(gridX, gridY, faction);
+
+        // Make officer
+        army.Formation.PutUnit(UnitGenerator.MakeUnit(faction.Faction, unitLevel, true));
+        for (var i = 1; i < numUnits; i++)
+        {
+            // Make other units
+            army.Formation.PutUnit(UnitGenerator.MakeUnit(faction.Faction, unitLevel));
+        }
+
+        return army;
     }
 
     public Army CreateArmy(IArmy army)

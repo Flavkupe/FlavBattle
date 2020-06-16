@@ -5,23 +5,31 @@ using UnityEngine.UI;
 
 public class FacePortrait : MonoBehaviour
 {
-    public Image Frame;
     public Image Portrait;
+    public Image FrameNormies;
+    public Image FrameOfficer;
 
-    
+
     public void SetUnit(Unit unit)
     {
+        FrameNormies.Hide();
+        FrameOfficer.Hide();
         if (unit == null)
         {
-            Frame.Hide();
             Portrait.Hide();
         }
         else
         {
-            Frame.Show();
             Portrait.Show();
-
             Portrait.sprite = unit.Info.Portrait;
+            if (unit.IsOfficer)
+            {
+                FrameOfficer.Show();
+            }
+            else
+            {
+                FrameNormies.Show();
+            }
         }
     }
 }
