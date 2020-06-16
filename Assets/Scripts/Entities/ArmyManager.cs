@@ -46,6 +46,8 @@ public class ArmyManager : MonoBehaviour
 
     public event EventHandler<ArmyLeftGarrisonEventArgs> ArmyLeftGarrison;
 
+    public bool ArmyIsSelected => _selected != null;
+
     void Awake()
     {
         _ui = FindObjectOfType<UIManager>();
@@ -233,6 +235,12 @@ public class ArmyManager : MonoBehaviour
         }
         else if (args.Button == MouseButton.RightButton)
         {
+            if (this.ArmyIsSelected && args.Clicked != _selected)
+            {
+                // Do not open window if an army is selected (unless it's this army)
+                return;
+            }
+
             if (args.Clicked != null)
             {
                 _ui.ShowArmyEditWindow(args.Clicked);

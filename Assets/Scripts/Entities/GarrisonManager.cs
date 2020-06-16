@@ -47,6 +47,12 @@ public class GarrisonManager : MonoBehaviour
 
     private void HandleGarrisonRightClicked(object sender, EventArgs e)
     {
+        if (_armyManager.ArmyIsSelected)
+        {
+            // Ignore right click if army is selected
+            return;
+        }
+
         this.EditGarrison();
     }
 
