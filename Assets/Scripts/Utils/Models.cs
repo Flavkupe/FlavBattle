@@ -13,6 +13,13 @@ public enum FormationColumn
     Right = 2,
 }
 
+public enum FormationRowAndCol
+{
+    FL, FM, FR,
+    ML, MM, MR,
+    BL, BM, BR,
+}
+
 public struct FormationPair
 {
     public FormationRow Row;

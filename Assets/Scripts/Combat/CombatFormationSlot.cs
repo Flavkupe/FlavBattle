@@ -19,6 +19,8 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
     private SpriteRenderer _sprite;
     private Color _startColor;
 
+    public GameObject OfficerRing;
+
     public FormationPair GetFormation()
     {
         return new FormationPair
@@ -30,6 +32,7 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 
     private void Start()
     {
+        OfficerRing.Hide();
         _sprite = GetComponent<SpriteRenderer>();
         if (_sprite != null)
         {
@@ -47,6 +50,15 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
         CurrentUnit = combatUnit;
         combatUnit.transform.SetParent(this.transform);
         combatUnit.transform.localPosition = new Vector3(0.0f, yPos, 0.0f);
+
+        if (unit.IsOfficer)
+        {
+            OfficerRing.Show();
+        }
+        else
+        {
+            OfficerRing.Hide();
+        }
     }
 
     public void ClearContents()
@@ -58,11 +70,11 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
         }
     }
 
-    public void Highlight()
+    public void Highlight(Color color)
     {
         if (_sprite != null)
         {
-            _sprite.color = Color.red;
+            _sprite.color = color;
         }
     }
 

@@ -39,7 +39,7 @@ public class CombatStrategy
         };
     }
 
-    private List<Unit> PickTargets(CombatAbilityData ability)
+    public List<Unit> PickTargets(CombatAbilityData ability)
     {
         var empty = new List<Unit>();
         if (ability == null || !ability.IsTargetedAbility())
@@ -47,16 +47,18 @@ public class CombatStrategy
             return empty;
         }
 
+        var targetArmy = ability.AffectsAllies() ? _allies : _enemies;
+
         // TODO: pick best targets based on other things
-        var enemyPositions = _enemies.Formation.GetOccupiedPositions(true);
+        var targetPositions = targetArmy.Formation.GetOccupiedPositions(true);
         var valid = FormationUtils.GetFormationPairs(ability.ValidTargets);
-        var targets = FormationUtils.GetIntersection(valid, enemyPositions);
+        var targets = FormationUtils.GetIntersection(valid, targetPositions);
         if (targets.Count == 0)
         {
             return empty;
         }
 
-        var units = _enemies.Formation.GetUnits(targets);
+        var units = targetArmy.Formation.GetUnits(targets);
 
         if (units.Count == 0)
         {
@@ -67,6 +69,8 @@ public class CombatStrategy
             case CombatAbilityTarget.RandomEnemy:
             case CombatAbilityTarget.RandomAlly:
                 return new List<Unit> { units.GetRandom() };
+            case CombatAbilityTarget.AllAllies:
+            case CombatAbilityTarget.AllEnemies:
             default:
                 return units;
         }

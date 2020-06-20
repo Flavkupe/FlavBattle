@@ -111,13 +111,13 @@ public class ArmyManager : MonoBehaviour
     {
         var army = CreateArmy(gridX, gridY, faction);
 
-        // Make officer
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(faction.Faction, unitLevel, true));
-        for (var i = 1; i < numUnits; i++)
+        UnitGenerator.PopulateArmy(army, _playerFaction.Faction, new UnitGenerator.RandomArmyOptions
         {
-            // Make other units
-            army.Formation.PutUnit(UnitGenerator.MakeUnit(faction.Faction, unitLevel));
-        }
+            MinLevel = unitLevel,
+            MaxLevel = unitLevel,
+            MinUnitNum = numUnits,
+            MaxUnitNum = numUnits,
+        });
 
         return army;
     }

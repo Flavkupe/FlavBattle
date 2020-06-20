@@ -53,6 +53,51 @@ public static class FormationUtils
     public static FormationPair[] FourCorners = { FR, FL, BR, BL };
     public static FormationPair[] FourSides = { MR, ML, FM, BM };
 
+    public static FormationRow GetRow(FormationRowAndCol rowAndCol)
+    {
+        switch (rowAndCol)
+        {
+            case FormationRowAndCol.FL:
+            case FormationRowAndCol.FM:
+            case FormationRowAndCol.FR:
+                return FormationRow.Front;
+            case FormationRowAndCol.ML:
+            case FormationRowAndCol.MM:
+            case FormationRowAndCol.MR:
+                return FormationRow.Middle;
+            case FormationRowAndCol.BL:
+            case FormationRowAndCol.BM:
+            case FormationRowAndCol.BR:
+            default:
+                return FormationRow.Back;
+        }
+    }
+
+    public static FormationColumn GetColumn(FormationRowAndCol rowAndCol)
+    {
+        switch (rowAndCol)
+        {
+            case FormationRowAndCol.FL:
+            case FormationRowAndCol.ML:
+            case FormationRowAndCol.BL:
+                return FormationColumn.Left;
+            case FormationRowAndCol.FM:
+            case FormationRowAndCol.MM:
+            case FormationRowAndCol.BM:
+                return FormationColumn.Middle;
+            case FormationRowAndCol.FR:
+            case FormationRowAndCol.MR:
+            case FormationRowAndCol.BR:
+            default:
+                return FormationColumn.Right;
+        }
+    }
+
+    public static FormationPair GetPair(FormationRowAndCol rowAndCol)
+    {
+        return new FormationPair(GetRow(rowAndCol), GetColumn(rowAndCol));
+    }
+
     public static FormationPair[] GetFormationPairs(FormationGroup group)
     {
         switch (group)

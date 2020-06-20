@@ -116,7 +116,7 @@ MonoBehaviour:
     Key: Prefabs
     SmallIcon: {fileID: 2800000, guid: 483d693b3f9d5704b89409016b40bc74, type: 3}
     LargeIcon: {fileID: 2800000, guid: fac7470563f79024ebc244b39080448d, type: 3}
-    IsIconRecursive: 0
+    IsIconRecursive: 1
     IsIconCustom: 0
     Background: {fileID: 0}
     IsBackgroundRecursive: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
     Key: Resources
     SmallIcon: {fileID: 2800000, guid: 97efd597cd18c564aadb45280476b23a, type: 3}
     LargeIcon: {fileID: 2800000, guid: 650a564eae901434e86dcb456fcc046a, type: 3}
-    IsIconRecursive: 0
+    IsIconRecursive: 1
     IsIconCustom: 0
     Background: {fileID: 0}
     IsBackgroundRecursive: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
     Key: Textures
     SmallIcon: {fileID: 2800000, guid: 27bb0c12d809b1e4fb2851723d50cde6, type: 3}
     LargeIcon: {fileID: 2800000, guid: f61940b61bdca1843bed2dbc93de9038, type: 3}
-    IsIconRecursive: 0
+    IsIconRecursive: 1
     IsIconCustom: 0
     Background: {fileID: 0}
     IsBackgroundRecursive: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
     Key: Assets/External
     SmallIcon: {fileID: 2800000, guid: 0a498e8f7fbcbef4db91d2d411e3f70f, type: 3}
     LargeIcon: {fileID: 2800000, guid: b88339035f924f94eab1e64bac79149f, type: 3}
-    IsIconRecursive: 0
+    IsIconRecursive: 1
     IsIconCustom: 0
     Background: {fileID: 0}
     IsBackgroundRecursive: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
     Key: Assets/Tilemap
     SmallIcon: {fileID: 2800000, guid: c75be7d9cde129149bb04f51d452d85a, type: 3}
     LargeIcon: {fileID: 2800000, guid: 4716b9cfe49343c499142d04bb004e0b, type: 3}
-    IsIconRecursive: 0
+    IsIconRecursive: 1
     IsIconCustom: 0
     Background: {fileID: 0}
     IsBackgroundRecursive: 0

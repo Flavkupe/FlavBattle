@@ -32,4 +32,20 @@ public class UnitStats
             Level = Math.Max(Level, other.Level),
         };
     }
+
+    /// <summary>
+    /// Gets stats affected by a multiplier
+    /// </summary>
+    public UnitStats Multiply(float multiplier)
+    {
+        return new UnitStats()
+        {
+            HP = (int)(this.HP * multiplier),
+            Power = (int)(this.Power * multiplier),
+            Defense = (int)(this.Defense * multiplier),
+            Speed = (int)(this.Speed * multiplier),
+
+            Level = this.Level, // not affected
+        };
+    }
 }

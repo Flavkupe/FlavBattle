@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "Unit Data", menuName = "Custom/Units/Unit Data", order = 1)]
 public class UnitData : ScriptableObject
@@ -12,6 +13,9 @@ public class UnitData : ScriptableObject
     public Sprite Icon;
 
     public string ClassName;
+
+    [Tooltip("Debug option to always use lowest roll for stat rolls.")]
+    public bool RollLow = false;
 
     // CombatStrategyData
     [BoxGroup("Base Stats")]
@@ -61,6 +65,9 @@ public class UnitData : ScriptableObject
     [BoxGroup("Abilities")]
     public CombatAbilityData[] StartingAbilities;
 
+    [BoxGroup("Abilities")]
+    public OfficerAbilityData[] OfficerAbilities;
+
     private string _name = "Unnamed";
 
     public override string ToString()
@@ -100,6 +107,24 @@ public class UnitData : ScriptableObject
         return stats;
     }
 
+    public OfficerAbilityData RollNewOfficerAbility(int level, List<OfficerAbilityData> existing)
+    {
+        if (OfficerAbilities == null || OfficerAbilities.Length == 0)
+        {
+            return null;
+        }
+
+        // Find abilities that match min level and are not already known
+        var available = OfficerAbilities.Where(a => a.MinLevel <= level && !existing.Any(b => b.Name == a.Name)).ToList();
+        if (available.Count == 0)
+        {
+            // no viable abilities
+            return null;
+        }
+
+        return available.GetRandom();
+    }
+
     public Sprite RollPortrait()
     {
         if (this.Portraits.Length == 0)
@@ -131,6 +156,11 @@ public class UnitData : ScriptableObject
 
     private int GenerateStat(Vector2 stat)
     {
+        if (RollLow)
+        {
+            return (int)stat.x;
+        }
+
         return (int)Mathf.Round(Utils.MathUtils.RandomNormalBetween(stat.x, stat.y));
     }
 }

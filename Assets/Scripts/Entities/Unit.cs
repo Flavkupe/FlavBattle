@@ -17,6 +17,11 @@ public class Unit : IEquatable<Unit>
 
     public bool IsOfficer => Info.IsOfficer;
 
+    /// <summary>
+    /// Display name of the unit.
+    /// </summary>
+    public string UnitName => Info.Name;
+
     public Unit()
     {
         ID = Guid.NewGuid().ToString();

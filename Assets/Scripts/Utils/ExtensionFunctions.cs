@@ -151,6 +151,16 @@ public static class ExtensionFunctions
         obj.gameObject.SetActive(false);
     }
 
+    public static void Hide(this GameObject obj)
+    {
+        obj.SetActive(false);
+    }
+
+    public static void Show(this GameObject obj)
+    {
+        obj.SetActive(true);
+    }
+
     public static void SetActive(this MonoBehaviour obj, bool active)
     {
         obj.gameObject.SetActive(active);

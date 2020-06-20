@@ -26,6 +26,7 @@ public enum CombatAbilityEffect
     Damage = 1,
     Heal = 2,
     MoraleDown = 4,
+    StatusChange = 8,
 }
 
 public enum CombatAbilityVisual
@@ -73,6 +74,19 @@ public enum CombatAnimationDurationType
 {
     OneCycle,
     Duration,
+}
+
+public enum CombatAnimationTarget
+{
+    /// <summary>
+    /// Combat animation shows up on user
+    /// </summary>
+    Self,
+
+    /// <summary>
+    /// Combat animation shows up on target
+    /// </summary>
+    Target
 }
 
 [Serializable]
@@ -196,6 +210,16 @@ public class CombatAbilityData : ScriptableObject
     [ShowIf("ShowAnimationProps")]
     public float CombatAnimationRepeats = 1.0f;
 
+    [BoxGroup("Visuals")]
+    [ShowIf(ConditionOperator.And, "ShowAnimationProps", "IsTargetedAbility")]
+    [Tooltip("Whether the animation shows up on the target or source, where applicable")]
+    public CombatAnimationTarget CombatAnimationTarget;
+
+    [BoxGroup("Visuals")]
+    [ShowIf(ConditionOperator.And, "ShowAnimationProps", "IsMultitarget")]
+    [Tooltip("For multiple animations, which sequence they run in")]
+    public CombatAnimationType AnimationSequence;
+
     /***** Character Animation ******/
 
     [BoxGroup("Visuals")]
@@ -219,14 +243,35 @@ public class CombatAbilityData : ScriptableObject
     [ShowIf("ShowMoraleDamage")]
     public int MoraleDamage;
 
+    [BoxGroup("Effect")]
+    [ShowIf("ShowStatusChange")]
+    public UnitStats StatusEffect;
+
     public bool IsTargetedAbility()
     {
         return Type != CombatAbilityType.Idle;
     }
 
+    public bool AffectsAllies()
+    {
+        switch (Target)
+        {
+            case CombatAbilityTarget.AllAllies:
+            case CombatAbilityTarget.RandomAlly:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private bool ShowAnimationProps()
     {
         return VisualEffect == CombatAbilityVisual.Animation;
+    }
+
+    private bool IsMultitarget()
+    {
+        return Target == CombatAbilityTarget.AllAllies || Target == CombatAbilityTarget.AllEnemies;
     }
 
     private bool ShowCharacterMoveProps()
@@ -249,6 +294,11 @@ public class CombatAbilityData : ScriptableObject
     private bool ShowMoraleDamage()
     {
         return Effect.HasFlag(CombatAbilityEffect.MoraleDown);
+    }
+
+    private bool ShowStatusChange()
+    {
+        return Effect.HasFlag(CombatAbilityEffect.StatusChange);
     }
 
     private bool ShowProjectileArcProps()

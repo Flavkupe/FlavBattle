@@ -21,6 +21,34 @@ public class TestArmyConfiguration
     public UnitData BL;
     public UnitData BM;
     public UnitData BR;
+
+    public FormationRowAndCol OfficerPosition;
+
+    public UnitData GetUnit(FormationRowAndCol rowAndCol)
+    {
+        switch (rowAndCol)
+        {
+            case FormationRowAndCol.FL:
+                return FL;
+            case FormationRowAndCol.FM:
+                return FM;
+            case FormationRowAndCol.FR:
+                return FR;
+            case FormationRowAndCol.ML:
+                return ML;
+            case FormationRowAndCol.MM:
+                return MM;
+            case FormationRowAndCol.MR:
+                return MR;
+            case FormationRowAndCol.BL:
+                return BL;
+            case FormationRowAndCol.BM:
+                return BM;
+            case FormationRowAndCol.BR:
+            default:
+                return BR;
+        }
+    }
 }
 
 public class TestingAbilitiesManager : MonoBehaviour
@@ -80,15 +108,21 @@ public class TestingAbilitiesManager : MonoBehaviour
     {
         var army = new TestArmy();
         var lvl = config.Level;
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.FL, faction, lvl), FormationUtils.FL);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.FM, faction, lvl), FormationUtils.FM);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.FR, faction, lvl), FormationUtils.FR);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.ML, faction, lvl), FormationUtils.ML);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.MM, faction, lvl), FormationUtils.MM);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.MR, faction, lvl), FormationUtils.MR);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.BL, faction, lvl), FormationUtils.BL);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.BM, faction, lvl), FormationUtils.BM);
-        army.Formation.PutUnit(UnitGenerator.MakeUnit(config.BR, faction, lvl), FormationUtils.BR);
+        foreach (FormationRowAndCol rowAndCol in Enum.GetValues(typeof(FormationRowAndCol)))
+        {
+            var unit = config.GetUnit(rowAndCol);
+            if (config.OfficerPosition == rowAndCol && unit == null)
+            {
+                Debug.LogError($"Specified {rowAndCol} for officer but no officer in slot!");
+            }
+
+            if (unit != null)
+            {
+                var newUnit = UnitGenerator.MakeUnit(unit, faction, lvl, rowAndCol == config.OfficerPosition);
+                army.Formation.PutUnit(newUnit, FormationUtils.GetPair(rowAndCol));
+            }
+        }
+
         return army;
     }
 

@@ -34,7 +34,7 @@ public class CombatAbility : MonoBehaviour
 
     private IEnumerator DoFullSelfCombatAnimation(GameObject source)
     {
-        yield return AnimateSelf(source);
+        yield return AnimateTarget(source);
         Destroy(this.gameObject);
     }
 
@@ -62,7 +62,8 @@ public class CombatAbility : MonoBehaviour
         }
 
         // Animate the character
-        yield return AnimateSelf(source);
+        var animationTarget = _data.CombatAnimationTarget == CombatAnimationTarget.Self ? source : target;
+        yield return AnimateTarget(animationTarget);
 
         // Move back
         if (_data.CharacterMove)
@@ -85,7 +86,7 @@ public class CombatAbility : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private IEnumerator AnimateSelf(GameObject source)
+    private IEnumerator AnimateTarget(GameObject target)
     {
         if (_data.ComabtAnimation != null)
         {
@@ -94,8 +95,8 @@ public class CombatAbility : MonoBehaviour
                 var instance = Instantiate(_data.ComabtAnimation.Instance);
                 var animation = instance.GetComponent<IPlayableAnimation>();
                 animation.Speed *= _data.CombatAnimationSpeed;
-                instance.transform.SetParent(source.transform);
-                instance.transform.position = source.transform.position;
+                instance.transform.SetParent(target.transform);
+                instance.transform.position = target.transform.position;
                 yield return animation.PlayToCompletion();
                 Destroy(instance);
             }

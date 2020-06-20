@@ -25,6 +25,8 @@ public class DraggableUnitProvider : MonoBehaviour
     {
         var draggable = Instantiate(Template);
         draggable.SetUnit(unit);
+        var tooltipSource = draggable.GetComponent<TooltipSource>();
+        tooltipSource.TooltipText = unit.UnitName;
         _draggables.Add(draggable);
         DraggableCreated?.Invoke(this, draggable);
         return draggable;

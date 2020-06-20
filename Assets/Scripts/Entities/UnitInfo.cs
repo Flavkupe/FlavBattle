@@ -16,6 +16,8 @@ public class UnitInfo
 
     public List<CombatAbilityData> Abilities { get; } = new List<CombatAbilityData>();
 
+    public List<OfficerAbilityData> OfficerAbilities { get; } = new List<OfficerAbilityData>();
+
     public bool IsOfficer { get; private set; } = false;
 
     public string Name { get; private set; }
@@ -34,6 +36,16 @@ public class UnitInfo
         this.Faction = faction;
         this.Abilities.AddRange(data.StartingAbilities);
         this.IsOfficer = isOfficer;
+
+        if (isOfficer)
+        {
+            // TODO: add more abilities
+            var ability = data.RollNewOfficerAbility(level, OfficerAbilities);
+            if (ability != null)
+            {
+                OfficerAbilities.Add(ability);
+            }
+        }
     }
 
     public void LearnAbility(CombatAbilityData data)

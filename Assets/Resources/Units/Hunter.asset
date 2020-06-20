@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Hunter
   m_EditorClassIdentifier: 
   Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
-  Name: Hunter
   ClassName: Hunter
+  RollLow: 1
   HP: {x: 10, y: 20}
   Power: {x: 4, y: 7}
-  Defense: {x: 2, y: 4}
+  Defense: {x: 2, y: 3}
   Speed: {x: 5, y: 8}
   HPScaling: {x: 1, y: 3}
   PowerScaling: {x: 2, y: 3}
@@ -35,3 +35,7 @@ MonoBehaviour:
   StartingAbilities:
   - {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
   - {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
+  OfficerAbilities:
+  - {fileID: 11400000, guid: 6fb091ad09e96ca448edbffaa104318c, type: 2}
+  - {fileID: 11400000, guid: 52cd095657ab02a4e9d1dd261a3ee5a0, type: 2}
+  - {fileID: 11400000, guid: dd3d08022f9ca124683766d46920995c, type: 2}

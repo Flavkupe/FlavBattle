@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
+
+public class BattleStatus
+{
+    public IArmy Left;
+    public IArmy Right;
+}
 
 public class BattleManager : MonoBehaviour
 {
@@ -11,6 +18,8 @@ public class BattleManager : MonoBehaviour
         AwaitingTurn,
         TurnInProgress,
         ShowWinner,
+
+        PreCombatOfficerActions,
     }
 
     private enum Winner
@@ -31,6 +40,20 @@ public class BattleManager : MonoBehaviour
 
         public IArmy Enemies;
         public IArmy Allies;
+
+        /// <summary>
+        /// Stat changes due to buffs
+        /// </summary>
+        public UnitStats StatChanges { get; private set; } = new UnitStats
+        {
+            // Level not affected by stat changes
+            Level = 0
+        };
+
+        public void ApplyStatChanges(UnitStats changes)
+        {
+            StatChanges = StatChanges.Combine(changes);
+        }
     }
 
     private State _state = State.NotInCombat;
@@ -41,6 +64,15 @@ public class BattleManager : MonoBehaviour
     private GameEventManager _gameEventManager;
 
     public BattleDisplay BattleDisplay;
+
+    public BattleStatus GetBattleStatus()
+    {
+        return new BattleStatus
+        {
+            Left = _player,
+            Right = _other
+        };
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +88,12 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
+        if (_state == State.PreCombatOfficerActions)
+        {
+            _state = State.TurnInProgress;
+            StartCoroutine(DoPrebattleOfficerActions());
+        }
+
         if (_state == State.AwaitingTurn)
         {
             var winner = CheckWinner();
@@ -69,7 +107,7 @@ public class BattleManager : MonoBehaviour
             var current = GetNextCombatant();
             if (current != null)
             {
-                _state = State.TurnInProgress;   
+                _state = State.TurnInProgress;
                 StartCoroutine(DoTurn(current));
             }
             else
@@ -105,12 +143,12 @@ public class BattleManager : MonoBehaviour
         _combatants.Clear();
         _turnQueue.Clear();
         yield return BattleDisplay.InitializeCombatScene(player, enemy);
-        _combatants.AddRange(GetCombatants(_player, _other, true));
-        _combatants.AddRange(GetCombatants(_other, _player, false));
-        _state = State.AwaitingTurn;
+        _combatants.AddRange(CreateCombatants(_player, _other, true));
+        _combatants.AddRange(CreateCombatants(_other, _player, false));
+        _state = State.PreCombatOfficerActions;
     }
 
-    private IEnumerable<Combatant> GetCombatants(IArmy allies, IArmy enemies, bool left)
+    private IEnumerable<Combatant> CreateCombatants(IArmy allies, IArmy enemies, bool left)
     {
         var combatFormation = left ? BattleDisplay.LeftFormation : BattleDisplay.RightFormation;
         return allies.Formation.GetOccupiedPositionInfo().Select(a => new Combatant
@@ -148,10 +186,26 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private IEnumerator DoTurn(Combatant combatant)
+    private CombatStrategy GetStrat(Combatant combatant)
     {
         var stratData = combatant.Unit.GetStrategy();
-        var strat = new CombatStrategy(stratData, combatant.Unit, combatant.Allies, combatant.Enemies);
+        return new CombatStrategy(stratData, combatant.Unit, combatant.Allies, combatant.Enemies);
+    }
+
+    private IEnumerator DoPrebattleOfficerActions()
+    {
+        // TODO: enemy army as well
+        var combatants = GetCombatants(_player.Formation.GetUnits());
+        var officer = combatants.First(a => a.Unit.IsOfficer);
+
+        yield return DoOfficerActions(officer);
+
+        _state = State.AwaitingTurn;
+    }
+
+    private IEnumerator DoTurn(Combatant combatant)
+    {
+        var strat = GetStrat(combatant);
         var decision = strat.Decide();
 
         var ability = decision.Ability;
@@ -159,6 +213,44 @@ public class BattleManager : MonoBehaviour
 
         Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name}'s turn!");
 
+        // TODO: multiplier
+        yield return UseAbility(combatant, ability, targets);
+
+        _state = State.AwaitingTurn;
+    }
+
+    private IEnumerator DoOfficerActions(Combatant combatant)
+    {
+        var strat = GetStrat(combatant);
+        var actions = combatant.Unit.Info.OfficerAbilities.Where(a => a.TriggerType == OfficerAbilityTriggerType.AutoStartInCombat).ToList();
+        if (actions.Count > 0)
+        {
+            Debug.Log(actions.Count);
+
+            // TODO: run each (in parallel...?) or pick a better one?
+            var action = actions.GetRandom();
+            Debug.Log(action.Name);
+
+            var ability = action.CombatAbility;
+
+            Debug.Log(ability.Name);
+            var targets = GetCombatants(strat.PickTargets(ability));
+            Debug.Log(targets.Count);
+            Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name} is doing officer action {action.CombatAbility.Name}!");
+
+            // TODO: other multipliers
+            var multiplier = action.MultiplierType == 
+                OfficerAbilityEffectMultiplierType.Constant ? action.ConstantEffectMultiplier : 1.0f;
+            yield return UseAbility(combatant, ability, targets, multiplier);
+        }
+        else
+        {
+            Debug.Log($"{combatant.Unit.Info.Faction}: officer {combatant.Unit.Info.Name} has no officer actions!");
+        }
+    }
+
+    private IEnumerator UseAbility(Combatant combatant, CombatAbilityData ability, List<Combatant> targets, float multiplier = 1.0f)
+    {
         if (ability == null)
         {
             Debug.Log("No ability available!");
@@ -172,26 +264,16 @@ public class BattleManager : MonoBehaviour
 
         if (targets.Count > 0)
         {
-            // Attack targets
+            // Targets
             Debug.Log($"Targets: {string.Join(", ", targets.Select(a => a.Unit.Data.ClassName)) }");
 
-            var damageRoll = combatant.Unit.Info.CurrentStats.Power;
-
-            foreach (var target in targets)
+            if (ability.AffectsAllies())
             {
-                var slot = target.CombatFormationSlot;
-                slot.Highlight();
-
-                var damage = damageRoll;
-                if (ability != null)
-                {
-                    damage += ability.Damage.RandomBetween();
-                    yield return AnimateAbility(combatant, target, ability);
-                }
-
-                Debug.Log($"Damage roll for {damage}!");
-                yield return AttackTarget(combatant, target, damage);
-                slot.ResetColor();
+                yield return UseAbilityOnAllies(combatant, ability, targets, multiplier);
+            }
+            else
+            {
+                yield return UseAbilityOnEnemies(combatant, ability, targets, multiplier);
             }
         }
         else
@@ -201,8 +283,42 @@ public class BattleManager : MonoBehaviour
         }
 
         // yield return new WaitForSeconds(0.5f);
+    }
 
-        _state = State.AwaitingTurn;
+    private IEnumerator UseAbilityOnAllies(Combatant combatant, CombatAbilityData ability, List<Combatant> targets, float multiplier = 1.0f)
+    {
+        var routines = Routine.CreateEmptyRoutineSet(this, ability.AnimationSequence == CombatAnimationType.Parallel);
+        foreach (var target in targets)
+        {
+            var routine = AnimateAbility(combatant, target, ability, Color.blue).ToRoutine();
+            routines.AddRoutine(routine);
+
+            // TODO: other effects
+            if (ability.Effect == CombatAbilityEffect.StatusChange)
+            {
+                var effect = ability.StatusEffect.Multiply(multiplier);
+                target.ApplyStatChanges(effect);
+            }
+        }
+
+        yield return routines;
+    }
+
+    private IEnumerator UseAbilityOnEnemies(Combatant combatant, CombatAbilityData ability, List<Combatant> targets, float multiplier = 1.0f)
+    {
+        var stats = GetCombinedCombatantStats(combatant);
+        var damageRoll = stats.Power;
+
+        foreach (var target in targets)
+        {
+            // TODO: other effects
+            var damage = damageRoll;
+            damage += ability.Damage.RandomBetween();
+            damage = (int)((float)damage * multiplier);
+            yield return AnimateAbility(combatant, target, ability, Color.red);
+            Debug.Log($"Damage roll for {damage}!");
+            yield return AttackTarget(combatant, target, damage);
+        }
     }
 
     private IEnumerator AnimateAbility(Combatant source, CombatAbilityData abilityData)
@@ -210,8 +326,15 @@ public class BattleManager : MonoBehaviour
         yield return AnimateAbility(source, null, abilityData);
     }
 
-    private IEnumerator AnimateAbility(Combatant source, Combatant target, CombatAbilityData abilityData)
+    private IEnumerator AnimateAbility(Combatant source, Combatant target, CombatAbilityData abilityData, Color? tileHighlight = null)
     {
+        CombatFormationSlot slot = null;
+        if (target != null)
+        {
+            slot = target.CombatFormationSlot;
+            slot.Highlight(tileHighlight ?? Color.white);
+        }
+
         var obj = new GameObject("Ability");
         var ability = obj.AddComponent<CombatAbility>();
 
@@ -225,12 +348,26 @@ public class BattleManager : MonoBehaviour
         {
             yield return ability.StartUntargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject);
         }
+
+        if (slot != null)
+        {
+            slot.ResetColor();
+        }
     }
 
     private IEnumerator AttackTarget(Combatant attacker, Combatant target, int damageRoll)
     {
         var slot = target.CombatFormationSlot;
         Debug.Log($"{target.Unit.Info.Name} of {target.Unit.Info.Faction} is hit for {damageRoll}!");
+
+        
+        var targetStats = GetCombinedCombatantStats(target);
+        var mitigation = targetStats.Defense;
+
+        Debug.Log($"Total damage mitigation from target: {mitigation} for total damage of {damageRoll}");
+
+        damageRoll = Math.Max(1, damageRoll - mitigation);
+
         yield return slot.CurrentUnit.TakeDamage(damageRoll);
 
         if (slot.CurrentUnit.Unit.IsDead())
@@ -238,6 +375,15 @@ public class BattleManager : MonoBehaviour
             yield return slot.CurrentUnit.AnimateDeath();
             ClearCombatant(target);
         }
+    }
+    /// <summary>
+    /// Gets all combined target stats (with buffs etc) for combatant
+    /// </summary>
+    private UnitStats GetCombinedCombatantStats(Combatant combatant)
+    {
+        var targetStats = combatant.Unit.Info.CurrentStats;
+        targetStats = targetStats.Combine(combatant.StatChanges);
+        return targetStats;
     }
 
     private void ClearCombatant(Combatant combatant)

@@ -4,6 +4,14 @@ using UnityEngine;
 
 public static class UnitGenerator
 {
+    public class RandomArmyOptions
+    {
+        public int MinLevel = 1;
+        public int MaxLevel = 1;
+        public int MinUnitNum = 1;
+        public int MaxUnitNum = 1;
+    }
+
     public static Unit MakeUnit(Faction faction, int level = 1, bool isOfficer = false)
     {
         return MakeUnit(ResourceHelper.Units.GetRandom(), faction, level, isOfficer);
@@ -23,5 +31,20 @@ public static class UnitGenerator
         };
 
         return unit;
+    }
+
+    /// <summary>
+    /// Populates an army with random units and levels in random open positions.
+    /// Always creates a random officer first.
+    /// </summary>
+    public static void PopulateArmy(IArmy army, Faction faction, RandomArmyOptions options)
+    {
+        var rand = Random.Range(options.MinUnitNum, options.MaxUnitNum + 1);
+        army.Formation.PutUnit(MakeUnit(faction, options.MaxLevel, true));
+        for (var i = 1; i < rand; i++)
+        {
+            var randLevel = Random.Range(options.MinLevel, options.MaxLevel + 1);
+            army.Formation.PutUnit(MakeUnit(faction, randLevel));
+        }
     }
 }

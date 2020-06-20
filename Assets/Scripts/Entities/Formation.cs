@@ -103,6 +103,11 @@ public class Formation
         Debug.Assert(e == current, "Attempting to remove unit not in this formation!");
     }
 
+    public Unit GetOfficer()
+    {
+        return GetUnits().First(a => a.IsOfficer);
+    }
+
     public Unit GetUnit(FormationRow row, FormationColumn column)
     {
         var rowIndex = (int)row;
@@ -160,6 +165,22 @@ public class Formation
             FormationPair = a,
             Unit = GetUnit(a.Row, a.Col)
         });
+    }
+
+    /// <summary>
+    /// Gets total number of dead units in formation
+    /// </summary>
+    public int GetNumberOfDeadUnits()
+    {
+        return GetUnits().Count(a => a != null && a.IsDead());
+    }
+
+    /// <summary>
+    /// Gets total number of live units in formation
+    /// </summary>
+    public int GetNumberOfLiveUnits()
+    {
+        return GetUnits().Count(a => a != null && !a.IsDead());
     }
 
     private FormationPair? GetRandomEmpty()

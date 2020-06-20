@@ -1,19 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UnitStatsPanel : MonoBehaviour
 {
+    [BoxGroup("Visual")]
+    public IconLabelPair Level;
+
+    [BoxGroup("Visual")]
+    public IconLabelPair Class;
+
+    [BoxGroup("Visual")]
+    public IconLabelPair HP;
+
+    [BoxGroup("Visual")]
+    public IconLabelPair Power;
+
+    [BoxGroup("Visual")]
+    public IconLabelPair Def;
+
+    [BoxGroup("Buttons")]
+    public Button CommandsButton;
+
+    [BoxGroup("Other")]
     public FacePortrait Portrait;
+
+    [BoxGroup("Other")]
     public NameTag NameTag;
 
-    public IconLabelPair Level;
-    public IconLabelPair Class;
-    public IconLabelPair HP;
-    public IconLabelPair Power;
-    public IconLabelPair Def;
+    [BoxGroup("Other")]
+    public OfficerCommandsPanel OfficerCommandsPanel;
 
     public void SetUnit(Unit unit)
     {
@@ -25,5 +44,10 @@ public class UnitStatsPanel : MonoBehaviour
         this.Power.SetText($"{unit.Info.MaxStats.Power}");
         this.Def.SetText($"{unit.Info.MaxStats.Defense}");
         this.NameTag.SetUnit(unit);
+
+        this.OfficerCommandsPanel.SetUnit(unit);
+        this.OfficerCommandsPanel.Hide();
+        this.CommandsButton.interactable = unit.IsOfficer;
+        
     }
 }

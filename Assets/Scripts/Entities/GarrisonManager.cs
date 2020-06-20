@@ -92,12 +92,13 @@ public class GarrisonManager : MonoBehaviour
         for (var i = 0; i < 8; i++)
         {
             var army1 = new StoredArmy(_playerFaction);
-            
-            var rand = UnityEngine.Random.Range(1, 5);
-            for (var j = 0; j < rand; j++)
-            {
-                army1.Formation.PutUnit(UnitGenerator.MakeUnit(_playerFaction.Faction, rand));
-            }
+
+            UnitGenerator.PopulateArmy(army1, _playerFaction.Faction, new UnitGenerator.RandomArmyOptions {
+                MinLevel = 2,
+                MaxLevel = 4,
+                MinUnitNum = 3,
+                MaxUnitNum = 5,
+            });
 
             _garrisonedArmies.Add(army1);
         }
