@@ -38,6 +38,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
   - {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
   OfficerAbilities:
-  - {fileID: 11400000, guid: 6fb091ad09e96ca448edbffaa104318c, type: 2}
-  - {fileID: 11400000, guid: 52cd095657ab02a4e9d1dd261a3ee5a0, type: 2}
   - {fileID: 11400000, guid: dd3d08022f9ca124683766d46920995c, type: 2}

@@ -8,4 +8,6 @@ public interface IDraggable : IDragHandler, IBeginDragHandler, IEndDragHandler
     void DroppedOnTarget(DropTarget gameObj);
 
     MonoBehaviour Instance { get; }
+
+    bool CancelDrag { get; set; }
 }

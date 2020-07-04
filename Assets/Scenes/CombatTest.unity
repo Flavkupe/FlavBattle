@@ -749,10 +749,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ArmyMode: 1
+  TimeScale: 1
   Left: {fileID: 731195046}
   Right: {fileID: 1171478143}
   AbilityData: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
-  RightToLeft: 1
+  RightToLeft: 0
   LeftArmyConfig:
     Level: 1
     FL: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
@@ -870,11 +871,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BattleDisplay
-      objectReference: {fileID: 0}
-    - target: {fileID: 6104582357145907552, guid: a142ca29ab85c98468281adb2e1cd328,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6104582357145907553, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}

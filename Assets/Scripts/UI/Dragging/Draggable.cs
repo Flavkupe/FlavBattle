@@ -14,6 +14,8 @@ public class Draggable : MonoBehaviour, IDraggable
 
     public static Draggable DraggedObject { get; private set; }
 
+    public bool CancelDrag { get; set; }
+
     public MonoBehaviour Instance => this;
 
     private Vector3 _startPos;

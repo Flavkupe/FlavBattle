@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The formation slot during combat for a single unit. Contains the unit, unless empty.
+/// </summary>
 public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 {
     public CombatUnit CombatUnitTemplate;

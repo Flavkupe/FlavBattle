@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
-  m_Name: SwordSlash
+  m_Name: LightClubBash
   m_EditorClassIdentifier: 
   Name: Slash
   Type: 0
-  Priority: 2
+  Priority: 0
   Target: 1
-  ValidTargets: 0
+  ValidTargets: 1
   VisualEffect: 1
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
@@ -30,7 +30,7 @@ MonoBehaviour:
   CharacterMoveTarget: 0
   CharacterMoveArcHeight: 1
   CharacterMoveSpeed: 40
-  ComabtAnimation: {fileID: 3110200331050148215, guid: a3961fcc4e001ed42b1c0a1a85b6af94,
+  ComabtAnimation: {fileID: 5331656751271035678, guid: f4bc414cc9329954cbab33df89d17be2,
     type: 3}
   CombatAnimationSpeed: 3
   CombatAnimationRepeats: 2
@@ -45,7 +45,7 @@ MonoBehaviour:
     WaitForCompletion: 0
     Animations: []
   Effect: 1
-  Damage: {x: 2, y: 4}
+  Damage: {x: 1, y: 1}
   MoraleDamage: 0
   StatusEffect:
     HP: 0

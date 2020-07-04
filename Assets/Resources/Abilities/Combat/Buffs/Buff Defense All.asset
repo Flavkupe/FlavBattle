@@ -36,13 +36,28 @@ MonoBehaviour:
   CombatAnimationTarget: 1
   AnimationSequence: 2
   PreAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
+    Type: 2
+    WaitForCompletion: 1
+    Animations:
+    - Animation: {fileID: 285175196612671447, guid: 7457d0d8bdc75924cbad2d801af632ca,
+        type: 3}
+      DurationType: 0
+      Target: 0
+      Duration: 0
+    - Animation: {fileID: 750596751060774699, guid: 46376cc25405aef4ea95c2b5be3a5548,
+        type: 3}
+      DurationType: 0
+      Target: 0
+      Duration: 0
   PostAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
+    Type: 2
+    WaitForCompletion: 1
+    Animations:
+    - Animation: {fileID: 750596751060774699, guid: afc8f3bbf02eca942981f5f39922be32,
+        type: 3}
+      DurationType: 0
+      Target: 1
+      Duration: 0
   Effect: 8
   Damage: {x: 0, y: 0}
   MoraleDamage: 0

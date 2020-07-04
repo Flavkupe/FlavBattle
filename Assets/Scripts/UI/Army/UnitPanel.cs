@@ -65,4 +65,19 @@ public class UnitPanel : DropTarget
     {
         _units.Remove(unit);
     }
+
+    protected override bool CanDrop(IDraggable draggable)
+    {
+        var unit = draggable.Instance.GetComponent<DraggableUIUnit>();
+        if (unit != null)
+        {
+            if (unit.Unit.IsOfficer)
+            {
+                // Cannot drop officers into unit panel
+                return false;
+            }
+        }
+
+        return base.CanDrop(draggable);
+    }
 }

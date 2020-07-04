@@ -50,6 +50,8 @@ public class BattleManager : MonoBehaviour
             Level = 0
         };
 
+        public CombatUnit CombatUnit => CombatFormationSlot?.CurrentUnit;
+
         public void ApplyStatChanges(UnitStats changes)
         {
             StatChanges = StatChanges.Combine(changes);
@@ -262,6 +264,8 @@ public class BattleManager : MonoBehaviour
             Debug.Log($"Using ability {ability.Name}");
         }
 
+        yield return PlayAdditionalAnimations(combatant, ability.PreAttackAnimations, targets);
+
         if (targets.Count > 0)
         {
             // Targets
@@ -282,7 +286,67 @@ public class BattleManager : MonoBehaviour
             yield return AnimateAbility(combatant, ability);
         }
 
+        yield return PlayAdditionalAnimations(combatant, ability.PostAttackAnimations, targets);
+
         // yield return new WaitForSeconds(0.5f);
+    }
+
+    /// <summary>
+    /// Plays CombatCharacterAnimations on targets or combatant, based on data.
+    /// For exmaple, PreAttackAnimations or PostAttackAnimations, which is just
+    /// the animations before or after combat.
+    /// 
+    /// Will run to completion if option is enabled. Otherwise will run in background.
+    /// </summary>
+    /// <param name="combatant">Unit whose turn it is</param>
+    /// <param name="animationsData">Data for this set of animations, such as PreAttackAnimations or PostAttackAnimations</param>
+    /// <param name="targets">Targets of ability, if any</param>
+    private IEnumerator PlayAdditionalAnimations(Combatant combatant, CombatCharacterAnimations animationsData, List<Combatant> targets)
+    {
+        if (animationsData.Animations.Count() == 0)
+        {
+            yield break;
+        }
+
+        var routines = Routine.CreateEmptyRoutineSet(this, animationsData.Type == CombatAnimationType.Parallel);
+
+        foreach (var animation in animationsData.Animations)
+        {
+            // TODO: duration type
+            var animationList = new List<IPlayableAnimation>();
+            if (animation.Target == CombatAnimationTarget.Self)
+            {
+                var instance = Instantiate(animation.Animation);
+                animationList.Add(instance);
+                instance.transform.position = combatant.CombatUnit.transform.position;
+            }
+            else if (animation.Target == CombatAnimationTarget.Target)
+            {
+                foreach (var target in targets)
+                {
+                    var instance = Instantiate(animation.Animation);
+                    animationList.Add(instance);
+                    instance.transform.position = target.CombatUnit.transform.position;
+                }
+            }
+
+            foreach (var anim in animationList)
+            {
+                if (animationsData.WaitForCompletion)
+                {
+                    routines.AddRoutine(anim.PlayToCompletion().ToRoutine());
+                }
+                else
+                {
+                    anim.PlayAnimation();
+                }
+            }
+        }
+
+        if (animationsData.WaitForCompletion)
+        {
+            yield return routines;
+        }
     }
 
     private IEnumerator UseAbilityOnAllies(Combatant combatant, CombatAbilityData ability, List<Combatant> targets, float multiplier = 1.0f)

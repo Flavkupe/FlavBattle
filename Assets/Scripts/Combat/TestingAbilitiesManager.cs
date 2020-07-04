@@ -55,6 +55,11 @@ public class TestingAbilitiesManager : MonoBehaviour
 {
     public bool ArmyMode = false;
 
+    /// <summary>
+    /// Change to raise or lower the speed the game goes
+    /// </summary>
+    public float TimeScale = 1.0f;
+
     [HideIf("ArmyMode")]
     public GameObject Left;
     
@@ -90,6 +95,7 @@ public class TestingAbilitiesManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Time.timeScale = TimeScale;
     }
 
     private void InitArmy()

@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 200929350286905208}
-  - component: {fileID: 200929350286905209}
   - component: {fileID: 200929350286905210}
+  - component: {fileID: 5331656751271035678}
   m_Layer: 0
-  m_Name: SwordAnimation
+  m_Name: ClubAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,20 +32,7 @@ Transform:
   - {fileID: 200929350397134144}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15.951719}
---- !u!114 &200929350286905209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200929350286905211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3122c53dd8450648ab10713edda3ecd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.19171}
 --- !u!111 &200929350286905210
 Animation:
   m_ObjectHideFlags: 0
@@ -62,6 +49,22 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &5331656751271035678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200929350286905211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e06a27f28c22967409a9fa3ac54dc141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 1
+  Weapon: {fileID: 21300000, guid: 4798087309cd04d44aed5806f1b9b362, type: 3}
+  AnimatedRenderer: {fileID: 200929350397134151}
+  Rotation: 1
 --- !u!1 &200929350397134145
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +76,7 @@ GameObject:
   - component: {fileID: 200929350397134144}
   - component: {fileID: 200929350397134151}
   m_Layer: 0
-  m_Name: Sword
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,6 +110,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -118,6 +122,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -128,9 +133,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1315524507
-  m_SortingLayer: 7
+  m_SortingLayer: 9
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: fff6f4db7e9ad874d8ba024d5ea7469d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4798087309cd04d44aed5806f1b9b362, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

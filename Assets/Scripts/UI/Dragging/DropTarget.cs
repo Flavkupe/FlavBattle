@@ -12,6 +12,13 @@ public class DropTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     private Image _image;
 
     public event EventHandler<IDraggable> ObjectDropped;
+
+    /// <summary>
+    /// Event that fires right before an object will be dropped, allowing the
+    /// drop to be cancelled
+    /// </summary>
+    public event EventHandler<IDraggable> ObjectWillBeDropped;
+
     public Color DragHoverColor;
 
     public bool ChangeColorOnHover;
@@ -31,12 +38,24 @@ public class DropTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         if (eventData.pointerDrag != null)
         {
             var draggable = eventData.pointerDrag.GetComponent<IDraggable>();
-            if (draggable != null)
+            if (draggable != null && CanDrop(draggable))
             {
-                ObjectDropped?.Invoke(this, draggable);
-                draggable.DroppedOnTarget(this);
+                ObjectWillBeDropped?.Invoke(this, draggable);
+                if (!draggable.CancelDrag)
+                {
+                    ObjectDropped?.Invoke(this, draggable);
+                    draggable.DroppedOnTarget(this);
+                }
             }
         }
+    }
+
+    /// <summary>
+    /// Allows override to determine if item should be dropped here.
+    /// </summary>
+    protected virtual bool CanDrop(IDraggable draggable)
+    {
+        return true;
     }
 
     private void SetColor(Color color)

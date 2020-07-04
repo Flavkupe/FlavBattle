@@ -8,7 +8,7 @@ public class CombatAnimation : PlayableAnimation
 {
     private Animation _animation;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _animation = GetComponent<Animation>();
     }
@@ -32,5 +32,4 @@ public class CombatAnimation : PlayableAnimation
             yield return null;
         }
     }
-
 }

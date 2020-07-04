@@ -67,7 +67,6 @@ public enum CombatAnimationType
     None,
     Serial,
     Parallel,
-    PickRandom,
 }
 
 public enum CombatAnimationDurationType
@@ -96,10 +95,9 @@ public class CombatCharacterAnimations
 
     public bool WaitForCompletion;
 
-    [ShowIf("ShowProps")]
     public Props[] Animations;
 
-    private bool ShowProps()
+    private bool ShowAnimations()
     {
         return Type != CombatAnimationType.None;
     }
@@ -107,9 +105,11 @@ public class CombatCharacterAnimations
     [Serializable]
     public class Props
     {
-        public IPlayableAnimation Animation;
+        public PlayableAnimation Animation;
 
         public CombatAnimationDurationType DurationType;
+
+        public CombatAnimationTarget Target;
 
         [ShowIf("ShowDuration")]
         public float Duration;

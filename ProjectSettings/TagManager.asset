@@ -53,8 +53,14 @@ TagManager:
   - name: Overlay
     uniqueID: 3885787269
     locked: 0
-  - name: BattleBackdrop
+  - name: BattleBackdropLeft
     uniqueID: 1051034847
+    locked: 0
+  - name: BattleBackdropRight
+    uniqueID: 3631050681
+    locked: 0
+  - name: BattleTiles
+    uniqueID: 3507968011
     locked: 0
   - name: BattleForeground
     uniqueID: 143904315
