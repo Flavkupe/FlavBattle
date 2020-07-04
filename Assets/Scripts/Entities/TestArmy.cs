@@ -11,6 +11,8 @@ public class TestArmy : IArmy
 
     public FactionData Faction { get; set; }
 
+    public FightingStance Stance { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {

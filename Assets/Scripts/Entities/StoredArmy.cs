@@ -11,6 +11,8 @@ public class StoredArmy : IArmy
 
     public FactionData Faction { get; private set; }
 
+    public FightingStance Stance { get; set; }
+
     public StoredArmy(Army army)
     {
         ID = army.ID;

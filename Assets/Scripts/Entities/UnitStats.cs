@@ -21,6 +21,17 @@ public class UnitStats
         return this.MemberwiseClone() as UnitStats;
     }
 
+    public UnitStats Combine(params UnitStats[] others)
+    {
+        var combined = new UnitStats();
+        foreach (var stats in others)
+        {
+            combined = combined.Combine(stats);
+        }
+
+        return combined;
+    }
+
     public UnitStats Combine(UnitStats other)
     {
         return new UnitStats()

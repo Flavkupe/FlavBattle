@@ -57,6 +57,8 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public bool IsOnGarrison { get; private set; }
 
+    public FightingStance Stance { get; set; }
+
     public DetectableType Type => DetectableType.Army;
 
     private Detector[] _detectors;

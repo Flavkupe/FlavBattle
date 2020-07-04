@@ -9,4 +9,6 @@ public interface IArmy
     Formation Formation { get; }
 
     FactionData Faction { get; }
+
+    FightingStance Stance { get; set; }
 }

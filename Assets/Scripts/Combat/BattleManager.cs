@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using NaughtyAttributes;
 
 public class BattleStatus
 {
@@ -65,7 +66,13 @@ public class BattleManager : MonoBehaviour
     private Queue<Combatant> _turnQueue = new Queue<Combatant>();
     private GameEventManager _gameEventManager;
 
+    private const float BattleFormationChangeCooldownSeconds = 5.0f;
+
+    [Required]
     public BattleDisplay BattleDisplay;
+
+    [Required]
+    public BattleUIPanel BattleUIPanel;
 
     public BattleStatus GetBattleStatus()
     {
@@ -80,6 +87,9 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         _gameEventManager = FindObjectOfType<GameEventManager>();
+
+        BattleUIPanel.OnStanceChangeClicked += (object o, FightingStance stance) => HandleStanceChanged(stance, true);
+        BattleUIPanel.Hide();
     }
 
     // Update is called once per frame
@@ -125,15 +135,29 @@ public class BattleManager : MonoBehaviour
         return StartCoroutine(StartCombatInternal(player, enemy));
     }
 
+    /// <summary>
+    /// Shows the winner of combat and hides all combat state
+    /// </summary>
+    /// <param name="winner"></param>
+    /// <returns></returns>
     private IEnumerator ShowWinner(Winner winner)
     {
         var victory = winner == Winner.Left;
         yield return BattleDisplay.ShowCombatEndSign(victory);
-        yield return BattleDisplay.HideCombatScene();
+        yield return HideCombatUI();
         var winningArmy = victory ? _player : _other;
         var losingArmy = victory ? _other : _player;
         _gameEventManager.TriggerCombatEndedEvent(winningArmy, losingArmy);
         _state = State.NotInCombat;
+    }
+
+    /// <summary>
+    /// Hides all UI for combat (Buttons, backdrop, etc)
+    /// </summary>
+    private IEnumerator HideCombatUI()
+    {
+        BattleUIPanel.Hide();
+        yield return BattleDisplay.HideCombatScene();
     }
 
     private IEnumerator StartCombatInternal(IArmy player, IArmy enemy)
@@ -148,6 +172,13 @@ public class BattleManager : MonoBehaviour
         _combatants.AddRange(CreateCombatants(_player, _other, true));
         _combatants.AddRange(CreateCombatants(_other, _player, false));
         _state = State.PreCombatOfficerActions;
+
+
+        // Init stance in the UI based on army setting
+        HandleStanceChanged(player.Stance, false);
+
+        // Enable UI State
+        BattleUIPanel.Show();
     }
 
     private IEnumerable<Combatant> CreateCombatants(IArmy allies, IArmy enemies, bool left)
@@ -446,8 +477,29 @@ public class BattleManager : MonoBehaviour
     private UnitStats GetCombinedCombatantStats(Combatant combatant)
     {
         var targetStats = combatant.Unit.Info.CurrentStats;
-        targetStats = targetStats.Combine(combatant.StatChanges);
+        var armyBonuses = GetArmyBonusStats(combatant.Allies);
+        targetStats = targetStats.Combine(combatant.StatChanges, armyBonuses);
         return targetStats;
+    }
+
+    /// <summary>
+    /// Gets unit stat bonuses associated with army.
+    /// </summary>
+    private UnitStats GetArmyBonusStats(IArmy army)
+    {
+        var stats = new UnitStats();
+        if (army.Stance == FightingStance.Defensive)
+        {
+            // TEMP: simple stance bonuses for now
+            stats.Defense += 1;
+        }
+        else if (army.Stance == FightingStance.Offensive)
+        {
+            // TEMP: simple stance bonuses for now
+            stats.Power += 1;
+        }
+
+        return stats;
     }
 
     private void ClearCombatant(Combatant combatant)
@@ -481,5 +533,15 @@ public class BattleManager : MonoBehaviour
     private List<Combatant> GetCombatants(List<Unit> units)
     {
         return _combatants.Where(a => units.Any(b => a.Unit.ID == b.ID)).ToList();
+    }
+
+    /// <summary>
+    /// Handles a UI stance change, such as from the UI or combat start
+    /// </summary>
+    /// <param name="stance"></param>
+    private void HandleStanceChanged(FightingStance stance, bool applyCooldown = false)
+    {
+        this._player.Stance = stance;
+        BattleUIPanel.UpdateStance(stance, applyCooldown ? BattleFormationChangeCooldownSeconds : 0.0f);
     }
 }

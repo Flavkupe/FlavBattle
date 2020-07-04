@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+
 public static class ExtensionFunctions
 {
     public static TValue GetRandom<TValue>(this IList<TValue> list)
@@ -189,5 +189,16 @@ public static class ExtensionFunctions
     public static int RandomBetween(this Vector2 range)
     {
         return Random.Range((int)range.x, (int)range.y);
+    }
+
+    public static void DoAfter(this MonoBehaviour behavior, float seconds, System.Action action)
+    {
+        behavior.StartCoroutine(DoAfterInternal(seconds, action));
+    }
+
+    private static IEnumerator DoAfterInternal(float seconds, System.Action action)
+    {
+        yield return new WaitForSeconds(seconds);
+        action();
     }
 }
