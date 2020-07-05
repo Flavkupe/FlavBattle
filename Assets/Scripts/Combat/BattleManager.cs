@@ -453,20 +453,18 @@ public class BattleManager : MonoBehaviour
         // TODO: other effects
         if (ability.Effect.HasFlag(CombatAbilityEffect.Damage))
         {
-            var damage = 0;
-            var damageRoll = stats.Power;
-            damage = damageRoll;
+            var damage = stats.Power;
             damage += ability.Damage.RandomBetween();
             damage = (int)((float)damage * multiplier);
             Debug.Log($"Damage roll for {damage}!");
             var mitigation = targetStats.Defense;
             Debug.Log($"Total damage mitigation from target: {mitigation} for total damage of {damage}");
-            damageRoll = Math.Max(1, damageRoll - mitigation);
+            damage = Math.Max(1, damage - mitigation);
             yield return slot.CurrentUnit.TakeDamage(damage);
             Debug.Log($"{target.Unit.Info.Name} of {target.Unit.Info.Faction} is hit for {damage}!");
 
             // do some additional morale damage
-            moraleDamage = CalculateMoraleDamage(attacker, target, damageRoll);
+            moraleDamage = CalculateMoraleDamage(attacker, target, damage);
         }
 
         if (ability.Effect.HasFlag(CombatAbilityEffect.MoraleDown))
