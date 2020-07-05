@@ -11,4 +11,6 @@ public interface IArmy
     FactionData Faction { get; }
 
     FightingStance Stance { get; set; }
+
+    Morale Morale { get; }
 }

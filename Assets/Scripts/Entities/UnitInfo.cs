@@ -9,7 +9,7 @@ public class UnitInfo
     public UnitData Data { get; private set; }
     public UnitStats CurrentStats { get; private set; }
     public UnitStats MaxStats { get; private set; }
-
+    public Morale Morale { get; } = new Morale();
     public Faction Faction { get; private set; }
 
     public Sprite Portrait { get; private set; }

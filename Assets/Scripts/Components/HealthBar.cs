@@ -1,27 +1,20 @@
-﻿using System.Collections;
+﻿using NaughtyAttributes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
     public SpriteRenderer Bar;
+    
+    [Required]
+    [Tooltip("The actual visual component that will shrink as health changes (does not affect colliders etc)")]
+    public GameObject Visual;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void SetPercent(float percent)
+    public void SetHP(int hp, float percent)
     {
         Debug.Assert(percent >= 0.0f && percent <= 1.0f);
-        this.transform.localScale = this.transform.localScale.SetX(percent);
+        Visual.transform.localScale = Visual.transform.localScale.SetX(percent);
         if (percent > 0.75f)
         {
             this.Bar.color = Color.green;
@@ -33,6 +26,12 @@ public class HealthBar : MonoBehaviour
         else
         {
             this.Bar.color = Color.red;
+        }
+
+        var tooltip = GetComponent<TooltipSource>();
+        if (tooltip != null)
+        {
+            tooltip.TooltipText = hp.ToString();
         }
     }
 }

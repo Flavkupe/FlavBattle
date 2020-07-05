@@ -1,28 +1,37 @@
 fileFormatVersion: 2
-guid: ea8e8fa534dc1284a84510d51543ac9e
+guid: 2ea68ca378803c444b9461264e8cedcd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5023407710064398905
-    second: WhiteFlag1
+      213: 2082893341414481568
+    second: SpookIcons_0
   - first:
-      213: -3860773912634225870
-    second: WhiteFlag2
+      213: 641756070202738475
+    second: SpookIcons_1
   - first:
-      213: 7670003739818491420
-    second: MoraleIcon
+      213: 6537333313695908211
+    second: SpookIcons_2
   - first:
-      213: -6041924565799567413
-    second: MoreMisc_0
+      213: -6387638709735572306
+    second: SpookIcons_3
   - first:
-      213: 8938138218236670619
-    second: MoreMisc_1
+      213: -8969466058626194041
+    second: SpookIcons_4
   - first:
-      213: -7712673242130958706
-    second: MoreMisc_2
+      213: -1767955645835782202
+    second: SpookIcons_5
   - first:
-      213: 7244531055324466602
-    second: HeartIcon
+      213: -7527596890601171229
+    second: SpookIcons_6
+  - first:
+      213: -2880597819170004741
+    second: SpookIcons_7
+  - first:
+      213: 1179661737759196421
+    second: SpookIcons_8
+  - first:
+      213: 3281275617945899368
+    second: SpookIcons_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -66,7 +75,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WhiteFlag1
+      name: SpookIcons_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 224
-        width: 32
-        height: 32
+        y: 0
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +155,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7cd27a78d45494ab0800000000000000
-      internalID: -5023407710064398905
+      spriteID: 0ae5908557ce7ec10800000000000000
+      internalID: 2082893341414481568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WhiteFlag2
+      name: SpookIcons_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 224
-        width: 32
-        height: 32
+        x: 24
+        y: 0
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,20 +176,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23b875be496cb6ac0800000000000000
-      internalID: -3860773912634225870
+      spriteID: b2782e4eeb9f7e800800000000000000
+      internalID: 641756070202738475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MoraleIcon
+      name: SpookIcons_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 223
-        width: 32
-        height: 32
+        x: 48
+        y: 0
+        width: 24
+        height: 24
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,29 +197,155 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1e7cc193c3517a60800000000000000
-      internalID: 7670003739818491420
+      spriteID: 3710c25330649ba50800000000000000
+      internalID: 6537333313695908211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HeartIcon
+      name: SpookIcons_3
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eac3da8cf6c8a57a0800000000000000
+      internalID: -6387638709735572306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpookIcons_4
       rect:
         serializedVersion: 2
         x: 96
-        y: 224
-        width: 32
-        height: 32
+        y: 0
+        width: 24
+        height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aad86e49c9eb98460800000000000000
-      internalID: 7244531055324466602
+      spriteID: 785a9a6542e068380800000000000000
+      internalID: -8969466058626194041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpookIcons_5
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c7df4705b5f677e0800000000000000
+      internalID: -1767955645835782202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpookIcons_6
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e6d16bc28a988790800000000000000
+      internalID: -7527596890601171229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpookIcons_7
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf06b97ab8f0608d0800000000000000
+      internalID: -2880597819170004741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpookIcons_8
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 505c142b9100f5010800000000000000
+      internalID: 1179661737759196421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpookIcons_9
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 861d0d12ace698d20800000000000000
+      internalID: 3281275617945899368
       vertices: []
       indices: 
       edges: []

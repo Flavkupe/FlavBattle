@@ -50,16 +50,10 @@ public class CombatStrategy
         var targetArmy = ability.AffectsAllies() ? _allies : _enemies;
 
         // TODO: pick best targets based on other things
-        var targetPositions = targetArmy.Formation.GetOccupiedPositions(true);
-        var valid = FormationUtils.GetFormationPairs(ability.ValidTargets);
-        var targets = FormationUtils.GetIntersection(valid, targetPositions);
-        if (targets.Count == 0)
-        {
-            return empty;
-        }
-
-        var units = targetArmy.Formation.GetUnits(targets);
-
+        //var targetPositions = targetArmy.Formation.GetOccupiedPositions(true);
+        //var valid = FormationUtils.GetFormationPairs(ability.ValidTargets);
+        //var targets = FormationUtils.GetIntersection(valid, targetPositions);
+        var units = GetValidAbilityTargets(ability, targetArmy);
         if (units.Count == 0)
         {
             return empty;
@@ -81,12 +75,13 @@ public class CombatStrategy
     /// </summary>
     private List<CombatAbilityData> FilterPossibleAbilities(List<CombatAbilityData> abilities)
     {
+        
         var enemyPositions = _enemies.Formation.GetOccupiedPositions(true);
         List<CombatAbilityData> possible = new List<CombatAbilityData>();
         foreach (var ability in abilities)
         {
-            // Check if any enemy position matches a valid position
-            if (CanAbilityHitPositions(ability, enemyPositions))
+            // Check if ability can hit any units
+            if (CanAbilityHitUnits(ability, _enemies))
             {
                 possible.Add(ability);
             }
@@ -95,17 +90,39 @@ public class CombatStrategy
         return possible;
     }
 
+    /// <summary>
+    /// Checks whether any units are affected by the ability. Checks both positional
+    /// and unit requirements of ability.
+    /// </summary>
     private bool CanAbilityHitUnits(CombatAbilityData ability, IArmy army)
     {
-        var positions = army.Formation.GetOccupiedPositions();
-        return CanAbilityHitPositions(ability, positions);
-
+        return GetValidAbilityTargets(ability, army).Count > 0;
     }
 
-    private bool CanAbilityHitPositions(CombatAbilityData ability, IEnumerable<FormationPair> positions)
+    /// <summary>
+    /// Gets the units that are affected by the ability. Checks both positional
+    /// and unit requirements of ability.
+    /// </summary>
+    private List<Unit> GetValidAbilityTargets(CombatAbilityData ability, IArmy army)
     {
         var validPositions = FormationUtils.GetFormationPairs(ability.ValidTargets);
-        return positions.Any(a => validPositions.Any(b => a.Equals(b)));
+        var validUnits = army.Formation.GetUnits(validPositions);
+        if (ability.ValidOpponent == ValidOpponent.Any)
+        {
+            return validUnits;
+        }
+
+        if (ability.ValidOpponent == ValidOpponent.LowerLevel)
+        {
+            return validUnits.Where(a => a.Info.CurrentStats.Level < _unit.Info.CurrentStats.Level).ToList();
+        }
+        else if (ability.ValidOpponent == ValidOpponent.HigherLevel)
+        {
+            return validUnits.Where(a => a.Info.CurrentStats.Level > _unit.Info.CurrentStats.Level).ToList(); ;
+        }
+
+        Debug.LogWarning($"No check configured for ability validity type {ability.ValidOpponent}; treating as 'Any'");
+        return validUnits;
     }
 
     private List<CombatAbilityPriority> GetPriorityValuesReversed()

@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\Entities\GarrisonManager.cs" />
     <Compile Include="Assets\Scripts\Entities\IArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\IDetectable.cs" />
+    <Compile Include="Assets\Scripts\Entities\Morale.cs" />
     <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\TestArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\Unit.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitStatsPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleUIPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\MoraleIcon.cs" />
     <Compile Include="Assets\Scripts\UI\Components\FacePortrait.cs" />
     <Compile Include="Assets\Scripts\UI\Components\IconLabelPair.cs" />
     <Compile Include="Assets\Scripts\UI\Components\NameTag.cs" />

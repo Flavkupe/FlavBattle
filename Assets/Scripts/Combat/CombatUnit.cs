@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,15 +8,19 @@ public class CombatUnit : MonoBehaviour
 {
     public Unit Unit { get; private set; }
 
+    [Required]
     public FloatingText DamageTextTemplate;
 
+    [Required]
+    public MoraleIcon MoraleIcon;
+
     private HealthBar _healthBar;
+
     private bool _facingLeft = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        _healthBar = GetComponentInChildren<HealthBar>();
     }
 
     public void SetUnit(Unit unit, bool facingLeft)
@@ -28,6 +33,8 @@ public class CombatUnit : MonoBehaviour
         {
             this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
         }
+
+        this.UpdateUIComponents();
     }
 
     public Coroutine TakeDamage(int damage)
@@ -35,10 +42,22 @@ public class CombatUnit : MonoBehaviour
         return StartCoroutine(TakeDamageInternal(damage));
     }
 
-    public Coroutine AnimateDamaged()
+    /// <summary>
+    /// Deals morale damage to target. If animate is true, will animate
+    /// effect and show numbers. If false, will do morale damage without
+    /// showing it (ie as part of damage attack etc). moraleDamage
+    /// should be a positive number.
+    /// </summary>
+    public Coroutine TakeMoraleDamage(int moraleDamage, bool animate)
+    {
+        Debug.Log($"{Unit.Info.Name} of {Unit.Info.Faction} took {moraleDamage} morale damage!");
+        return StartCoroutine(TakeMoraleDamageInternal(moraleDamage, animate));
+    }
+
+    public Coroutine AnimateDamaged(Color? color = null)
     {
         var renderer = this.GetComponent<SpriteRenderer>();
-        return StartCoroutine(renderer.FlashColor(Color.red));
+        return StartCoroutine(renderer.FlashColor(color ?? Color.red));
     }
 
     public Coroutine AnimateAttack()
@@ -65,12 +84,23 @@ public class CombatUnit : MonoBehaviour
         }
         else
         {
-            var percent = (float)info.CurrentStats.HP / (float)info.MaxStats.HP;
-            percent = Mathf.Clamp(percent, 0.0f, 1.0f);
-            _healthBar.SetPercent(percent);
+            yield return AnimateDamaged();
+            this.UpdateUIComponents();
+        }
+    }
+
+    private IEnumerator TakeMoraleDamageInternal(int moraleDamage, bool animate)
+    {
+        var info = Unit.Info;
+
+        this.Unit.Info.Morale.ChangeMorale(-moraleDamage);
+        if (animate)
+        {
+            this.CreateDamageTextOverHead(moraleDamage.ToString(), Color.blue);
+            yield return AnimateDamaged(Color.blue);
         }
 
-        yield return AnimateDamaged();
+        this.UpdateUIComponents();        
     }
 
     private IEnumerator AnimateAttackInternal()
@@ -90,13 +120,33 @@ public class CombatUnit : MonoBehaviour
     }
 
 
-    private void CreateDamageTextOverHead(string text)
+    private void CreateDamageTextOverHead(string text, Color? color = null)
     {
         var currentY = this.transform.position.y;
         var damageNumber = Instantiate(DamageTextTemplate);
-        damageNumber.SetText(text);
+        damageNumber.SetText(text, color);
         damageNumber.transform.position = this.transform.position.SetY(currentY + 0.25f);
     }
 
-    
+    /// <summary>
+    /// Updates each part of the UI to the current player state
+    /// </summary>
+    private void UpdateUIComponents()
+    {
+        if (_healthBar == null)
+        {
+            _healthBar = GetComponentInChildren<HealthBar>();
+        }
+
+        var info = Unit.Info;
+
+        // Update HP
+        var hp = info.CurrentStats.HP;
+        var percent = (float)hp / (float)info.MaxStats.HP;
+        percent = Mathf.Clamp(percent, 0.0f, 1.0f);
+        _healthBar.SetHP(hp, percent);
+
+        // Update Morale
+        this.MoraleIcon.UpdateIcon(info.Morale);
+    }
 }

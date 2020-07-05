@@ -88,6 +88,27 @@ public enum CombatAnimationTarget
     Target
 }
 
+/// <summary>
+/// Specific opponent requirement for this ability to work
+/// </summary>
+public enum ValidOpponent
+{
+    /// <summary>
+    /// Works on any opponent
+    /// </summary>
+    Any,
+
+    /// <summary>
+    /// Only works on lower level opponent
+    /// </summary>
+    LowerLevel,
+
+    /// <summary>
+    /// Only works on higher level opponent
+    /// </summary>
+    HigherLevel,
+}
+
 [Serializable]
 public class CombatCharacterAnimations
 {
@@ -139,6 +160,10 @@ public class CombatAbilityData : ScriptableObject
     [BoxGroup("Targets")]
     [ShowIf("IsTargetedAbility")]
     public FormationGroup ValidTargets;
+
+    [BoxGroup("Targets")]
+    [ShowIf("IsTargetedAbility")]
+    public ValidOpponent ValidOpponent;
 
     /***** Visuals ******/
 
@@ -241,7 +266,8 @@ public class CombatAbilityData : ScriptableObject
 
     [BoxGroup("Effect")]
     [ShowIf("ShowMoraleDamage")]
-    public int MoraleDamage;
+    [MinMaxSlider(0.0f, 100.0f)]
+    public Vector2 MoraleDamage;
 
     [BoxGroup("Effect")]
     [ShowIf("ShowStatusChange")]

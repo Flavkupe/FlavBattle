@@ -13,6 +13,8 @@ public class StoredArmy : IArmy
 
     public FightingStance Stance { get; set; }
 
+    public Morale Morale { get; } = new Morale();
+
     public StoredArmy(Army army)
     {
         ID = army.ID;

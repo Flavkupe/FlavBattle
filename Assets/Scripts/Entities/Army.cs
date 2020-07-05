@@ -59,6 +59,8 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public FightingStance Stance { get; set; }
 
+    public Morale Morale { get; } = new Morale();
+
     public DetectableType Type => DetectableType.Army;
 
     private Detector[] _detectors;

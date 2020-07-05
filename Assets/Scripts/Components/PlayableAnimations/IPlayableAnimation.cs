@@ -12,6 +12,11 @@ public interface IPlayableAnimation
     float Speed { get; set; }
 
     GameObject Instance { get; }
+
+    /// <summary>
+    /// If true, animation will scale to match target. Use this for things like weapons, but not for unscaled effects like particles.
+    /// </summary>
+    bool ScaleToTarget { get; }
 }
 
 public abstract class PlayableAnimation : MonoBehaviour, IPlayableAnimation
@@ -23,6 +28,8 @@ public abstract class PlayableAnimation : MonoBehaviour, IPlayableAnimation
     private float _speed = 1.0f;
 
     public GameObject Instance => this.gameObject;
+
+    public virtual bool ScaleToTarget => false;
 
     public abstract void PlayAnimation();
 

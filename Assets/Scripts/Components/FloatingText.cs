@@ -24,8 +24,13 @@ public class FloatingText : MonoBehaviour
         this.transform.position = this.transform.position.SetY(newY);
     }
 
-    public void SetText(string text)
+    public void SetText(string text, Color? color = null)
     {
-        GetComponent<TextMeshPro>().text = text;
+        var tmp = GetComponent<TextMeshPro>();
+        tmp.text = text;
+        if (color != null)
+        {
+            tmp.color = color.Value;
+        }
     }
 }

@@ -5,6 +5,9 @@ public class TooltipSource : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     public string TooltipText;
 
+    [Tooltip("Optional Icon that will show up to the right of tooltip (at 24x24 pixels size)")]
+    public Sprite Icon;
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (Tooltip.Instance == null)
@@ -14,7 +17,7 @@ public class TooltipSource : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
 
         Tooltip.Instance.Show();
-        Tooltip.Instance.SetText(TooltipText);
+        Tooltip.Instance.SetText(TooltipText, Icon);
     }
 
     public void OnPointerExit(PointerEventData eventData)

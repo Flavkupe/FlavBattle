@@ -95,7 +95,7 @@ public class CombatAbility : MonoBehaviour
                 var instance = Instantiate(_data.ComabtAnimation.Instance);
                 var animation = instance.GetComponent<IPlayableAnimation>();
                 animation.Speed *= _data.CombatAnimationSpeed;
-                instance.transform.SetParent(target.transform);
+                instance.transform.SetParent(target.transform, _data.ComabtAnimation.ScaleToTarget);
                 instance.transform.position = target.transform.position;
                 yield return animation.PlayToCompletion();
                 Destroy(instance);
@@ -107,6 +107,12 @@ public class CombatAbility : MonoBehaviour
     {
         var targetPos = target.transform.position;
         var sourcePos = source.transform.position;
+
+        if (_data.ProjectileObject == null)
+        {
+            Debug.LogError($"No projectile for ability {this._data.Name}");
+        }
+
         var projectile = Instantiate(_data.ProjectileObject);
         projectile.transform.position = sourcePos;
 

@@ -8,6 +8,8 @@ public class CombatAnimation : PlayableAnimation
 {
     private Animation _animation;
 
+    public override bool ScaleToTarget => true;
+
     protected virtual void Awake()
     {
         _animation = GetComponent<Animation>();

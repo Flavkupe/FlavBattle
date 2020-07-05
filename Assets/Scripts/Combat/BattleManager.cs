@@ -401,18 +401,10 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator UseAbilityOnEnemies(Combatant combatant, CombatAbilityData ability, List<Combatant> targets, float multiplier = 1.0f)
     {
-        var stats = GetCombinedCombatantStats(combatant);
-        var damageRoll = stats.Power;
-
         foreach (var target in targets)
         {
-            // TODO: other effects
-            var damage = damageRoll;
-            damage += ability.Damage.RandomBetween();
-            damage = (int)((float)damage * multiplier);
             yield return AnimateAbility(combatant, target, ability, Color.red);
-            Debug.Log($"Damage roll for {damage}!");
-            yield return AttackTarget(combatant, target, damage);
+            yield return AttackTarget(combatant, target, ability, multiplier);
         }
     }
 
@@ -450,20 +442,46 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private IEnumerator AttackTarget(Combatant attacker, Combatant target, int damageRoll)
+    private IEnumerator AttackTarget(Combatant attacker, Combatant target, CombatAbilityData ability, float multiplier = 1.0f)
     {
+        var stats = GetCombinedCombatantStats(attacker);
         var slot = target.CombatFormationSlot;
-        Debug.Log($"{target.Unit.Info.Name} of {target.Unit.Info.Faction} is hit for {damageRoll}!");
-
-        
         var targetStats = GetCombinedCombatantStats(target);
-        var mitigation = targetStats.Defense;
 
-        Debug.Log($"Total damage mitigation from target: {mitigation} for total damage of {damageRoll}");
+        var moraleDamage = 0;
 
-        damageRoll = Math.Max(1, damageRoll - mitigation);
+        // TODO: other effects
+        if (ability.Effect.HasFlag(CombatAbilityEffect.Damage))
+        {
+            var damage = 0;
+            var damageRoll = stats.Power;
+            damage = damageRoll;
+            damage += ability.Damage.RandomBetween();
+            damage = (int)((float)damage * multiplier);
+            Debug.Log($"Damage roll for {damage}!");
+            var mitigation = targetStats.Defense;
+            Debug.Log($"Total damage mitigation from target: {mitigation} for total damage of {damage}");
+            damageRoll = Math.Max(1, damageRoll - mitigation);
+            yield return slot.CurrentUnit.TakeDamage(damage);
+            Debug.Log($"{target.Unit.Info.Name} of {target.Unit.Info.Faction} is hit for {damage}!");
 
-        yield return slot.CurrentUnit.TakeDamage(damageRoll);
+            // do some additional morale damage
+            moraleDamage = CalculateMoraleDamage(attacker, target, damageRoll);
+        }
+
+        if (ability.Effect.HasFlag(CombatAbilityEffect.MoraleDown))
+        {
+            // TODO: morale damage mitigation based on bravery stats and other factors
+            moraleDamage += ability.MoraleDamage.RandomBetween();
+
+            // do and animate morale damage
+            yield return slot.CurrentUnit.TakeMoraleDamage(moraleDamage, true);
+        }
+        else
+        {
+            // do the morale damage without showing it if it's not part of the effect
+            yield return slot.CurrentUnit.TakeMoraleDamage(moraleDamage, false);
+        }
 
         if (slot.CurrentUnit.Unit.IsDead())
         {
@@ -471,6 +489,18 @@ public class BattleManager : MonoBehaviour
             ClearCombatant(target);
         }
     }
+
+    /// <summary>
+    /// Given the 2 combatants and the damage dealt, calculates and returns Morale damage
+    /// taken, accounting for all things.
+    /// </summary>
+    private int CalculateMoraleDamage(Combatant attacker, Combatant target, int damage)
+    {
+        // TODO: different morale damages
+        // Currently taking half of damage as morale damage
+        return damage / 2;
+    }
+
     /// <summary>
     /// Gets all combined target stats (with buffs etc) for combatant
     /// </summary>
