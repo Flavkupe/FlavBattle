@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class ExtensionFunctions
 {
@@ -200,5 +201,30 @@ public static class ExtensionFunctions
     {
         yield return new WaitForSeconds(seconds);
         action();
+    }
+
+    /// <summary>
+    /// Gets the SpriteRenderer or Image and sets the color of that.
+    /// First tries to get a SpriteRenderer, and get Image if that's null.
+    /// </summary>
+    public static void SetColor(this MonoBehaviour obj, Color color)
+    {
+        var rend = obj.GetComponent<SpriteRenderer>();
+        if (rend != null)
+        {
+            rend.color = color;
+        }
+        else
+        {
+            var img = obj.GetComponent<Image>();
+            if (img != null)
+            {
+                img.color = color;
+            }
+            else
+            {
+                Debug.LogWarning($"No SpriteRenderer or Image component on {obj.name}");
+            }
+        }
     }
 }

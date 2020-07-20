@@ -106,7 +106,7 @@ public class CombatStrategy
     private List<Unit> GetValidAbilityTargets(CombatAbilityData ability, IArmy army)
     {
         var validPositions = FormationUtils.GetFormationPairs(ability.ValidTargets);
-        var validUnits = army.Formation.GetUnits(validPositions);
+        var validUnits = army.Formation.GetUnits(validPositions, true);
         if (ability.ValidOpponent == ValidOpponent.Any)
         {
             return validUnits;

@@ -102,17 +102,18 @@ public class TestingAbilitiesManager : MonoBehaviour
     {
         if (ArmyMode)
         {
-            var enemyFaction = ResourceHelper.Factions.First(a => !a.IsPlayerFaction).Faction;
-            var playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction).Faction;
+            var enemyFaction = ResourceHelper.Factions.First(a => !a.IsPlayerFaction);
+            var playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
 
             _leftArmy = MakeArmy(LeftArmyConfig, playerFaction);
             _rightArmy = MakeArmy(RightArmyConfig, enemyFaction);
         }
     }
 
-    private TestArmy MakeArmy(TestArmyConfiguration config, Faction faction)
+    private TestArmy MakeArmy(TestArmyConfiguration config, FactionData factionData)
     {
         var army = new TestArmy();
+        army.Faction = factionData;
         var lvl = config.Level;
         foreach (FormationRowAndCol rowAndCol in Enum.GetValues(typeof(FormationRowAndCol)))
         {
@@ -124,9 +125,14 @@ public class TestingAbilitiesManager : MonoBehaviour
 
             if (unit != null)
             {
-                var newUnit = UnitGenerator.MakeUnit(unit, faction, lvl, rowAndCol == config.OfficerPosition);
+                var newUnit = UnitGenerator.MakeUnit(unit, factionData.Faction, lvl, rowAndCol == config.OfficerPosition);
                 army.Formation.PutUnit(newUnit, FormationUtils.GetPair(rowAndCol));
             }
+        }
+
+        if (army.Formation.GetOfficer() == null)
+        {
+            Debug.LogError("No officer for army!!");
         }
 
         return army;

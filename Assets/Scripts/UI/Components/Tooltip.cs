@@ -9,6 +9,8 @@ public class Tooltip : SingletonObject<Tooltip>
 
     public Image Icon;
 
+    public bool CameraSpace = false;
+
     public float HorizontalPadding = 20.0f;
     public float VerticalOffset = -30.0f;
 
@@ -21,8 +23,19 @@ public class Tooltip : SingletonObject<Tooltip>
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = Input.mousePosition;
+        if (CameraSpace)
+        {
+            this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+        else
+        {
+            this.transform.position = Input.mousePosition;
+        }
+
         this.transform.position = this.transform.position.ShiftY(VerticalOffset);
+        this.transform.position = this.transform.position.SetZ(0);
+
+        Debug.Log(this.transform.position);
     }
 
     public void SetText(string text, Sprite icon = null)

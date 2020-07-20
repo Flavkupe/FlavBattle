@@ -12,6 +12,12 @@ public class BattleUIPanel : MonoBehaviour
     [Required]
     public ToggleableButton OffensiveButton;
 
+    [Required]
+    public ArmyMoraleBar LeftMoraleBar;
+
+    [Required]
+    public ArmyMoraleBar RightMoraleBar;
+
     /// <summary>
     /// Fires an event indicating that the FightingStance has been changed from the UI
     /// </summary>
@@ -58,5 +64,28 @@ public class BattleUIPanel : MonoBehaviour
                 OffensiveButton.Button.interactable = true;
             });
         }
+    }
+
+    public void UpdateMorale(IArmy left, IArmy right)
+    {
+        LeftMoraleBar.UpdateMorale(left.Morale);
+        RightMoraleBar.UpdateMorale(right.Morale);
+    }
+
+    public void SetArmies(IArmy left, IArmy right)
+    {
+        LeftMoraleBar.SetArmy(left);
+        RightMoraleBar.SetArmy(right);
+    }
+
+    /// <summary>
+    /// Shows an effect animation on morale.
+    /// </summary>
+    /// <param name="left">Left morale bar; otherwise is right morale bar.</param>
+    /// <param name="positive">Whether change is positive or negative.</param>
+    public void AnimateMoraleBar(bool left, bool positive)
+    {
+        var bar = left ? LeftMoraleBar : RightMoraleBar;
+        bar.AnimateMoraleChange(positive);
     }
 }

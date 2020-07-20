@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TestArmy : IArmy
 {
-    public string ID => Guid.NewGuid().ToString();
+    public string ID { get; } = Guid.NewGuid().ToString();
 
     public Formation Formation { get; set; } = new Formation();
 

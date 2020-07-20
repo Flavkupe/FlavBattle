@@ -14,27 +14,18 @@ public class Formation
 {
     private Unit[,] _units = new Unit[3,3];
 
-    public List<Unit> GetUnits()
+    public List<Unit> GetUnits(bool liveOnly = false)
     {
-        var list = new List<Unit>();
-        foreach (var unit in this._units)
-        {
-            if (unit != null)
-            {
-                list.Add(unit);
-            }
-        }
-
-        return list;
+        return GetUnits(FormationUtils.AllSquares, liveOnly);
     }
 
-    public List<Unit> GetUnits(IEnumerable<FormationPair> pairs)
+    public List<Unit> GetUnits(IEnumerable<FormationPair> pairs, bool liveOnly = false)
     {
         var list = new List<Unit>();
         foreach (var pair in pairs)
         {
             var unit = GetUnit(pair.Row, pair.Col);
-            if (unit != null)
+            if (unit != null && (!liveOnly || !unit.IsDead()))
             {
                 list.Add(unit);
             }

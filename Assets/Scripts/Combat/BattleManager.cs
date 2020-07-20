@@ -174,8 +174,9 @@ public class BattleManager : MonoBehaviour
         _state = State.PreCombatOfficerActions;
 
 
-        // Init stance in the UI based on army setting
+        // Init UI based on army setting
         HandleStanceChanged(player.Stance, false);
+        BattleUIPanel.SetArmies(_player, _other);
 
         // Enable UI State
         BattleUIPanel.Show();
@@ -481,11 +482,46 @@ public class BattleManager : MonoBehaviour
             yield return slot.CurrentUnit.TakeMoraleDamage(moraleDamage, false);
         }
 
-        if (slot.CurrentUnit.Unit.IsDead())
+        var unitDied = slot.CurrentUnit.Unit.IsDead();
+        if (unitDied)
         {
             yield return slot.CurrentUnit.AnimateDeath();
             ClearCombatant(target);
         }
+
+        DealMoraleDamageToArmy(attacker?.Allies, target?.Allies, moraleDamage, unitDied);
+    }
+
+    /// <summary>
+    /// Deals morale damage to entire army (target) based on factors. source is
+    /// opposing army (that is dealing morale damage). source and target can be null,
+    /// depending on attack.
+    /// </summary>
+    private void DealMoraleDamageToArmy(IArmy source, IArmy target, int unitMoraleDamage, bool unitDied)
+    {
+        // TODO: affected by other stats
+        // TODO: should mitigate under certain conditions
+        var armyDamage = (int)Math.Max(1, (float)unitMoraleDamage / 5.0f);
+        if (unitDied)
+        {
+            var roll = UnityEngine.Random.Range(5, 10);
+            armyDamage += roll;
+            if (source != null && armyDamage > 0)
+            {
+                // Positive morale change for attacking army
+                source.Morale.ChangeMorale(roll);
+                BattleUIPanel.AnimateMoraleBar(source == _player, true);
+            }
+        }
+
+        if (target != null)
+        {
+            // Negative morale change for attacked army
+            target.Morale.ChangeMorale(-armyDamage);
+            BattleUIPanel.AnimateMoraleBar(target == _player, false);
+        }
+
+        BattleUIPanel.UpdateMorale(_player, _other);
     }
 
     /// <summary>

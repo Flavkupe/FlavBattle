@@ -18,7 +18,7 @@ MonoBehaviour:
   Target: 1
   ValidTargets: 0
   ValidOpponent: 1
-  VisualEffect: 0
+  VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
   TraceDirection: 0
@@ -30,10 +30,11 @@ MonoBehaviour:
   CharacterMoveTarget: 0
   CharacterMoveArcHeight: 0
   CharacterMoveSpeed: 0
-  ComabtAnimation: {fileID: 0}
+  ComabtAnimation: {fileID: 750596751060774699, guid: 7a01b52c2b19c2546a04a9547eeedea0,
+    type: 3}
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
-  CombatAnimationTarget: 0
+  CombatAnimationTarget: 1
   AnimationSequence: 0
   PreAttackAnimations:
     Type: 2
@@ -52,12 +53,7 @@ MonoBehaviour:
   PostAttackAnimations:
     Type: 1
     WaitForCompletion: 0
-    Animations:
-    - Animation: {fileID: 750596751060774699, guid: 7a01b52c2b19c2546a04a9547eeedea0,
-        type: 3}
-      DurationType: 0
-      Target: 1
-      Duration: 0
+    Animations: []
   Effect: 4
   Damage: {x: 0, y: 0}
   MoraleDamage: {x: 10, y: 20}

@@ -11,6 +11,7 @@ public class Morale
     public void ChangeMorale(int change)
     {
         Current += change;
+        Current = Mathf.Clamp(Current, 0, 100);
     }
 
     public Color GetColor()
