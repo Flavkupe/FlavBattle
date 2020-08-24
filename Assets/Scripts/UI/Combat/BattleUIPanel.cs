@@ -18,10 +18,15 @@ public class BattleUIPanel : MonoBehaviour
     [Required]
     public ArmyMoraleBar RightMoraleBar;
 
+    [Required]
+    public BattleCommandMenu CommandMenu;
+
     /// <summary>
     /// Fires an event indicating that the FightingStance has been changed from the UI
     /// </summary>
     public event EventHandler<FightingStance> OnStanceChangeClicked;
+
+    private IArmy _playerArmy;
 
     // Start is called before the first frame update
     void Awake()
@@ -76,6 +81,15 @@ public class BattleUIPanel : MonoBehaviour
     {
         LeftMoraleBar.SetArmy(left);
         RightMoraleBar.SetArmy(right);
+
+        _playerArmy = left.Faction.IsPlayerFaction ? left : right.Faction.IsPlayerFaction ? right : null;
+        if (_playerArmy != null) {
+            var officer = _playerArmy.Formation.GetOfficer();
+            if (officer != null)
+            {
+                CommandMenu.SetCommander(officer);
+            }
+        }
     }
 
     /// <summary>

@@ -43,6 +43,21 @@ public class OfficerAbilityData : ScriptableObject
 
     public int MinLevel = 0;
 
+    /// <summary>
+    /// How many command points the ability costs to activate
+    /// </summary>
+    public int CommandCost = 0;
+
+    /// <summary>
+    /// Min morale required to use. 0 if no morale min requirement.
+    /// </summary>
+    public int MoraleMin = 0;
+
+    /// <summary>
+    /// Max morale to use ability. 100 if no maximum to use ability.
+    /// </summary>
+    public int MoraleMax = 100;
+
     public OfficerAbilityTriggerType TriggerType;
 
     public bool IsCombatAbility() => TriggerType == OfficerAbilityTriggerType.AutoStartInCombat;

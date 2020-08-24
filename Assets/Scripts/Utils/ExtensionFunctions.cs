@@ -227,4 +227,15 @@ public static class ExtensionFunctions
             }
         }
     }
+
+    public static void DestroyChildren(this Transform transform)
+    {
+        foreach (Transform child in transform)
+        {
+            if (child != null)
+            {
+                Object.Destroy(child.gameObject);
+            }
+        }
+    }
 }

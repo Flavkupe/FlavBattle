@@ -16,6 +16,11 @@ public class UnitStats
 
     public int Level = 1;
 
+    /// <summary>
+    /// For officers, it's how many commands they can issue.
+    /// </summary>
+    public int Command = 0;
+
     public UnitStats Clone()
     {
         return this.MemberwiseClone() as UnitStats;

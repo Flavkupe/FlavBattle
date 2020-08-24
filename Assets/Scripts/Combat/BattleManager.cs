@@ -57,6 +57,9 @@ public class BattleManager : MonoBehaviour
         {
             StatChanges = StatChanges.Combine(changes);
         }
+
+        public int UnitMorale => Unit.Info.Morale.Current;
+        public int ArmyMorale => Allies.Morale.Current;
     }
 
     private State _state = State.NotInCombat;
@@ -536,14 +539,35 @@ public class BattleManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets all combined target stats (with buffs etc) for combatant
+    /// Gets all combined target stats (with buffs etc) for combatant.
+    /// Includes morale roll.
     /// </summary>
     private UnitStats GetCombinedCombatantStats(Combatant combatant)
     {
         var targetStats = combatant.Unit.Info.CurrentStats;
         var armyBonuses = GetArmyBonusStats(combatant.Allies);
         targetStats = targetStats.Combine(combatant.StatChanges, armyBonuses);
+
+        // Calculate the morale effect on Combat stats.
+        // Roll between -0.5 to 0.5, with 50 morale being 0. Multiply stats
+        // by 1 + that number (range of 0.5 to 1.5, ie between 50% less to 50% more)
+        var moraleRoll = GetCombatantMoraleRoll(combatant);
+        moraleRoll -= 50;
+        var moraleMultiplier = 1.0f + ((float)moraleRoll / 100.0f);
+        targetStats.Multiply(moraleMultiplier);
+
         return targetStats;
+    }
+
+    /// <summary>
+    /// Gets a roll for morale, consisting of a random point between
+    /// unit morale and his Allies' morale. It's a value from 0 to 100
+    /// </summary>
+    private int GetCombatantMoraleRoll(Combatant combatant)
+    {
+        var min = Math.Min(combatant.UnitMorale, combatant.ArmyMorale);
+        var max = Math.Max(combatant.UnitMorale, combatant.ArmyMorale);
+        return UnityEngine.Random.Range(min, max + 1); // +1 because Range top is exclusive
     }
 
     /// <summary>

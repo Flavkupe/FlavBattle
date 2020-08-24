@@ -15,6 +15,9 @@ MonoBehaviour:
   Name: Battlecry
   Icon: {fileID: -6436234111012599980, guid: 5e125f43e4019e24b824797058d49d2d, type: 3}
   MinLevel: 0
+  CommandCost: 1
+  MoraleMin: 0
+  MoraleMax: 100
   TriggerType: 2
   CombatAbility: {fileID: 11400000, guid: eca85201708e1b343ac559529995b4eb, type: 2}
   MultiplierType: 1

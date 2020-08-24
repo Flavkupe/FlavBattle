@@ -36,9 +36,12 @@ public class UnitInfo
         this.Faction = faction;
         this.Abilities.AddRange(data.StartingAbilities);
         this.IsOfficer = isOfficer;
-
+        
         if (isOfficer)
         {
+            // TODO: different command amounts
+            this.CurrentStats.Command = 3;
+
             // TODO: add more abilities
             var ability = data.RollNewOfficerAbility(level, OfficerAbilities);
             if (ability != null)
