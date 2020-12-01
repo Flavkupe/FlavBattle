@@ -69,6 +69,8 @@ public class BattleManager : MonoBehaviour
     private Queue<Combatant> _turnQueue = new Queue<Combatant>();
     private GameEventManager _gameEventManager;
 
+    private Queue<OfficerAbilityData> _abilityQueue = new Queue<OfficerAbilityData>();
+
     private const float BattleFormationChangeCooldownSeconds = 5.0f;
 
     [Required]
@@ -92,6 +94,7 @@ public class BattleManager : MonoBehaviour
         _gameEventManager = FindObjectOfType<GameEventManager>();
 
         BattleUIPanel.OnStanceChangeClicked += (object o, FightingStance stance) => HandleStanceChanged(stance, true);
+        BattleUIPanel.OnCommandAbilityUsed += HandleBattleUIPanelOnCommandAbilityUsed;
         BattleUIPanel.Hide();
     }
 
@@ -116,6 +119,14 @@ public class BattleManager : MonoBehaviour
             {
                 _state = State.ShowWinner;
                 StartCoroutine(ShowWinner(winner));
+                return;
+            }
+
+            if (this._abilityQueue.Count > 0)
+            {
+                // Do a queued ability
+                _state = State.TurnInProgress;
+                StartCoroutine(DoQueuedOfficerAbility());
                 return;
             }
 
@@ -229,14 +240,18 @@ public class BattleManager : MonoBehaviour
         return new CombatStrategy(stratData, combatant.Unit, combatant.Allies, combatant.Enemies);
     }
 
+    private Combatant GetPlayerOfficer()
+    {
+        var combatants = GetCombatants(_player.Formation.GetUnits());
+        var officer = combatants.First(a => a.Unit.IsOfficer);
+        return officer;
+    }
+
     private IEnumerator DoPrebattleOfficerActions()
     {
         // TODO: enemy army as well
-        var combatants = GetCombatants(_player.Formation.GetUnits());
-        var officer = combatants.First(a => a.Unit.IsOfficer);
-
+        var officer = GetPlayerOfficer();
         yield return DoOfficerActions(officer);
-
         _state = State.AwaitingTurn;
     }
 
@@ -258,32 +273,46 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator DoOfficerActions(Combatant combatant)
     {
-        var strat = GetStrat(combatant);
         var actions = combatant.Unit.Info.OfficerAbilities.Where(a => a.TriggerType == OfficerAbilityTriggerType.AutoStartInCombat).ToList();
         if (actions.Count > 0)
         {
-            Debug.Log(actions.Count);
-
             // TODO: run each (in parallel...?) or pick a better one?
-            var action = actions.GetRandom();
-            Debug.Log(action.Name);
-
-            var ability = action.CombatAbility;
-
-            Debug.Log(ability.Name);
-            var targets = GetCombatants(strat.PickTargets(ability));
-            Debug.Log(targets.Count);
-            Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name} is doing officer action {action.CombatAbility.Name}!");
-
-            // TODO: other multipliers
-            var multiplier = action.MultiplierType == 
-                OfficerAbilityEffectMultiplierType.Constant ? action.ConstantEffectMultiplier : 1.0f;
-            yield return UseAbility(combatant, ability, targets, multiplier);
+            var action = actions.GetRandom();            
+            yield return DoOfficerAbility(combatant, action);
         }
         else
         {
             Debug.Log($"{combatant.Unit.Info.Faction}: officer {combatant.Unit.Info.Name} has no officer actions!");
         }
+    }
+
+    /// <summary>
+    /// Dequeues an officer ability from the list and executes it
+    /// </summary>
+    private IEnumerator DoQueuedOfficerAbility()
+    {
+        var officer = GetPlayerOfficer();
+        var ability = this._abilityQueue.Dequeue();
+        yield return BattleUIPanel.AnimateAbilityNameCallout(ability);
+        yield return this.DoOfficerAbility(officer, ability);
+        _state = State.AwaitingTurn;
+    }
+
+    /// <summary>
+    /// Performs an officer ability based on OfficerAbilityData, such as when clicking on an action or
+    /// due to events like combat start.
+    /// </summary>
+    private IEnumerator DoOfficerAbility(Combatant combatant, OfficerAbilityData officerAbility)
+    {
+        var ability = officerAbility.CombatAbility;
+        var strat = GetStrat(combatant);
+        var targets = GetCombatants(strat.PickTargets(ability));
+        Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name} is doing officer action {ability.Name}!");
+
+        // TODO: other multipliers
+        var multiplier = officerAbility.MultiplierType ==
+            OfficerAbilityEffectMultiplierType.Constant ? officerAbility.ConstantEffectMultiplier : 1.0f;
+        yield return UseAbility(combatant, ability, targets, multiplier);
     }
 
     private IEnumerator UseAbility(Combatant combatant, CombatAbilityData ability, List<Combatant> targets, float multiplier = 1.0f)
@@ -631,5 +660,19 @@ public class BattleManager : MonoBehaviour
     {
         this._player.Stance = stance;
         BattleUIPanel.UpdateStance(stance, applyCooldown ? BattleFormationChangeCooldownSeconds : 0.0f);
+    }
+
+    /// <summary>
+    /// Handles clicking on a command item from the CommandAbility panel.
+    /// </summary>
+    private void HandleBattleUIPanelOnCommandAbilityUsed(object sender, OfficerAbilityData e)
+    {
+        var officer = this.GetPlayerOfficer();
+        if (e.CommandCost <= officer.Unit.Info.CurrentStats.Command)
+        {
+            this._abilityQueue.Enqueue(e);
+            officer.Unit.Info.CurrentStats.Command -= e.CommandCost;
+            this.BattleUIPanel.CommandMenu.UpdateMenu();
+        }
     }
 }

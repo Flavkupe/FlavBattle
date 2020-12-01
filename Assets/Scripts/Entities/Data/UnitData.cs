@@ -87,7 +87,6 @@ public class UnitData : ScriptableObject
         stats.Power = GenerateStat(Power);
         stats.Defense = GenerateStat(Defense);
         stats.Speed = GenerateStat(Speed);
-
         for (int i = 1; i < level; i++)
         {
             var levelup = RollLevel();

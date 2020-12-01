@@ -118,6 +118,7 @@
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitStatsPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\AbilityNameCallout.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\ArmyMoraleBar.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenuItem.cs" />

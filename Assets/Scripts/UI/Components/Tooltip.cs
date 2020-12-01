@@ -34,8 +34,6 @@ public class Tooltip : SingletonObject<Tooltip>
 
         this.transform.position = this.transform.position.ShiftY(VerticalOffset);
         this.transform.position = this.transform.position.SetZ(0);
-
-        Debug.Log(this.transform.position);
     }
 
     public void SetText(string text, Sprite icon = null)

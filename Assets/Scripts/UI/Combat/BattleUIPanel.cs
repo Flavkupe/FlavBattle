@@ -21,10 +21,15 @@ public class BattleUIPanel : MonoBehaviour
     [Required]
     public BattleCommandMenu CommandMenu;
 
+    [Required]
+    public AbilityNameCallout AbilityNameCallout;
+
     /// <summary>
     /// Fires an event indicating that the FightingStance has been changed from the UI
     /// </summary>
     public event EventHandler<FightingStance> OnStanceChangeClicked;
+
+    public event EventHandler<OfficerAbilityData> OnCommandAbilityUsed;
 
     private IArmy _playerArmy;
 
@@ -33,6 +38,19 @@ public class BattleUIPanel : MonoBehaviour
     {
         DefensiveButton.OnClicked += (object obj, EventArgs e) => OnStanceChangeClicked?.Invoke(this, FightingStance.Defensive);
         OffensiveButton.OnClicked += (object obj, EventArgs e) => OnStanceChangeClicked?.Invoke(this, FightingStance.Offensive);
+        CommandMenu.OnAbilityClicked += HandleCommandMenuOnAbilityClicked;
+    }
+
+    /// <summary>
+    /// Handles an ability clicked from the OfficerAbility command menu. Closes the menu and
+    /// invokes the ability.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void HandleCommandMenuOnAbilityClicked(object sender, OfficerAbilityData e)
+    {
+        CommandMenu.Hide();
+        OnCommandAbilityUsed?.Invoke(this, e);
     }
 
     // Update is called once per frame
@@ -101,5 +119,23 @@ public class BattleUIPanel : MonoBehaviour
     {
         var bar = left ? LeftMoraleBar : RightMoraleBar;
         bar.AnimateMoraleChange(positive);
+    }
+
+    /// <summary>
+    /// Sets the data and fully animates a callout for the ability
+    /// </summary>
+    public IEnumerator AnimateAbilityNameCallout(CombatAbilityData ability)
+    {
+        this.AbilityNameCallout.SetData(ability);
+        yield return this.AbilityNameCallout.Animate();
+    }
+
+    /// <summary>
+    /// Sets the data and fully animates a callout for an officer ability
+    /// </summary>
+    public IEnumerator AnimateAbilityNameCallout(OfficerAbilityData ability)
+    {
+        this.AbilityNameCallout.SetData(ability);
+        yield return this.AbilityNameCallout.Animate();
     }
 }

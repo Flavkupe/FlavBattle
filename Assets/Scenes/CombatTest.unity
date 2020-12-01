@@ -1091,6 +1091,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -318
       objectReference: {fileID: 0}
+    - target: {fileID: 1361351606713036081, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1509738965879519559, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1224,7 +1229,7 @@ PrefabInstance:
     - target: {fileID: 2943866804879909578, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -42.762
+      value: -42.761993
       objectReference: {fileID: 0}
     - target: {fileID: 2943866804879909578, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
@@ -1316,6 +1321,11 @@ PrefabInstance:
       propertyPath: CommandMenu
       value: 
       objectReference: {fileID: 1409218440}
+    - target: {fileID: 5179985775150579246, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: AbilityNameCallout
+      value: 
+      objectReference: {fileID: 3495426948669248303}
     - target: {fileID: 5613127813222011482, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1528,6 +1538,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aaff33a9cc8f81b468798578c40eb59c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3495426948669248303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8390523875719224110, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+    type: 3}
+  m_PrefabInstance: {fileID: 3495426948669248301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f946b450e4c6442addfefa08d84530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3495426948669248304 stripped

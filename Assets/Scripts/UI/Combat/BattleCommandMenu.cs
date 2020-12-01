@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
+using System;
 
 public class BattleCommandMenu : MonoBehaviour
 {
@@ -21,9 +22,16 @@ public class BattleCommandMenu : MonoBehaviour
     [Required]
     public BattleCommandMenuItem CommandItemTemplate;
 
+    public event EventHandler<OfficerAbilityData> OnAbilityClicked;
+
+    private Unit _commander;
+
+    private List<BattleCommandMenuItem> _items = new List<BattleCommandMenuItem>();
+
     public void SetCommander(Unit commander)
     {
-        CommandPointsArea.SetCount(commander.Info.CurrentStats.Command);
+        _items.Clear();
+        _commander = commander;
         CommandArea.DestroyChildren();
 
         var abilities = commander.Info.OfficerAbilities.Where(a =>
@@ -35,6 +43,46 @@ public class BattleCommandMenu : MonoBehaviour
             var item = Instantiate(CommandItemTemplate);
             item.SetAbility(ability);
             item.transform.SetParent(CommandArea, false);
+            item.OnClicked += (o, e) => this.OnAbilityClicked?.Invoke(this, e);
+            _items.Add(item);
+        }
+
+        // Update enabled state of buttons and menu
+        UpdateMenu();
+    }
+
+    public void OpenMenu()
+    {
+        this.Show();
+        this.UpdateMenu();
+    }
+
+    public void UpdateMenu()
+    {
+        if (_commander == null)
+        {
+            return;
+        }
+
+        var commandPoints = _commander.Info.CurrentStats.Command;
+        CommandPointsArea.SetCount(commandPoints);
+        foreach (var item in _items)
+        {
+            item.UpdateState(commandPoints);
+        }
+    }
+
+    public void HandleAbilityClicked(object o, OfficerAbilityData data)
+    {
+        if (_commander == null)
+        {
+            return;
+        }
+
+        var commandPoints = _commander.Info.CurrentStats.Command;
+        if (data.CommandCost <= commandPoints)
+        {
+            this.OnAbilityClicked?.Invoke(this, data);
         }
     }
 }
