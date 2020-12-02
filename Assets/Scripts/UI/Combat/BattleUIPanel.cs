@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
 using System;
+using TMPro;
 
 public class BattleUIPanel : MonoBehaviour
 {
@@ -22,7 +23,13 @@ public class BattleUIPanel : MonoBehaviour
     public BattleCommandMenu CommandMenu;
 
     [Required]
-    public AbilityNameCallout AbilityNameCallout;
+    public CombatTextCallout CombatTextCallout;
+
+    [Required]
+    public CombatTextCallout InfoTextCallout;
+
+    [Required]
+    public TextMeshProUGUI BoutCounterText;
 
     /// <summary>
     /// Fires an event indicating that the FightingStance has been changed from the UI
@@ -126,8 +133,8 @@ public class BattleUIPanel : MonoBehaviour
     /// </summary>
     public IEnumerator AnimateAbilityNameCallout(CombatAbilityData ability)
     {
-        this.AbilityNameCallout.SetData(ability);
-        yield return this.AbilityNameCallout.Animate();
+        this.CombatTextCallout.SetData(ability);
+        yield return this.CombatTextCallout.Animate();
     }
 
     /// <summary>
@@ -135,7 +142,21 @@ public class BattleUIPanel : MonoBehaviour
     /// </summary>
     public IEnumerator AnimateAbilityNameCallout(OfficerAbilityData ability)
     {
-        this.AbilityNameCallout.SetData(ability);
-        yield return this.AbilityNameCallout.Animate();
+        this.CombatTextCallout.SetData(ability);
+        yield return this.CombatTextCallout.Animate();
+    }
+
+    public IEnumerator AnimateInfoTextCallout(string text)
+    {
+        this.InfoTextCallout.SetText(text);
+        yield return this.InfoTextCallout.Animate();
+    }
+
+    /// <summary>
+    /// Sets the bout text counter to the bout number.
+    /// </summary>
+    public void SetBoutCounterNumber(int number)
+    {
+        this.BoutCounterText.text = number.ToString();
     }
 }

@@ -68,6 +68,7 @@ public class BattleManager : MonoBehaviour
     private List<Combatant> _combatants = new List<Combatant>();
     private Queue<Combatant> _turnQueue = new Queue<Combatant>();
     private GameEventManager _gameEventManager;
+    private int _round = 0;
 
     private Queue<OfficerAbilityData> _abilityQueue = new Queue<OfficerAbilityData>();
 
@@ -139,7 +140,8 @@ public class BattleManager : MonoBehaviour
             else
             {
                 // Round done; rearrange turns
-                ArrangeTurns();
+                _state = State.TurnInProgress;
+                StartCoroutine(InitRound());
             }
         }
     }
@@ -177,7 +179,7 @@ public class BattleManager : MonoBehaviour
     private IEnumerator StartCombatInternal(IArmy player, IArmy enemy)
     {
         _gameEventManager.TriggerCombatStartedEvent(player, enemy);
-
+        _round = 0;
         _player = player;
         _other = enemy;
         _combatants.Clear();
@@ -185,8 +187,6 @@ public class BattleManager : MonoBehaviour
         yield return BattleDisplay.InitializeCombatScene(player, enemy);
         _combatants.AddRange(CreateCombatants(_player, _other, true));
         _combatants.AddRange(CreateCombatants(_other, _player, false));
-        _state = State.PreCombatOfficerActions;
-
 
         // Init UI based on army setting
         HandleStanceChanged(player.Stance, false);
@@ -194,6 +194,10 @@ public class BattleManager : MonoBehaviour
 
         // Enable UI State
         BattleUIPanel.Show();
+
+        yield return BattleUIPanel.AnimateInfoTextCallout("Combat Start");
+
+        _state = State.PreCombatOfficerActions;
     }
 
     private IEnumerable<Combatant> CreateCombatants(IArmy allies, IArmy enemies, bool left)
@@ -226,12 +230,21 @@ public class BattleManager : MonoBehaviour
         return null;
     }
 
-    private void ArrangeTurns()
+    /// <summary>
+    /// Initializes the round and queues up turns
+    /// </summary>
+    private IEnumerator InitRound()
     {
+        _round++;
+        BattleUIPanel.SetBoutCounterNumber(_round);
+        yield return BattleUIPanel.AnimateInfoTextCallout($"Bout {_round}");
+
         foreach (var item in _combatants.OrderBy(a => a.Unit.Info.CurrentStats.Speed).Reverse())
         {
             _turnQueue.Enqueue(item);
         }
+
+        _state = State.AwaitingTurn;
     }
 
     private CombatStrategy GetStrat(Combatant combatant)
