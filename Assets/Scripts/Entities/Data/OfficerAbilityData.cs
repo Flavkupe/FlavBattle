@@ -60,7 +60,7 @@ public class OfficerAbilityData : ScriptableObject
 
     public OfficerAbilityTriggerType TriggerType;
 
-    public bool IsCombatAbility() => TriggerType == OfficerAbilityTriggerType.AutoStartInCombat;
+    public bool IsCombatAbility() => TriggerType == OfficerAbilityTriggerType.AutoStartInCombat || TriggerType == OfficerAbilityTriggerType.PlayerActivatedInCombat;
 
     private bool UsesConstantMultiplier() => MultiplierType == OfficerAbilityEffectMultiplierType.Constant;
 

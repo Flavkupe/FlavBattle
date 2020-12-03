@@ -13,12 +13,21 @@ public class CombatEndedEventArgs
 {
     public IArmy Winner { get; set; }
     public IArmy Loser { get; set; }
+
+    public VictoryType VictoryType;
 }
 
 public class CombatStartedEventArgs
 {
     public IArmy Player { get; set; }
     public IArmy Enemy { get; set; }
+}
+
+public enum VictoryType
+{
+    Destroyed,
+    Fled,
+    Routed,
 }
 
 /// <summary>
@@ -88,12 +97,13 @@ public class GameEventManager : MonoBehaviour
         });
     }
 
-    public void TriggerCombatEndedEvent(IArmy winner, IArmy loser)
+    public void TriggerCombatEndedEvent(IArmy winner, IArmy loser, VictoryType type = VictoryType.Destroyed)
     {
         CombatEndedEvent?.Invoke(this, new CombatEndedEventArgs
         {
             Winner = winner,
             Loser = loser,
+            VictoryType = type,
         });
     }
     public void TriggerUnitGarrisoned(Unit e)

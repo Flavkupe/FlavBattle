@@ -34,6 +34,7 @@ MonoBehaviour:
     type: 3}
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
+  WaitForCompletion: 0
   CombatAnimationTarget: 1
   AnimationSequence: 0
   PreAttackAnimations:
@@ -63,3 +64,4 @@ MonoBehaviour:
     Defense: 0
     Speed: 0
     Level: 1
+    Command: 0

@@ -1301,6 +1301,11 @@ PrefabInstance:
       propertyPath: ArmyPortrait
       value: 
       objectReference: {fileID: 1925285636}
+    - target: {fileID: 4679600948551415912, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4695288195265333539, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_ChildForceExpandWidth

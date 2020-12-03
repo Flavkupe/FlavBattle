@@ -27,12 +27,19 @@ public enum CombatAbilityEffect
     Heal = 2,
     MoraleDown = 4,
     StatusChange = 8,
+    Withdraw = 16,
 }
 
 public enum CombatAbilityVisual
 {
     Projectile,
     Animation,
+    
+    /// <summary>
+    /// No specific visual effect for animation, though it can
+    /// still have post attack and pre-attack animations
+    /// </summary>
+    None,
 }
 
 public enum CombatAbilityProjectileEffect
@@ -234,6 +241,11 @@ public class CombatAbilityData : ScriptableObject
     [BoxGroup("Visuals")]
     [ShowIf("ShowAnimationProps")]
     public float CombatAnimationRepeats = 1.0f;
+
+    [BoxGroup("Visuals")]
+    [ShowIf("ShowAnimationProps")]
+    [Tooltip("Whether to wait for the animation before continuing")]
+    public bool WaitForCompletion = true;
 
     [BoxGroup("Visuals")]
     [ShowIf(ConditionOperator.And, "ShowAnimationProps", "IsTargetedAbility")]

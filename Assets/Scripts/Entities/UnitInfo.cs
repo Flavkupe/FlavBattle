@@ -42,6 +42,8 @@ public class UnitInfo
             // TODO: different command amounts
             this.CurrentStats.Command = 3;
 
+            OfficerAbilities.AddRange(data.DefaultOfficerAbilities);
+
             // TODO: add more abilities
             var ability = data.RollNewOfficerAbility(level, OfficerAbilities);
             if (ability != null)

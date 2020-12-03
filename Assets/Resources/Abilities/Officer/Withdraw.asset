@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de525abf27b85e488e1e7a7938bb7c8, type: 3}
+  m_Name: Withdraw
+  m_EditorClassIdentifier: 
+  Name: Withdraw
+  Icon: {fileID: -3860773912634225870, guid: ea8e8fa534dc1284a84510d51543ac9e, type: 3}
+  MinLevel: 0
+  CommandCost: 0
+  MoraleMin: 0
+  MoraleMax: 100
+  TriggerType: 1
+  CombatAbility: {fileID: 11400000, guid: 6f51e4fcb94459d4b85c345495d9d7e2, type: 2}
+  MultiplierType: 1
+  ConstantEffectMultiplier: 0

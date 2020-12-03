@@ -66,6 +66,11 @@ public class UnitData : ScriptableObject
     public CombatAbilityData[] StartingAbilities;
 
     [BoxGroup("Abilities")]
+    [Tooltip("Officer abilities that are always available by default")]
+    public OfficerAbilityData[] DefaultOfficerAbilities;
+
+    [BoxGroup("Abilities")]
+    [Tooltip("Officer abilities that can be learned")]
     public OfficerAbilityData[] OfficerAbilities;
 
     private string _name = "Unnamed";

@@ -21,7 +21,11 @@ public class CombatAbility : MonoBehaviour
         }
         else if (_data.VisualEffect == CombatAbilityVisual.Animation)
         {
-            return StartCoroutine(DoAnimation(source, target));
+            var coroutine = StartCoroutine(DoAnimation(source, target));
+            if (_data.WaitForCompletion)
+            {
+                return coroutine;
+            }
         }
 
         return null;

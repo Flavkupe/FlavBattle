@@ -20,6 +20,8 @@ public class BattleManager : MonoBehaviour
         TurnInProgress,
         ShowWinner,
 
+        ArmyFleeing,
+
         PreCombatOfficerActions,
     }
 
@@ -65,6 +67,7 @@ public class BattleManager : MonoBehaviour
     private State _state = State.NotInCombat;
     private IArmy _player;
     private IArmy _other;
+    private IArmy _fleeingArmy;
     private List<Combatant> _combatants = new List<Combatant>();
     private Queue<Combatant> _turnQueue = new Queue<Combatant>();
     private GameEventManager _gameEventManager;
@@ -111,10 +114,19 @@ public class BattleManager : MonoBehaviour
         {
             _state = State.TurnInProgress;
             StartCoroutine(DoPrebattleOfficerActions());
+            return;
+        }
+
+        if (_state == State.ArmyFleeing)
+        {
+            _state = State.TurnInProgress;
+            StartCoroutine(DoArmyFlee());
+            return;
         }
 
         if (_state == State.AwaitingTurn)
         {
+            // Check and report winner, if applicable
             var winner = CheckWinner();
             if (winner != Winner.None)
             {
@@ -123,25 +135,28 @@ public class BattleManager : MonoBehaviour
                 return;
             }
 
+            // If an ability is queued, perform that
             if (this._abilityQueue.Count > 0)
             {
-                // Do a queued ability
                 _state = State.TurnInProgress;
                 StartCoroutine(DoQueuedOfficerAbility());
                 return;
             }
 
+            // Get a combatant from queue and do their turn, if queue not empty
             var current = GetNextCombatant();
             if (current != null)
             {
                 _state = State.TurnInProgress;
                 StartCoroutine(DoTurn(current));
+                return;
             }
             else
             {
-                // Round done; rearrange turns
+                // No more combatants queued; round done, so rearrange turns
                 _state = State.TurnInProgress;
                 StartCoroutine(InitRound());
+                return;
             }
         }
     }
@@ -168,6 +183,19 @@ public class BattleManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets the army that is the oponent of army in this fight.
+    /// </summary>
+    private IArmy GetOpponent(IArmy army)
+    {
+        if (army == _player)
+        {
+            return _other;
+        }
+
+        return _player;
+    }
+
+    /// <summary>
     /// Hides all UI for combat (Buttons, backdrop, etc)
     /// </summary>
     private IEnumerator HideCombatUI()
@@ -182,6 +210,7 @@ public class BattleManager : MonoBehaviour
         _round = 0;
         _player = player;
         _other = enemy;
+        _fleeingArmy = null;
         _combatants.Clear();
         _turnQueue.Clear();
         yield return BattleDisplay.InitializeCombatScene(player, enemy);
@@ -238,6 +267,17 @@ public class BattleManager : MonoBehaviour
         _round++;
         BattleUIPanel.SetBoutCounterNumber(_round);
         yield return BattleUIPanel.AnimateInfoTextCallout($"Bout {_round}");
+        Debug.Log($"BOUT {_round} STARTED");
+
+        if (_round >= 3)
+        {
+            // During the third bout and onward, army with low enough morale will run
+            _fleeingArmy = GetFleeingArmy();
+            if (_fleeingArmy != null)
+            {
+                yield break;
+            }
+        }
 
         foreach (var item in _combatants.OrderBy(a => a.Unit.Info.CurrentStats.Speed).Reverse())
         {
@@ -245,6 +285,32 @@ public class BattleManager : MonoBehaviour
         }
 
         _state = State.AwaitingTurn;
+    }
+
+    /// <summary>
+    /// Checks if any army is fleeing and sets state accordingly.
+    /// If so, returns the army and sets fleeing state. If not, returns null.
+    /// </summary>
+    /// <returns></returns>
+    private IArmy GetFleeingArmy()
+    {
+        if (_player.Morale.Current - _other.Morale.Current > 20.0f)
+        {
+            // Enemy flees due to morale diff
+            _state = State.ArmyFleeing;
+            Debug.Log($"Army {_other.Faction.Name} is fleeing");
+            return _other;
+        }
+        else if (_other.Morale.Current - _player.Morale.Current > 20.0f)
+        {
+            // Player flees due to morale difference
+            _state = State.ArmyFleeing;
+            Debug.Log($"Army {_player.Faction.Name} is fleeing");
+            return _player;
+        }
+
+        // Nobody is fleeing
+        return null;
     }
 
     private CombatStrategy GetStrat(Combatant combatant)
@@ -258,6 +324,31 @@ public class BattleManager : MonoBehaviour
         var combatants = GetCombatants(_player.Formation.GetUnits());
         var officer = combatants.First(a => a.Unit.IsOfficer);
         return officer;
+    }
+
+    private IEnumerator DoArmyFlee()
+    {
+        BattleUIPanel.InfoTextCallout.SetText($"{_fleeingArmy.Faction.Name} is fleeing");
+        yield return BattleUIPanel.InfoTextCallout.Animate();
+
+        yield return AnimateArmyEscape(_fleeingArmy);
+        var winner = GetOpponent(_fleeingArmy);
+
+        _gameEventManager.TriggerCombatEndedEvent(winner, _fleeingArmy, VictoryType.Fled);
+        yield return HideCombatUI();
+        _state = State.NotInCombat;
+    }
+
+    private IEnumerator AnimateArmyEscape(IArmy army)
+    {
+        var direction = army == _player ? Vector3.left : Vector3.right;
+        ParallelRoutineSet routines = new ParallelRoutineSet(this);
+        foreach (var combatant in GetCombatants(army))
+        {
+            routines.AddRoutine(Routine.Create(combatant.CombatUnit.AnimateEscape(direction)));
+        }
+
+        yield return routines.ToRoutine();
     }
 
     private IEnumerator DoPrebattleOfficerActions()
@@ -281,7 +372,15 @@ public class BattleManager : MonoBehaviour
         // TODO: multiplier
         yield return UseAbility(combatant, ability, targets);
 
-        _state = State.AwaitingTurn;
+        if (_fleeingArmy != null)
+        {
+            // If a fleeing army was activated by ability, do that.
+            _state = State.ArmyFleeing;
+        }
+        else
+        {
+            _state = State.AwaitingTurn;
+        }
     }
 
     private IEnumerator DoOfficerActions(Combatant combatant)
@@ -308,7 +407,16 @@ public class BattleManager : MonoBehaviour
         var ability = this._abilityQueue.Dequeue();
         yield return BattleUIPanel.AnimateAbilityNameCallout(ability);
         yield return this.DoOfficerAbility(officer, ability);
-        _state = State.AwaitingTurn;
+
+        if (_fleeingArmy != null)
+        {
+            // If a fleeing army was activated by ability, do that.
+            _state = State.ArmyFleeing;
+        }
+        else
+        {
+            _state = State.AwaitingTurn;
+        }
     }
 
     /// <summary>
@@ -364,8 +472,6 @@ public class BattleManager : MonoBehaviour
         }
 
         yield return PlayAdditionalAnimations(combatant, ability.PostAttackAnimations, targets);
-
-        // yield return new WaitForSeconds(0.5f);
     }
 
     /// <summary>
@@ -422,7 +528,7 @@ public class BattleManager : MonoBehaviour
 
         if (animationsData.WaitForCompletion)
         {
-            yield return routines;
+            yield return routines.AsRoutine();
         }
     }
 
@@ -439,6 +545,11 @@ public class BattleManager : MonoBehaviour
             {
                 var effect = ability.StatusEffect.Multiply(multiplier);
                 target.ApplyStatChanges(effect);
+            }
+            else if (ability.Effect == CombatAbilityEffect.Withdraw)
+            {
+                _fleeingArmy = combatant.Allies;
+
             }
         }
 
@@ -461,6 +572,11 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator AnimateAbility(Combatant source, Combatant target, CombatAbilityData abilityData, Color? tileHighlight = null)
     {
+        if (abilityData.VisualEffect == CombatAbilityVisual.None)
+        {
+            yield break;
+        }
+
         CombatFormationSlot slot = null;
         if (target != null)
         {
@@ -658,6 +774,11 @@ public class BattleManager : MonoBehaviour
         // Single attack
         var enemy = enemies.ToList().GetRandom();
         return enemy == null ? new List<Combatant>() : new List<Combatant>() { enemy };
+    }
+
+    private List<Combatant> GetCombatants(IArmy army)
+    {
+        return GetCombatants(army.Formation.GetUnits());
     }
 
     private List<Combatant> GetCombatants(List<Unit> units)

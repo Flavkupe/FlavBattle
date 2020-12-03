@@ -14,9 +14,11 @@ public class CombatUnit : MonoBehaviour
     [Required]
     public MoraleIcon MoraleIcon;
 
-    private HealthBar _healthBar;
+    [Required]
+    public HealthBar HealthBar;
 
     private bool _facingLeft = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +70,21 @@ public class CombatUnit : MonoBehaviour
     public Coroutine AnimateDeath()
     {
         return StartCoroutine(AnimateDeathInternal());
+    }
+
+    public IEnumerator AnimateEscape(Vector3 direction)
+    {
+        var time = 0.0f;
+        var speed = 3.0f;
+        this.HideInterface();
+        StartCoroutine(this.FadeAway());
+        while (time < 1.5f)
+        {
+            time += Time.deltaTime;
+            var pos = this.transform.position;
+            this.transform.position = Vector3.MoveTowards(pos, pos + direction, speed * Time.deltaTime);
+            yield return null;
+        }
     }
 
     private IEnumerator TakeDamageInternal(int damage)
@@ -133,9 +150,9 @@ public class CombatUnit : MonoBehaviour
     /// </summary>
     private void UpdateUIComponents()
     {
-        if (_healthBar == null)
+        if (HealthBar == null)
         {
-            _healthBar = GetComponentInChildren<HealthBar>();
+            HealthBar = GetComponentInChildren<HealthBar>();
         }
 
         var info = Unit.Info;
@@ -144,9 +161,15 @@ public class CombatUnit : MonoBehaviour
         var hp = info.CurrentStats.HP;
         var percent = (float)hp / (float)info.MaxStats.HP;
         percent = Mathf.Clamp(percent, 0.0f, 1.0f);
-        _healthBar.SetHP(hp, percent);
+        HealthBar.SetHP(hp, percent);
 
         // Update Morale
         this.MoraleIcon.UpdateIcon(info.Morale);
+    }
+
+    public void HideInterface()
+    {
+        this.HealthBar.Hide();
+        this.MoraleIcon.Hide();
     }
 }
