@@ -48,7 +48,9 @@ public class CombatDebugWindow : EditorWindow
         }
 
         var status = _manager.GetBattleStatus();
-        if (status.Left == null || status.Right == null)
+        var left = status.PlayerArmy;
+        var right = status.OtherArmy;
+        if (left == null || right == null)
         {
             return;
         }
@@ -56,15 +58,15 @@ public class CombatDebugWindow : EditorWindow
         _leftFoldout = EditorGUILayout.Foldout(_leftFoldout, "Left");
         if (_leftFoldout)
         {
-            EditorGUILayout.LabelField("Live Units:", status.Left.Formation.GetNumberOfLiveUnits().ToString());
-            EditorGUILayout.LabelField("Dead Units:", status.Left.Formation.GetNumberOfDeadUnits().ToString());
+            EditorGUILayout.LabelField("Live Units:", left.Formation.GetNumberOfLiveUnits().ToString());
+            EditorGUILayout.LabelField("Dead Units:", left.Formation.GetNumberOfDeadUnits().ToString());
         }
 
         _rightFoldout = EditorGUILayout.Foldout(_rightFoldout, "Right");
         if (_rightFoldout)
         {
-            EditorGUILayout.LabelField("Live Units:", status.Right.Formation.GetNumberOfLiveUnits().ToString());
-            EditorGUILayout.LabelField("Dead Units:", status.Right.Formation.GetNumberOfDeadUnits().ToString());
+            EditorGUILayout.LabelField("Live Units:", right.Formation.GetNumberOfLiveUnits().ToString());
+            EditorGUILayout.LabelField("Dead Units:", right.Formation.GetNumberOfDeadUnits().ToString());
         }
     }
 

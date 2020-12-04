@@ -300,7 +300,8 @@ public class ArmyManager : MonoBehaviour
         var icon = Instantiate(BattleIndicator);
         icon.transform.position = middle;
         yield return icon.SpinAround();
-        yield return _battleManager.StartCombat(player, enemy);
+        // yield return _battleManager.StartCombat(player, enemy);
+        _battleManager.StartCombat(player, enemy);
     }
 
     private bool IsPlayerArmy(Army army)

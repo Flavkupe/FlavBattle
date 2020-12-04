@@ -74,6 +74,16 @@
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
     <Compile Include="Assets\Scripts\Combat\Data\CombatAbilityData.cs" />
     <Compile Include="Assets\Scripts\Combat\Data\CombatStrategyData.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\BattleStateBase.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\BattleStatus.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\InitCombatState.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\InitRoundState.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\Models.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\NextCombatantTurnState.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\OfficerAbilityState.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\PreCombatBattleActionsState.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\ShowWinnerState.cs" />
     <Compile Include="Assets\Scripts\Combat\TestingAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\Combat\WeaponAnimation.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
