@@ -18,6 +18,7 @@ public class CombatTextCallout : MonoBehaviour
     void Start()
     {
         _initialPos = this.transform.position;
+        this.Hide();
     }
 
     public void SetData(OfficerAbilityData data)

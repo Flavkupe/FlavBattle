@@ -139,6 +139,7 @@
     <Compile Include="Assets\Scripts\UI\Components\NameTag.cs" />
     <Compile Include="Assets\Scripts\UI\Components\ToggleableButton.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tooltip.cs" />
+    <Compile Include="Assets\Scripts\UI\Components\TooltipHolder.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TooltipSource.cs" />
     <Compile Include="Assets\Scripts\UI\Components\VisualCounter.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Draggable.cs" />

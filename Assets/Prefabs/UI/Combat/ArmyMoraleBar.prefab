@@ -408,7 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoraleIcon: {fileID: 2894024974174301434}
   MoraleBar: {fileID: 9166350127657696551}
-  ArmyPortrait: {fileID: 0}
+  ArmyPortrait: {fileID: 3225312670270224344}
 --- !u!1 &4920079754823147665
 GameObject:
   m_ObjectHideFlags: 0

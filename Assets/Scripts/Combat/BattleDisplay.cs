@@ -21,8 +21,8 @@ public class BattleDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LeftSide.gameObject.SetActive(false);
-        RightSide.gameObject.SetActive(false);
+        // LeftSide.Hide();
+        // RightSide.Hide();
     }
 
     // Update is called once per frame
@@ -51,8 +51,8 @@ public class BattleDisplay : MonoBehaviour
         RightFormation.InitArmy(right);
 
         this.transform.position = Camera.main.transform.position.SetZ(0.0f);
-        LeftSide.gameObject.SetActive(true);
-        RightSide.gameObject.SetActive(true);
+        LeftSide.Show();
+        RightSide.Show();
 
         LeftSide.transform.localPosition = LeftSide.transform.localPosition.SetY(_backdropMinY);
         RightSide.transform.localPosition = RightSide.transform.localPosition.SetY(_backdropMaxY);
@@ -85,6 +85,7 @@ public class BattleDisplay : MonoBehaviour
 
         LeftFormation.ClearArmy();
         RightFormation.ClearArmy();
+        this.Hide();
     }
 
     private IEnumerator ShowCombatEndSignInternal(bool victory)

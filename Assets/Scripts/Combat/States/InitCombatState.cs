@@ -29,10 +29,11 @@ public class InitCombatState : BattleStateBase
     {
         var player = state.PlayerArmy;
         var enemy = state.OtherArmy;
+        state.BattleDisplay.Show();
+        yield return state.BattleDisplay.InitializeCombatScene(player, enemy);
         state.Combatants.AddRange(CreateCombatants(state, player, enemy, true));
         state.Combatants.AddRange(CreateCombatants(state, enemy, player, false));
         state.GameEventManager.TriggerCombatStartedEvent(player, enemy);
-        yield return state.BattleDisplay.InitializeCombatScene(player, enemy);
 
         // Init UI based on army setting
         state.BattleUIPanel.UpdateStance(player.Stance, 0.0f);

@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Tooltip : SingletonObject<Tooltip>
+public class Tooltip : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI Text;
 
     public Image Icon;
 
+    /// <summary>
+    /// Whether the mouse is relative to camera coords rather
+    /// than canvas coords when this tooltip appears
+    /// </summary>
     public bool CameraSpace = false;
 
     public float HorizontalPadding = 20.0f;
@@ -16,7 +20,6 @@ public class Tooltip : SingletonObject<Tooltip>
 
     private void Awake()
     {
-        SetSingleton(this);
         this.Hide();
     }
 
