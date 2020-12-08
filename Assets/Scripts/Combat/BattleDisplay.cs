@@ -60,8 +60,9 @@ public class BattleDisplay : MonoBehaviour
         while (LeftSide.transform.localPosition.y < -0.1f ||
             RightSide.transform.localPosition.y > 0.1f)
         {
-            LeftSide.transform.localPosition += Vector3.up * Time.deltaTime * BackdropShiftSpeed;
-            RightSide.transform.localPosition += Vector3.up * Time.deltaTime * -BackdropShiftSpeed;
+            var delta = TimeUtils.FullAdjustedGameDelta;
+            LeftSide.transform.localPosition += Vector3.up * delta * BackdropShiftSpeed;
+            RightSide.transform.localPosition += Vector3.up * delta * -BackdropShiftSpeed;
             yield return null;
         }
 
@@ -74,8 +75,9 @@ public class BattleDisplay : MonoBehaviour
         while (LeftSide.transform.localPosition.y > _backdropMinY ||
             RightSide.transform.localPosition.y < _backdropMaxY)
         {
-            LeftSide.transform.localPosition -= Vector3.up * Time.deltaTime * BackdropShiftSpeed;
-            RightSide.transform.localPosition -= Vector3.up * Time.deltaTime * -BackdropShiftSpeed;
+            var delta = TimeUtils.FullAdjustedGameDelta;
+            LeftSide.transform.localPosition -= Vector3.up * delta * BackdropShiftSpeed;
+            RightSide.transform.localPosition -= Vector3.up * delta * -BackdropShiftSpeed;
             yield return null;
         }
 

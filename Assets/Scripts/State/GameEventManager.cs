@@ -67,6 +67,31 @@ public class GameEventManager : MonoBehaviour
     void Update()
     {
         Utils.TraceEnabled = DebugTrace;
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Slow);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Normal);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Fast);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.VeryFast);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.UltraFast);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TimeUtils.GameSpeed.TogglePause();
+        }
     }
 
     public void TriggerMapEvent(MapEventType mapEvent)

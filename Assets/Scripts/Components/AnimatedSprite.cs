@@ -82,7 +82,6 @@ public class AnimatedSprite : MonoBehaviour
         this.SetSprite(Animations[0]);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_idle)
@@ -90,7 +89,7 @@ public class AnimatedSprite : MonoBehaviour
             return;
         }
 
-        _timeout += Time.deltaTime * AnimationSpeed * _modifier;
+        _timeout += TimeUtils.FullAdjustedGameDelta * AnimationSpeed * _modifier;
         if (_timeout >= 1.0f)
         {
             _timeout = 0;

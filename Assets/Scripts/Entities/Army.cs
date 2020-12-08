@@ -285,7 +285,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
             var currentTile = this._map.GetGridTileAtWorldPos(this.transform.position.x, this.transform.position.y);
             var cost = Math.Max(1, currentTile.Data.WalkCost);
             var modifier = MoveStep / cost;
-            var delta = modifier * Time.deltaTime;
+            var delta = modifier * TimeUtils.AdjustedGameDelta;
             this._sprite.SetSpeedModifier(modifier);
             var newPos = Vector3.MoveTowards(this.transform.position, this._destination.Value, delta);
             this.transform.position = newPos;

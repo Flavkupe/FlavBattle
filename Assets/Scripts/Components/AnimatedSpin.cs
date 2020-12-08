@@ -36,7 +36,8 @@ public class AnimatedSpin : MonoBehaviour
         var angle = 0.0f;
         while (times > 0)
         {
-            var rate = speed * Time.deltaTime;
+            var delta = TimeUtils.FullAdjustedGameDelta;
+            var rate = speed * delta;
             angle += rate;
             this.transform.Rotate(axis, rate);
             if (angle > 360.0f)
@@ -52,8 +53,9 @@ public class AnimatedSpin : MonoBehaviour
         var baseSpeed = speed;
         while (angle < 360.0f)
         {
+            var delta = TimeUtils.FullAdjustedGameDelta;
             speed = Mathf.Max(baseSpeed / SlowdownBase, speed * 0.9f);
-            var rate = speed * Time.deltaTime;
+            var rate = speed * delta;
             angle += rate;
             this.transform.Rotate(axis, rate);
             yield return null;
@@ -71,14 +73,14 @@ public class AnimatedSpin : MonoBehaviour
         var timer = FadeDelay;
         while (timer > 0.0f)
         {
-            timer -= Time.deltaTime;
+            timer -= TimeUtils.FullAdjustedGameDelta;
             yield return null;
         }
 
         var alpha = 1.0f;
         while (alpha > 0.0f)
         {
-            alpha -= Time.deltaTime;
+            alpha -= TimeUtils.FullAdjustedGameDelta;
             foreach (var renderer in renderers)
             {
                 renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);

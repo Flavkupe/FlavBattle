@@ -43,8 +43,9 @@ public class CombatTextCallout : MonoBehaviour
         var time = 0.0f;
         while (time < AnimationTime)
         {
-            time += Time.deltaTime;
-            this.transform.position = Vector3.MoveTowards(this.transform.position, this.transform.position + Vector3.up, Time.deltaTime / 2);
+            var delta = TimeUtils.FullAdjustedGameDelta;
+            time += delta;
+            this.transform.position = Vector3.MoveTowards(this.transform.position, this.transform.position + Vector3.up, delta / 2);
             yield return null;
         }
 

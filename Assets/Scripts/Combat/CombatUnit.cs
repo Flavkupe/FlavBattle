@@ -80,9 +80,10 @@ public class CombatUnit : MonoBehaviour
         StartCoroutine(this.FadeAway());
         while (time < 1.5f)
         {
-            time += Time.deltaTime;
+            var delta = TimeUtils.FullAdjustedGameDelta;
+            time += delta;
             var pos = this.transform.position;
-            this.transform.position = Vector3.MoveTowards(pos, pos + direction, speed * Time.deltaTime);
+            this.transform.position = Vector3.MoveTowards(pos, pos + direction, speed * delta);
             yield return null;
         }
     }

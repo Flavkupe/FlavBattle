@@ -150,7 +150,7 @@ public class CombatAbility : MonoBehaviour
 
         while (dist > 0 && travelled < dist)
         {
-            var step = speed * Time.deltaTime;
+            var step = speed * TimeUtils.FullAdjustedGameDelta;
             travelled += step;
 
             var t = travelled / dist;
@@ -187,7 +187,7 @@ public class CombatAbility : MonoBehaviour
         var travelled = 0.0f;
         while (dist > 0 && travelled < dist)
         {
-            var speed = _data.ProjectileSpeed * Time.deltaTime;
+            var speed = _data.ProjectileSpeed * TimeUtils.FullAdjustedGameDelta;
             travelled += speed;
             projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, target, speed);
             yield return null;

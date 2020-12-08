@@ -33,7 +33,7 @@ public class ParticleAnimation : PlayableAnimation
         particles.Play();
         while (this._duration > 0.0f)
         {
-            this._duration -= Time.deltaTime;
+            this._duration -= TimeUtils.FullAdjustedGameDelta;
             yield return null;
         }
 

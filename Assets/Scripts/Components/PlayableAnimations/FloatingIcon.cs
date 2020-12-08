@@ -30,8 +30,9 @@ public class FloatingIcon : PlayableAnimation
 
         while (Duration > 0.0f)
         {
-            Duration -= Time.deltaTime;
-            this.transform.position = this.transform.position.ShiftY(Speed * Time.deltaTime);
+            var delta = TimeUtils.FullAdjustedGameDelta;
+            Duration -= delta;
+            this.transform.position = this.transform.position.ShiftY(Speed * delta);
             yield return null;
         }
 

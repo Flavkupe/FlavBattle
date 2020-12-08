@@ -16,10 +16,9 @@ public class FloatingText : MonoBehaviour
         Destroy(this.gameObject, Lifetime);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        var shift = RaisingSpeed * Time.deltaTime;
+        var shift = RaisingSpeed * TimeUtils.FullAdjustedGameDelta;
         var newY = this.transform.position.y + shift;
         this.transform.position = this.transform.position.SetY(newY);
     }
