@@ -43,6 +43,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     private Vector3? _destination = null;
     private TravelPath _path = null;
     private TilemapManager _map = null;
+    private bool _fleeing = false;
 
     private AnimatedSprite _sprite;
     public SpriteRenderer FactionFlag;
@@ -57,9 +58,13 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public bool IsOnGarrison { get; private set; }
 
+    public bool IsCommandable => IsPlayerArmy && !_fleeing;
+
     public FightingStance Stance { get; set; }
 
     public Morale Morale { get; } = new Morale();
+
+    public GameObject FlagIcon;
 
     public DetectableType Type => DetectableType.Army;
 
@@ -77,7 +82,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     // Start is called before the first frame update
     void Start()
     {
-           _sprite = this.GetComponentInChildren<AnimatedSprite>();
+        _sprite = this.GetComponentInChildren<AnimatedSprite>();
         _detectors = this.GetComponentsInChildren<Detector>();
         foreach (var detector in _detectors)
         {
@@ -229,6 +234,19 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         this._path = path;
     }
 
+    public void SetFleeing(bool fleeing)
+    {
+        _fleeing = fleeing;
+        if (fleeing)
+        {
+            FlagIcon.Show();
+        }
+        else
+        {
+            FlagIcon.Hide();
+        }
+    }
+
     public void SetPaused(bool pause)
     {
         this._paused = pause;
@@ -245,9 +263,11 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         {
             if (this._path.Nodes.Count == 0)
             {
+                // Reached final destination
                 AdjustForCollisions();
                 this._path = null;
                 this._sprite.SetIdle(true);
+                this.SetFleeing(false);
                 return;
             }
             else

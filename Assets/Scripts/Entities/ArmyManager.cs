@@ -189,6 +189,12 @@ public class ArmyManager : MonoBehaviour
         {
             if (e.Button == MouseButton.RightButton)
             {
+                if (!_selected.IsCommandable)
+                {
+                    // Do not move uncommandable units (fleeing, etc)
+                    return;
+                }
+
                 var start = TileMap.GetGridTileAtWorldPos(_selected.transform.position);
                 var path = TileMap.GetPath(start, e.Tile);
                 _selected.SetPath(path);
@@ -273,21 +279,64 @@ public class ArmyManager : MonoBehaviour
 
     private void HandleCombatEndedEvent(object sender, CombatEndedEventArgs e)
     {
-        StartCoroutine(CombatEnded(e.Winner, e.Loser));
+        StartCoroutine(CombatEnded(e.Winner, e.Loser, e.VictoryType));
     }
 
-    private IEnumerator CombatEnded(IArmy winner, IArmy loser)
+    private IEnumerator CombatEnded(IArmy winner, IArmy loser, VictoryType victoryType)
     {
         var loserArmy = _armies.FirstOrDefault(a => a.ID == loser.ID);
         Debug.Assert(loserArmy != null);
         if (loserArmy != null)
         {
-            _armies.Remove(loserArmy);
-            yield return loserArmy.Vanish();
-            Destroy(loserArmy.gameObject);
+            if (victoryType == VictoryType.Destroyed)
+            {
+                // Army vanquished
+                _armies.Remove(loserArmy);
+                yield return loserArmy.Vanish();
+                Destroy(loserArmy.gameObject);
+            }
+            else if (victoryType == VictoryType.Fled)
+            {
+                // set fleeing state
+                FleeFromOther(loser, winner);
+            }
+
             _combatProcessed = false;
             PauseAll(false);
         }
+    }
+
+    /// <summary>
+    /// Causes army 'army' to flee from 'other' by going to the furthest valid square away from
+    /// the other army, within a 1 block space.
+    /// </summary>
+    /// <returns></returns>
+    private void FleeFromOther(IArmy army, IArmy other)
+    {
+        var armyObj = GetArmyByID(army.ID);
+        var otherObj = GetArmyByID(other.ID);
+        var currTile = TileMap.GetGridTileAtWorldPos(armyObj.transform.position);
+        var enemyTile = TileMap.GetGridTileAtWorldPos(otherObj.transform.position);
+        var tiles = TileMap.GetNeighborTileData(currTile.GridX, currTile.GridY);
+
+        // Filter by only passable tiles
+        tiles = tiles.Where(a => a.Data.Passable).ToList();
+
+        // Get the tile with the highest distance from the other unit.
+        var furthest = tiles.GetMax(a => Vector2.Distance(enemyTile.ToGridPos(), a.ToGridPos()));
+        var path = TileMap.GetPath(currTile, furthest);
+        armyObj.SetPath(path);
+        armyObj.SetFleeing(true);        
+    }
+
+    /// <summary>
+    /// Gets an army from the interface by comparing IDs
+    /// </summary>
+    /// <param name="army"></param>
+    /// <returns></returns>
+    private Army GetArmyByID(string armyID)
+    {
+        return this._armies.First(a => a.ID == armyID);
     }
 
     private IEnumerator StartCombat(Army player, Army enemy)
@@ -299,7 +348,6 @@ public class ArmyManager : MonoBehaviour
         var icon = Instantiate(BattleIndicator);
         icon.transform.position = middle;
         yield return icon.SpinAround();
-        // yield return _battleManager.StartCombat(player, enemy);
         _battleManager.StartCombat(player, enemy);
     }
 

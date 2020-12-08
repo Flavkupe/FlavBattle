@@ -18,13 +18,6 @@ public class BattleDisplay : MonoBehaviour
     private float _backdropMinY = -6.25f;
     private float _backdropMaxY = 6.25f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // LeftSide.Hide();
-        // RightSide.Hide();
-    }
-
     // Update is called once per frame
     void Update()
     {   

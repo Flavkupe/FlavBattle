@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public static class ExtensionFunctions
 {
@@ -237,5 +238,30 @@ public static class ExtensionFunctions
                 Object.Destroy(child.gameObject);
             }
         }
+    }
+
+    /// <summary>
+    /// Gets the item with the highest value based on the selector. It's like
+    /// Linq's Max but it gets the item rather than the value from the selector.
+    /// </summary>
+    public static T GetMax<T, R>(this IList<T> items, System.Func<T, R> selector) where R : System.IComparable
+    {
+        if (items.Count == 0)
+        {
+            return default(T);
+        }
+
+        var maxIndex = 0;
+        for(var i = 1; i < items.Count; i++)
+        {
+            var maxDist = selector(items[maxIndex]);
+            var currDist = selector(items[i]);
+            if (currDist.CompareTo(maxDist) == 1)
+            {
+                maxIndex = i;
+            }
+        }
+
+        return items[maxIndex];
     }
 }

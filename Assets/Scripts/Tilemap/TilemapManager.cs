@@ -17,6 +17,21 @@ public class GridTile
     {
         return new Vector3(WorldX, WorldY, 0.0f);
     }
+
+    public Vector2 ToWorldPos2D()
+    {
+        return new Vector2(WorldX, WorldY);
+    }
+
+    public Vector2 ToGridPos()
+    {
+        return new Vector2(GridX, GridY);
+    }
+
+    public override string ToString()
+    {
+        return $"({GridX},{GridY})";
+    }
 }
 
 public class TileClickedEventArgs : EventArgs
@@ -51,6 +66,7 @@ public class TilemapManager : MonoBehaviour
             var tile = GetGridTileAtWorldPos(point.x, point.y);
             if (tile != null && TileClicked != null)
             {
+                Debug.Log($"Clicked on ({tile.GridX},{tile.GridY})");
                 TileClicked.Invoke(this, new TileClickedEventArgs()
                 {
                     Button = leftClick ? MouseButton.LeftButton : MouseButton.RightButton,

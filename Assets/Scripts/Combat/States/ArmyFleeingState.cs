@@ -34,8 +34,8 @@ public class ArmyFleeingState : BattleStateBase
         yield return AnimateArmyEscape(state, fleeing);
         var winner = state.GetOpponent(fleeing);
 
-        state.GameEventManager.TriggerCombatEndedEvent(winner, fleeing, VictoryType.Fled);
         yield return HideCombatUI(state);
+        state.GameEventManager.TriggerCombatEndedEvent(winner, fleeing, VictoryType.Fled);
         state.Stage = BattleStatus.BattleStage.NotInCombat;
     }
 
