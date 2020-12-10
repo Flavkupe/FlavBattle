@@ -31,24 +31,40 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: b2911f599bced4d4b8cb225ec2b8c2f3, type: 3}
-    totalSpriteSurfaceArea: 3149824
+    totalSpriteSurfaceArea: 5246976
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: c314e26162aeef64a9d1f7d15d701800, type: 3}
   - {fileID: 21300000, guid: e158764228ff5194fa693e11eb884233, type: 3}
+  - {fileID: 21300000, guid: 6f08ee82df2aa17408dd5b9d12492538, type: 3}
   - {fileID: 21300000, guid: 8dbf8a44206fbaf4d8376d485052b917, type: 3}
+  - {fileID: 21300000, guid: 6ed6a85411b1f2148af8eb7cfe11a059, type: 3}
+  - {fileID: 21300000, guid: a0f7e8a52e3bf9f4ca2cff56a13fda95, type: 3}
   - {fileID: 21300000, guid: f9cbd9167fa16864b96c259434e506aa, type: 3}
   - {fileID: -2464099594667407422, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: -5016430902054153369, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 841623118389204737, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 1766183139497562430, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
+  - {fileID: 21300000, guid: d76cb438a0f07d043a5ba00234d541f9, type: 3}
+  - {fileID: 21300000, guid: 934d1a7847d0820448bab251e6df3a3c, type: 3}
+  - {fileID: 21300000, guid: dcc23fdb3d32dd24591a12b8205d6498, type: 3}
+  - {fileID: 21300000, guid: c6236a7dd0b59a440b480ce121451646, type: 3}
   m_PackedSpriteNamesToIndex:
+  - t_884
   - isometric_0087
+  - brick_base
   - isometric_0056
+  - t_999
+  - t_896
   - isometric_0064
   - RustyLand_0
   - RustyLand_1
   - RustyLand_2
   - RustyLand_3
+  - t_905
+  - t_885
+  - t_886
+  - t_913
   m_Tag: Overworld
   m_IsVariant: 0

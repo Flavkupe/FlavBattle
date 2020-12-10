@@ -123,7 +123,8 @@ public class TilemapManager : MonoBehaviour
             GridX = x,
             GridY = y,
             WorldX = worldLoc.x,
-            WorldY = worldLoc.y + 0.25f, // 0.25f is the vertical offset to the tile center
+            //WorldY = worldLoc.y + 0.25f, // 0.25f is the vertical offset to the tile center
+            WorldY = worldLoc.y,
         };
     }
 
