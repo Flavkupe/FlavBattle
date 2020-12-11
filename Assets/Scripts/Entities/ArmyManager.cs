@@ -218,6 +218,8 @@ public class ArmyManager : MonoBehaviour
         UnselectAll();
         _selected = army;
 
+        Sounds.Play(CommonSoundType.Select);
+
         UpdateSelectedArmyUI(army);
 
         if (IsPlayerArmy(_selected))

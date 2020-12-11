@@ -92,6 +92,7 @@ public class UIManager : MonoBehaviour
     {
         if (!ArmyEditWindow.IsShowing())
         {
+            Sounds.Play(UISoundType.Open);
             ArmyEditWindow.Show();
             ArmyPanel.Hide();
             ArmyEditWindow.SetMode(ArmyEditWindow.Mode.DeployedArmy);
@@ -103,6 +104,7 @@ public class UIManager : MonoBehaviour
     {
         if (!ArmyEditWindow.IsShowing())
         {
+            Sounds.Play(UISoundType.Open);
             ArmyEditWindow.Show();
             ArmyPanel.Hide();
             ArmyEditWindow.SetMode(ArmyEditWindow.Mode.Garrison);
@@ -120,6 +122,7 @@ public class UIManager : MonoBehaviour
 
     public void HideArmyEditWindow()
     {
+        Sounds.Play(UISoundType.Close);
         ArmyEditWindow.Hide();
         _gameEvents.TriggerMapEvent(MapEventType.MapUnpaused);
     }

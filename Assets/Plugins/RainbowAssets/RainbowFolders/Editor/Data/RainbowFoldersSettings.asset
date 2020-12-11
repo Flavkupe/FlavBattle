@@ -26,7 +26,7 @@ MonoBehaviour:
     Key: Audio
     SmallIcon: {fileID: 2800000, guid: 4372cfb8a7d3b5b4d9b899147b193270, type: 3}
     LargeIcon: {fileID: 2800000, guid: 65e13c9890ffa26478506eda78683d5c, type: 3}
-    IsIconRecursive: 0
+    IsIconRecursive: 1
     IsIconCustom: 0
     Background: {fileID: 0}
     IsBackgroundRecursive: 0

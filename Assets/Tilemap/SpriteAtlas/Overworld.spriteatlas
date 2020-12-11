@@ -31,7 +31,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: b2911f599bced4d4b8cb225ec2b8c2f3, type: 3}
-    totalSpriteSurfaceArea: 5246976
+    totalSpriteSurfaceArea: 5509120
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -47,6 +47,7 @@ SpriteAtlas:
   - {fileID: 841623118389204737, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 1766183139497562430, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 21300000, guid: d76cb438a0f07d043a5ba00234d541f9, type: 3}
+  - {fileID: 21300000, guid: 5bd44f68abae7544985e0940990a6db7, type: 3}
   - {fileID: 21300000, guid: 934d1a7847d0820448bab251e6df3a3c, type: 3}
   - {fileID: 21300000, guid: dcc23fdb3d32dd24591a12b8205d6498, type: 3}
   - {fileID: 21300000, guid: c6236a7dd0b59a440b480ce121451646, type: 3}
@@ -63,6 +64,7 @@ SpriteAtlas:
   - RustyLand_2
   - RustyLand_3
   - t_905
+  - t_897
   - t_885
   - t_886
   - t_913
