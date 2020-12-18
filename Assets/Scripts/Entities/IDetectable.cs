@@ -16,3 +16,11 @@ public interface IDetectable
     GameObject GetObject();
     DetectableType Type { get; }
 }
+
+public static class IDetectableExtensions
+{
+    public static T GetComponent<T>(this IDetectable obj) where T : Component 
+    {
+        return obj.GetObject()?.GetComponent<T>();
+    }
+}

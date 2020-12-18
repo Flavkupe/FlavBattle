@@ -134,6 +134,12 @@ public class Army : MonoBehaviour, IDetectable, IArmy
             {
                 this.IsOnGarrison = true;
             }
+
+            if (e.HasComponent<Town>())
+            {
+                var town = e.GetComponent<Town>();
+                town.Entered(this);
+            }
         }
     }
 

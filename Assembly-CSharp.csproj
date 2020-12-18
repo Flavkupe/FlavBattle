@@ -96,10 +96,12 @@
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\FloatingIcon.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\IPlayableAnimation.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\ParticleAnimation.cs" />
+    <Compile Include="Assets\Scripts\Components\RadialTimer.cs" />
     <Compile Include="Assets\Scripts\Entities\Army.cs" />
     <Compile Include="Assets\Scripts\Entities\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\OfficerAbilityData.cs" />
+    <Compile Include="Assets\Scripts\Entities\Data\TownData.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Entities\FightingStance.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
@@ -110,6 +112,7 @@
     <Compile Include="Assets\Scripts\Entities\Morale.cs" />
     <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
     <Compile Include="Assets\Scripts\Entities\TestArmy.cs" />
+    <Compile Include="Assets\Scripts\Entities\Town.cs" />
     <Compile Include="Assets\Scripts\Entities\Unit.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitGenerator.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />

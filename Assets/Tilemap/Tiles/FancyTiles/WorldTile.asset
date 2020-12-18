@@ -35,7 +35,7 @@ MonoBehaviour:
   m_Flags: 1
   m_ColliderType: 1
   TileData:
-    Passable: 0
+    Passable: 1
     WalkCost: 8
     SpecialProperty: 0
     OverridePassable: 0

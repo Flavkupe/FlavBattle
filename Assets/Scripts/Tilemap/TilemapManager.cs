@@ -66,7 +66,6 @@ public class TilemapManager : MonoBehaviour
             var tile = GetGridTileAtWorldPos(point.x, point.y);
             if (tile != null && TileClicked != null)
             {
-                Debug.Log($"Clicked on ({tile.GridX},{tile.GridY})");
                 TileClicked.Invoke(this, new TileClickedEventArgs()
                 {
                     Button = leftClick ? MouseButton.LeftButton : MouseButton.RightButton,
