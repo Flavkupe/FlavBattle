@@ -58,6 +58,11 @@ public static class ExtensionFunctions
         return new Vector3(vector.x, vector.y + y, vector.z);
     }
 
+    public static Vector2 Shift(this Vector2 vector, float x, float y)
+    {
+        return new Vector2(vector.x + x, vector.y + y);
+    }
+
     public static Color SetAlpha(this Color color, float a)
     {
         return new Color(color.r, color.g, color.b, a);

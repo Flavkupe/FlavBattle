@@ -68,11 +68,16 @@ public class ArmyManager : MonoBehaviour
         _playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
 
         // TODO: TEMP
-        var playerArmy = CreateArmyWithUnits(0, 0, _playerFaction, 4, 4);
-        var playerArmy2 = CreateArmyWithUnits(0, -2, _playerFaction, 3, 4);
+        // var playerArmy = CreateArmyWithUnits(0, 0, _playerFaction, 4, 4);
+        // var playerArmy2 = CreateArmyWithUnits(0, -2, _playerFaction, 3, 4);
 
+        var spawners = FindObjectsOfType<ArmyMapSpawn>();
+        foreach (var spawner in spawners)
+        {
+            CreateArmyFromSpawner(spawner);
+        }
 
-        var enemyArmy = CreateArmyWithUnits(-2, -3, enemyFaction, 3, 1);
+        // var enemyArmy = CreateArmyWithUnits(-2, -3, enemyFaction, 3, 1);
 
         _ui.ArmyPanel.UpdatePanelContents();
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
@@ -127,6 +132,16 @@ public class ArmyManager : MonoBehaviour
         newArmy.CopyFrom(army);
         InitArmy(newArmy);
         return newArmy;
+    }
+
+    private Army CreateArmyFromSpawner(ArmyMapSpawn spawn)
+    {
+        var army = spawn.SpawnArmy();
+        var startTile = TileMap.GetGridTileAtWorldPos(army.transform.position);
+        InitArmy(army);
+        army.PutOnTile(startTile);
+        Destroy(spawn.gameObject);
+        return army;       
     }
 
     private void InitArmy(Army army)

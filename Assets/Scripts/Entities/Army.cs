@@ -30,6 +30,13 @@ public class ExitTileEventArgs : EventArgs
 
 public class Army : MonoBehaviour, IDetectable, IArmy
 {
+    public static Army CreateFromFormation(Army template, Formation formation)
+    {
+        var army = Instantiate(template);
+        army.Formation = formation;
+        return army;
+    }
+
     public float MoveStep = 1.0f;
 
     public event EventHandler<ArmyClickedEventArgs> ArmyClicked;
@@ -114,6 +121,12 @@ public class Army : MonoBehaviour, IDetectable, IArmy
             if (e.HasComponent<Garrison>())
             {
                 this.IsOnGarrison = false;
+            }
+
+            if (e.HasComponent<Town>())
+            {
+                var town = e.GetComponent<Town>();
+                town.Exited(this);
             }
         }
     }

@@ -5,52 +5,6 @@ using System.Linq;
 using UnityEngine;
 using NaughtyAttributes;
 
-[Serializable]
-public class TestArmyConfiguration
-{
-    public int Level = 1;
-
-    public UnitData FL;
-    public UnitData FM;
-    public UnitData FR;
-
-    public UnitData ML;
-    public UnitData MM;
-    public UnitData MR;
-
-    public UnitData BL;
-    public UnitData BM;
-    public UnitData BR;
-
-    public FormationRowAndCol OfficerPosition;
-
-    public UnitData GetUnit(FormationRowAndCol rowAndCol)
-    {
-        switch (rowAndCol)
-        {
-            case FormationRowAndCol.FL:
-                return FL;
-            case FormationRowAndCol.FM:
-                return FM;
-            case FormationRowAndCol.FR:
-                return FR;
-            case FormationRowAndCol.ML:
-                return ML;
-            case FormationRowAndCol.MM:
-                return MM;
-            case FormationRowAndCol.MR:
-                return MR;
-            case FormationRowAndCol.BL:
-                return BL;
-            case FormationRowAndCol.BM:
-                return BM;
-            case FormationRowAndCol.BR:
-            default:
-                return BR;
-        }
-    }
-}
-
 public class TestingAbilitiesManager : MonoBehaviour
 {
     public bool ArmyMode = false;
@@ -73,10 +27,10 @@ public class TestingAbilitiesManager : MonoBehaviour
     public bool RightToLeft;
 
     [ShowIf("ArmyMode")]
-    public TestArmyConfiguration LeftArmyConfig;
+    public InitialFormation LeftArmyConfig;
 
     [ShowIf("ArmyMode")]
-    public TestArmyConfiguration RightArmyConfig;
+    public InitialFormation RightArmyConfig;
 
 
     public GameObject Thing;
@@ -110,7 +64,7 @@ public class TestingAbilitiesManager : MonoBehaviour
         }
     }
 
-    private TestArmy MakeArmy(TestArmyConfiguration config, FactionData factionData)
+    private TestArmy MakeArmy(InitialFormation config, FactionData factionData)
     {
         var army = new TestArmy();
         army.Faction = factionData;

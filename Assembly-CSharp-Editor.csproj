@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Editor\ClipperWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\CombatDebugWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\EnumFlagsAttribute.cs" />
+    <Compile Include="Assets\Scripts\Editor\InitialFormationEditor.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Unity/2019.4.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

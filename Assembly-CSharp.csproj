@@ -99,7 +99,9 @@
     <Compile Include="Assets\Scripts\Components\RadialTimer.cs" />
     <Compile Include="Assets\Scripts\Entities\Army.cs" />
     <Compile Include="Assets\Scripts\Entities\ArmyManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\ArmyMapSpawn.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
+    <Compile Include="Assets\Scripts\Entities\Data\FormationData.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\OfficerAbilityData.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\TownData.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
