@@ -9,5 +9,5 @@ public class PropsTile : Tile
     public TileData TileData;
 
     [AssetIcon]
-    public Sprite Icon;
+    public Sprite Icon => this.sprite;
 }

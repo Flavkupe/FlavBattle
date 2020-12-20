@@ -97,6 +97,8 @@
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\IPlayableAnimation.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\ParticleAnimation.cs" />
     <Compile Include="Assets\Scripts\Components\RadialTimer.cs" />
+    <Compile Include="Assets\Scripts\Entities\AI\ArmyMapAI.cs" />
+    <Compile Include="Assets\Scripts\Entities\AI\ChargeToBuilding.cs" />
     <Compile Include="Assets\Scripts\Entities\Army.cs" />
     <Compile Include="Assets\Scripts\Entities\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\Entities\ArmyMapSpawn.cs" />

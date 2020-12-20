@@ -90,6 +90,11 @@ public class TilemapManager : MonoBehaviour
         return GetGridTileAtWorldPos(pos.x, pos.y);
     }
 
+    public GridTile GetGridTileAtWorldPos(GameObject obj)
+    {
+        return GetGridTileAtWorldPos(obj.transform.position);
+    }
+
     public GridTile GetGridTileAtWorldPos(float x, float y)
     {
         var cell = Tilemap.WorldToCell(new Vector3(x, y, 0));

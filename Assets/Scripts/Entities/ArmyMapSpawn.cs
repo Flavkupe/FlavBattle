@@ -22,6 +22,10 @@ public class ArmyMapSpawn : MonoBehaviour
     {
         var formation = Formation.CreateFormation(Faction.Faction);
         var army = Army.CreateFromFormation(ArmyTemplate, formation);
+
+        // Enable in case it's not enabled
+        army.Show();
+
         army.SetFaction(Faction);
         army.transform.position = this.transform.position;
         return army;

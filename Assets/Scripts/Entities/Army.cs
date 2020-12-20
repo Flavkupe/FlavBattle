@@ -65,6 +65,11 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public bool IsOnGarrison { get; private set; }
 
+    /// <summary>
+    /// Whether the Army is in motion somewhere
+    /// </summary>
+    public bool HasDestination => _destination != null;
+
     public bool IsCommandable => IsPlayerArmy && !_fleeing;
 
     public FightingStance Stance { get; set; }
@@ -77,6 +82,9 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     private Detector[] _detectors;
     private bool _paused = false;
+
+    private List<ArmyMapAIBase> _aiActions = new List<ArmyMapAIBase>();
+    private ArmyMapAIBase _currentAction = null;
 
     void Awake()
     {
@@ -104,6 +112,9 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 detector.Exited += TileDetectorExited;
             }
         }
+
+        _aiActions.AddRange(GetComponents<ArmyMapAIBase>());
+        _aiActions = _aiActions.OrderBy(a => a.Priority).ToList();
     }
 
     private void TileDetectorExited(object sender, GameObject e)
@@ -206,6 +217,8 @@ public class Army : MonoBehaviour, IDetectable, IArmy
             return;
         }
 
+        // TODO; some events should cause all armies to
+        // have to revisit plans
         if (this._destination != null)
         {
             this.StepTowardsDestination();
@@ -213,6 +226,10 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         else if (this._path != null)
         {
             this.PlotNextPath();
+        }
+        else
+        {
+            this.PlotNextAction();
         }
     }
 
@@ -274,6 +291,31 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     private IEnumerator VanishInternal()
     {
         yield return _sprite.FadeAway();
+    }
+
+    // TODO: there should be a cooldown for this
+    private void PlotNextAction()
+    {
+        if (_aiActions.Count == 0)
+        {
+            return;
+        }
+
+        if (_currentAction != null && _currentAction.ShouldContinueAction)
+        {
+            _currentAction.DoActionTick(this, _map);
+            return;
+        }
+
+        foreach (var action in _aiActions)
+        {
+            if (action.IsActionPossible(this, _map))
+            {
+                _currentAction = action;
+                action.DoActionTick(this, _map);
+                return;
+            }
+        }
     }
 
     private void PlotNextPath()

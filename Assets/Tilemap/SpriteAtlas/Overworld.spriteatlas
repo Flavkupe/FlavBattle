@@ -31,42 +31,82 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: b2911f599bced4d4b8cb225ec2b8c2f3, type: 3}
-    totalSpriteSurfaceArea: 5509120
+    totalSpriteSurfaceArea: 10752000
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 3c2038a047660b54c8e59e809924d758, type: 3}
+  - {fileID: 21300000, guid: 04bb4741c1219e24f94439d24a60a034, type: 3}
   - {fileID: 21300000, guid: c314e26162aeef64a9d1f7d15d701800, type: 3}
   - {fileID: 21300000, guid: e158764228ff5194fa693e11eb884233, type: 3}
   - {fileID: 21300000, guid: 6f08ee82df2aa17408dd5b9d12492538, type: 3}
+  - {fileID: 21300000, guid: 646467921e699764693bd91d1eabb718, type: 3}
+  - {fileID: 21300000, guid: 3dde06f3fa1eb7b43aa598847132fa4f, type: 3}
+  - {fileID: 21300000, guid: a02ccd0442239564ab788b55e973005e, type: 3}
   - {fileID: 21300000, guid: 8dbf8a44206fbaf4d8376d485052b917, type: 3}
   - {fileID: 21300000, guid: 6ed6a85411b1f2148af8eb7cfe11a059, type: 3}
+  - {fileID: 21300000, guid: a7cebe85c3e47954296015ac6b294c50, type: 3}
   - {fileID: 21300000, guid: a0f7e8a52e3bf9f4ca2cff56a13fda95, type: 3}
+  - {fileID: 21300000, guid: c5ccb4c5ea3150e47945083cfb08a10f, type: 3}
   - {fileID: 21300000, guid: f9cbd9167fa16864b96c259434e506aa, type: 3}
+  - {fileID: 21300000, guid: eaea4d2731e758943bbc4cdac2a3af80, type: 3}
+  - {fileID: 21300000, guid: 6c7dc1a77a20a794dae0d8d56b760fa0, type: 3}
   - {fileID: -2464099594667407422, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: -5016430902054153369, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 841623118389204737, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 1766183139497562430, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 21300000, guid: d76cb438a0f07d043a5ba00234d541f9, type: 3}
   - {fileID: 21300000, guid: 5bd44f68abae7544985e0940990a6db7, type: 3}
+  - {fileID: 21300000, guid: 38f2847843686cc4ea01878020f541c8, type: 3}
   - {fileID: 21300000, guid: 934d1a7847d0820448bab251e6df3a3c, type: 3}
+  - {fileID: 21300000, guid: 23127769ec36c9146bb549ff0c2b7644, type: 3}
+  - {fileID: 21300000, guid: 4f70b579cb898b744a78eb0f829ee3bf, type: 3}
+  - {fileID: 21300000, guid: c489e18924624a44ba5ea9fcc4db8b67, type: 3}
+  - {fileID: 21300000, guid: cbce90c92f9b6af49b468efdae43d623, type: 3}
+  - {fileID: 21300000, guid: 9e09e1e91c8c67d408e053120494248d, type: 3}
+  - {fileID: 21300000, guid: 3d2a068ac33dd354490bc6552c7af583, type: 3}
   - {fileID: 21300000, guid: dcc23fdb3d32dd24591a12b8205d6498, type: 3}
+  - {fileID: 21300000, guid: 7a693bccdf9aa7740b0e58b9cfa1f812, type: 3}
+  - {fileID: 21300000, guid: 3aad326d5b7492343be4b642bb152dfe, type: 3}
   - {fileID: 21300000, guid: c6236a7dd0b59a440b480ce121451646, type: 3}
+  - {fileID: 21300000, guid: d12ba31ed5a031149a96ad377975756d, type: 3}
+  - {fileID: 21300000, guid: 9044d6fe1f48efe4eac24bb6c4dae0b6, type: 3}
   m_PackedSpriteNamesToIndex:
+  - t_722
+  - t_898
   - t_884
   - isometric_0087
   - brick_base
+  - t_882
+  - t_721
+  - t_901
   - isometric_0056
   - t_999
+  - t_883
   - t_896
+  - t_768
   - isometric_0064
+  - t_982
+  - t_891
   - RustyLand_0
   - RustyLand_1
   - RustyLand_2
   - RustyLand_3
   - t_905
   - t_897
+  - t_731
   - t_885
+  - t_890
+  - t_881
+  - t_767
+  - t_990
+  - t_887
+  - t_989
   - t_886
+  - t_889
+  - t_732
   - t_913
+  - t_892
+  - t_888
   m_Tag: Overworld
   m_IsVariant: 0
