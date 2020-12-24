@@ -178,9 +178,9 @@ public static class ExtensionFunctions
         obj.gameObject.SetActive(!obj.gameObject.activeInHierarchy);
     }
 
-    public static bool HasComponent<T>(this GameObject obj) where T : MonoBehaviour
+    public static bool HasComponent<T>(this GameObject obj)
     {
-        return obj.GetComponent<T>();
+        return obj.GetComponent<T>() != null;
     }
 
     public static Vector3 ToVector3(this Vector2 vect)

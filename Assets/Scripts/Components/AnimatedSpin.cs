@@ -14,6 +14,9 @@ public class AnimatedSpin : MonoBehaviour
 
     public bool FadeAndDestroyOnComplete;
 
+    [Tooltip("Which sort of acceleration is applied to the spin (mouse, gamespeed, etc). Defaults to all.")]
+    public AccelOption Acceleration = AccelOption.MouseAndGameSpeed;
+
     public float FadeDelay = 2.0f;
     
     // Start is called before the first frame update
@@ -36,7 +39,7 @@ public class AnimatedSpin : MonoBehaviour
         var angle = 0.0f;
         while (times > 0)
         {
-            var delta = TimeUtils.FullAdjustedGameDelta;
+            var delta = TimeUtils.AdjustedDelta(Acceleration);
             var rate = speed * delta;
             angle += rate;
             this.transform.Rotate(axis, rate);
@@ -53,7 +56,7 @@ public class AnimatedSpin : MonoBehaviour
         var baseSpeed = speed;
         while (angle < 360.0f)
         {
-            var delta = TimeUtils.FullAdjustedGameDelta;
+            var delta = TimeUtils.AdjustedDelta(Acceleration);
             speed = Mathf.Max(baseSpeed / SlowdownBase, speed * 0.9f);
             var rate = speed * delta;
             angle += rate;
@@ -73,14 +76,14 @@ public class AnimatedSpin : MonoBehaviour
         var timer = FadeDelay;
         while (timer > 0.0f)
         {
-            timer -= TimeUtils.FullAdjustedGameDelta;
+            timer -= TimeUtils.AdjustedDelta(Acceleration);
             yield return null;
         }
 
         var alpha = 1.0f;
         while (alpha > 0.0f)
         {
-            alpha -= TimeUtils.FullAdjustedGameDelta;
+            alpha -= TimeUtils.AdjustedDelta(Acceleration);
             foreach (var renderer in renderers)
             {
                 renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);

@@ -7,6 +7,7 @@ using UnityEngine;
 public enum CommonSoundType
 {
     Select,
+    Fanfare,
 }
 
 public enum UISoundType
@@ -17,28 +18,10 @@ public enum UISoundType
 
 public class SoundManager : SingletonObject<SoundManager>
 {
-    [Serializable]
-    public class CommonSounds
-    {
-        [Required]
-        public AudioClip SelectSound;
-    }
-
-    [Serializable]
-    public class UISounds
-    {
-        [Required]
-        public AudioClip Close;
-
-        [Required]
-        public AudioClip Open;
-    }
-
     [Required]
     public AudioSource GlobalSource;
 
-    public CommonSounds Common;
-    public UISounds UI;
+
 
     void Awake()
     {
@@ -79,7 +62,9 @@ public class SoundManager : SingletonObject<SoundManager>
         switch (type)
         {
             case CommonSoundType.Select:
-                return Common.SelectSound;
+                return GRM.CommonSounds.SelectSound;
+            case CommonSoundType.Fanfare:
+                return GRM.CommonSounds.FanfareSound;
             default:
                 Debug.LogError("No sound effect set for " + type);
                 return null;
@@ -91,9 +76,9 @@ public class SoundManager : SingletonObject<SoundManager>
         switch (type)
         {
             case UISoundType.Close:
-                return UI.Close;
+                return GRM.UISounds.Close;
             case UISoundType.Open:
-                return UI.Open;
+                return GRM.UISounds.Open;
             default:
                 Debug.LogError("No sound effect set for " + type);
                 return null;

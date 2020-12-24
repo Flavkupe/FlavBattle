@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NaughtyAttributes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,13 @@ public class CameraFollow : MonoBehaviour
 {
     [Range(0.75f, 1.00f)]
     public float EdgeThreshold = 0.95f;
+
+    private bool ShowOffscreenScrollingControls() => StopScrollingPastScreen;
+    [Tooltip("If true, camera will not keep scrolling if the mouse is off the game screen")]
+    public bool StopScrollingPastScreen = true;
+    [Tooltip("How far past the screen to keep scrolling. Only used if StopScrollingPastScreen is true")]
+    [ShowIf("ShowOffscreenScrollingControls")]
+    public float OffscreenPadding = 0.1f;
 
     public float Speed = 3.0f;
 
@@ -78,6 +86,11 @@ public class CameraFollow : MonoBehaviour
 
     private float GetAxisSpeed(float axisPercent)
     {
+        if (StopScrollingPastScreen && (axisPercent < (0.0f - OffscreenPadding) || axisPercent > (1.0f + OffscreenPadding)))
+        {
+            return 0.0f;
+        }
+
         var rate = Time.deltaTime * this.Speed;
         if (axisPercent > EdgeThreshold)
         {

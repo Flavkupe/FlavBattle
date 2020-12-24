@@ -74,7 +74,12 @@ public class ArmyManager : MonoBehaviour
         var spawners = FindObjectsOfType<ArmyMapSpawn>();
         foreach (var spawner in spawners)
         {
-            CreateArmyFromSpawner(spawner);
+            if (spawner.SpawnOnStart)
+            {
+                CreateArmyFromSpawner(spawner);
+            }
+
+            spawner.SpawnTriggered += HandleSpawnTriggered;
         }
 
         // var enemyArmy = CreateArmyWithUnits(-2, -3, enemyFaction, 3, 1);
@@ -83,6 +88,11 @@ public class ArmyManager : MonoBehaviour
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
         _ui.ArmyPanel.ArmyEditRequested += OnEditArmy;
         _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;
+    }
+
+    private void HandleSpawnTriggered(object sender, ArmyMapSpawn e)
+    {
+        CreateArmyFromSpawner(e);
     }
 
     private void OnEditArmy(object sender, IArmy army)

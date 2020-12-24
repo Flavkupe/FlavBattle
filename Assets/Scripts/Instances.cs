@@ -26,6 +26,10 @@ public class Instances : MonoBehaviour
         public ArmyManager ArmyManager;
 
         public BattleManager BattleManager;
+
+        public SoundManager SoundManager;
+
+        public GameResourceManager GameResourceManager;
     }
 
     public ManagerRefs Managers;

@@ -247,7 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f3a34fdbf9dba4aa3b2284145aacb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: e9d74748d33558941b2174fb61c5b709, type: 2}
+  RequiredToTake: 20
+  StartingFaction: {fileID: 0}
+  RedTextTemplate: {fileID: -6760694237348889443, guid: 604884fbe425e9c488906954de8dcd6c,
+    type: 3}
   Faction: {fileID: 0}
   BannerSprite: {fileID: 4907739761124770510}
   Timer: {fileID: 3241692283746745203}

@@ -248,12 +248,12 @@ public class CombatAbilityData : ScriptableObject
     public bool WaitForCompletion = true;
 
     [BoxGroup("Visuals")]
-    [ShowIf(ConditionOperator.And, "ShowAnimationProps", "IsTargetedAbility")]
+    [ShowIf(EConditionOperator.And, "ShowAnimationProps", "IsTargetedAbility")]
     [Tooltip("Whether the animation shows up on the target or source, where applicable")]
     public CombatAnimationTarget CombatAnimationTarget;
 
     [BoxGroup("Visuals")]
-    [ShowIf(ConditionOperator.And, "ShowAnimationProps", "IsMultitarget")]
+    [ShowIf(EConditionOperator.And, "ShowAnimationProps", "IsMultitarget")]
     [Tooltip("For multiple animations, which sequence they run in")]
     public CombatAnimationType AnimationSequence;
 

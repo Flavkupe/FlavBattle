@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IArmy
+public interface IArmy : IOwnedEntity
 {
     string ID { get; }
 
     Formation Formation { get; }
-
-    FactionData Faction { get; }
 
     FightingStance Stance { get; set; }
 

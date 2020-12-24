@@ -179,6 +179,8 @@ public static class TimeUtils
     /// </summary>
     public static GameSpeedConfig GameSpeed { get; } = new GameSpeedConfig();
 
+    public static float AdjustedDelta(AccelOption option) => GameSpeed.GetAdjustedDeltaTime(option);
+
     /// <summary>
     /// Shortcut to TimeUtils.GameSpeed.GetAdjustedDeltaTime(AccelOption.GameSpeedOnly)
     /// 
@@ -208,4 +210,82 @@ public static class TimeUtils
     /// combat animations.
     /// </summary>
     public static float FullAdjustedGameDelta => GameSpeed.GetAdjustedDeltaTime(AccelOption.MouseAndGameSpeed);
+}
+
+/// <summary>
+/// Like WaitForSeconds, but accelerated by the left mouseclick
+/// </summary>
+public class WaitForSecondsAccelerated : CustomYieldInstruction
+{
+    private float _seconds;
+
+    private KeyCode? _interruptKey;
+
+    public WaitForSecondsAccelerated(float seconds)
+    {
+        _seconds = seconds;
+    }
+
+    public WaitForSecondsAccelerated(float seconds, KeyCode interruptKey)
+    {
+        _seconds = seconds;
+        _interruptKey = interruptKey;
+    }
+
+    public override bool keepWaiting
+    {
+        get
+        {
+            if (_interruptKey.HasValue && Input.GetKey(_interruptKey.Value))
+            {
+                return false;
+            }
+
+            _seconds -= TimeUtils.AdjustedGameDeltaWithMouse;
+            return _seconds > 0.0f;
+        }
+    }
+}
+
+/// <summary>
+/// A simple cooldown timer based on ticks. Will add delta to the total, and
+/// when the total reaches a fixed amount, will return true.
+/// 
+/// Use it to throttle behaviors that otherwise happen too often, like checking
+/// for win conditions.
+/// </summary>
+public class ThrottleTimer
+{
+    private float _ticks = 1.0f;
+    private float _current = 0.0f;
+
+    public ThrottleTimer(float ticks = 1.0f)
+    {
+        _ticks = ticks;
+    }
+
+    /// <summary>
+    /// Adds delta to the timer. If the timer reaches the
+    /// threshold, reset the cooldown and return true. Otherwise,
+    /// return false.
+    /// </summary>
+    public bool Tick(float delta)
+    {
+        _current += delta;
+        if (_current >= _ticks)
+        {
+            _current = 0.0f;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Ticks using Time.deltaTime.
+    /// </summary>
+    public bool Tick()
+    {
+        return Tick(Time.deltaTime);
+    }
 }

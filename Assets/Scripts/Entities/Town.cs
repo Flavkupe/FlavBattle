@@ -3,14 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Town : MonoBehaviour, IDetectable
+public class Town : MonoBehaviour, IDetectable, IOwnedEntity
 {
+    public float RequiredToTake = 20.0f;
+
+    public FactionData StartingFaction;
+
     [Required]
-    public TownData Data;
+    public FloatingText RedTextTemplate;
 
     public DetectableType Type => DetectableType.Tile;
 
-    public FactionData Faction;
+    public FactionData Faction { get; private set; }
 
     [Required]
     public SpriteRenderer BannerSprite;
@@ -29,7 +33,7 @@ public class Town : MonoBehaviour, IDetectable
 
     private void Awake()
     {
-        SetFaction(Faction);
+        SetFaction(StartingFaction);
     }
 
     private void Update()
@@ -53,7 +57,7 @@ public class Town : MonoBehaviour, IDetectable
         // TODO: based on leadership and morale
         var tick = TimeUtils.AdjustedGameDelta;
         
-        if (_process + tick >= this.Data.RequiredToTake)
+        if (_process + tick >= this.RequiredToTake)
         {
             Conquered(army);
         }
@@ -68,8 +72,8 @@ public class Town : MonoBehaviour, IDetectable
         SetProcess(0.0f);
         SetFaction(army.Faction);
 
-        Sounds.Play(Data.GoodConqueredClip);
-        var floater = Instantiate(Data.RedTextTemplate);
+        Sounds.Play(GRM.CommonSounds.FanfareSound);
+        var floater = Instantiate(RedTextTemplate);
         floater.transform.SetParent(this.transform);
         floater.transform.localPosition = Vector3.zero;
         floater.SetText("Secured!");
@@ -92,9 +96,9 @@ public class Town : MonoBehaviour, IDetectable
     public void SetProcess(float process)
     {
         _process = process;
-        if (Data.RequiredToTake > 0.0f)
+        if (RequiredToTake > 0.0f)
         {
-            Timer.SetPercentage(_process / Data.RequiredToTake);
+            Timer.SetPercentage(_process / RequiredToTake);
         }
     }
 

@@ -30,13 +30,6 @@ public class ExitTileEventArgs : EventArgs
 
 public class Army : MonoBehaviour, IDetectable, IArmy
 {
-    public static Army CreateFromFormation(Army template, Formation formation)
-    {
-        var army = Instantiate(template);
-        army.Formation = formation;
-        return army;
-    }
-
     public float MoveStep = 1.0f;
 
     public event EventHandler<ArmyClickedEventArgs> ArmyClicked;
@@ -207,6 +200,15 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         ID = army.ID;
         Formation = army.Formation;
         SetFaction(army.Faction);
+    }
+
+    /// <summary>
+    /// Replaces the formation with the provided one.
+    /// NOTE: Should ONLY be used for initialization.
+    /// </summary>
+    public void SetFormation(Formation formation)
+    {
+        this.Formation = formation;
     }
 
     // Update is called once per frame
