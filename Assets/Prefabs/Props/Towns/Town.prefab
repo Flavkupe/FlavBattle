@@ -46,6 +46,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -127,6 +128,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -251,7 +253,6 @@ MonoBehaviour:
   StartingFaction: {fileID: 0}
   RedTextTemplate: {fileID: -6760694237348889443, guid: 604884fbe425e9c488906954de8dcd6c,
     type: 3}
-  Faction: {fileID: 0}
   BannerSprite: {fileID: 4907739761124770510}
   Timer: {fileID: 3241692283746745203}
 --- !u!1001 &7378002048164020026
@@ -268,6 +269,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4066251559401466837, guid: bf53b2e79f773f1438a2d4a25fd26fda,
         type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0abd524d5404b684f8c18d564cac248d,
+        type: 3}
+    - target: {fileID: 4066251559401466837, guid: bf53b2e79f773f1438a2d4a25fd26fda,
+        type: 3}
       propertyPath: m_MaskAlphaCutoff
       value: 1
       objectReference: {fileID: 0}
@@ -275,6 +282,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
         type: 3}
@@ -293,6 +310,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -308,16 +330,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
-        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
@@ -330,11 +342,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7696293069999094146, guid: bf53b2e79f773f1438a2d4a25fd26fda,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf53b2e79f773f1438a2d4a25fd26fda, type: 3}

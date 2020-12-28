@@ -15,7 +15,7 @@ public class TooltipSource : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             var holder = GetComponentInParent<TooltipHolder>();
             if (holder == null || holder.Tooltip == null)
             {
-                Debug.LogError("No tooltips or tooltip holder found!!");
+                Debug.LogError($"No tooltips or tooltip holder found for object {this.name} !!", this);
             }
             else
             {
