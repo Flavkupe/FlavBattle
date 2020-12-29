@@ -12,14 +12,6 @@ public enum CombatAbilityType
     Idle,
 }
 
-public enum CombatAbilityTarget
-{
-    AllEnemies,
-    RandomEnemy,
-    AllAllies,
-    RandomAlly,
-}
-
 [Flags]
 public enum CombatAbilityEffect
 {
@@ -60,15 +52,6 @@ public enum CombatAbilityCharacterMoveTarget
     Front,
 }
 
-public enum CombatAbilityPriority
-{
-    LastResort = 0,
-    Low = 1,
-    Medium = 2,
-    High = 3,
-    Top = 4,
-}
-
 public enum CombatAnimationType
 {
     None,
@@ -95,26 +78,7 @@ public enum CombatAnimationTarget
     Target
 }
 
-/// <summary>
-/// Specific opponent requirement for this ability to work
-/// </summary>
-public enum ValidOpponent
-{
-    /// <summary>
-    /// Works on any opponent
-    /// </summary>
-    Any,
 
-    /// <summary>
-    /// Only works on lower level opponent
-    /// </summary>
-    LowerLevel,
-
-    /// <summary>
-    /// Only works on higher level opponent
-    /// </summary>
-    HigherLevel,
-}
 
 [Serializable]
 public class CombatCharacterAnimations
@@ -348,10 +312,5 @@ public class CombatAbilityData : ScriptableObject
     private bool ShowProjectileVisualEffect()
     {
         return VisualEffect == CombatAbilityVisual.Projectile;
-    }
-
-    public bool MatchesStrat(CombatActionStrategy strat)
-    {
-        return strat == CombatActionStrategy.Any || this.Type.ToString() == strat.ToString();
     }
 }

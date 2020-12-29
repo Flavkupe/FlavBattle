@@ -68,6 +68,9 @@ public class OfficerAbilityData : ScriptableObject
     public CombatAbilityData CombatAbility;
 
     [ShowIf("IsCombatAbility")]
+    public CombatTargetInfo Target;
+
+    [ShowIf("IsCombatAbility")]
     public OfficerAbilityEffectMultiplierType MultiplierType;
 
     [ShowIf("UsesConstantMultiplier")]

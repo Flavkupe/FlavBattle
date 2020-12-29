@@ -32,12 +32,6 @@ public class Unit : IEquatable<Unit>
         return this.Info.CurrentStats.HP <= 0;
     }
 
-    public ICombatStrategy GetStrategy()
-    {
-        // TODO: need some arg to decide which to pick
-        return Data.DefaultStrategy;
-    }
-
     public bool Equals(Unit other)
     {
         return this == other || this.ID == other.ID;

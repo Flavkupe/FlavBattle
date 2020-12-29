@@ -15,12 +15,12 @@ MonoBehaviour:
   Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   ClassName: Foot Soldier
   RollLow: 1
-  HP: {x: 20, y: 30}
-  Power: {x: 6, y: 7}
-  Defense: {x: 3, y: 5}
-  Speed: {x: 3, y: 6}
-  HPScaling: {x: 4, y: 8}
-  PowerScaling: {x: 2, y: 3}
+  HP: {x: 4, y: 5}
+  Power: {x: 1, y: 1}
+  Defense: {x: 2, y: 2}
+  Speed: {x: 1, y: 1}
+  HPScaling: {x: 1, y: 1}
+  PowerScaling: {x: 1, y: 1}
   DefenseScaling: {x: 1, y: 2}
   SpeedScaling: {x: 1, y: 1}
   Sprite: {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
@@ -37,7 +37,35 @@ MonoBehaviour:
   StartingAbilities:
   - {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
   - {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
-  - {fileID: 11400000, guid: 086ad4ca2cfc14341aed732b5f163517, type: 2}
+  StartingActions:
+  - Priority: 4
+    Description: Attack vs front
+    Target:
+      TargetType: 2
+      ValidOpponent: 0
+      ValidTargets: 1
+    Ability: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
+  - Priority: 3
+    Description: Attack vs mid
+    Target:
+      TargetType: 2
+      ValidOpponent: 0
+      ValidTargets: 2
+    Ability: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
+  - Priority: 2
+    Description: Attack vs back
+    Target:
+      TargetType: 2
+      ValidOpponent: 0
+      ValidTargets: 3
+    Ability: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
+  - Priority: 0
+    Description: Idle
+    Target:
+      TargetType: 0
+      ValidOpponent: 0
+      ValidTargets: 0
+    Ability: {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
   DefaultOfficerAbilities:
   - {fileID: 11400000, guid: 52cd095657ab02a4e9d1dd261a3ee5a0, type: 2}
   OfficerAbilities:

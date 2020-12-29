@@ -14,7 +14,7 @@ public class UnitInfo
 
     public Sprite Portrait { get; private set; }
 
-    public List<CombatAbilityData> Abilities { get; } = new List<CombatAbilityData>();
+    public List<CombatAction> Actions { get; } = new List<CombatAction>();
 
     public List<OfficerAbilityData> OfficerAbilities { get; } = new List<OfficerAbilityData>();
 
@@ -34,7 +34,8 @@ public class UnitInfo
         this.Name = data.RollName();
         this.Portrait = data.RollPortrait();
         this.Faction = faction;
-        this.Abilities.AddRange(data.StartingAbilities);
+
+        this.Actions.AddRange(data.StartingActions);
         this.IsOfficer = isOfficer;
         
         if (isOfficer)
@@ -50,14 +51,6 @@ public class UnitInfo
             {
                 OfficerAbilities.Add(ability);
             }
-        }
-    }
-
-    public void LearnAbility(CombatAbilityData data)
-    {
-        if (!Abilities.Contains(data))
-        {
-            Abilities.Add(data);
         }
     }
 }

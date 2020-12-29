@@ -119,12 +119,6 @@ public class BattleStatus
         Combatants.Remove(combatant);
     }
 
-    public CombatStrategy GetStrat(Combatant combatant)
-    {
-        var stratData = combatant.Unit.GetStrategy();
-        return new CombatStrategy(stratData, combatant.Unit, combatant.Allies, combatant.Enemies);
-    }
-
     /// <summary>
     /// Gets the army that is the oponent of army in this fight.
     /// </summary>

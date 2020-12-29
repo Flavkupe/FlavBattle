@@ -56,7 +56,6 @@
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ShowWinnerState.cs" />
-    <Compile Include="Assets\Scripts\Combat\Data\CombatStrategyData.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
@@ -147,7 +146,6 @@
     <Compile Include="Assets\Scripts\Entities\AI\ArmyMapAI.cs" />
     <Compile Include="Assets\Scripts\Combat\TestingAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\UI\Components\NameTag.cs" />
-    <Compile Include="Assets\Scripts\Combat\CombatStrategy.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\MoraleIcon.cs" />
     <Compile Include="Assets\Scripts\UI\Components\FacePortrait.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
@@ -172,6 +170,8 @@
     <Compile Include="Assets\Scripts\Utils\Routines\RoutineChain.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatTargetInfo.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatActionChoice.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

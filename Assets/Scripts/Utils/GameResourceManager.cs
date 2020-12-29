@@ -13,6 +13,28 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
         this.SetSingleton(this);
     }
 
+    [Required]
+    [Tooltip("The default idle ability if no ability can be done")]
+    [SerializeField]
+    private CombatAbilityData DefaultIdleAbility;
+
+    /// <summary>
+    /// Gets the default action if nothing is possible.
+    /// </summary>
+    /// <returns></returns>
+    public CombatAction GetDefaultCombatAction()
+    {
+        return new CombatAction()
+        {
+            Ability = DefaultIdleAbility,
+            Priority = CombatAbilityPriority.LastResort,
+            Target = new CombatTargetInfo()
+            {
+                TargetType = CombatAbilityTarget.Self,
+            }
+        };
+    }
+
     [Serializable]
     public class CommonSoundPrefabs
     {

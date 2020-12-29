@@ -36,6 +36,28 @@ MonoBehaviour:
   - {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
   - {fileID: 11400000, guid: 66852593919b2064688b402db09f140a, type: 2}
   - {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
+  StartingActions:
+  - Priority: 4
+    Description: Attow to back
+    Target:
+      TargetType: 2
+      ValidOpponent: 0
+      ValidTargets: 7
+    Ability: {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
+  - Priority: 1
+    Description: Melee front
+    Target:
+      TargetType: 2
+      ValidOpponent: 0
+      ValidTargets: 1
+    Ability: {fileID: 11400000, guid: 66852593919b2064688b402db09f140a, type: 2}
+  - Priority: 0
+    Description: Idle
+    Target:
+      TargetType: 0
+      ValidOpponent: 0
+      ValidTargets: 1
+    Ability: {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
   DefaultOfficerAbilities:
   - {fileID: 11400000, guid: 52cd095657ab02a4e9d1dd261a3ee5a0, type: 2}
   OfficerAbilities:

@@ -31,16 +31,72 @@ public class NextCombatantTurnState : BattleStateBase
 
     private IEnumerator DoTurn(BattleStatus state, Combatant combatant)
     {
-        var strat = state.GetStrat(combatant);
-        var decision = strat.Decide();
+        var action = PickAction(state, combatant, combatant.Unit.Info.Actions);
 
-        var ability = decision.Ability;
-        var targets = state.GetCombatants(decision.Targets);
-
-        Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name}'s turn!");
+        var targets = PickTargets(state, combatant, action.Target);
 
         // TODO: multiplier
-        yield return UseAbility(state, combatant, ability, targets);
+        yield return UseAbility(state, combatant, action.Ability, targets);
+    }
+
+    /// <summary>
+    /// Filters abilities by those that can target enemy formation
+    /// </summary>
+    private List<CombatAction> FilterPossibleActions(BattleStatus state, Combatant combatant, List<CombatAction> actions)
+    {
+        var enemyPositions = combatant.Enemies.Formation.GetOccupiedPositions(true);
+        List<CombatAction> possible = new List<CombatAction>();
+        foreach (var action in actions)
+        {
+            // Check if ability can hit any units
+            if (CanHitUnits(state, combatant, action))
+            {
+                possible.Add(action);
+            }
+        }
+
+        return possible;
+    }
+
+    /// <summary>
+    /// Checks whether any units are affected by the ability. Checks both positional
+    /// and unit requirements of ability.
+    /// </summary>
+    private bool CanHitUnits(BattleStatus state, Combatant combatant, CombatAction ability)
+    {
+        return GetValidAbilityTargets(state, combatant, ability.Target).Count > 0;
+    }
+
+    /// <summary>
+    /// Picks an attack by priority, if one exists. If not, then returns null
+    /// (meaning there is no preference).
+    /// </summary>
+    private CombatAction PickAction(BattleStatus state, Combatant combatant, List<CombatAction> actions)
+    {
+        // First filter by possible attacks, and return default if none are possible.
+        var possible = FilterPossibleActions(state, combatant, actions);
+
+        if (possible.Count == 0)
+        {
+            Debug.Log("No valid actions! Returning global default");
+            return GameResourceManager.Instance.GetDefaultCombatAction();
+        }
+
+        // Get random action from the top priority possible action
+        var maxPriority = possible.Max(a => a.Priority);
+        return possible.Where(a => a.Priority == maxPriority).ToList().GetRandom();
+    }
+
+    private List<CombatAbilityPriority> GetPriorityValuesReversed()
+    {
+        var list = new List<CombatAbilityPriority>();
+        foreach (CombatAbilityPriority priority in Enum.GetValues(typeof(CombatAbilityPriority)))
+        {
+            list.Add(priority);
+        }
+
+        list.Reverse();
+        return list;
     }
 }
 

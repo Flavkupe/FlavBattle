@@ -60,10 +60,8 @@ public class UnitData : ScriptableObject
     public Sprite[] Animations;
 
     [BoxGroup("Abilities")]
-    public CombatStrategyData DefaultStrategy;
-
-    [BoxGroup("Abilities")]
-    public CombatAbilityData[] StartingAbilities;
+    public CombatAction[] StartingActions;
+    
 
     [BoxGroup("Abilities")]
     [Tooltip("Officer abilities that are always available by default")]
