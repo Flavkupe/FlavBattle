@@ -31,6 +31,9 @@ public class BattleUIPanel : MonoBehaviour
     [Required]
     public TextMeshProUGUI BoutCounterText;
 
+    [Required]
+    public AttackStats AttackStats;
+
     /// <summary>
     /// Fires an event indicating that the FightingStance has been changed from the UI
     /// </summary>

@@ -35,8 +35,75 @@ public class NextCombatantTurnState : BattleStateBase
 
         var targets = PickTargets(state, combatant, action.Target);
 
+        var pair = GetAttackInfoPair(state, combatant, action, targets);
+        var pairs = new List<CombatAttackInfoPair>();
+        if (pair != null)
+        {
+            pairs.Add(pair);
+        }
+
+        state.BattleUIPanel.AttackStats.SetStats(pairs);
+
         // TODO: multiplier
         yield return UseAbility(state, combatant, action.Ability, targets);
+    }
+
+    // TODO: multiple at once
+    private CombatAttackInfoPair GetAttackInfoPair(BattleStatus state, Combatant combatant, CombatAction action, List<Combatant> targets)
+    {
+        var pair = new CombatAttackInfoPair();
+
+        if (action.Ability.AffectsAllies())
+        {
+            // Only affects allies, so no need to display
+            return null;
+        }
+
+        var combatantInfo = new CombatAttackInfo()
+        {
+            Attack = GetTotalAttack(combatant, action),
+            Combatant = combatant,
+        };
+
+        var targetsInfo = new List<CombatAttackInfo>();
+        foreach (var target in targets)
+        {
+            var targetInfo = new CombatAttackInfo()
+            {
+                Defense = GetTotalDefense(target, action),
+                Combatant = target,
+            };
+
+            targetsInfo.Add(targetInfo);
+        }
+
+        if (combatant.Left)
+        {
+            pair.Left = new List<CombatAttackInfo>() { combatantInfo };
+            pair.Right = targetsInfo;
+        }
+        else
+        {
+            pair.Right = new List<CombatAttackInfo>() { combatantInfo };
+            pair.Left = targetsInfo;
+        }
+
+        return pair;
+    }
+
+    private int GetTotalAttack(Combatant combatant, CombatAction action)
+    {
+        var attack = combatant.Unit.Info.CurrentStats.Power;
+        attack += action.Ability.Damage.RandomBetween();
+        attack += combatant.UnitMoraleBonus;
+        return attack;
+    }
+
+    private int GetTotalDefense(Combatant combatant, CombatAction action)
+    {
+        var defense = combatant.Unit.Info.CurrentStats.Defense;
+        defense += combatant.UnitMoraleBonus;
+        return defense;
     }
 
     /// <summary>

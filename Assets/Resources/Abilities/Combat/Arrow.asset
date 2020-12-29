@@ -17,7 +17,7 @@ MonoBehaviour:
   Priority: 2
   Target: 1
   ValidTargets: 7
-  PreferredTargets: 3
+  ValidOpponent: 0
   VisualEffect: 0
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
@@ -34,12 +34,24 @@ MonoBehaviour:
   ComabtAnimation: {fileID: 0}
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
+  WaitForCompletion: 1
+  CombatAnimationTarget: 0
+  AnimationSequence: 0
   PreAttackAnimations:
     Type: 0
+    WaitForCompletion: 0
     Animations: []
   PostAttackAnimations:
     Type: 0
+    WaitForCompletion: 0
     Animations: []
   Effect: 1
-  Damage: {x: 2, y: 4}
-  MoraleDamage: 0
+  Damage: {x: 2, y: 2}
+  MoraleDamage: {x: 0, y: 0}
+  StatusEffect:
+    HP: 0
+    Power: 0
+    Defense: 0
+    Speed: 0
+    Level: 1
+    Command: 0

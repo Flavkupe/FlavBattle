@@ -15,14 +15,14 @@ MonoBehaviour:
   Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   ClassName: Hunter
   RollLow: 1
-  HP: {x: 10, y: 20}
-  Power: {x: 4, y: 7}
-  Defense: {x: 2, y: 3}
-  Speed: {x: 5, y: 8}
-  HPScaling: {x: 1, y: 3}
-  PowerScaling: {x: 2, y: 3}
-  DefenseScaling: {x: 1, y: 2}
-  SpeedScaling: {x: 1, y: 2}
+  HP: {x: 2, y: 3}
+  Power: {x: 1, y: 1}
+  Defense: {x: 0, y: 0}
+  Speed: {x: 2, y: 2}
+  HPScaling: {x: 0, y: 0}
+  PowerScaling: {x: 0, y: 0}
+  DefenseScaling: {x: 0, y: 0}
+  SpeedScaling: {x: 0, y: 0}
   Sprite: {fileID: 807448920738025961, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   Portraits:
   - {fileID: 21300000, guid: 94a13421e84754816bf53257ade2b30a, type: 3}
@@ -31,11 +31,6 @@ MonoBehaviour:
   Animations:
   - {fileID: -6278177606702991857, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   - {fileID: 7173849240055794619, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
-  DefaultStrategy: {fileID: 11400000, guid: 8010bf353205325439b582df9bdfb3b0, type: 2}
-  StartingAbilities:
-  - {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
-  - {fileID: 11400000, guid: 66852593919b2064688b402db09f140a, type: 2}
-  - {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
   StartingActions:
   - Priority: 4
     Description: Attow to back

@@ -40,6 +40,7 @@ public class Combatant
         StatChanges = StatChanges.Combine(changes);
     }
 
+    public int UnitMoraleBonus => Unit.Info.Morale.GetDefaultBonus();
     public int UnitMorale => Unit.Info.Morale.Current;
     public int ArmyMorale => Allies.Morale.Current;
 }

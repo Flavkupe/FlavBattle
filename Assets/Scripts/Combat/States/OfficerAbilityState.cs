@@ -32,5 +32,24 @@ public class OfficerAbilityState : BattleStateBase
         yield return state.BattleUIPanel.AnimateAbilityNameCallout(ability);
         yield return DoOfficerAbility(state, officer, ability);
     }
+
+
+    /// <summary>
+    /// Performs an officer ability based on OfficerAbilityData, such as when clicking on an action or
+    /// due to events like combat start.
+    /// </summary>
+    private IEnumerator DoOfficerAbility(BattleStatus state, Combatant combatant, OfficerAbilityData officerAbility)
+    {
+        var target = officerAbility.Target;
+        var targets = PickTargets(state, combatant, target);
+        var ability = officerAbility.CombatAbility;
+
+        Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name} is doing officer action {ability.Name}!");
+
+        // TODO: other multipliers
+        var multiplier = officerAbility.MultiplierType ==
+            OfficerAbilityEffectMultiplierType.Constant ? officerAbility.ConstantEffectMultiplier : 1.0f;
+        yield return UseAbility(state, combatant, ability, targets, multiplier);
+    }
 }
 

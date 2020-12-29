@@ -19,35 +19,35 @@ public class UnitData : ScriptableObject
 
     // CombatStrategyData
     [BoxGroup("Base Stats")]
-    [MinMaxSlider(1.0f, 200.0f)]
+    [MinMaxSlider(1.0f, 10.0f)]
     public Vector2 HP;
 
     [BoxGroup("Base Stats")]
-    [MinMaxSlider(1.0f, 200.0f)]
+    [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 Power;
 
     [BoxGroup("Base Stats")]
-    [MinMaxSlider(1.0f, 200.0f)]
+    [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 Defense;
 
     [BoxGroup("Base Stats")]
-    [MinMaxSlider(1.0f, 200.0f)]
+    [MinMaxSlider(0.0f, 10.0f)]
     public Vector2 Speed;
 
     [BoxGroup("Stat Scaling")]
-    [MinMaxSlider(1.0f, 20.0f)]
+    [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 HPScaling;
 
     [BoxGroup("Stat Scaling")]
-    [MinMaxSlider(1.0f, 20.0f)]
+    [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 PowerScaling;
 
     [BoxGroup("Stat Scaling")]
-    [MinMaxSlider(1.0f, 20.0f)]
+    [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 DefenseScaling;
 
     [BoxGroup("Stat Scaling")]
-    [MinMaxSlider(1.0f, 20.0f)]
+    [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 SpeedScaling;
 
     [BoxGroup("Visual")]

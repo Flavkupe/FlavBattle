@@ -19,15 +19,31 @@ public class PreCombatBattleActionsState : BattleStateBase
 
     protected override IEnumerator Run(BattleStatus state)
     {
-        yield return DoPrebattleOfficerActions(state);
+        PrepareOfficerActions(state);
+        yield return null;
+        state.Stage = BattleStatus.BattleStage.CombatPhase;
     }
 
-    private IEnumerator DoPrebattleOfficerActions(BattleStatus state)
+    private void PrepareOfficerActions(BattleStatus state)
     {
         // TODO: enemy army as well
         var officer = state.GetPlayerOfficer();
-        yield return DoOfficerActions(state, officer);
-        state.Stage = BattleStatus.BattleStage.CombatPhase;
+        EnqueueOfficerActions(state, officer);
+    }
+
+    private void EnqueueOfficerActions(BattleStatus state, Combatant combatant)
+    {
+        var actions = combatant.Unit.Info.OfficerAbilities.Where(a => a.TriggerType == OfficerAbilityTriggerType.AutoStartInCombat).ToList();
+        if (actions.Count > 0)
+        {
+            // TODO: run each (in parallel...?) or pick a better one?
+            var action = actions.GetRandom();
+            state.AbilityQueue.Enqueue(action);
+            // yield return DoOfficerAbility(state, combatant, action);
+        }
+        else
+        {
+            Debug.Log($"{combatant.Unit.Info.Faction}: officer {combatant.Unit.Info.Name} has no officer actions!");
+        }
     }
 }
-

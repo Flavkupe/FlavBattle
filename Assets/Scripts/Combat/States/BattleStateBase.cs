@@ -35,39 +35,6 @@ public abstract class BattleStateBase : IBattleState
         state.TurnExecuting = false;
     }
 
-    protected IEnumerator DoOfficerActions(BattleStatus state, Combatant combatant)
-    {
-        var actions = combatant.Unit.Info.OfficerAbilities.Where(a => a.TriggerType == OfficerAbilityTriggerType.AutoStartInCombat).ToList();
-        if (actions.Count > 0)
-        {
-            // TODO: run each (in parallel...?) or pick a better one?
-            var action = actions.GetRandom();
-            yield return DoOfficerAbility(state, combatant, action);
-        }
-        else
-        {
-            Debug.Log($"{combatant.Unit.Info.Faction}: officer {combatant.Unit.Info.Name} has no officer actions!");
-        }
-    }
-
-    /// <summary>
-    /// Performs an officer ability based on OfficerAbilityData, such as when clicking on an action or
-    /// due to events like combat start.
-    /// </summary>
-    protected IEnumerator DoOfficerAbility(BattleStatus state, Combatant combatant, OfficerAbilityData officerAbility)
-    {
-        var target = officerAbility.Target;
-        var targets = PickTargets(state, combatant, target);
-        var ability = officerAbility.CombatAbility;
-
-        Debug.Log($"{combatant.Unit.Info.Faction}: {combatant.Unit.Info.Name} is doing officer action {ability.Name}!");
-
-        // TODO: other multipliers
-        var multiplier = officerAbility.MultiplierType ==
-            OfficerAbilityEffectMultiplierType.Constant ? officerAbility.ConstantEffectMultiplier : 1.0f;
-        yield return UseAbility(state, combatant, ability, targets, multiplier);
-    }
-
     protected List<Combatant> PickTargets(BattleStatus state, Combatant combatant, CombatTargetInfo target)
     {
         var empty = new List<Combatant>();
