@@ -43,4 +43,5 @@ public class Combatant
     public int UnitMoraleBonus => Unit.Info.Morale.GetDefaultBonus();
     public int UnitMorale => Unit.Info.Morale.Current;
     public int ArmyMorale => Allies.Morale.Current;
+    public bool IsInPlayerArmy => Allies.Faction.IsPlayerFaction;
 }

@@ -21,13 +21,23 @@ public class AttackStatsInfoBar : MonoBehaviour
     [Required]
     public Sprite ShieldSprite;
 
-    public void SetStats(CombatAttackInfoPair pair)
+    public void SetStats(CombatAttackInfo info)
     {
-        var left = pair.Left;
-        var right = pair.Right;
+        var left = new List<ComputedAttackInfo>();
+        var right = new List<ComputedAttackInfo>();
+        if (info.LeftSource)
+        {
+            left.Add(info.Source);
+            right.AddRange(info.Targets);
+        }
+        else
+        {
+            right.Add(info.Source);
+            left.AddRange(info.Targets);
+        }
 
-        // LeftInfo.DestroyChildren();
-        // RightInfo.DestroyChildren();
+        LeftInfo.DestroyChildren();
+        RightInfo.DestroyChildren();
 
         foreach (var item in left)
         {

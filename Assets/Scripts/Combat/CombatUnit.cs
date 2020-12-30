@@ -39,21 +39,18 @@ public class CombatUnit : MonoBehaviour
         this.UpdateUIComponents();
     }
 
-    public Coroutine TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-        return StartCoroutine(TakeDamageInternal(damage));
+        var info = Unit.Info;
+        info.CurrentStats.HP -= damage;
+        this.UpdateUIComponents();
     }
 
-    /// <summary>
-    /// Deals morale damage to target. If animate is true, will animate
-    /// effect and show numbers. If false, will do morale damage without
-    /// showing it (ie as part of damage attack etc). moraleDamage
-    /// should be a positive number.
-    /// </summary>
-    public Coroutine TakeMoraleDamage(int moraleDamage, bool animate)
+    public void TakeMoraleDamage(int moraleDamage)
     {
-        Debug.Log($"{Unit.Info.Name} of {Unit.Info.Faction} took {moraleDamage} morale damage!");
-        return StartCoroutine(TakeMoraleDamageInternal(moraleDamage, animate));
+        var info = Unit.Info;
+        this.Unit.Info.Morale.ChangeMorale(-moraleDamage);
+        this.UpdateUIComponents();
     }
 
     public Coroutine AnimateDamaged(Color? color = null)
@@ -72,6 +69,16 @@ public class CombatUnit : MonoBehaviour
         return StartCoroutine(AnimateDeathInternal());
     }
 
+
+    /// <summary>
+    /// Shows text with the selected color and flashes in the chosen color
+    /// </summary>
+    public IEnumerator AnimateDamageTaken(string textNumber, Color textColor, Color flashColor)
+    {
+        this.CreateDamageTextOverHead(textNumber, textColor);
+        yield return AnimateDamaged(flashColor);
+    }
+
     public IEnumerator AnimateEscape(Vector3 direction)
     {
         var time = 0.0f;
@@ -86,39 +93,6 @@ public class CombatUnit : MonoBehaviour
             this.transform.position = Vector3.MoveTowards(pos, pos + direction, speed * delta);
             yield return null;
         }
-    }
-
-    private IEnumerator TakeDamageInternal(int damage)
-    {
-        var info = Unit.Info;
-
-        this.CreateDamageTextOverHead(damage.ToString());
-
-        info.CurrentStats.HP -= damage;
-        if (info.CurrentStats.HP < 0)
-        {
-            Debug.Log($"{Unit.Info.Name} of {Unit.Info.Faction} has died!");
-            yield break;
-        }
-        else
-        {
-            yield return AnimateDamaged();
-            this.UpdateUIComponents();
-        }
-    }
-
-    private IEnumerator TakeMoraleDamageInternal(int moraleDamage, bool animate)
-    {
-        var info = Unit.Info;
-
-        this.Unit.Info.Morale.ChangeMorale(-moraleDamage);
-        if (animate)
-        {
-            this.CreateDamageTextOverHead(moraleDamage.ToString(), Color.blue);
-            yield return AnimateDamaged(Color.blue);
-        }
-
-        this.UpdateUIComponents();        
     }
 
     private IEnumerator AnimateAttackInternal()

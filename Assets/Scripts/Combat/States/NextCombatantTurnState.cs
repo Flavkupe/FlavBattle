@@ -17,58 +17,150 @@ public class NextCombatantTurnState : BattleStateBase
     /// </summary>
     public override bool ShouldUpdate(BattleStatus state)
     {
-        return state.Stage == BattleStatus.BattleStage.CombatPhase && state.TurnQueue.Count > 0;
+        return state.Stage == BattleStatus.BattleStage.CombatPhase && (state.TurnQueue.Count > 0 || state.AbilityQueue.Count > 0);
     }
 
     protected override IEnumerator Run(BattleStatus state)
     {
-        var current = state.GetNextCombatant();
-        if (current != null)
+        if (state.AbilityQueue.Count > 0)
         {
-            yield return DoTurn(state, current);
+            // Queued officer ability
+            var officer = state.GetPlayerOfficer();
+            var ability = state.AbilityQueue.Dequeue();
+            yield return state.BattleUIPanel.AnimateAbilityNameCallout(ability);
+            var action = new CombatAction()
+            {
+                Ability = ability.CombatAbility,
+                Target = ability.Target,
+            };
+
+            yield return DoTurn(state, officer, action);
+        }
+        else
+        {
+            // Queued combatant
+            var current = state.GetNextCombatant();
+            if (current != null)
+            {
+                yield return DoTurn(state, current);
+            }
         }
     }
 
-    private IEnumerator DoTurn(BattleStatus state, Combatant combatant)
+    private IEnumerator DoTurn(BattleStatus state, Combatant combatant, CombatAction preloadedAction = null)
     {
-        var action = PickAction(state, combatant, combatant.Unit.Info.Actions);
-
+        var action = preloadedAction ?? PickAction(state, combatant, combatant.Unit.Info.Actions);
         var targets = PickTargets(state, combatant, action.Target);
 
-        var pair = GetAttackInfoPair(state, combatant, action, targets);
-        var pairs = new List<CombatAttackInfoPair>();
-        if (pair != null)
+        // TODO: Step 1 should be part of an ICombatEvent
+        // Step 1: calculate pre-attack info
+        var info = GetAttackInfo(state, combatant, action, targets);
+        var infoList = new List<CombatAttackInfo>();
+        if (info != null)
         {
-            pairs.Add(pair);
+            infoList.Add(info);
         }
 
-        state.BattleUIPanel.AttackStats.SetStats(pairs);
+        // Update panel
+        if (!info.IsAllyAbility)
+        {
+            state.BattleUIPanel.AttackStats.SetStats(infoList);
+        }
+        else
+        {
+            state.BattleUIPanel.AttackStats.Clear();
+        }
 
-        // TODO: multiplier
-        yield return UseAbility(state, combatant, action.Ability, targets);
+        var preAnimation = new CombatAbilityAnimationEvent(_owner, info, CombatAbilityAnimationEvent.AnimationType.PreAttack);
+        var attackAnimation = new CombatAbilityAnimationEvent(_owner, info, CombatAbilityAnimationEvent.AnimationType.Ability);
+        var attackEvent = new CombatAttackEvent(_owner, info);
+        var postAnimation = new CombatAbilityAnimationEvent(_owner, info, CombatAbilityAnimationEvent.AnimationType.PostAttack);
+
+        // Step 2: pre-ability animations
+        yield return preAnimation.Animate();
+
+        // Step 3: ability animation
+        yield return attackAnimation.Animate();
+
+        // Step 4: process ability and get results (includes rolls etc)
+        var results = attackEvent.Process();
+
+        foreach (var result in results.Results)
+        {
+            yield return AnimateAttackResults(state, result);
+        }
+
+        // Step 5: post ability animation
+        yield return postAnimation.Animate();
+
+        // Step 6: check for newly dead units
+        yield return CheckForDeadUnits(state);
+
+        state.BattleUIPanel.UpdateMorale(state.PlayerArmy, state.OtherArmy);
+    }
+
+    private IEnumerator CheckForDeadUnits(BattleStatus state)
+    {
+        foreach (var combatant in state.Combatants.ToList())
+        {
+            
+            if (combatant.Unit.IsDead())
+            {
+                yield return combatant.CombatUnit.AnimateDeath();
+                state.ClearCombatant(combatant);
+
+                // get morale bonus for killing unit
+                var roll = UnityEngine.Random.Range(5, 10);
+
+                // Positive morale change for attacking army
+                combatant.Allies.Morale.ChangeMorale(roll);
+                state.BattleUIPanel.AnimateMoraleBar(combatant.IsInPlayerArmy, true);
+            }
+        }
+    }
+
+    private IEnumerator AnimateAttackResults(BattleStatus state, ComputedAttackResultInfo info)
+    {
+        if (info.Target == null)
+        {
+            // Currently results with no target should probably just not animate
+            yield break;
+        }
+
+        if (info.ArmyMoraleDamage.HasValue)
+        {
+            state.BattleUIPanel.AnimateMoraleBar(info.Target.IsInPlayerArmy, info.ArmyMoraleDamage.Value > 0);
+        }
+
+        // Prefer physical damage
+        if (info.AttackDamage.HasValue)
+        {
+            var anim = new CombatUnitAnimationEvent(_owner, info);
+            yield return anim.Animate();
+        }
+
+        if (info.DirectMoraleDamage.HasValue)
+        {
+            var anim = new CombatUnitAnimationEvent(_owner, info);
+            yield return anim.Animate();
+        }
     }
 
     // TODO: multiple at once
-    private CombatAttackInfoPair GetAttackInfoPair(BattleStatus state, Combatant combatant, CombatAction action, List<Combatant> targets)
+    private CombatAttackInfo GetAttackInfo(BattleStatus state, Combatant combatant, CombatAction action, List<Combatant> targets)
     {
-        var pair = new CombatAttackInfoPair();
+        var info = new CombatAttackInfo();
 
-        if (action.Ability.AffectsAllies())
-        {
-            // Only affects allies, so no need to display
-            return null;
-        }
-
-        var combatantInfo = new CombatAttackInfo()
+        var combatantInfo = new ComputedAttackInfo()
         {
             Attack = GetTotalAttack(combatant, action),
             Combatant = combatant,
         };
 
-        var targetsInfo = new List<CombatAttackInfo>();
+        var targetsInfo = new List<ComputedAttackInfo>();
         foreach (var target in targets)
         {
-            var targetInfo = new CombatAttackInfo()
+            var targetInfo = new ComputedAttackInfo()
             {
                 Defense = GetTotalDefense(target, action),
                 Combatant = target,
@@ -77,18 +169,12 @@ public class NextCombatantTurnState : BattleStateBase
             targetsInfo.Add(targetInfo);
         }
 
-        if (combatant.Left)
-        {
-            pair.Left = new List<CombatAttackInfo>() { combatantInfo };
-            pair.Right = targetsInfo;
-        }
-        else
-        {
-            pair.Right = new List<CombatAttackInfo>() { combatantInfo };
-            pair.Left = targetsInfo;
-        }
-
-        return pair;
+        info.Targets = targetsInfo;
+        info.Source = combatantInfo;
+        info.Ability = action.Ability;
+        info.TargetInfo = action.Target;
+        info.State = state;
+        return info;
     }
 
     private int GetTotalAttack(Combatant combatant, CombatAction action)

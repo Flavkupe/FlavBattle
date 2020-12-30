@@ -122,20 +122,6 @@ public class CombatAbilityData : ScriptableObject
 
     public CombatAbilityPriority Priority = CombatAbilityPriority.Medium;
 
-    /***** Targets ******/
-
-    [BoxGroup("Targets")]
-    [ShowIf("IsTargetedAbility")]
-    public CombatAbilityTarget Target;
-
-    [BoxGroup("Targets")]
-    [ShowIf("IsTargetedAbility")]
-    public FormationGroup ValidTargets;
-
-    [BoxGroup("Targets")]
-    [ShowIf("IsTargetedAbility")]
-    public ValidOpponent ValidOpponent;
-
     /***** Visuals ******/
 
     [BoxGroup("Visuals")]
@@ -254,26 +240,9 @@ public class CombatAbilityData : ScriptableObject
         return Type != CombatAbilityType.Idle;
     }
 
-    public bool AffectsAllies()
-    {
-        switch (Target)
-        {
-            case CombatAbilityTarget.AllAllies:
-            case CombatAbilityTarget.RandomAlly:
-                return true;
-            default:
-                return false;
-        }
-    }
-
     private bool ShowAnimationProps()
     {
         return VisualEffect == CombatAbilityVisual.Animation;
-    }
-
-    private bool IsMultitarget()
-    {
-        return Target == CombatAbilityTarget.AllAllies || Target == CombatAbilityTarget.AllEnemies;
     }
 
     private bool ShowCharacterMoveProps()

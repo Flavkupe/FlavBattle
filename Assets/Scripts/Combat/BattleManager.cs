@@ -53,9 +53,6 @@ public class BattleManager : MonoBehaviour
             // Must be before NextCombatantTurnState
             new ShowWinnerState(this),
 
-            // Must be before next NextCombatantTurnState
-            new OfficerAbilityState(this),
-
             // Should be towards the end, along with NextCombatantTurnState
             new InitRoundState(this),
 

@@ -51,7 +51,8 @@ public class CombatTargetInfo
     public bool AffectsAllies()
     {
         return TargetType == CombatAbilityTarget.AllAllies ||
-            TargetType == CombatAbilityTarget.RandomAlly;
+            TargetType == CombatAbilityTarget.RandomAlly ||
+            TargetType == CombatAbilityTarget.Self;
     }
 
     public bool IsTargetedAbility()

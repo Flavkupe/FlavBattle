@@ -66,6 +66,8 @@
     <Compile Include="Assets\Scripts\UI\Combat\BattleUIPanel.cs" />
     <Compile Include="Assets\Scripts\Sound\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Utils\ExtensionFunctions.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatAttackInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\AttackStats.cs" />
     <Compile Include="Assets\Scripts\Components\FloatingText.cs" />
     <Compile Include="Assets\Scripts\Entities\FightingStance.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\Routine.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Town.cs" />
     <Compile Include="Assets\Scripts\Entities\IDetectable.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatAction.cs" />
     <Compile Include="Assets\Scripts\Entities\ArmyMapSpawn.cs" />
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Prop.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TooltipHolder.cs" />
@@ -111,7 +114,6 @@
     <Compile Include="Assets\Scripts\Utils\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
-    <Compile Include="Assets\Scripts\Combat\States\OfficerAbilityState.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
     <Compile Include="Assets\Scripts\Utils\GameResourceManager.cs" />
@@ -141,8 +143,10 @@
     <Compile Include="Assets\Scripts\Utils\FormationUtils.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ActionButtonsPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DropTargetUIGridTile.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\CombatAttackEvent.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Models.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\Models.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatTargetInfo.cs" />
     <Compile Include="Assets\Scripts\Entities\AI\ArmyMapAI.cs" />
     <Compile Include="Assets\Scripts\Combat\TestingAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\UI\Components\NameTag.cs" />
@@ -157,6 +161,7 @@
     <Compile Include="Assets\Scripts\UI\Dragging\DropTarget.cs" />
     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGrid.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\CombatEvent.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DropTargetUIGrid.cs" />
     <Compile Include="Assets\Scripts\Combat\States\NextCombatantTurnState.cs" />
     <Compile Include="Assets\Scripts\Combat\States\PreCombatBattleActionsState.cs" />
@@ -168,13 +173,10 @@
     <Compile Include="Assets\Scripts\Combat\CombatFormationSlot.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\OfficerAbilityData.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\RoutineChain.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\CombatAbilityAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
-    <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
-    <Compile Include="Assets\Scripts\Combat\CombatTargetInfo.cs" />
-    <Compile Include="Assets\Scripts\Combat\CombatActionChoice.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
-    <Compile Include="Assets\Scripts\UI\Combat\AttackStats.cs" />
-    <Compile Include="Assets\Scripts\Combat\CombatAttackInfo.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

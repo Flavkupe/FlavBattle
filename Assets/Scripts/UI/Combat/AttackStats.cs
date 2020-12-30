@@ -12,16 +12,21 @@ public class AttackStats : MonoBehaviour
     [Required]
     public Transform Container;
 
-    public void SetStats(List<CombatAttackInfoPair> pairs)
+    public void Clear()
     {
         this.Container.DestroyChildren();
+    }
 
-        foreach (var pair in pairs)
+    public void SetStats(List<CombatAttackInfo> infoList)
+    {
+        Clear();
+
+        foreach (var info in infoList)
         {
             var bar = Instantiate(InfoBarTemplate);
             bar.transform.SetParent(Container, true);
             bar.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            bar.SetStats(pair);
+            bar.SetStats(info);
         }
     }
 }

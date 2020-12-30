@@ -20,5 +20,9 @@ MonoBehaviour:
   MoraleMax: 100
   TriggerType: 1
   CombatAbility: {fileID: 11400000, guid: 6f51e4fcb94459d4b85c345495d9d7e2, type: 2}
+  Target:
+    TargetType: 0
+    ValidOpponent: 0
+    ValidTargets: 0
   MultiplierType: 1
   ConstantEffectMultiplier: 0
