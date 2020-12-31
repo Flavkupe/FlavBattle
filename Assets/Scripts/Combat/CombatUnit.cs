@@ -17,6 +17,14 @@ public class CombatUnit : MonoBehaviour
     [Required]
     public HealthBar HealthBar;
 
+    [Tooltip("Animation for blocking an attack")]
+    [Required]
+    public FloatingIcon BlockAnimationTemplate;
+
+    [Tooltip("Animation for blocking an attack via high morale")]
+    [Required]
+    public FloatingIcon MoraleTankAnimationTemplate;
+
     private bool _facingLeft = false;
 
 
@@ -53,7 +61,7 @@ public class CombatUnit : MonoBehaviour
         this.UpdateUIComponents();
     }
 
-    public Coroutine AnimateDamaged(Color? color = null)
+    public Coroutine AnimateFlash(Color? color = null)
     {
         var renderer = this.GetComponent<SpriteRenderer>();
         return StartCoroutine(renderer.FlashColor(color ?? Color.red));
@@ -69,6 +77,29 @@ public class CombatUnit : MonoBehaviour
         return StartCoroutine(AnimateDeathInternal());
     }
 
+    public void AnimateBlockedDamageAsync()
+    {
+        var anim = Instantiate(BlockAnimationTemplate, this.transform);
+        anim.PlayAnimation();
+    }
+
+    public void AnimateBlockedThroughMoraleAsync()
+    {
+        var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
+        anim.PlayAnimation();
+    }
+
+    public IEnumerator AnimateBlockedDamage()
+    {
+        var anim = Instantiate(BlockAnimationTemplate, this.transform);
+        yield return anim.PlayToCompletion();
+    }
+
+    public IEnumerator AnimateBlockedThroughMorale()
+    {
+        var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
+        yield return anim.PlayToCompletion();
+    }
 
     /// <summary>
     /// Shows text with the selected color and flashes in the chosen color
@@ -76,7 +107,7 @@ public class CombatUnit : MonoBehaviour
     public IEnumerator AnimateDamageTaken(string textNumber, Color textColor, Color flashColor)
     {
         this.CreateDamageTextOverHead(textNumber, textColor);
-        yield return AnimateDamaged(flashColor);
+        yield return AnimateFlash(flashColor);
     }
 
     public IEnumerator AnimateEscape(Vector3 direction)

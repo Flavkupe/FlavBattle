@@ -17,6 +17,20 @@ public class FloatingIcon : PlayableAnimation
     [Tooltip("Starting offset when this is created")]
     public Vector3 Offset;
 
+    [Tooltip("Whether this should float up over time as the animation")]
+    public bool FloatUp = true;
+
+    [Tooltip("Whether this should float up over time as the animation")]
+    public bool ChangeScale = false;
+
+    [Tooltip("Initial scale, in case of ChangeScale being true")]
+    [ShowIf("ChangeScale")]
+    public Vector3 ScaleStart;
+
+    [Tooltip("Initial scale, in case of ChangeScale being true")]
+    [ShowIf("ChangeScale")]
+    public Vector3 ScaleEnd;
+
     public override void PlayAnimation()
     {
         StartCoroutine(PlayToCompletion());
@@ -27,12 +41,26 @@ public class FloatingIcon : PlayableAnimation
         var renderer = this.gameObject.GetComponent<SpriteRenderer>();
         renderer.sprite = Sprite;
         this.transform.position += Offset;
+        if (ChangeScale)
+        {
+            this.transform.localScale = ScaleStart;
+        }
 
         while (Duration > 0.0f)
         {
             var delta = TimeUtils.FullAdjustedGameDelta;
             Duration -= delta;
-            this.transform.position = this.transform.position.ShiftY(Speed * delta);
+
+            if (FloatUp)
+            {
+                this.transform.position = this.transform.position.ShiftY(Speed * delta);
+            }
+
+            if (ChangeScale)
+            {
+                this.transform.localScale = Vector3.Lerp(this.transform.localScale, ScaleEnd, Speed * delta);
+            }
+
             yield return null;
         }
 

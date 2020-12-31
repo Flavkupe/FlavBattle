@@ -9,16 +9,18 @@ public class PreCombatCalculationEvent : ICombatProcessEvent<CombatAttackInfo>
 {
     private BattleStatus _state;
     private Combatant _combatant;
+    private CombatAction _preloadedAction;
 
-    public PreCombatCalculationEvent(BattleStatus state, Combatant combatant)
+    public PreCombatCalculationEvent(BattleStatus state, Combatant combatant, CombatAction action = null)
     {
         _state = state;
         _combatant = combatant;
+        _preloadedAction = action;
     }
 
     public CombatAttackInfo Process()
     {
-        var action = PickAction(_state, _combatant, _combatant.Unit.Info.Actions);
+        var action = _preloadedAction ?? PickAction(_state, _combatant, _combatant.Unit.Info.Actions);
         var targets = PickTargets(_state, _combatant, action.Target);
         var info = GetAttackInfo(_state, _combatant, action, targets);
         return info;
@@ -59,6 +61,15 @@ public class PreCombatCalculationEvent : ICombatProcessEvent<CombatAttackInfo>
         var attack = combatant.Unit.Info.CurrentStats.Power;
         attack += action.Ability.Damage.RandomBetween();
         attack += combatant.UnitMoraleBonus;
+        if (combatant.Allies.Stance == FightingStance.Offensive)
+        {
+            attack += 1;
+        }
+        else if (combatant.Allies.Stance == FightingStance.Defensive)
+        {
+            attack -= 1;
+        }
+
         return attack;
     }
 
@@ -66,6 +77,15 @@ public class PreCombatCalculationEvent : ICombatProcessEvent<CombatAttackInfo>
     {
         var defense = combatant.Unit.Info.CurrentStats.Defense;
         defense += combatant.UnitMoraleBonus;
+        if (combatant.Allies.Stance == FightingStance.Offensive)
+        {
+            defense -= 1;
+        }
+        else if (combatant.Allies.Stance == FightingStance.Defensive)
+        {
+            defense += 1;
+        }
+
         return defense;
     }
 

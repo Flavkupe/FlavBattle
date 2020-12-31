@@ -27,16 +27,31 @@ public class CombatUnitAnimationEvent : ICombatAnimationEvent
         var target = _attackResult.Target;
         var slot = target.CombatFormationSlot;
 
-        if (_attackResult.AttackDamage.HasValue)
+        if (_attackResult.ShieldBlockedAttack || _attackResult.ResistedAttack)
         {
-            var damage = _attackResult.AttackDamage.Value.ToString();
-            yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.red, Color.red);
+            // no yield
+            slot.CurrentUnit.AnimateBlockedDamageAsync();
+            slot.CurrentUnit.AnimateFlash(Color.yellow);
         }
-
-        if (_attackResult.DirectMoraleDamage.HasValue)
+        else if (_attackResult.MoraleBlockedAttack)
         {
-            var damage = _attackResult.DirectMoraleDamage.Value.ToString();
-            yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.blue, Color.blue);
+            // no yield
+            slot.CurrentUnit.AnimateBlockedThroughMoraleAsync();
+            slot.CurrentUnit.AnimateFlash(Color.yellow);
+        }
+        else
+        {
+            if (_attackResult.AttackDamage.HasValue)
+            {
+                var damage = _attackResult.AttackDamage.Value.ToString();
+                yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.red, Color.red);
+            }
+
+            if (_attackResult.DirectMoraleDamage.HasValue)
+            {
+                var damage = _attackResult.DirectMoraleDamage.Value.ToString();
+                yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.blue, Color.blue);
+            }
         }
     }
 }

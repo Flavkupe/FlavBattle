@@ -65,10 +65,7 @@ public class OfficerAbilityData : ScriptableObject
     private bool UsesConstantMultiplier() => MultiplierType == OfficerAbilityEffectMultiplierType.Constant;
 
     [ShowIf("IsCombatAbility")]
-    public CombatAbilityData CombatAbility;
-
-    [ShowIf("IsCombatAbility")]
-    public CombatTargetInfo Target;
+    public CombatAction Action;
 
     [ShowIf("IsCombatAbility")]
     public OfficerAbilityEffectMultiplierType MultiplierType;

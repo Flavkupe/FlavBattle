@@ -132,6 +132,10 @@ MonoBehaviour:
     type: 3}
   MoraleIcon: {fileID: 306458488228756450}
   HealthBar: {fileID: 6731452862875063587}
+  BlockAnimationTemplate: {fileID: 285175196612671447, guid: 03f4b4370bccca34a9fc173f19b5c38a,
+    type: 3}
+  MoraleTankAnimationTemplate: {fileID: 285175196612671447, guid: 22045c03c1844344dacb963f3dd0b802,
+    type: 3}
 --- !u!212 &4987339295749207981
 SpriteRenderer:
   m_ObjectHideFlags: 0

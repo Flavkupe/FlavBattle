@@ -48,5 +48,20 @@ public class ComputedAttackResultInfo
     public int? AttackDamage { get; set; }
     public int? ArmyMoraleDamage { get; set; }
 
+    /// <summary>
+    /// Whether attack was resisted due to def/att differences
+    /// </summary>
+    public bool ResistedAttack { get; set; }
+
+    /// <summary>
+    /// Whether attack was tanked using a shield unit
+    /// </summary>
+    public bool ShieldBlockedAttack { get; set; }
+
+    /// <summary>
+    /// Whether attack was tanked from high morale
+    /// </summary>
+    public bool MoraleBlockedAttack { get; set; }
+
     public Combatant Target { get; private set; }
 }

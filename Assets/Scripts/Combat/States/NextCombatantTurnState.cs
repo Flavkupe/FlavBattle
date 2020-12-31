@@ -34,7 +34,7 @@ public class NextCombatantTurnState : BattleStateBase
             var officer = state.GetPlayerOfficer();
             var ability = state.AbilityQueue.Dequeue();
             yield return state.BattleUIPanel.AnimateAbilityNameCallout(ability);
-            var action = (new PreCombatCalculationEvent(state, officer)).Process();
+            var action = (new PreCombatCalculationEvent(state, officer, ability.Action)).Process();
             yield return DoTurn(state, new List<CombatAttackInfo>() { action });
         }
         else
