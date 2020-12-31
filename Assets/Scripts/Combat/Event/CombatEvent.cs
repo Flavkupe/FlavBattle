@@ -18,6 +18,12 @@ public class CombatAnimationEventSequence : ICombatAnimationEvent
     /// </summary>
     public bool Parallel { get; set; } = true;
 
+    /// <summary>
+    /// Optional time to stagger animations for multiple events, giving some time between
+    /// parallel events. Defaults to 0.0f (no stagger).
+    /// </summary>
+    public float StaggerTime { get; set; } = 0.0f;
+
     private MonoBehaviour _owner;
 
     public CombatAnimationEventSequence(MonoBehaviour owner, List<ICombatAnimationEvent> events)
@@ -38,12 +44,13 @@ public class CombatAnimationEventSequence : ICombatAnimationEvent
 
     public IEnumerator Animate()
     {
-        var routines = Routine.CreateEmptyRoutineSet(_owner, Parallel);
+        var routines = Routine.CreateEmptyRoutineSet(_owner, Parallel, StaggerTime);
         foreach (var item in Events)
         {
-            routines.AddRoutine(Routine.Create(item.Animate()));
+            var routine = Routine.Create(item.Animate());
+            routines.AddRoutine(routine);
         }
-        
+
         yield return routines;
     }
 }
@@ -51,6 +58,15 @@ public class CombatAnimationEventSequence : ICombatAnimationEvent
 public class CombatProcessEventSequence<TResultType> : ICombatProcessEvent<List<TResultType>>
 {
     public List<ICombatProcessEvent<TResultType>> Events { get; private set; } = new List<ICombatProcessEvent<TResultType>>();
+
+    public CombatProcessEventSequence()
+    {
+    }
+
+    public void AddEvent(ICombatProcessEvent<TResultType> newEvent)
+    {
+        Events.Add(newEvent);
+    }
 
     public CombatProcessEventSequence(List<ICombatProcessEvent<TResultType>> events)
     {
@@ -69,11 +85,18 @@ public class CombatProcessEventSequence<TResultType> : ICombatProcessEvent<List<
     }
 }
 
+/// <summary>
+/// An event that performs some sort of animation that can be awaited.
+/// </summary>
 public interface ICombatAnimationEvent
 {
     IEnumerator Animate();
 }
 
+/// <summary>
+/// An event that is processed and returns a value after being processed,
+/// representing the results of the process.
+/// </summary>
 public interface ICombatProcessEvent<TResultType>
 {
     TResultType Process();

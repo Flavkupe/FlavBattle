@@ -99,6 +99,25 @@ public class BattleStatus
         return Winner.None;
     }
 
+    public Combatant PeekNextLiveCombatant()
+    {
+        while (TurnQueue.Count > 0)
+        {
+            var current = TurnQueue.Peek();
+            if (!current.Unit.IsDead())
+            {
+                return current;
+            }
+            else
+            {
+                // remove dead combatants from queue
+                TurnQueue.Dequeue();
+            }
+        }
+
+        return null;
+    }
+
     public Combatant GetNextCombatant()
     {
         while (TurnQueue.Count > 0)

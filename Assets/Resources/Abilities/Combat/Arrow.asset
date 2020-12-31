@@ -15,14 +15,11 @@ MonoBehaviour:
   Name: Arrow
   Type: 0
   Priority: 2
-  Target: 1
-  ValidTargets: 7
-  ValidOpponent: 0
   VisualEffect: 0
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
   TraceDirection: 1
-  ProjectileSpeed: 15
+  ProjectileSpeed: 8
   ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
     type: 3}
   CharacterMove: 0

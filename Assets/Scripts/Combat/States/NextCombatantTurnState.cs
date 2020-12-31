@@ -8,6 +8,12 @@ using UnityEngine;
 
 public class NextCombatantTurnState : BattleStateBase
 {
+    /// <summary>
+    /// How long to stagger between parallel animations from
+    /// same unit types.
+    /// </summary>
+    private float _parallelStaggerTime = 0.2f;
+
     public NextCombatantTurnState(MonoBehaviour owner) : base(owner)
     {
     }
@@ -28,75 +34,119 @@ public class NextCombatantTurnState : BattleStateBase
             var officer = state.GetPlayerOfficer();
             var ability = state.AbilityQueue.Dequeue();
             yield return state.BattleUIPanel.AnimateAbilityNameCallout(ability);
-            var action = new CombatAction()
-            {
-                Ability = ability.CombatAbility,
-                Target = ability.Target,
-            };
-
-            yield return DoTurn(state, officer, action);
+            var action = (new PreCombatCalculationEvent(state, officer)).Process();
+            yield return DoTurn(state, new List<CombatAttackInfo>() { action });
         }
         else
         {
-            // Queued combatant
-            var current = state.GetNextCombatant();
-            if (current != null)
+            // Queued combatant actions
+            var actions = GetSimilarCombatActions(state);
+            if (actions.Count > 0)
             {
-                yield return DoTurn(state, current);
+                yield return DoTurn(state, actions);
             }
         }
     }
 
-    private IEnumerator DoTurn(BattleStatus state, Combatant combatant, CombatAction preloadedAction = null)
+    /// <summary>
+    /// Gets next action and any units in queue from same class
+    /// expected to use the same attack.
+    /// </summary>
+    private List<CombatAttackInfo> GetSimilarCombatActions(BattleStatus state)
     {
-        var action = preloadedAction ?? PickAction(state, combatant, combatant.Unit.Info.Actions);
-        var targets = PickTargets(state, combatant, action.Target);
-
-        // TODO: Step 1 should be part of an ICombatEvent
-        // Step 1: calculate pre-attack info
-        var info = GetAttackInfo(state, combatant, action, targets);
-        var infoList = new List<CombatAttackInfo>();
-        if (info != null)
+        var current = state.GetNextCombatant();
+        var original = current;
+        if (current == null)
         {
-            infoList.Add(info);
+            // nobody left over
+            return new List<CombatAttackInfo>();
         }
 
-        // Update panel
-        if (!info.IsAllyAbility)
+        var actions = new List<CombatAttackInfo>();
+        var action = (new PreCombatCalculationEvent(state, current)).Process();
+
+        actions.Add(action);
+        while (current != null)
         {
-            state.BattleUIPanel.AttackStats.SetStats(infoList);
+            current = state.PeekNextLiveCombatant();
+            if (current == null)
+            {
+                break;
+            }
+
+            var newAction = new PreCombatCalculationEvent(state, current).Process();
+            if (original.Allies == current.Allies &&
+                newAction.Ability.MatchesOther(action.Ability))
+            {
+                // batch with others in same team that have same attack,
+                // and dequeue the combatant
+                actions.Add(newAction);
+                state.GetNextCombatant();
+            }
+            else
+            {
+                // if the next doesn't match, just break out of the loop (done batching)
+                break;
+            }
+        }
+
+        return actions;
+    }
+
+    private IEnumerator DoTurn(BattleStatus state, List<CombatAttackInfo> actions)
+    {
+        var attackEvents = new CombatProcessEventSequence<CombatAttackEventResult>();
+        var preAttackAnimations = new CombatAnimationEventSequence(_owner);
+        var attackAnimations = new CombatAnimationEventSequence(_owner);
+        var postAnimations = new CombatAnimationEventSequence(_owner);
+
+        attackAnimations.StaggerTime = _parallelStaggerTime;
+
+        // Update panel as needed
+        var nonAllyActions = actions.Where(a => !a.IsAllyAbility).ToList();
+        if (nonAllyActions.Count > 0)
+        {
+            state.BattleUIPanel.AttackStats.SetStats(nonAllyActions);
         }
         else
         {
             state.BattleUIPanel.AttackStats.Clear();
         }
 
-        var preAnimation = new CombatAbilityAnimationEvent(_owner, info, CombatAbilityAnimationEvent.AnimationType.PreAttack);
-        var attackAnimation = new CombatAbilityAnimationEvent(_owner, info, CombatAbilityAnimationEvent.AnimationType.Ability);
-        var attackEvent = new CombatAttackEvent(_owner, info);
-        var postAnimation = new CombatAbilityAnimationEvent(_owner, info, CombatAbilityAnimationEvent.AnimationType.PostAttack);
+        foreach (var action in actions)
+        {
+            preAttackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, action, CombatAbilityAnimationEvent.AnimationType.PreAttack));
+            attackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, action, CombatAbilityAnimationEvent.AnimationType.Ability));
+            attackEvents.AddEvent(new CombatAttackEvent(_owner, action));
+            postAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, action, CombatAbilityAnimationEvent.AnimationType.PostAttack));
+        }
 
         // Step 2: pre-ability animations
-        yield return preAnimation.Animate();
+        yield return preAttackAnimations.Animate();
 
         // Step 3: ability animation
-        yield return attackAnimation.Animate();
+        yield return attackAnimations.Animate();
 
         // Step 4: process ability and get results (includes rolls etc)
-        var results = attackEvent.Process();
-
-        foreach (var result in results.Results)
+        var attackEventResults = attackEvents.Process();
+        foreach (var attackEventResult in attackEventResults)
         {
-            yield return AnimateAttackResults(state, result);
+            foreach (var info in attackEventResult.Results)
+            {
+                yield return AnimateAttackResults(state, info);
+            }
         }
 
         // Step 5: post ability animation
-        yield return postAnimation.Animate();
+        yield return postAnimations.Animate();
 
         // Step 6: check for newly dead units
         yield return CheckForDeadUnits(state);
 
         state.BattleUIPanel.UpdateMorale(state.PlayerArmy, state.OtherArmy);
+
+        // Brief pause
+        yield return new WaitForSecondsAccelerated(1.0f);
     }
 
     private IEnumerator CheckForDeadUnits(BattleStatus state)
@@ -144,112 +194,6 @@ public class NextCombatantTurnState : BattleStateBase
             var anim = new CombatUnitAnimationEvent(_owner, info);
             yield return anim.Animate();
         }
-    }
-
-    // TODO: multiple at once
-    private CombatAttackInfo GetAttackInfo(BattleStatus state, Combatant combatant, CombatAction action, List<Combatant> targets)
-    {
-        var info = new CombatAttackInfo();
-
-        var combatantInfo = new ComputedAttackInfo()
-        {
-            Attack = GetTotalAttack(combatant, action),
-            Combatant = combatant,
-        };
-
-        var targetsInfo = new List<ComputedAttackInfo>();
-        foreach (var target in targets)
-        {
-            var targetInfo = new ComputedAttackInfo()
-            {
-                Defense = GetTotalDefense(target, action),
-                Combatant = target,
-            };
-
-            targetsInfo.Add(targetInfo);
-        }
-
-        info.Targets = targetsInfo;
-        info.Source = combatantInfo;
-        info.Ability = action.Ability;
-        info.TargetInfo = action.Target;
-        info.State = state;
-        return info;
-    }
-
-    private int GetTotalAttack(Combatant combatant, CombatAction action)
-    {
-        var attack = combatant.Unit.Info.CurrentStats.Power;
-        attack += action.Ability.Damage.RandomBetween();
-        attack += combatant.UnitMoraleBonus;
-        return attack;
-    }
-
-    private int GetTotalDefense(Combatant combatant, CombatAction action)
-    {
-        var defense = combatant.Unit.Info.CurrentStats.Defense;
-        defense += combatant.UnitMoraleBonus;
-        return defense;
-    }
-
-    /// <summary>
-    /// Filters abilities by those that can target enemy formation
-    /// </summary>
-    private List<CombatAction> FilterPossibleActions(BattleStatus state, Combatant combatant, List<CombatAction> actions)
-    {
-        var enemyPositions = combatant.Enemies.Formation.GetOccupiedPositions(true);
-        List<CombatAction> possible = new List<CombatAction>();
-        foreach (var action in actions)
-        {
-            // Check if ability can hit any units
-            if (CanHitUnits(state, combatant, action))
-            {
-                possible.Add(action);
-            }
-        }
-
-        return possible;
-    }
-
-    /// <summary>
-    /// Checks whether any units are affected by the ability. Checks both positional
-    /// and unit requirements of ability.
-    /// </summary>
-    private bool CanHitUnits(BattleStatus state, Combatant combatant, CombatAction ability)
-    {
-        return GetValidAbilityTargets(state, combatant, ability.Target).Count > 0;
-    }
-
-    /// <summary>
-    /// Picks an attack by priority, if one exists. If not, then returns null
-    /// (meaning there is no preference).
-    /// </summary>
-    private CombatAction PickAction(BattleStatus state, Combatant combatant, List<CombatAction> actions)
-    {
-        // First filter by possible attacks, and return default if none are possible.
-        var possible = FilterPossibleActions(state, combatant, actions);
-
-        if (possible.Count == 0)
-        {
-            Debug.Log("No valid actions! Returning global default");
-            return GameResourceManager.Instance.GetDefaultCombatAction();
-        }
-
-        // Get random action from the top priority possible action
-        var maxPriority = possible.Max(a => a.Priority);
-        return possible.Where(a => a.Priority == maxPriority).ToList().GetRandom();
-    }
-
-    private List<CombatAbilityPriority> GetPriorityValuesReversed()
-    {
-        var list = new List<CombatAbilityPriority>();
-        foreach (CombatAbilityPriority priority in Enum.GetValues(typeof(CombatAbilityPriority)))
-        {
-            list.Add(priority);
-        }
-
-        list.Reverse();
-        return list;
     }
 }
 

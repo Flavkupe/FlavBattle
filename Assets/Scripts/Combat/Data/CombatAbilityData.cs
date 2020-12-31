@@ -240,6 +240,12 @@ public class CombatAbilityData : ScriptableObject
         return Type != CombatAbilityType.Idle;
     }
 
+    public bool MatchesOther(CombatAbilityData other)
+    {
+        // For now the criteria will be if they have the same name
+        return other.Name == this.Name;
+    }
+
     private bool ShowAnimationProps()
     {
         return VisualEffect == CombatAbilityVisual.Animation;

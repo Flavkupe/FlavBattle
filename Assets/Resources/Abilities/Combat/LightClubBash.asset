@@ -15,8 +15,6 @@ MonoBehaviour:
   Name: Slash
   Type: 0
   Priority: 0
-  Target: 1
-  ValidTargets: 1
   VisualEffect: 1
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
@@ -29,11 +27,12 @@ MonoBehaviour:
   CharacterMoveBackEffect: 2
   CharacterMoveTarget: 0
   CharacterMoveArcHeight: 1
-  CharacterMoveSpeed: 40
+  CharacterMoveSpeed: 20
   ComabtAnimation: {fileID: 5331656751271035678, guid: f4bc414cc9329954cbab33df89d17be2,
     type: 3}
   CombatAnimationSpeed: 3
   CombatAnimationRepeats: 2
+  WaitForCompletion: 1
   CombatAnimationTarget: 0
   AnimationSequence: 0
   PreAttackAnimations:
@@ -46,10 +45,11 @@ MonoBehaviour:
     Animations: []
   Effect: 1
   Damage: {x: 1, y: 1}
-  MoraleDamage: 0
+  MoraleDamage: {x: 0, y: 0}
   StatusEffect:
     HP: 0
     Power: 0
     Defense: 0
     Speed: 0
     Level: 1
+    Command: 0

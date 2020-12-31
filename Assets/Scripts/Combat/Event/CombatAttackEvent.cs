@@ -164,14 +164,7 @@ public class CombatAttackEvent : ICombatProcessEvent<CombatAttackEventResult>
         // TODO: other effects
         if (ability.Effect.HasFlag(CombatAbilityEffect.Damage))
         {
-            var damage = stats.Power;
-            damage += ability.Damage.RandomBetween();
-            damage = (int)((float)damage * multiplier);
-
-            var mitigation = targetStats.Defense;
-            
-            damage = Math.Max(1, damage - mitigation);
-
+            var damage = 1;
             result.AttackDamage = damage;
             target.CombatUnit.TakeDamage(damage);
 

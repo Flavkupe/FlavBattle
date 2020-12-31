@@ -177,6 +177,8 @@
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\CombatUnitAnimationEvent.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\PreCombatCalculationEvent.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

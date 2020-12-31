@@ -39,7 +39,6 @@ public class PreCombatBattleActionsState : BattleStateBase
             // TODO: run each (in parallel...?) or pick a better one?
             var action = actions.GetRandom();
             state.AbilityQueue.Enqueue(action);
-            // yield return DoOfficerAbility(state, combatant, action);
         }
         else
         {

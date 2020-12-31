@@ -25,4 +25,4 @@ MonoBehaviour:
     ValidOpponent: 0
     ValidTargets: 0
   MultiplierType: 1
-  ConstantEffectMultiplier: 3
+  ConstantEffectMultiplier: 1

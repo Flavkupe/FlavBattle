@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ParallelRoutineSet : IRoutineSet
 {
+    public float StaggerTime = 0.0f;
+
     private MonoBehaviour _runner;
 
     private readonly HashSet<Routine> _routines = new HashSet<Routine>();
@@ -66,6 +68,10 @@ public class ParallelRoutineSet : IRoutineSet
             });
 
             _runner.StartCoroutine(routine);
+            if (StaggerTime > 0.0f)
+            {
+                yield return new WaitForSeconds(StaggerTime);
+            }
         }
 
         while (_running > 0)

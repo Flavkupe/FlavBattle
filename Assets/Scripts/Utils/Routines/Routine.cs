@@ -377,11 +377,20 @@ public class Routine : IEnumerator
         yield return new WaitForSeconds(seconds);
     }
 
-    public static IRoutineSet CreateEmptyRoutineSet(MonoBehaviour runner, bool parallel)
+    /// <summary>
+    /// Creates a routine set that runs sequentially or in parallel, depending on second param.
+    /// </summary>
+    /// <param name="runner">Something that can run StartCoroutine.</param>
+    /// <param name="parallel">Whether to run routines in parallel or not.</param>
+    /// <param name="staggerTime">Parallel is staggered by staggerTime if third param is provided. No effect on  sequential.</param>
+    /// <returns></returns>
+    public static IRoutineSet CreateEmptyRoutineSet(MonoBehaviour runner, bool parallel, float staggerTime = 0.0f)
     {
         if (parallel)
         {
-            return new ParallelRoutineSet(runner);
+            var set = new ParallelRoutineSet(runner);
+            set.StaggerTime = staggerTime;
+            return set;
         }
         else
         {

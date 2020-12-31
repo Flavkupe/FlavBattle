@@ -63,8 +63,6 @@ public class CombatAbilityAnimationEvent : ICombatAnimationEvent
             Debug.Log($"Using ability {ability.Name}");
         }
 
-        // yield return PlayAdditionalAnimations(combatant, ability.PreAttackAnimations, targets);
-
         if (targets.Count > 0)
         {
             // Targets
@@ -84,8 +82,6 @@ public class CombatAbilityAnimationEvent : ICombatAnimationEvent
             Debug.Log("Running ability with no target");
             yield return AnimateAbility(combatant, ability);
         }
-
-        // yield return PlayAdditionalAnimations(combatant, ability.PostAttackAnimations, targets);
     }
 
     private IEnumerator UseAbilityOnAllies(BattleStatus state, Combatant combatant, CombatAbilityData ability, List<Combatant> targets)
@@ -105,7 +101,6 @@ public class CombatAbilityAnimationEvent : ICombatAnimationEvent
         foreach (var target in targets)
         {
             yield return AnimateAbility(combatant, target, ability, Color.red);
-            // yield return AttackTarget(state, combatant, target, ability, multiplier);
         }
     }
 
@@ -204,37 +199,6 @@ public class CombatAbilityAnimationEvent : ICombatAnimationEvent
         if (animationsData.WaitForCompletion)
         {
             yield return routines.AsRoutine();
-        }
-    }
-}
-
-public class CombatUnitAnimationEvent : ICombatAnimationEvent
-{
-    private MonoBehaviour _owner;
-
-    private ComputedAttackResultInfo _attackResult;
-
-    public CombatUnitAnimationEvent(MonoBehaviour owner, ComputedAttackResultInfo attackResult)
-    {
-        _owner = owner;
-        _attackResult = attackResult;
-    }
-
-    public IEnumerator Animate()
-    {
-        var target = _attackResult.Target;
-        var slot = target.CombatFormationSlot;
-
-        if (_attackResult.AttackDamage.HasValue)
-        {
-            var damage = _attackResult.AttackDamage.Value.ToString();
-            yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.red, Color.red);
-        }
-
-        if (_attackResult.DirectMoraleDamage.HasValue)
-        {
-            var damage = _attackResult.DirectMoraleDamage.Value.ToString();
-            yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.blue, Color.blue);
         }
     }
 }
