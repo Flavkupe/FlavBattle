@@ -1,32 +1,38 @@
+using FlavBattle.Combat;
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-
-public class AttackStats : MonoBehaviour
+namespace FlavBattle.UI.Combat
 {
-    [Required]
-    public AttackStatsInfoBar InfoBarTemplate;
-
-    [Required]
-    public Transform Container;
-
-    public void Clear()
+    public class AttackStats : MonoBehaviour
     {
-        this.Container.DestroyChildren();
-    }
+        [Required]
+        public AttackStatsInfoBar InfoBarTemplate;
 
-    public void SetStats(List<CombatAttackInfo> infoList)
-    {
-        Clear();
+        [Required]
+        public Transform Container;
 
-        foreach (var info in infoList)
+        public void Clear()
         {
-            var bar = Instantiate(InfoBarTemplate);
-            bar.transform.SetParent(Container, true);
-            bar.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            bar.SetStats(info);
+            this.Container.DestroyChildren();
+        }
+
+        public void SetStats(CombatTurnSummary summary)
+        {
+            Clear();
+
+            var nonAllyActions = summary.Turns.Where(a => !a.IsAllyAbility).ToList();
+            foreach (var action in nonAllyActions)
+            {
+                var bar = Instantiate(InfoBarTemplate);
+                bar.transform.SetParent(Container, true);
+                bar.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                bar.SetStats(action);
+            }
         }
     }
+
 }

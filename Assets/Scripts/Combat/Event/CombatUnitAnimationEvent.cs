@@ -6,52 +6,65 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-/// <summary>
-/// Animates stuff like the unit getting hit and showing attack numbers
-/// or other notifications.
-/// </summary>
-public class CombatUnitAnimationEvent : ICombatAnimationEvent
+namespace FlavBattle.Combat.Events
 {
-    private MonoBehaviour _owner;
 
-    private ComputedAttackResultInfo _attackResult;
-
-    public CombatUnitAnimationEvent(MonoBehaviour owner, ComputedAttackResultInfo attackResult)
+    /// <summary>
+    /// Animates stuff like the unit getting hit and showing attack numbers
+    /// or other notifications.
+    /// </summary>
+    public class CombatUnitAnimationEvent : ICombatAnimationEvent
     {
-        _owner = owner;
-        _attackResult = attackResult;
-    }
+        private MonoBehaviour _owner;
 
-    public IEnumerator Animate()
-    {
-        var target = _attackResult.Target;
-        var slot = target.CombatFormationSlot;
+        private CombatTurnActionSummary _summary;
 
-        if (_attackResult.ShieldBlockedAttack || _attackResult.ResistedAttack)
+        public CombatUnitAnimationEvent(MonoBehaviour owner, CombatTurnActionSummary summary)
         {
-            // no yield
-            slot.CurrentUnit.AnimateBlockedDamageAsync();
-            slot.CurrentUnit.AnimateFlash(Color.yellow);
+            _owner = owner;
+            _summary = summary;
         }
-        else if (_attackResult.MoraleBlockedAttack)
+
+        public IEnumerator Animate()
         {
-            // no yield
-            slot.CurrentUnit.AnimateBlockedThroughMoraleAsync();
-            slot.CurrentUnit.AnimateFlash(Color.yellow);
-        }
-        else
-        {
-            if (_attackResult.AttackDamage.HasValue)
+            var target = _summary.Target;
+            var slot = target.CombatFormationSlot;
+            var unit = slot.CurrentUnit;
+            if (unit == null)
             {
-                var damage = _attackResult.AttackDamage.Value.ToString();
-                yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.red, Color.red);
+                yield break;
             }
 
-            if (_attackResult.DirectMoraleDamage.HasValue)
+            if (_summary.ShieldBlockedAttack || _summary.ResistedAttack)
             {
-                var damage = _attackResult.DirectMoraleDamage.Value.ToString();
-                yield return slot.CurrentUnit.AnimateDamageTaken(damage, Color.blue, Color.blue);
+                // no yield
+                unit.AnimateBlockedDamageAsync();
+                // unit.AnimateFlash(Color.yellow);
             }
+            else if (_summary.MoraleBlockedAttack)
+            {
+                // no yield
+                unit.AnimateBlockedThroughMoraleAsync();
+                unit.RemoveBuff(CombatBuffIcon.BuffType.MoraleShield);
+                // unit.AnimateFlash(Color.yellow);
+            }
+            else
+            {
+                if (_summary.AttackDamage > 0)
+                {
+                    var damage = _summary.AttackDamage.ToString();
+                    yield return unit.AnimateDamageTaken(damage, Color.red, Color.red);
+
+                }
+
+                if (_summary.DirectMoraleDamage > 0)
+                {
+                    var damage = _summary.DirectMoraleDamage.ToString();
+                    yield return unit.AnimateDamageTaken(damage, Color.blue, Color.blue);
+                }
+            }
+
+            unit.UpdateUIComponents();
         }
     }
 }

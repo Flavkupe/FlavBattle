@@ -55,49 +55,10 @@ public class CombatAnimationEventSequence : ICombatAnimationEvent
     }
 }
 
-public class CombatProcessEventSequence<TResultType> : ICombatProcessEvent<List<TResultType>>
-{
-    public List<ICombatProcessEvent<TResultType>> Events { get; private set; } = new List<ICombatProcessEvent<TResultType>>();
-
-    public CombatProcessEventSequence()
-    {
-    }
-
-    public void AddEvent(ICombatProcessEvent<TResultType> newEvent)
-    {
-        Events.Add(newEvent);
-    }
-
-    public CombatProcessEventSequence(List<ICombatProcessEvent<TResultType>> events)
-    {
-        Events = events;
-    }
-
-    public List<TResultType> Process()
-    {
-        List<TResultType> results = new List<TResultType>();
-        foreach (var item in Events)
-        {
-            results.Add(item.Process());
-        }
-
-        return results;
-    }
-}
-
 /// <summary>
 /// An event that performs some sort of animation that can be awaited.
 /// </summary>
 public interface ICombatAnimationEvent
 {
     IEnumerator Animate();
-}
-
-/// <summary>
-/// An event that is processed and returns a value after being processed,
-/// representing the results of the process.
-/// </summary>
-public interface ICombatProcessEvent<TResultType>
-{
-    TResultType Process();
 }

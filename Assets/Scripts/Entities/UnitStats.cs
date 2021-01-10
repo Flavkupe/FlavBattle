@@ -21,6 +21,17 @@ public class UnitStats
     /// </summary>
     public int Command = 0;
 
+    /// <summary>
+    /// Shields available in combat start due to high morale
+    /// </summary>
+    public int MoraleShields { get; set; } = 0;
+
+
+    /// <summary>
+    /// Shields available in combat start due to defensive properties
+    /// </summary>
+    public int BlockShields { get; set; } = 0;
+
     public UnitStats Clone()
     {
         return this.MemberwiseClone() as UnitStats;
@@ -45,6 +56,10 @@ public class UnitStats
             Power = this.Power + other.Power,
             Defense = this.Defense + other.Defense,
             Speed = this.Speed + other.Speed,
+
+            MoraleShields = this.MoraleShields + other.MoraleShields,
+            BlockShields = this.BlockShields + other.BlockShields,
+
             Level = Math.Max(Level, other.Level),
         };
     }

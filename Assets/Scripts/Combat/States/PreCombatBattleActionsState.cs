@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Combat;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,30 @@ public class PreCombatBattleActionsState : BattleStateBase
     protected override IEnumerator Run(BattleStatus state)
     {
         PrepareOfficerActions(state);
+        PrepareStats(state);
         yield return null;
         state.Stage = BattleStatus.BattleStage.CombatPhase;
+    }
+
+    private void PrepareStats(BattleStatus state)
+    {
+        foreach (var combatant in state.Combatants)
+        {
+            PrepareUnitShields(combatant);
+        }
+    }
+
+    private void PrepareUnitShields(Combatant combatant)
+    {
+        if (combatant.UnitMorale.GetTier() == Morale.Tier.High)
+        {
+            combatant.ApplyStatChanges(new UnitStats()
+            {
+                MoraleShields = 1
+            });
+
+            combatant.CombatUnit.AddBuff(CombatBuffIcon.BuffType.MoraleShield);
+        }
     }
 
     private void PrepareOfficerActions(BattleStatus state)

@@ -8,6 +8,8 @@ public class CombatAbility : MonoBehaviour
 {
     private CombatAbilityData _data;
 
+    public event EventHandler TargetHit;
+
     public void InitData(CombatAbilityData data)
     {
         _data = data;
@@ -69,6 +71,8 @@ public class CombatAbility : MonoBehaviour
         var animationTarget = _data.CombatAnimationTarget == CombatAnimationTarget.Self ? source : target;
         yield return AnimateTarget(animationTarget);
 
+        TargetHit?.Invoke(this, new EventArgs());
+
         // Move back
         if (_data.CharacterMove)
         {
@@ -128,6 +132,8 @@ public class CombatAbility : MonoBehaviour
         {
             yield return FireProjectileArc(sourcePos, targetPos, projectile);
         }
+
+        TargetHit?.Invoke(this, new EventArgs());
 
         Destroy(projectile.gameObject);
         Destroy(this.gameObject);

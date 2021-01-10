@@ -25,7 +25,7 @@ public class Combatant
     public IArmy Allies;
 
     /// <summary>
-    /// Stat changes due to buffs
+    /// Stat changes due to buffs and temporary combat effects
     /// </summary>
     public UnitStats StatChanges { get; private set; } = new UnitStats
     {
@@ -35,10 +35,21 @@ public class Combatant
 
     public CombatUnit CombatUnit => CombatFormationSlot?.CurrentUnit;
 
+    /// <summary>
+    /// Change Stats for the Combatant temporarily, just for the combat duration.
+    /// </summary>
     public void ApplyStatChanges(UnitStats changes)
     {
         StatChanges = StatChanges.Combine(changes);
     }
+
+    /// <summary>
+    /// Use this to get the current unit stats combined with stat changes.
+    /// Changing this value will not change current stats! For that, use
+    /// Unit.Info.CurrentStats for permanent or ApplyStatChanges for only
+    /// within combat.
+    /// </summary>
+    public UnitStats GetCombatCombinedStats => Unit.Info.CurrentStats.Combine(StatChanges);
 
     public int UnitMoraleBonus => Unit.Info.Morale.GetDefaultBonus();
     public Morale UnitMorale => Unit.Info.Morale;

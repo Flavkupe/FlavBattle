@@ -1,8 +1,10 @@
-﻿using NaughtyAttributes;
+﻿using FlavBattle.Combat;
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CombatUnit : MonoBehaviour
 {
@@ -24,6 +26,13 @@ public class CombatUnit : MonoBehaviour
     [Tooltip("Animation for blocking an attack via high morale")]
     [Required]
     public FloatingIcon MoraleTankAnimationTemplate;
+
+    [SerializeField]
+    private CombatBuffIcon[] _buffTemplates;
+
+    [Tooltip("Component used to display buffs")]
+    [SerializeField]
+    private GameObject _buffPanel;
 
     private bool _facingLeft = false;
 
@@ -51,14 +60,34 @@ public class CombatUnit : MonoBehaviour
     {
         var info = Unit.Info;
         info.CurrentStats.HP -= damage;
-        this.UpdateUIComponents();
     }
 
     public void TakeMoraleDamage(int moraleDamage)
     {
         var info = Unit.Info;
         this.Unit.Info.Morale.ChangeMorale(-moraleDamage);
-        this.UpdateUIComponents();
+    }
+
+    public void AddBuff(CombatBuffIcon.BuffType type)
+    {
+        var template = _buffTemplates.FirstOrDefault(a => a.Type == type);
+        if (template == null)
+        {
+            Debug.LogError($"No buff template of type {type}");
+            return;
+        }
+
+        Instantiate(template, _buffPanel.transform);
+    }
+
+    public void RemoveBuff(CombatBuffIcon.BuffType type)
+    {
+        var buffs = _buffPanel.GetComponentsInChildren<CombatBuffIcon>();
+        var buff = buffs.FirstOrDefault(a => a.Type == type);
+        if (buff != null)
+        {
+            Destroy(buff.gameObject);
+        }
     }
 
     public Coroutine AnimateFlash(Color? color = null)
@@ -154,7 +183,7 @@ public class CombatUnit : MonoBehaviour
     /// <summary>
     /// Updates each part of the UI to the current player state
     /// </summary>
-    private void UpdateUIComponents()
+    public void UpdateUIComponents()
     {
         if (HealthBar == null)
         {
@@ -167,7 +196,7 @@ public class CombatUnit : MonoBehaviour
         var hp = info.CurrentStats.HP;
         var percent = (float)hp / (float)info.MaxStats.HP;
         percent = Mathf.Clamp(percent, 0.0f, 1.0f);
-        HealthBar.SetHP(hp, percent);
+        HealthBar.SetHPGradual(hp, percent);
 
         // Update Morale
         this.MoraleIcon.UpdateIcon(info.Morale);

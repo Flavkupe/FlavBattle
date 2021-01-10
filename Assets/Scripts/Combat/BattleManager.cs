@@ -4,42 +4,43 @@ using UnityEngine;
 using System.Linq;
 using System;
 using NaughtyAttributes;
+using FlavBattle.Combat.States;
 
-
-
-public class BattleManager : MonoBehaviour
+namespace FlavBattle.Combat
 {
-    private const float BattleFormationChangeCooldownSeconds = 5.0f;
-
-    [Required]
-    public BattleDisplay BattleDisplay;
-
-    [Required]
-    public BattleUIPanel BattleUIPanel;
-
-    private BattleStatus _battleStatus;
-
-    private List<IBattleState> _states = new List<IBattleState>();
-
-    public BattleStatus GetBattleStatus()
+    public class BattleManager : MonoBehaviour
     {
-        return _battleStatus;
-    }
+        private const float BattleFormationChangeCooldownSeconds = 5.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        var gameEventManager = FindObjectOfType<GameEventManager>();
-        _battleStatus = new BattleStatus(gameEventManager, BattleDisplay, BattleUIPanel);
+        [Required]
+        public BattleDisplay BattleDisplay;
 
-        BattleUIPanel.OnStanceChangeClicked += (object o, FightingStance stance) => HandleStanceChanged(stance);
-        BattleUIPanel.OnCommandAbilityUsed += HandleBattleUIPanelOnCommandAbilityUsed;
-        BattleUIPanel.Hide();
+        [Required]
+        public BattleUIPanel BattleUIPanel;
 
-        _states.Clear();
+        private BattleStatus _battleStatus;
 
-        // Add states in order. The order here matters! Top-most will always override if applicable.
-        _states.AddRange(new List<IBattleState>()
+        private List<IBattleState> _states = new List<IBattleState>();
+
+        public BattleStatus GetBattleStatus()
+        {
+            return _battleStatus;
+        }
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            var gameEventManager = FindObjectOfType<GameEventManager>();
+            _battleStatus = new BattleStatus(gameEventManager, BattleDisplay, BattleUIPanel);
+
+            BattleUIPanel.OnStanceChangeClicked += (object o, FightingStance stance) => HandleStanceChanged(stance);
+            BattleUIPanel.OnCommandAbilityUsed += HandleBattleUIPanelOnCommandAbilityUsed;
+            BattleUIPanel.Hide();
+
+            _states.Clear();
+
+            // Add states in order. The order here matters! Top-most will always override if applicable.
+            _states.AddRange(new List<IBattleState>()
         {
             // Must be first
             new InitCombatState(this),
@@ -59,56 +60,57 @@ public class BattleManager : MonoBehaviour
             // Should be towards the end, along with InitRoundState
             new NextCombatantTurnState(this),
         });
-    
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (_battleStatus.Stage == BattleStatus.BattleStage.NotInCombat)
-        {
-            return;
+
         }
 
-        foreach (var state in _states)
+        // Update is called once per frame
+        void Update()
         {
-            if (state.ShouldUpdate(_battleStatus))
+            if (_battleStatus.Stage == BattleStatus.BattleStage.NotInCombat)
             {
-                state.Update(_battleStatus);
-                // Only one state updates per cycle!
-                break;
+                return;
+            }
+
+            foreach (var state in _states)
+            {
+                if (state.ShouldUpdate(_battleStatus))
+                {
+                    state.Update(_battleStatus);
+                    // Only one state updates per cycle!
+                    break;
+                }
             }
         }
-    }
 
-    public void StartCombat(IArmy player, IArmy enemy)
-    {
-        _battleStatus.Init(player, enemy);
-        _battleStatus.Stage = BattleStatus.BattleStage.InitCombat;
-    }
-
-    /// <summary>
-    /// Handles a UI stance change, such as from the UI or combat start
-    /// </summary>
-    /// <param name="stance"></param>
-    private void HandleStanceChanged(FightingStance stance)
-    {
-        _battleStatus.PlayerArmy.Stance = stance;
-        BattleUIPanel.UpdateStance(stance, BattleFormationChangeCooldownSeconds);
-    }
-
-    /// <summary>
-    /// Handles clicking on a command item from the CommandAbility panel.
-    /// </summary>
-    private void HandleBattleUIPanelOnCommandAbilityUsed(object sender, OfficerAbilityData e)
-    {
-        var officer = _battleStatus.GetPlayerOfficer();
-        if (e.CommandCost <= officer.Unit.Info.CurrentStats.Command)
+        public void StartCombat(IArmy player, IArmy enemy)
         {
-            _battleStatus.AbilityQueue.Enqueue(e);
-            officer.Unit.Info.CurrentStats.Command -= e.CommandCost;
-            this.BattleUIPanel.CommandMenu.UpdateMenu();
+            _battleStatus.Init(player, enemy);
+            _battleStatus.Stage = BattleStatus.BattleStage.InitCombat;
+        }
+
+        /// <summary>
+        /// Handles a UI stance change, such as from the UI or combat start
+        /// </summary>
+        /// <param name="stance"></param>
+        private void HandleStanceChanged(FightingStance stance)
+        {
+            _battleStatus.PlayerArmy.Stance = stance;
+            BattleUIPanel.UpdateStance(stance, BattleFormationChangeCooldownSeconds);
+        }
+
+        /// <summary>
+        /// Handles clicking on a command item from the CommandAbility panel.
+        /// </summary>
+        private void HandleBattleUIPanelOnCommandAbilityUsed(object sender, OfficerAbilityData e)
+        {
+            var officer = _battleStatus.GetPlayerOfficer();
+            if (e.CommandCost <= officer.Unit.Info.CurrentStats.Command)
+            {
+                _battleStatus.AbilityQueue.Enqueue(e);
+                officer.Unit.Info.CurrentStats.Command -= e.CommandCost;
+                this.BattleUIPanel.CommandMenu.UpdateMenu();
+            }
         }
     }
 }

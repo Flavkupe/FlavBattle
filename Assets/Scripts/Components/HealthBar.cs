@@ -26,6 +26,46 @@ public class HealthBar : MonoBehaviour
     [Tooltip("The actual visual component that will shrink as health changes, for Bar type (does not affect colliders etc)")]
     public GameObject Visual;
 
+    /// <summary>
+    /// Percent currently displayed on the UI
+    /// </summary>
+    private float CurrentPercent
+    {
+        get
+        {
+            return Type == BarType.Bar ? Visual.transform.localScale.x : 1.0f - Mask.alphaCutoff;
+        }
+    }
+
+    // Target values for changing the percents gradually rather than instantly.
+    private float? _targetPercent = null;
+    private int _targetHP = 0;
+    private float _gradualSpeed = 3.0f;
+
+    void Update()
+    {
+        if (_targetPercent.HasValue)
+        {
+            if (Mathf.Abs(_targetPercent.Value - CurrentPercent) > 0.05f)
+            {
+                var newPercent = Mathf.Lerp(CurrentPercent, _targetPercent.Value, Time.deltaTime * _gradualSpeed);
+                SetHP(_targetHP, newPercent);
+            }
+            else
+            {
+                SetHP(_targetHP, _targetPercent.Value);
+                _targetPercent = null;
+            }
+        }
+    }
+
+    public void SetHPGradual(int hp, float percent, float speed = 3.0f)
+    {
+        _targetPercent = percent;
+        _gradualSpeed = speed;
+        _targetHP = hp;
+    }
+
     public void SetHP(int hp, float percent)
     {
         Debug.Assert(percent >= 0.0f && percent <= 1.0f);

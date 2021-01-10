@@ -4,6 +4,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using System;
 using TMPro;
+using FlavBattle.UI.Combat;
 
 public class BattleUIPanel : MonoBehaviour
 {

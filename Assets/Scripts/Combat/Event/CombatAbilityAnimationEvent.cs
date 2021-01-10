@@ -6,199 +6,202 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-/// <summary>
-/// Performing an attack or ability; this would be the animation itself,
-/// before damage or effects are applied
-/// </summary>
-public class CombatAbilityAnimationEvent : ICombatAnimationEvent
+namespace FlavBattle.Combat.Events
 {
-    public CombatAttackInfo _info { get; private set; }
 
-    private AnimationType _type;
-
-    private MonoBehaviour _owner;
-
-    public enum AnimationType
+    /// <summary>
+    /// Performing an attack or ability; this would be the animation itself,
+    /// before damage or effects are applied
+    /// </summary>
+    public class CombatAbilityAnimationEvent : ICombatAnimationEvent
     {
-        PreAttack,
-        Ability,
-        PostAttack,
-    }
+        public CombatTurnUnitSummary _summary { get; private set; }
 
-    public CombatAbilityAnimationEvent(MonoBehaviour owner, CombatAttackInfo info, AnimationType type)
-    {
-        _info = info;
-        _type = type;
-        _owner = owner;
-    }
+        private AnimationType _type;
 
-    public IEnumerator Animate()
-    {
-        var targets = _info.Targets.Select(a => a.Combatant).ToList();
-        var combatant = _info.Source.Combatant;
+        private MonoBehaviour _owner;
 
-        if (_type == AnimationType.PreAttack)
-        { 
-            yield return PlayAdditionalAnimations(combatant, _info.Ability.PreAttackAnimations, targets);
-        }
-        else if (_type == AnimationType.PostAttack)
+        public enum AnimationType
         {
-            yield return PlayAdditionalAnimations(combatant, _info.Ability.PostAttackAnimations, targets);
-        }
-        else if (_type == AnimationType.Ability)
-        {
-            yield return PlayAbilityAnimation(_info.State, combatant, _info.Ability, _info, targets);
-        }
-    }
-
-    private IEnumerator PlayAbilityAnimation(BattleStatus state, Combatant combatant, CombatAbilityData ability, CombatAttackInfo info, List<Combatant> targets)
-    {
-        if (ability == null)
-        {
-            Debug.Log("No ability available!");
-            yield break;
-        }
-        else
-        {
-            Debug.Log($"Using ability {ability.Name}");
+            PreAttack,
+            Ability,
+            PostAttack,
         }
 
-        if (targets.Count > 0)
+        public CombatAbilityAnimationEvent(MonoBehaviour owner, CombatTurnUnitSummary summary, AnimationType type)
         {
-            // Targets
-            Debug.Log($"Targets: {string.Join(", ", targets.Select(a => a.Unit.Data.ClassName)) }");
+            _summary = summary;
+            _type = type;
+            _owner = owner;
+        }
 
-            if (info.TargetInfo.AffectsAllies())
+        public IEnumerator Animate()
+        {
+            var targets = _summary.Results.Select(a => a.Target).ToList();
+            var combatant = _summary.Source;
+
+            if (_type == AnimationType.PreAttack)
             {
-                yield return UseAbilityOnAllies(state, combatant, ability, targets);
+                yield return PlayAdditionalAnimations(combatant, _summary.Ability.PreAttackAnimations, targets);
+            }
+            else if (_type == AnimationType.PostAttack)
+            {
+                yield return PlayAdditionalAnimations(combatant, _summary.Ability.PostAttackAnimations, targets);
+            }
+            else if (_type == AnimationType.Ability)
+            {
+                yield return PlayAbilityAnimation(_summary.Ability, _summary.TargetInfo, _summary.Results);
+            }
+        }
+
+        private IEnumerator PlayAbilityAnimation(CombatAbilityData ability, CombatTargetInfo targetInfo, List<CombatTurnActionSummary> results)
+        {
+            if (ability == null)
+            {
+                Debug.Log("No ability available!");
+                yield break;
             }
             else
             {
-                yield return UseAbilityOnEnemies(state, combatant, ability, targets);
+                Debug.Log($"Using ability {ability.Name}");
             }
-        }
-        else
-        {
-            Debug.Log("Running ability with no target");
-            yield return AnimateAbility(combatant, ability);
-        }
-    }
 
-    private IEnumerator UseAbilityOnAllies(BattleStatus state, Combatant combatant, CombatAbilityData ability, List<Combatant> targets)
-    {
-        var routines = Routine.CreateEmptyRoutineSet(_owner, ability.AnimationSequence == CombatAnimationType.Parallel);
-        foreach (var target in targets)
-        {
-            var routine = AnimateAbility(combatant, target, ability, Color.blue).ToRoutine();
-            routines.AddRoutine(routine);
+            // Targets
+            Debug.Log($"Targets: {string.Join(", ", results.Select(a => a.Target.Unit.Data.ClassName)) }");
+            yield return AnimateAbilities(ability, results);
         }
 
-        yield return routines;
-    }
-
-    private IEnumerator UseAbilityOnEnemies(BattleStatus state, Combatant combatant, CombatAbilityData ability, List<Combatant> targets)
-    {
-        foreach (var target in targets)
+        private IEnumerator AnimateAbilities(CombatAbilityData ability, List<CombatTurnActionSummary> results)
         {
-            yield return AnimateAbility(combatant, target, ability, Color.red);
-        }
-    }
-
-    private IEnumerator AnimateAbility(Combatant source, CombatAbilityData abilityData)
-    {
-        yield return AnimateAbility(source, null, abilityData);
-    }
-
-    private IEnumerator AnimateAbility(Combatant source, Combatant target, CombatAbilityData abilityData, Color? tileHighlight = null)
-    {
-        if (abilityData.VisualEffect == CombatAbilityVisual.None)
-        {
-            yield break;
-        }
-
-        CombatFormationSlot slot = null;
-        if (target != null)
-        {
-            slot = target.CombatFormationSlot;
-            slot.Highlight(tileHighlight ?? Color.white);
-        }
-
-        var obj = new GameObject("Ability");
-        var ability = obj.AddComponent<CombatAbility>();
-
-        ability.InitData(abilityData);
-
-        if (target != null)
-        {
-            yield return ability.StartTargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject, target.CombatFormationSlot.CurrentUnit.gameObject);
-        }
-        else
-        {
-            yield return ability.StartUntargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject);
-        }
-
-        if (slot != null)
-        {
-            slot.ResetColor();
-        }
-    }
-
-
-    /// <summary>
-    /// Plays CombatCharacterAnimations on targets or combatant, based on data.
-    /// For exmaple, PreAttackAnimations or PostAttackAnimations, which is just
-    /// the animations before or after combat.
-    /// 
-    /// Will run to completion if option is enabled. Otherwise will run in background.
-    /// </summary>
-    /// <param name="combatant">Unit whose turn it is</param>
-    /// <param name="animationsData">Data for this set of animations, such as PreAttackAnimations or PostAttackAnimations</param>
-    /// <param name="targets">Targets of ability, if any</param>
-    private IEnumerator PlayAdditionalAnimations(Combatant combatant, CombatCharacterAnimations animationsData, List<Combatant> targets)
-    {
-        if (animationsData.Animations.Count() == 0)
-        {
-            yield break;
-        }
-
-        var routines = Routine.CreateEmptyRoutineSet(_owner, animationsData.Type == CombatAnimationType.Parallel);
-
-        foreach (var animation in animationsData.Animations)
-        {
-            // TODO: duration type
-            var animationList = new List<IPlayableAnimation>();
-            if (animation.Target == CombatAnimationTarget.Self)
+            var routines = Routine.CreateEmptyRoutineSet(_owner, ability.AnimationSequence == CombatAnimationType.Parallel);
+            foreach (var result in results)
             {
-                var instance = GameObject.Instantiate(animation.Animation);
-                animationList.Add(instance);
-                instance.transform.position = combatant.CombatUnit.transform.position;
+                var routine = AnimateAbility(result, ability).ToRoutine();
+                routines.AddRoutine(routine);
             }
-            else if (animation.Target == CombatAnimationTarget.Target)
+
+            yield return routines;
+        }
+
+        private IEnumerator AnimateAbility(CombatTurnActionSummary result, CombatAbilityData abilityData)
+        {
+            if (abilityData.VisualEffect == CombatAbilityVisual.None)
             {
-                foreach (var target in targets)
+                yield break;
+            }
+
+            var target = result.Target;
+            var source = result.Source;
+
+            CombatFormationSlot slot = null;
+            if (target != null)
+            {
+                var tileColor = result.TileHighlight;
+                slot = target.CombatFormationSlot;
+                slot.Highlight(tileColor ?? Color.white);
+            }
+
+            // highlight source tile
+            var sourceSlot = source.CombatFormationSlot;
+            sourceSlot.Highlight(Color.cyan);
+
+            var obj = new GameObject("Ability");
+            var ability = obj.AddComponent<CombatAbility>();
+
+            ability.InitData(abilityData);
+
+            ability.TargetHit += (object o, EventArgs e) =>
+            {
+                // When/if the animation hits a target, play the anim
+                _owner.StartCoroutine(AnimateAttackResults(result));
+            };
+
+            if (target != null)
+            {
+                yield return ability.StartTargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject, target.CombatFormationSlot.CurrentUnit.gameObject);
+            }
+            else
+            {
+                yield return ability.StartUntargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject);
+            }
+
+            if (slot != null)
+            {
+                slot.ResetColor();
+            }
+
+            sourceSlot.ResetColor();
+        }
+
+
+        /// <summary>
+        /// Plays CombatCharacterAnimations on targets or combatant, based on data.
+        /// For exmaple, PreAttackAnimations or PostAttackAnimations, which is just
+        /// the animations before or after combat.
+        /// 
+        /// Will run to completion if option is enabled. Otherwise will run in background.
+        /// </summary>
+        /// <param name="combatant">Unit whose turn it is</param>
+        /// <param name="animationsData">Data for this set of animations, such as PreAttackAnimations or PostAttackAnimations</param>
+        /// <param name="targets">Targets of ability, if any</param>
+        private IEnumerator PlayAdditionalAnimations(Combatant combatant, CombatCharacterAnimations animationsData, List<Combatant> targets)
+        {
+            if (animationsData.Animations.Count() == 0)
+            {
+                yield break;
+            }
+
+            var routines = Routine.CreateEmptyRoutineSet(_owner, animationsData.Type == CombatAnimationType.Parallel);
+
+            foreach (var animation in animationsData.Animations)
+            {
+                // TODO: duration type
+                var animationList = new List<IPlayableAnimation>();
+                if (animation.Target == CombatAnimationTarget.Self)
                 {
                     var instance = GameObject.Instantiate(animation.Animation);
                     animationList.Add(instance);
-                    instance.transform.position = target.CombatUnit.transform.position;
+                    instance.transform.position = combatant.CombatUnit.transform.position;
+                }
+                else if (animation.Target == CombatAnimationTarget.Target)
+                {
+                    foreach (var target in targets)
+                    {
+                        var instance = GameObject.Instantiate(animation.Animation);
+                        animationList.Add(instance);
+                        instance.transform.position = target.CombatUnit.transform.position;
+                    }
+                }
+
+                foreach (var anim in animationList)
+                {
+                    if (animationsData.WaitForCompletion)
+                    {
+                        routines.AddRoutine(anim.PlayToCompletion().ToRoutine());
+                    }
+                    else
+                    {
+                        anim.PlayAnimation();
+                    }
                 }
             }
 
-            foreach (var anim in animationList)
+            if (animationsData.WaitForCompletion)
             {
-                if (animationsData.WaitForCompletion)
-                {
-                    routines.AddRoutine(anim.PlayToCompletion().ToRoutine());
-                }
-                else
-                {
-                    anim.PlayAnimation();
-                }
+                yield return routines.AsRoutine();
             }
         }
 
-        if (animationsData.WaitForCompletion)
+        private IEnumerator AnimateAttackResults(CombatTurnActionSummary summary)
         {
-            yield return routines.AsRoutine();
+            if (summary.Target == null)
+            {
+                // Currently results with no target should probably just not animate
+                yield break;
+            }
+
+            var anim = new CombatUnitAnimationEvent(_owner, summary);
+            yield return anim.Animate();
         }
     }
 }

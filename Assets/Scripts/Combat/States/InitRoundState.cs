@@ -46,7 +46,7 @@ public class InitRoundState : BattleStateBase
             }
         }
 
-        foreach (var item in state.Combatants.OrderBy(a => a.Unit.Info.CurrentStats.Speed).Reverse())
+        foreach (var item in state.Combatants.OrderBy(a => a.GetCombatCombinedStats.Speed).Reverse())
         {
             state.TurnQueue.Enqueue(item);
         }
