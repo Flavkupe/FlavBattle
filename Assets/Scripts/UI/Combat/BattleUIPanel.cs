@@ -8,11 +8,11 @@ using FlavBattle.UI.Combat;
 
 public class BattleUIPanel : MonoBehaviour
 {
-    [Required]
-    public ToggleableButton DefensiveButton;
+
 
     [Required]
-    public ToggleableButton OffensiveButton;
+    [SerializeField]
+    private CombatStancePanel StancePanel;
 
     [Required]
     public ArmyMoraleBar LeftMoraleBar;
@@ -47,8 +47,7 @@ public class BattleUIPanel : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        DefensiveButton.OnClicked += (object obj, EventArgs e) => OnStanceChangeClicked?.Invoke(this, FightingStance.Defensive);
-        OffensiveButton.OnClicked += (object obj, EventArgs e) => OnStanceChangeClicked?.Invoke(this, FightingStance.Offensive);
+        StancePanel.OnStanceChangeClicked += HandleStanceClicked;
         CommandMenu.OnAbilityClicked += HandleCommandMenuOnAbilityClicked;
     }
 
@@ -62,42 +61,6 @@ public class BattleUIPanel : MonoBehaviour
     {
         CommandMenu.Hide();
         OnCommandAbilityUsed?.Invoke(this, e);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    /// <summary>
-    /// Updates the selected button on the UI and enforces an optional
-    /// cooldown (in seconds) on the buttons. If cooldown is 0, no cooldown is applied.
-    /// </summary>
-    /// <param name="stance">Stance to set to.</param>
-    /// <param name="cooldown">Cooldown before buttons are enabled again. Use 0 for no cooldown</param>
-    public void UpdateStance(FightingStance stance, float cooldownSeconds)
-    {
-        if (stance == FightingStance.Defensive)
-        {
-            DefensiveButton.ToggleSelected(true);
-            OffensiveButton.ToggleSelected(false);
-        }
-        else
-        {
-            DefensiveButton.ToggleSelected(false);
-            OffensiveButton.ToggleSelected(true);
-        }
-
-        if (cooldownSeconds > 0.0f)
-        {
-            DefensiveButton.Button.interactable = false;
-            OffensiveButton.Button.interactable = false;
-            this.DoAfter(cooldownSeconds, () => {
-                DefensiveButton.Button.interactable = true;
-                OffensiveButton.Button.interactable = true;
-            });
-        }
     }
 
     public void UpdateMorale(IArmy left, IArmy right)
@@ -162,5 +125,24 @@ public class BattleUIPanel : MonoBehaviour
     public void SetBoutCounterNumber(int number)
     {
         this.BoutCounterText.text = number.ToString();
+    }
+
+    /// <summary>
+    /// Shows the stance panel to select stance
+    /// </summary>
+    public void ShowStancePanel()
+    {
+        StancePanel.Show();
+    }
+
+    /// <summary>
+    /// Handles selection of a stance from the UI
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="e"></param>
+    public void HandleStanceClicked(object source, FightingStance e)
+    {
+        StancePanel.Hide();
+        OnStanceChangeClicked?.Invoke(source, e);
     }
 }

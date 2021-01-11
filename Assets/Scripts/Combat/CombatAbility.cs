@@ -10,6 +10,12 @@ public class CombatAbility : MonoBehaviour
 
     public event EventHandler TargetHit;
 
+    /// <summary>
+    /// Happens directly before the attack animation starts (such as sword swing)
+    /// but after movement to target.
+    /// </summary>
+    public event EventHandler AttackAnimationStarting;
+
     public void InitData(CombatAbilityData data)
     {
         _data = data;
@@ -66,6 +72,8 @@ public class CombatAbility : MonoBehaviour
                 source.transform.position = targetPos;
             }
         }
+
+        AttackAnimationStarting?.Invoke(this, new EventArgs());
 
         // Animate the character
         var animationTarget = _data.CombatAnimationTarget == CombatAnimationTarget.Self ? source : target;

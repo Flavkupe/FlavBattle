@@ -22,6 +22,8 @@ public class BattleStatus
 
         PreCombatStart,
 
+        SelectStance,
+
         CombatPhase,
     }
 

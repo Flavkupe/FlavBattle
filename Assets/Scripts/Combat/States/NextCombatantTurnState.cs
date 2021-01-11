@@ -103,6 +103,7 @@ namespace FlavBattle.Combat.States
             {
                 var action = new CombatTurnActionSummary();
                 action.Source = combatant;
+                action.Ability = ability;
                 action.Target = target;
                 action.TileHighlight = targetInfo.AffectsAllies() ? Color.blue : Color.red;
 

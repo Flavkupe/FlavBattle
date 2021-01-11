@@ -55,11 +55,22 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
         public AudioClip Open;
     }
 
+
+    [Serializable]
+    public class CombatSoundPrefabs
+    {
+        [Required]
+        public AudioClip[] Block;
+    }
+
     [BoxGroup("Sounds")]
     public CommonSoundPrefabs CommonSounds;
 
     [BoxGroup("Sounds")]
     public UISoundPrefabs UISounds;
+
+    [BoxGroup("Sounds")]
+    public CombatSoundPrefabs CombatSounds;
 }
 
 /// <summary>
@@ -70,4 +81,7 @@ public static class GRM
     public static GameResourceManager.CommonSoundPrefabs CommonSounds => GameResourceManager.Instance.CommonSounds;
 
     public static GameResourceManager.UISoundPrefabs UISounds => GameResourceManager.Instance.UISounds;
+
+    public static GameResourceManager.CombatSoundPrefabs CombatSounds => GameResourceManager.Instance.CombatSounds;
+
 }

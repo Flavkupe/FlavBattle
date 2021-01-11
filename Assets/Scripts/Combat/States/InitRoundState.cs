@@ -50,6 +50,8 @@ public class InitRoundState : BattleStateBase
         {
             state.TurnQueue.Enqueue(item);
         }
+
+        state.Stage = BattleStatus.BattleStage.SelectStance;
     }
 }
 

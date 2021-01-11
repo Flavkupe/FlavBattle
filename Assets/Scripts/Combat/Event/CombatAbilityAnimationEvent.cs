@@ -110,11 +110,20 @@ namespace FlavBattle.Combat.Events
 
             ability.InitData(abilityData);
 
+            ability.AttackAnimationStarting += (object o, EventArgs e) =>
+            {
+                // When/if the animation hits a target, play the anim
+                PlaySoundClip(abilityData.PreHitSoundClips.GetRandom());
+            };
+
             ability.TargetHit += (object o, EventArgs e) =>
             {
                 // When/if the animation hits a target, play the anim
                 _owner.StartCoroutine(AnimateAttackResults(result));
             };
+
+            PlaySoundClip(abilityData.StartSoundClips.GetRandom());
+
 
             if (target != null)
             {
@@ -124,6 +133,8 @@ namespace FlavBattle.Combat.Events
             {
                 yield return ability.StartUntargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject);
             }
+
+            PlaySoundClip(abilityData.EndSoundClips.GetRandom());
 
             if (slot != null)
             {
@@ -200,8 +211,18 @@ namespace FlavBattle.Combat.Events
                 yield break;
             }
 
+            PlaySoundClip(summary.Ability.HitSoundClips.GetRandom());
+
             var anim = new CombatUnitAnimationEvent(_owner, summary);
             yield return anim.Animate();
+        }
+
+        private void PlaySoundClip(AudioClip clip)
+        {
+            if (clip != null)
+            {
+                Sounds.Play(clip);
+            }
         }
     }
 }

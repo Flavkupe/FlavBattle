@@ -58,6 +58,8 @@ namespace FlavBattle.Combat
         /// </summary>
         public Combatant Source;
 
+        public CombatAbilityData Ability;
+
         /// <summary>
         /// Who is this target of the attack (or heal)
         /// </summary>

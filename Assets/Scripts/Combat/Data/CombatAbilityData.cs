@@ -235,6 +235,22 @@ public class CombatAbilityData : ScriptableObject
     [ShowIf("ShowStatusChange")]
     public UnitStats StatusEffect;
 
+    [BoxGroup("Sounds")]
+    [Tooltip("Possible sounds to play when attack starts")]
+    public AudioClip[] StartSoundClips;
+
+    [BoxGroup("Sounds")]
+    [Tooltip("Possible sounds to play right before hit animation starts (such as for swords)")]
+    public AudioClip[] PreHitSoundClips;
+
+    [BoxGroup("Sounds")]
+    [Tooltip("Possible sounds to play when attack hits target (as target flashes and takes damage)")]
+    public AudioClip[] HitSoundClips;
+
+    [BoxGroup("Sounds")]
+    [Tooltip("Possible sounds to play when attack finishes")]
+    public AudioClip[] EndSoundClips;
+
     public bool IsTargetedAbility()
     {
         return Type != CombatAbilityType.Idle;

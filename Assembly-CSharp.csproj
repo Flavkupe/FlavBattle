@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
     <Compile Include="Assets\Scripts\Components\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Combat\CombatBuffIcon.cs" />
     <Compile Include="Assets\Scripts\Instances.cs" />
     <Compile Include="Assets\Scripts\UI\Components\VisualCounter.cs" />
     <Compile Include="Assets\Scripts\Utils\Models.cs" />
@@ -177,7 +178,8 @@
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
-    <Compile Include="Assets\Scripts\Combat\CombatBuffIcon.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\CombatStancePanel.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\StanceSelectionState.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

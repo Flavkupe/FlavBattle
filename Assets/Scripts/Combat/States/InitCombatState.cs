@@ -36,7 +36,6 @@ public class InitCombatState : BattleStateBase
         state.GameEventManager.TriggerCombatStartedEvent(player, enemy);
 
         // Init UI based on army setting
-        state.BattleUIPanel.UpdateStance(player.Stance, 0.0f);
         state.BattleUIPanel.SetArmies(player, enemy);
 
         // Enable UI State

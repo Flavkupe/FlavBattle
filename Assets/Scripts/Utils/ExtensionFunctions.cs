@@ -8,7 +8,7 @@ public static class ExtensionFunctions
 {
     public static TValue GetRandom<TValue>(this IList<TValue> list)
     {
-        if (list.Count == 0)
+        if (list == null || list.Count == 0)
         {
             return default(TValue);
         }

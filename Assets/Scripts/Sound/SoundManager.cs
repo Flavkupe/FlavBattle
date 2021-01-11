@@ -16,6 +16,11 @@ public enum UISoundType
     Close,
 }
 
+public enum CombatSoundType
+{
+    Block,
+}
+
 public class SoundManager : SingletonObject<SoundManager>
 {
     [Required]
@@ -40,6 +45,15 @@ public class SoundManager : SingletonObject<SoundManager>
     public void PlaySound(UISoundType type)
     {
         var clip = GetUISoundClip(type);
+        if (clip != null)
+        {
+            PlayClip(clip);
+        }
+    }
+
+    public void PlaySound(CombatSoundType type)
+    {
+        var clip = GetCombatSoundClip(type);
         if (clip != null)
         {
             PlayClip(clip);
@@ -84,6 +98,18 @@ public class SoundManager : SingletonObject<SoundManager>
                 return null;
         }
     }
+
+    private AudioClip GetCombatSoundClip(CombatSoundType type)
+    {
+        switch (type)
+        {
+            case CombatSoundType.Block:
+                return GRM.CombatSounds.Block.GetRandom();
+            default:
+                Debug.LogError("No sound effect set for " + type);
+                return null;
+        }
+    }
 }
 
 public static class Sounds
@@ -111,6 +137,17 @@ public static class Sounds
     }
 
     public static void Play(UISoundType type)
+    {
+        if (SoundManager.Instance == null)
+        {
+            Debug.LogError("No SoundManager instance!");
+            return;
+        }
+
+        SoundManager.Instance.PlaySound(type);
+    }
+
+    public static void Play(CombatSoundType type)
     {
         if (SoundManager.Instance == null)
         {

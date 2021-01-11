@@ -50,3 +50,7 @@ MonoBehaviour:
   UISounds:
     Close: {fileID: 8300000, guid: 548618606e46b4d4e9e1933afde43510, type: 3}
     Open: {fileID: 8300000, guid: 8d0d3bac7cbc52d45b2ee1240339a3e6, type: 3}
+  CombatSounds:
+    Block:
+    - {fileID: 8300000, guid: 5bf8f685f9edafa48b0a500585408d3e, type: 3}
+    - {fileID: 8300000, guid: 08493eab01d2eb041a217703737b62bd, type: 3}

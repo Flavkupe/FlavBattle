@@ -17,7 +17,7 @@ MonoBehaviour:
   RollLow: 1
   HP: {x: 4, y: 5}
   Power: {x: 1, y: 1}
-  Defense: {x: 2, y: 2}
+  Defense: {x: 1, y: 1}
   Speed: {x: 1, y: 1}
   HPScaling: {x: 0, y: 0}
   PowerScaling: {x: 0, y: 0}

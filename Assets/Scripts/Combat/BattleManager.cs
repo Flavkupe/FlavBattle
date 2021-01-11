@@ -54,6 +54,9 @@ namespace FlavBattle.Combat
             // Must be before NextCombatantTurnState
             new ShowWinnerState(this),
 
+            // Before new combat turn and before bout starts
+            new StanceSelectionState(this, _battleStatus),
+
             // Should be towards the end, along with NextCombatantTurnState
             new InitRoundState(this),
 
@@ -95,8 +98,7 @@ namespace FlavBattle.Combat
         /// <param name="stance"></param>
         private void HandleStanceChanged(FightingStance stance)
         {
-            _battleStatus.PlayerArmy.Stance = stance;
-            BattleUIPanel.UpdateStance(stance, BattleFormationChangeCooldownSeconds);
+            
         }
 
         /// <summary>
