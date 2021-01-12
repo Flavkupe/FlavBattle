@@ -8,7 +8,10 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "WorldTile", menuName = "Custom/Tiles/World Tile", order = 1)]
 public class WorldTile : Tile
 {
-    public TileData TileData;
+    [SerializeField]
+    private TileData _data;
+
+    public TileInfo Info => _data?.Info;
 
     [AssetIcon]
     public Sprite Icon => this.sprite;

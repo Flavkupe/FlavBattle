@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class GridTile
 {
-    public TileData Data;
+    public TileInfo Data;
     public int GridX;
     public int GridY;
     public float WorldX;
@@ -109,14 +109,14 @@ public class TilemapManager : MonoBehaviour
             return null;
         }
 
-        var data = tile.TileData;
+        var data = tile.Info;
         foreach (var propMap in PropsTilemaps)
         {
             // Get all props data
             var propsTile = propMap.GetTile<PropsTile>(new Vector3Int(x, y, 0));
             if (propsTile != null)
             {
-                data = data.Combine(propsTile.TileData);
+                data = data.Combine(propsTile.Info);
             }
         }
 

@@ -10,8 +10,14 @@ public enum SpecialTileProperty
     Town = 2,
 }
 
+[CreateAssetMenu(fileName = "Tile Data", menuName = "Custom/Tiles/Tile Data", order = 1)]
+public class TileData : ScriptableObject
+{
+    public TileInfo Info;
+}
+
 [Serializable]
-public class TileData
+public class TileInfo
 {
     public bool Passable;
     public float WalkCost = 1.0f;
@@ -24,9 +30,9 @@ public class TileData
     /// </summary>
     public bool OverridePassable = false;
 
-    public TileData Combine(TileData data)
+    public TileInfo Combine(TileInfo data)
     {
-        return new TileData()
+        return new TileInfo()
         {
             Passable = OverridePassable || data.OverridePassable || (Passable && data.Passable),
             WalkCost = WalkCost + data.WalkCost

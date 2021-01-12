@@ -50,7 +50,7 @@ public class ArmyPanel : MonoBehaviour
     public void AddArmy(IArmy army)
     {
         _armies.Add(army);
-        var grid = FormationUtils.CreateFormationGrid(ArmyGridTemplate, FormationOrientation.BottomRight, 50.0f);
+        var grid = FormationUtils.CreateFormationGrid(ArmyGridTemplate, 50.0f, FormationOrientation.BottomRight);
         grid.transform.SetParent(ScrollContent.transform);
         grid.SetArmy(army);
         grid.GridClicked += HandleGridClicked;

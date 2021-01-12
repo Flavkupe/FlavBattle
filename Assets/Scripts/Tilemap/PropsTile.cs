@@ -6,7 +6,10 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(fileName = "PropsTile", menuName = "Custom/Tiles/Props Tile", order = 2)]
 public class PropsTile : Tile
 {
-    public TileData TileData;
+    [SerializeField]
+    private TileData _data;
+
+    public TileInfo Info => _data?.Info;
 
     [AssetIcon]
     public Sprite Icon => this.sprite;

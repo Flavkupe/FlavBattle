@@ -12,6 +12,9 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 
     public bool FacingLeft { get; set; }
 
+    [SerializeField]
+    private float _yOffset = 0.25f;
+
     public FormationRow Row { get; set; }
     public FormationColumn Col { get; set; }
 
@@ -46,7 +49,7 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
     public void SetUnit(Unit unit)
     {
         // Put it in the .25f mark, adjusting for scale of slot
-        var yPos = 0.25f / transform.localScale.y;
+        var yPos = _yOffset / transform.localScale.y;
         var combatUnit = Instantiate(CombatUnitTemplate);
         combatUnit.name = unit.Info.Name;
         combatUnit.SetUnit(unit, FacingLeft);

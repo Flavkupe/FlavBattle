@@ -201,7 +201,13 @@ public static class FormationUtils
         return grid;
     }
 
-    public static TObjectType CreateFormationGrid<TObjectType>(TObjectType template, FormationOrientation orientation = FormationOrientation.BottomRight, float gap = 2.0f) where TObjectType : MonoBehaviour, IFormationGrid
+    public static TObjectType CreateFormationGrid<TObjectType>(TObjectType template, float gapX, float gapY, FormationOrientation orientation = FormationOrientation.BottomRight) where TObjectType : MonoBehaviour, IFormationGrid
+    {
+        var grid = UnityEngine.Object.Instantiate(template);
+        return PopulateFormationGrid(grid, orientation, gapX, gapY);
+    }
+
+    public static TObjectType CreateFormationGrid<TObjectType>(TObjectType template, float gap, FormationOrientation orientation = FormationOrientation.BottomRight) where TObjectType : MonoBehaviour, IFormationGrid
     {
         var grid = UnityEngine.Object.Instantiate(template);
         return PopulateFormationGrid(grid, orientation, gap);

@@ -1,16 +1,17 @@
-﻿using System.Collections;
+﻿using FlavBattle.Formation;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class UIUnitGridBase : MonoBehaviour, IFormationGrid
+public abstract class UIUnitGridBase : FormationGridBase
 {
     private List<IFormationGridSlot> _slots = new List<IFormationGridSlot>();
     
 
     public IArmy Army { get; private set; }
 
-    public IFormationGridSlot CreateSlot()
+    public override IFormationGridSlot CreateSlot()
     {
         var slot = OnCreateSlot();
         _slots.Add(slot);

@@ -35,8 +35,4 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  TileData:
-    Passable: 1
-    WalkCost: 5
-    OverridePassable: 0
-  Icon: {fileID: 5595747086137543514, guid: c9e0f8c1950cf734fb9cf6d273d0846f, type: 3}
+  _data: {fileID: 11400000, guid: bdbb44ee038c84d479162fca14b16c6b, type: 2}
