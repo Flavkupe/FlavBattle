@@ -11,4 +11,6 @@ public interface IArmy : IOwnedEntity
     FightingStance Stance { get; set; }
 
     Morale Morale { get; }
+
+    TileInfo CurrentTileInfo { get; }
 }

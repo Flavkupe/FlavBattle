@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   Info:
+    _slotModel: {fileID: 8502142653311525639, guid: 108464c13884bd3428bda49181b6bfd2,
+      type: 3}
     Passable: 1
     WalkCost: 1
     SpecialProperty: 0

@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class GridTile
 {
-    public TileInfo Data;
+    public TileInfo Info;
     public int GridX;
     public int GridY;
     public float WorldX;
@@ -95,9 +95,15 @@ public class TilemapManager : MonoBehaviour
         return GetGridTileAtWorldPos(obj.transform.position);
     }
 
-    public GridTile GetGridTileAtWorldPos(float x, float y)
+    public Vector3Int GetGridCoordsAtWorldPos(float x, float y)
     {
         var cell = Tilemap.WorldToCell(new Vector3(x, y, 0));
+        return cell;
+    }
+
+    public GridTile GetGridTileAtWorldPos(float x, float y)
+    {
+        var cell = GetGridCoordsAtWorldPos(x, y);
         return GetGridTile(cell.x, cell.y);
     }
 
@@ -109,21 +115,21 @@ public class TilemapManager : MonoBehaviour
             return null;
         }
 
-        var data = tile.Info;
+        var info = tile.Info;
         foreach (var propMap in PropsTilemaps)
         {
             // Get all props data
             var propsTile = propMap.GetTile<PropsTile>(new Vector3Int(x, y, 0));
             if (propsTile != null)
             {
-                data = data.Combine(propsTile.Info);
+                info = info.Combine(propsTile.Info);
             }
         }
 
         Vector3 worldLoc = Tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0));
         return new GridTile()
         {
-            Data = data,
+            Info = info,
             GridX = x,
             GridY = y,
             WorldX = worldLoc.x,

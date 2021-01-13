@@ -12,7 +12,14 @@ public class CombatFormation : FormationGridBase
 
     public override IFormationGridSlot CreateSlot()
     {
-        var slot = Instantiate(SlotTemplate);
+        // Get default template or get template populated by current army
+        var template = SlotTemplate;
+        if (_army?.CurrentTileInfo?.SlotModel != null)
+        {
+            template = _army.CurrentTileInfo.SlotModel;
+        }
+
+        var slot = Instantiate(template);
         _slots.Add(slot);
         slot.FacingLeft = FacingLeft;
         return slot;
@@ -28,15 +35,12 @@ public class CombatFormation : FormationGridBase
 
     private IArmy _army;
 
-    void Awake()
-    {
-        var orientation = FacingLeft ? FormationOrientation.BottomLeft : FormationOrientation.BottomRight;
-        FormationUtils.PopulateFormationGrid(this, orientation, _gridXGap, _gridYGap);
-    }
-
     public void InitArmy(IArmy army)
     {
         _army = army;
+
+        var orientation = FacingLeft ? FormationOrientation.BottomLeft : FormationOrientation.BottomRight;
+        FormationUtils.PopulateFormationGrid(this, orientation, _gridXGap, _gridYGap);
 
         foreach (var formation in army.Formation.GetOccupiedPositions())
         {

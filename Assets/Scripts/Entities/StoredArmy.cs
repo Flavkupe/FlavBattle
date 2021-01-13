@@ -13,6 +13,8 @@ public class StoredArmy : IArmy
 
     public FightingStance Stance { get; set; }
 
+    public TileInfo CurrentTileInfo => null;
+
     public Morale Morale { get; } = new Morale();
 
     public StoredArmy(Army army)

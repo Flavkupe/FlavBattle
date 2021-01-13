@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Bridge
   m_EditorClassIdentifier: 
   Info:
+    _slotModel: {fileID: 0}
     Passable: 1
     WalkCost: 1
     SpecialProperty: 0
+    OverrideWalk: 1
     OverridePassable: 1

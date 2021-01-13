@@ -510,9 +510,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d177888f3bf742e4889b1dbcd007c896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotTemplate: {fileID: 8502142653311525639, guid: 81cfa84d12db34e49b568eed36c92f04,
+  SlotTemplate: {fileID: 8502142653311525639, guid: 108464c13884bd3428bda49181b6bfd2,
     type: 3}
   FacingLeft: 0
+  _gridXGap: 1.5
+  _gridYGap: 0.5
 --- !u!1 &6104582356555520743
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,9 +640,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d177888f3bf742e4889b1dbcd007c896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SlotTemplate: {fileID: 8502142653311525639, guid: 81cfa84d12db34e49b568eed36c92f04,
+  SlotTemplate: {fileID: 8502142653311525639, guid: 108464c13884bd3428bda49181b6bfd2,
     type: 3}
   FacingLeft: 1
+  _gridXGap: 1.5
+  _gridYGap: 0.5
 --- !u!1 &6104582357145907552
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6104582357145907553
 Transform:
   m_ObjectHideFlags: 0

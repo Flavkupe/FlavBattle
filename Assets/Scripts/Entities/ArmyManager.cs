@@ -349,7 +349,7 @@ public class ArmyManager : MonoBehaviour
         var tiles = TileMap.GetNeighborTileData(currTile.GridX, currTile.GridY);
 
         // Filter by only passable tiles
-        tiles = tiles.Where(a => a.Data.Passable).ToList();
+        tiles = tiles.Where(a => a.Info.Passable).ToList();
 
         // Get the tile with the highest distance from the other unit.
         var furthest = tiles.GetMax(a => Vector2.Distance(enemyTile.ToGridPos(), a.ToGridPos()));

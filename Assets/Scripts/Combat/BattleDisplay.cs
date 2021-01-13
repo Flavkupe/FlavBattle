@@ -30,6 +30,9 @@ public class BattleDisplay : MonoBehaviour
 
     public Coroutine InitializeCombatScene(IArmy left, IArmy right)
     {
+        LeftFormation.InitArmy(left);
+        RightFormation.InitArmy(right);
+
         return StartCoroutine(InitializeCombatSceneInternal(left, right));
     }
 
@@ -40,9 +43,6 @@ public class BattleDisplay : MonoBehaviour
 
     private IEnumerator InitializeCombatSceneInternal(IArmy left, IArmy right)
     {
-        LeftFormation.InitArmy(left);
-        RightFormation.InitArmy(right);
-
         this.transform.position = Camera.main.transform.position.SetZ(0.0f);
         LeftSide.Show();
         RightSide.Show();

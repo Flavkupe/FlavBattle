@@ -1138,37 +1138,10 @@ PrefabInstance:
       propertyPath: Tooltip
       value: 
       objectReference: {fileID: 1999119384}
-    - target: {fileID: 6104582356458597791, guid: a142ca29ab85c98468281adb2e1cd328,
-        type: 3}
-      propertyPath: _gridYGap
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6104582356458597791, guid: a142ca29ab85c98468281adb2e1cd328,
-        type: 3}
-      propertyPath: SlotTemplate
-      value: 
-      objectReference: {fileID: 8502142653311525639, guid: 108464c13884bd3428bda49181b6bfd2,
-        type: 3}
-    - target: {fileID: 6104582356643393605, guid: a142ca29ab85c98468281adb2e1cd328,
-        type: 3}
-      propertyPath: _gridYGap
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6104582356643393605, guid: a142ca29ab85c98468281adb2e1cd328,
-        type: 3}
-      propertyPath: SlotTemplate
-      value: 
-      objectReference: {fileID: 8502142653311525639, guid: 108464c13884bd3428bda49181b6bfd2,
-        type: 3}
     - target: {fileID: 6104582357145907552, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}
       propertyPath: m_Name
       value: BattleDisplay
-      objectReference: {fileID: 0}
-    - target: {fileID: 6104582357145907552, guid: a142ca29ab85c98468281adb2e1cd328,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6104582357145907553, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}

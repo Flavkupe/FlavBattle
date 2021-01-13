@@ -14,4 +14,6 @@ public class TestArmy : IArmy
     public FightingStance Stance { get; set; }
 
     public Morale Morale { get; } = new Morale();
+
+    public TileInfo CurrentTileInfo { get; set; }
 }

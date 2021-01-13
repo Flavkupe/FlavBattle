@@ -45,6 +45,10 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     private TilemapManager _map = null;
     private bool _fleeing = false;
 
+    private GridTile _currentTile = null;
+    private Vector3Int _currentTileCoords;
+    public TileInfo CurrentTileInfo => _currentTile?.Info;
+
     private AnimatedSprite _sprite;
     public SpriteRenderer FactionFlag;
     public SpriteRenderer FactionMarker;
@@ -243,6 +247,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public void SetMap(TilemapManager map)
     {
         this._map = map;
+        UpdateCurrentTile();
     }
 
     public void SetFaction(FactionData faction)
@@ -361,12 +366,41 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         }
     }
 
+    /// <summary>
+    /// Checks the current position on the map, as map coords. If
+    /// the current position is a new grid coord from previous, updates
+    /// to a new tile on the tilemap. This is a small optimization over
+    /// always updating the tilemap on every frame.
+    /// </summary>
+    private void CheckCurrentLocation()
+    {
+        // After moving, check if this is a new tile
+        var x = this.transform.position.x;
+        var y = this.transform.position.y;
+        var currentTileCoords = this._map.GetGridCoordsAtWorldPos(x, y);
+        if (!currentTileCoords.Equals(_currentTileCoords))
+        {
+            // on a new grid coord    
+            UpdateCurrentTile();
+        }
+    }
+
+    /// <summary>
+    /// Updates the current tile to match the 
+    /// </summary>
+    private void UpdateCurrentTile()
+    {
+        var x = this.transform.position.x;
+        var y = this.transform.position.y;
+        _currentTileCoords = this._map.GetGridCoordsAtWorldPos(x, y);
+        _currentTile = this._map.GetGridTileAtWorldPos(x, y);
+    }
+
     private void StepTowardsDestination()
     {
         if (this._destination != null)
         {
-            var currentTile = this._map.GetGridTileAtWorldPos(this.transform.position.x, this.transform.position.y);
-            var cost = Math.Max(1, currentTile.Data.WalkCost);
+            var cost = Math.Max(1, _currentTile.Info.WalkCost);
             var modifier = MoveStep / cost;
             var delta = modifier * TimeUtils.AdjustedGameDelta;
             this._sprite.SetSpeedModifier(modifier);
@@ -378,6 +412,8 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 this._destination = null;
                 this._sprite.SetIdle(true);
             }
+
+            CheckCurrentLocation();
         }
     }
 
