@@ -42,6 +42,7 @@ MonoBehaviour:
     Type: 0
     WaitForCompletion: 0
     Animations: []
+  _animatorTriggerName: 2
   Effect: 1
   Damage: {x: 1, y: 1}
   MoraleDamage: {x: 0, y: 0}

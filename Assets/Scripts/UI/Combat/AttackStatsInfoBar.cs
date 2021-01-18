@@ -33,7 +33,6 @@ namespace FlavBattle.UI.Combat
             LeftInfo.DestroyChildren();
             RightInfo.DestroyChildren();
 
-
             SetIconOn(attackerInfo, summary.FirstResult.Source.Unit.Info.Data.Icon);
             SetIconsOn(attackerInfo, SwordSprite, summary.FirstResult.Attack);
 

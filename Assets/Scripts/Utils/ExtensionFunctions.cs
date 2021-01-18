@@ -91,7 +91,6 @@ public static class ExtensionFunctions
 
     public static IEnumerator FlashColor(this SpriteRenderer sprite, Color color, float speed = 8.0f)
     {
-        var starting = sprite.color;
         var progress = 0.0f;
         while (progress < 1.0f)
         {
@@ -104,10 +103,10 @@ public static class ExtensionFunctions
         while (progress < 1.0f)
         {
             progress += speed * Time.deltaTime;
-            sprite.color = Color.Lerp(sprite.color, starting, progress);
+            sprite.color = Color.Lerp(sprite.color, Color.white, progress);
         }
 
-        sprite.color = starting;
+        sprite.color = Color.white;
     }
 
     public static IEnumerator FadeAway(this MonoBehaviour obj, float speed = 1.0f, AccelOption accel = AccelOption.None)

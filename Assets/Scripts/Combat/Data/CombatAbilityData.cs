@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using FlavBattle.Combat;
 
 public enum CombatAbilityType
 {
@@ -77,8 +78,6 @@ public enum CombatAnimationTarget
     /// </summary>
     Target
 }
-
-
 
 [Serializable]
 public class CombatCharacterAnimations
@@ -214,6 +213,16 @@ public class CombatAbilityData : ScriptableObject
 
     [BoxGroup("Visuals")]
     public CombatCharacterAnimations PostAttackAnimations;
+
+    [BoxGroup("Visuals")]
+    [Tooltip("String name for animator for what character animation would look like (ie ShootBow). Left empty, does no animator animation.")]
+    [SerializeField]
+    private UnitAnimatorTrigger _animatorTriggerName = UnitAnimatorTrigger.None;
+
+    /// <summary>
+    /// Gets animator animation for this attack (if any)
+    /// </summary>
+    public UnitAnimatorTrigger AnimatorTrigger => _animatorTriggerName;
 
     /***** Effect ******/
 

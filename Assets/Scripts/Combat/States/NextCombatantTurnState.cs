@@ -48,6 +48,42 @@ namespace FlavBattle.Combat.States
             }
         }
 
+        private IEnumerator DoTurn(BattleStatus state, CombatTurnSummary summary)
+        {
+            var preAttackAnimations = new CombatAnimationEventSequence(_owner);
+            var attackAnimations = new CombatAnimationEventSequence(_owner);
+            var postAnimations = new CombatAnimationEventSequence(_owner);
+
+            attackAnimations.StaggerTime = _parallelStaggerTime;
+
+            // Update panel as needed
+            state.BattleUIPanel.AttackStats.SetStats(summary);
+
+            foreach (var turn in summary.Turns)
+            {
+                preAttackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.PreAttack));
+                attackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.Ability));
+                postAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.PostAttack));
+            }
+
+            // Step 2: pre-ability animations
+            yield return preAttackAnimations.Animate();
+
+            // Step 3: ability animation
+            yield return attackAnimations.Animate();
+
+            // Step 4: post ability animation
+            yield return postAnimations.Animate();
+
+            // Step 5: check for newly dead units
+            ProcessDeadUnits(state);
+
+            AnimateUIForResults(state, summary);
+
+            // Brief pause
+            yield return new WaitForSecondsAccelerated(1.0f);
+        }
+
         private CombatTurnSummary GenerateSpecificTurnSummary(BattleStatus state, Combatant combatant, CombatAction action)
         {
             var summary = new CombatTurnSummary();
@@ -144,50 +180,14 @@ namespace FlavBattle.Combat.States
             return actions;
         }
 
-        private IEnumerator DoTurn(BattleStatus state, CombatTurnSummary summary)
-        {
-            var preAttackAnimations = new CombatAnimationEventSequence(_owner);
-            var attackAnimations = new CombatAnimationEventSequence(_owner);
-            var postAnimations = new CombatAnimationEventSequence(_owner);
-
-            attackAnimations.StaggerTime = _parallelStaggerTime;
-
-            // Update panel as needed
-            state.BattleUIPanel.AttackStats.SetStats(summary);
-
-            foreach (var turn in summary.Turns)
-            {
-                preAttackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.PreAttack));
-                attackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.Ability));
-                postAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.PostAttack));
-            }
-
-            // Step 2: pre-ability animations
-            yield return preAttackAnimations.Animate();
-
-            // Step 3: ability animation
-            yield return attackAnimations.Animate();
-
-            // Step 4: post ability animation
-            yield return postAnimations.Animate();
-
-            // Step 5: check for newly dead units
-            yield return CheckForDeadUnits(state);
-
-            AnimateUIForResults(state, summary);
-
-            // Brief pause
-            yield return new WaitForSecondsAccelerated(1.0f);
-        }
-
-        private IEnumerator CheckForDeadUnits(BattleStatus state)
+        private void ProcessDeadUnits(BattleStatus state)
         {
             foreach (var combatant in state.Combatants.ToList())
             {
 
                 if (combatant.Unit.IsDead())
                 {
-                    yield return combatant.CombatUnit.AnimateDeath();
+                    combatant.CombatUnit.AnimateDeath();
                     state.ClearCombatant(combatant);
 
                     // get morale bonus for killing unit

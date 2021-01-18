@@ -19,10 +19,6 @@ public class CombatUnit : MonoBehaviour
     [Required]
     public HealthBar HealthBar;
 
-    [Tooltip("Animation for blocking an attack")]
-    [Required]
-    public FloatingIcon BlockAnimationTemplate;
-
     [Tooltip("Animation for blocking an attack via high morale")]
     [Required]
     public FloatingIcon MoraleTankAnimationTemplate;
@@ -34,12 +30,19 @@ public class CombatUnit : MonoBehaviour
     [SerializeField]
     private GameObject _buffPanel;
 
+    [Tooltip("Icon which represents this guy being dead")]
+    [SerializeField]
+    [Required]
+    private GameObject _skullIcon;
+
     private bool _facingLeft = false;
 
+    private Animator _animator;
+    private bool _animating = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        _animator = this.GetComponent<Animator>();
     }
 
     public void SetUnit(Unit unit, bool facingLeft)
@@ -47,11 +50,14 @@ public class CombatUnit : MonoBehaviour
         this.Unit = unit;
         var renderer = this.GetComponent<SpriteRenderer>();
         renderer.sprite = unit.Data.Sprite;
+
         _facingLeft = facingLeft;
         if (facingLeft)
         {
             this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
         }
+
+        _animator.runtimeAnimatorController = unit.Data.Animator;
 
         this.UpdateUIComponents();
     }
@@ -96,32 +102,27 @@ public class CombatUnit : MonoBehaviour
         return StartCoroutine(renderer.FlashColor(color ?? Color.red));
     }
 
-    public Coroutine AnimateAttack()
+    public void AnimateDeath()
     {
-        return StartCoroutine(AnimateAttackInternal());
-    }
-
-    public Coroutine AnimateDeath()
-    {
-        return StartCoroutine(AnimateDeathInternal());
+        _animator.SetTrigger(UnitAnimatorTrigger.Die.ToString());
+        this.MoraleIcon.Hide();
+        this._skullIcon.Show();
     }
 
     public void AnimateBlockedDamageAsync()
     {
-        var anim = Instantiate(BlockAnimationTemplate, this.transform);
-        anim.PlayAnimation();
+        StartCoroutine(this.PlayAnimatorToCompletion(UnitAnimatorTrigger.ShieldBlock));
+    }
+
+    public IEnumerator AnimateBlockedDamage()
+    {
+        yield return this.PlayAnimatorToCompletion(UnitAnimatorTrigger.ShieldBlock);
     }
 
     public void AnimateBlockedThroughMoraleAsync()
     {
         var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
         anim.PlayAnimation();
-    }
-
-    public IEnumerator AnimateBlockedDamage()
-    {
-        var anim = Instantiate(BlockAnimationTemplate, this.transform);
-        yield return anim.PlayToCompletion();
     }
 
     public IEnumerator AnimateBlockedThroughMorale()
@@ -139,6 +140,13 @@ public class CombatUnit : MonoBehaviour
         yield return AnimateFlash(flashColor);
     }
 
+    public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger)
+    {
+        this._animating = true;
+        this._animator.SetTrigger(animatorTrigger.ToString());
+        yield return WaitForAnimationEnd();
+    }
+
     public IEnumerator AnimateEscape(Vector3 direction)
     {
         var time = 0.0f;
@@ -154,23 +162,6 @@ public class CombatUnit : MonoBehaviour
             yield return null;
         }
     }
-
-    private IEnumerator AnimateAttackInternal()
-    {
-        var startPos = transform.position;
-        var direction = _facingLeft ? Vector3.left : Vector3.right;
-        direction *= 0.25f;
-        yield return this.MoveBy(direction, 5.0f);
-        yield return this.MoveBy(-direction, 5.0f);
-        transform.position = startPos;
-    }
-
-    private IEnumerator AnimateDeathInternal()
-    {
-        var renderer = this.GetComponent<SpriteRenderer>();
-        yield return renderer.FadeAway(2.0f);
-    }
-
 
     private void CreateDamageTextOverHead(string text, Color? color = null)
     {
@@ -206,5 +197,28 @@ public class CombatUnit : MonoBehaviour
     {
         this.HealthBar.Hide();
         this.MoraleIcon.Hide();
+    }
+
+    // TRIGGERED BY ANIMATOR
+    public void AnimationStarted()
+    {
+        this._animating = true;
+    }
+
+    // TRIGGERED BY ANIMATOR
+    public void AnimationEnded()
+    {
+        this._animating = false;
+    }
+
+    /// <summary>
+    /// Used to wait for animator animation to complete
+    /// </summary>
+    public IEnumerator WaitForAnimationEnd()
+    {
+        while (_animating)
+        {
+            yield return null;
+        }
     }
 }

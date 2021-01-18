@@ -40,7 +40,6 @@ namespace FlavBattle.Combat.Events
                 // no yield
                 unit.AnimateBlockedDamageAsync();
                 Sounds.Play(CombatSoundType.Block);
-                // unit.AnimateFlash(Color.yellow);
             }
             else if (_summary.MoraleBlockedAttack)
             {
@@ -48,7 +47,6 @@ namespace FlavBattle.Combat.Events
                 unit.AnimateBlockedThroughMoraleAsync();
                 unit.RemoveBuff(CombatBuffIcon.BuffType.MoraleShield);
                 Sounds.Play(CombatSoundType.Block);
-                // unit.AnimateFlash(Color.yellow);
             }
             else
             {

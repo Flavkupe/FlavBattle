@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,10 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
     private SpriteRenderer _sprite;
     private Color _startColor;
 
+    [Required]
+    public SpriteRenderer HighlightRing;
+
+    [Required]
     public GameObject OfficerRing;
 
     public FormationPair GetFormation()
@@ -78,17 +83,19 @@ public class CombatFormationSlot : MonoBehaviour, IFormationGridSlot
 
     public void Highlight(Color color)
     {
-        if (_sprite != null)
+        if (HighlightRing != null)
         {
-            _sprite.color = color;
+            HighlightRing.gameObject.Show();
+            HighlightRing.color = color.SetAlpha(0.5f);
         }
     }
 
     public void ResetColor()
     {
-        if (_sprite != null)
+        if (HighlightRing != null)
         {
-            _sprite.color = _startColor;
+            HighlightRing.color = _startColor;
+            HighlightRing.gameObject.Hide();
         }
     }
 }

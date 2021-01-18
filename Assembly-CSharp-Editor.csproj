@@ -55,9 +55,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Editor\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\Editor\InitialFormationEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\FormationBuilderEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\CombatDebugWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\ClipperWindow.cs" />
-    <Compile Include="Assets\Scripts\Editor\FormationBuilderEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -32,5 +32,17 @@ namespace FlavBattle.UI.Combat
             OffensiveButton.onClick.AddListener(() => OnStanceChangeClicked?.Invoke(this, FightingStance.Offensive));
             NeutralStanceButton.onClick.AddListener(() => OnStanceChangeClicked?.Invoke(this, FightingStance.Neutral));
         }
+
+        public void Close()
+        {
+            // If this closes too quick we lose the tooltip
+            var tooltip = GetComponent<TooltipSource>()?.Tooltip;
+            if (tooltip != null)
+            {
+                tooltip.Hide();
+            }
+
+            this.Hide();
+        }
     }
 }

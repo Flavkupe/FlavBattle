@@ -136,7 +136,7 @@ public class BattleStatus
 
     public void ClearCombatant(Combatant combatant)
     {
-        combatant.CombatFormationSlot.ClearContents();
+        // combatant.CombatFormationSlot.ClearContents();
         Combatants.Remove(combatant);
     }
 

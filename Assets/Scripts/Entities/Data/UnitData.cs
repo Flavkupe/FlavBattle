@@ -54,6 +54,11 @@ public class UnitData : ScriptableObject
     public Sprite Sprite;
 
     [BoxGroup("Visual")]
+    [SerializeField]
+    [Required]
+    private AnimatorOverrideController _animatorOverride;
+
+    [BoxGroup("Visual")]
     public Sprite[] Portraits;
 
     [BoxGroup("Visual")]
@@ -61,7 +66,7 @@ public class UnitData : ScriptableObject
 
     [BoxGroup("Abilities")]
     public CombatAction[] StartingActions;
-    
+
 
     [BoxGroup("Abilities")]
     [Tooltip("Officer abilities that are always available by default")]
@@ -71,7 +76,10 @@ public class UnitData : ScriptableObject
     [Tooltip("Officer abilities that can be learned")]
     public OfficerAbilityData[] OfficerAbilities;
 
+
     private string _name = "Unnamed";
+
+    public AnimatorOverrideController Animator => _animatorOverride;
 
     public override string ToString()
     {

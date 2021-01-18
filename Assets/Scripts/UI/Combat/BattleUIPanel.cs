@@ -142,7 +142,7 @@ public class BattleUIPanel : MonoBehaviour
     /// <param name="e"></param>
     public void HandleStanceClicked(object source, FightingStance e)
     {
-        StancePanel.Hide();
+        StancePanel.Close();
         OnStanceChangeClicked?.Invoke(source, e);
     }
 }
