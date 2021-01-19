@@ -50,6 +50,20 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public TileInfo CurrentTileInfo => _currentTile?.Info;
 
     private AnimatedSprite _sprite;
+    // Gets the AnimatedSprite for this, caching it if needed
+    private AnimatedSprite AnimatedSprite
+    {
+        get
+        {
+            if (_sprite == null)
+            {
+                _sprite = this.GetComponentInChildren<AnimatedSprite>(true);
+            }
+
+            return _sprite;
+        }
+    }
+
     public SpriteRenderer FactionFlag;
     public SpriteRenderer FactionMarker;
 
@@ -94,7 +108,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     // Start is called before the first frame update
     void Start()
     {
-        _sprite = this.GetComponentInChildren<AnimatedSprite>();
+        
         _detectors = this.GetComponentsInChildren<Detector>();
         foreach (var detector in _detectors)
         {
@@ -213,6 +227,12 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public void SetFormation(Formation formation)
     {
         this.Formation = formation;
+
+        var officer = formation.GetOfficer();
+        if (officer != null)
+        {
+            this.AnimatedSprite.SetAnimations(officer.Data.Animations);
+        }
     }
 
     // Update is called once per frame

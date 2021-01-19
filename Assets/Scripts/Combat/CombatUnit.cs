@@ -40,9 +40,12 @@ public class CombatUnit : MonoBehaviour
     private Animator _animator;
     private bool _animating = false;
 
+    private AudioSource _audioSource;
+
     void Awake()
     {
         _animator = this.GetComponent<Animator>();
+        _audioSource = this.GetComponent<AudioSource>();
     }
 
     public void SetUnit(Unit unit, bool facingLeft)
@@ -123,12 +126,15 @@ public class CombatUnit : MonoBehaviour
     {
         var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
         anim.PlayAnimation();
+        AnimateBlockedDamageAsync();
     }
 
     public IEnumerator AnimateBlockedThroughMorale()
     {
+        yield return AnimateBlockedDamage();
         var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
         yield return anim.PlayToCompletion();
+
     }
 
     /// <summary>
@@ -216,9 +222,24 @@ public class CombatUnit : MonoBehaviour
     /// </summary>
     public IEnumerator WaitForAnimationEnd()
     {
+        var timer = new ThrottleTimer(3.0f);
         while (_animating)
         {
+            if (timer.Tick())
+            {
+                Debug.LogError("Attack took more than 3 seconds! Ensure animation has an AnimationEnded trigger!!");
+                yield break;
+            }
+
             yield return null;
+        }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        if (_audioSource != null)
+        {
+            _audioSource.PlayOneShot(clip);
         }
     }
 }

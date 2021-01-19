@@ -10335,6 +10335,8 @@ MonoBehaviour:
   SecondsBetween: 5
   UseLocalPos: 1
   Speed: 500
+  _allowKeyInterrupt: 1
+  _interruptKey: 27
 --- !u!114 &772990425
 MonoBehaviour:
   m_ObjectHideFlags: 0

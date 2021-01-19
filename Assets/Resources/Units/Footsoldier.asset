@@ -32,8 +32,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5d39b14510a084f44958a225a5c3e27e, type: 3}
   - {fileID: 21300000, guid: 0f3fef5c15fe84c7fb72c70ac4114163, type: 3}
   Animations:
-  - {fileID: -507162818337944714, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
-  - {fileID: 6265214865827592138, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
+  - {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
+  - {fileID: -1839323964325251070, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
+  - {fileID: -1603908247639142068, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
+  - {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
   StartingActions:
   - Priority: 4
     Description: Attack vs front

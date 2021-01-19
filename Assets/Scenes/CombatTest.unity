@@ -1023,11 +1023,11 @@ MonoBehaviour:
   LeftArmyConfig:
     Level: 3
     FL: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
-    FM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
-    FR: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
+    FM: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
+    FR: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     ML: {fileID: 0}
     MM: {fileID: 0}
-    MR: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
+    MR: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
     BL: {fileID: 0}
     BM: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
     BR: {fileID: 0}
@@ -1037,7 +1037,7 @@ MonoBehaviour:
     FL: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
     FM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     FR: {fileID: 0}
-    ML: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
+    ML: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
     MM: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
     MR: {fileID: 0}
     BL: {fileID: 0}

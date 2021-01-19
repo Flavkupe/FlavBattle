@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Combat;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -75,6 +76,8 @@ public class CombatAbility : MonoBehaviour
 
         AttackAnimationStarting?.Invoke(this, new EventArgs());
 
+        yield return AnimatorAnimation(source);
+
         // Animate the character
         var animationTarget = _data.CombatAnimationTarget == CombatAnimationTarget.Self ? source : target;
         yield return AnimateTarget(animationTarget);
@@ -119,8 +122,28 @@ public class CombatAbility : MonoBehaviour
         }
     }
 
+    private IEnumerator AnimatorAnimation(GameObject source)
+    {
+        // Play animator animation first
+        if (_data.AnimatorTrigger != UnitAnimatorTrigger.None)
+        {
+            var combatUnit = source.GetComponent<CombatUnit>();
+            if (combatUnit == null)
+            {
+                Debug.LogError("No CombatUnit for animation");
+                yield break;
+            }
+            else
+            {
+                yield return combatUnit.PlayAnimatorToCompletion(_data.AnimatorTrigger);
+            }
+        }
+    }
+
     private IEnumerator FireProjectile(GameObject source, GameObject target)
     {
+        yield return AnimatorAnimation(source);
+
         var targetPos = target.transform.position;
         var sourcePos = source.transform.position;
 

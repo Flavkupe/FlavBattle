@@ -105,12 +105,12 @@ namespace FlavBattle.Combat.Events
             var sourceSlot = source.CombatFormationSlot;
             sourceSlot.Highlight(Color.cyan);
 
-            // Play animator animation first
-            if (abilityData.AnimatorTrigger != UnitAnimatorTrigger.None)
-            {
-                var combatUnit = result.Source.CombatUnit;
-                yield return combatUnit.PlayAnimatorToCompletion(abilityData.AnimatorTrigger);
-            }
+            //// Play animator animation first
+            //if (abilityData.AnimatorTrigger != UnitAnimatorTrigger.None)
+            //{
+            //    var combatUnit = result.Source.CombatUnit;
+            //    yield return combatUnit.PlayAnimatorToCompletion(abilityData.AnimatorTrigger);
+            //}
 
             var obj = new GameObject("Ability");
             var ability = obj.AddComponent<CombatAbility>();

@@ -12,5 +12,6 @@ namespace FlavBattle.Combat
         Die,
         ShootBow,
         ShieldBlock,
+        Melee,
     }
 }

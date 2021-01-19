@@ -282,7 +282,9 @@ public class ThrottleTimer
     }
 
     /// <summary>
-    /// Ticks using Time.deltaTime.
+    /// Ticks using Time.deltaTime. If the timer reaches the
+    /// threshold, reset the cooldown and return true. Otherwise,
+    /// return false.
     /// </summary>
     public bool Tick()
     {

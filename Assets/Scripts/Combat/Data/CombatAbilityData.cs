@@ -183,6 +183,11 @@ public class CombatAbilityData : ScriptableObject
     public PlayableAnimation ComabtAnimation;
 
     [BoxGroup("Visuals")]
+    [Tooltip("String name for animator for what character animation would look like (ie ShootBow). Left empty, does no animator animation.")]
+    [SerializeField]
+    private UnitAnimatorTrigger _animatorTriggerName = UnitAnimatorTrigger.None;
+
+    [BoxGroup("Visuals")]
     [ShowIf("ShowAnimationProps")]
     [Tooltip("An additional multiplier over the animation's existing speed.")]
     public float CombatAnimationSpeed = 1.0f;
@@ -213,11 +218,6 @@ public class CombatAbilityData : ScriptableObject
 
     [BoxGroup("Visuals")]
     public CombatCharacterAnimations PostAttackAnimations;
-
-    [BoxGroup("Visuals")]
-    [Tooltip("String name for animator for what character animation would look like (ie ShootBow). Left empty, does no animator animation.")]
-    [SerializeField]
-    private UnitAnimatorTrigger _animatorTriggerName = UnitAnimatorTrigger.None;
 
     /// <summary>
     /// Gets animator animation for this attack (if any)
