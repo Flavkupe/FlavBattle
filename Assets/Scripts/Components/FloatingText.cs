@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof (TextMeshPro))]
 public class FloatingText : MonoBehaviour
 {
     public float RaisingSpeed = 10.0f;
@@ -34,10 +34,23 @@ public class FloatingText : MonoBehaviour
     public void SetText(string text, Color? color = null)
     {
         var tmp = GetComponent<TextMeshPro>();
-        tmp.text = text;
-        if (color != null)
+        if (tmp != null)
         {
-            tmp.color = color.Value;
+            tmp.text = text;
+            if (color != null)
+            {
+                tmp.color = color.Value;
+            }
+        }
+
+        var tmp2 = GetComponent<Text>();
+        if (tmp2 != null)
+        {
+            tmp2.text = text;
+            if (color != null)
+            {
+                tmp2.color = color.Value;
+            }
         }
     }
 }

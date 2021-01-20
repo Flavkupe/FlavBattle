@@ -114,12 +114,7 @@ public class CombatUnit : MonoBehaviour
 
     public void AnimateBlockedDamageAsync()
     {
-        StartCoroutine(this.PlayAnimatorToCompletion(UnitAnimatorTrigger.ShieldBlock));
-    }
-
-    public IEnumerator AnimateBlockedDamage()
-    {
-        yield return this.PlayAnimatorToCompletion(UnitAnimatorTrigger.ShieldBlock);
+        this.PlayAnimator(UnitAnimatorTrigger.ShieldBlock);
     }
 
     public void AnimateBlockedThroughMoraleAsync()
@@ -127,14 +122,6 @@ public class CombatUnit : MonoBehaviour
         var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
         anim.PlayAnimation();
         AnimateBlockedDamageAsync();
-    }
-
-    public IEnumerator AnimateBlockedThroughMorale()
-    {
-        yield return AnimateBlockedDamage();
-        var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
-        yield return anim.PlayToCompletion();
-
     }
 
     /// <summary>
@@ -146,10 +133,19 @@ public class CombatUnit : MonoBehaviour
         yield return AnimateFlash(flashColor);
     }
 
+    /// <summary>
+    /// Plays the animator trigger without waiting for it to finish.
+    /// </summary>
+    /// <param name="animatorTrigger"></param>
+    public void PlayAnimator(UnitAnimatorTrigger animatorTrigger)
+    {
+        this._animator.SetTrigger(animatorTrigger.ToString());
+    }
+
     public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger)
     {
         this._animating = true;
-        this._animator.SetTrigger(animatorTrigger.ToString());
+        this.PlayAnimator(animatorTrigger);
         yield return WaitForAnimationEnd();
     }
 
@@ -222,12 +218,14 @@ public class CombatUnit : MonoBehaviour
     /// </summary>
     public IEnumerator WaitForAnimationEnd()
     {
-        var timer = new ThrottleTimer(3.0f);
+        var timer = 0.0f;
         while (_animating)
         {
-            if (timer.Tick())
+            timer += Time.deltaTime;
+            if (timer > 5.0f)
             {
-                Debug.LogError("Attack took more than 3 seconds! Ensure animation has an AnimationEnded trigger!!");
+                Debug.LogError($" {this.Unit.Data.ClassName} attack took more than 5 seconds! Ensure animation has an AnimationEnded trigger!!");
+                _animating = false;
                 yield break;
             }
 

@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af3d991eb338ec4a8529f53620592a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageTextTemplate: {fileID: 3278432570077837357, guid: bd72a4556e99ee74f8e067cacbe35c99,
+  DamageTextTemplate: {fileID: 3278432570077837357, guid: 71ec044f48e6c5549b8837fd65c247d4,
     type: 3}
   MoraleIcon: {fileID: 306458488228756450}
   HealthBar: {fileID: 6731452862875063587}
