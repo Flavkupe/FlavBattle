@@ -36,14 +36,21 @@ public class PreCombatBattleActionsState : BattleStateBase
 
     private void PrepareUnitShields(Combatant combatant)
     {
-        if (combatant.UnitMorale.GetTier() == Morale.Tier.High)
-        {
-            combatant.ApplyStatChanges(new UnitStats()
-            {
-                MoraleShields = 1
-            });
+        // High morale shield - uncomment later?
+        //if (combatant.UnitMorale.GetTier() == Morale.Tier.High)
+        //{
+        //    combatant.ApplyStatChanges(new UnitStats()
+        //    {
+        //        MoraleShields = 1
+        //    });
 
-            combatant.CombatUnit.AddBuff(CombatBuffIcon.BuffType.MoraleShield);
+        //    combatant.CombatUnit.AddBuff(CombatBuffIcon.BuffType.MoraleShield);
+        //}
+
+        for (var i = 0; i < combatant.Unit.Info.CurrentStats.StartingBlockShields; i++)
+        {
+            combatant.StatChanges.BlockShields++;
+            combatant.CombatUnit.AddBuff(CombatBuffIcon.BuffType.BlockShield);
         }
     }
 

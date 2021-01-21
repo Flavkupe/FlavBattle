@@ -109,6 +109,12 @@ namespace FlavBattle.Combat
         /// Sum of all recorded morale damages (includes both direct and indirect)
         /// </summary>
         public int TotalMoraleDamage => DirectMoraleDamage + IndirectMoraleDamage;
+
+        /// <summary>
+        /// Morale damage suffered by attacker as a result of some action
+        /// (such as opponent blocking)
+        /// </summary>
+        public int SelfMoraleDamage { get; set; }
     }
 
 }

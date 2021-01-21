@@ -345,10 +345,13 @@ MonoBehaviour:
     type: 3}
   MoraleIcon: {fileID: 306458488228756450}
   HealthBar: {fileID: 6731452862875063587}
-  MoraleTankAnimationTemplate: {fileID: 285175196612671447, guid: 22045c03c1844344dacb963f3dd0b802,
+  _moraleTankAnimationTemplate: {fileID: 285175196612671447, guid: 22045c03c1844344dacb963f3dd0b802,
+    type: 3}
+  _shieldTankAnimationTemplate: {fileID: 285175196612671447, guid: 03f4b4370bccca34a9fc173f19b5c38a,
     type: 3}
   _buffTemplates:
   - {fileID: 8817977768410384934, guid: bfefc5afd28a32043b9fa4d603065e50, type: 3}
+  - {fileID: 8817977768410384934, guid: f3aadc3f27cd1104d886a337616658f9, type: 3}
   _buffPanel: {fileID: 6435911114930853353}
   _skullIcon: {fileID: 1905554376942760041}
 --- !u!212 &4987339295749207981

@@ -35,33 +35,40 @@ namespace FlavBattle.Combat.Events
                 yield break;
             }
 
-            if (_summary.ShieldBlockedAttack || _summary.ResistedAttack)
+            var damageToShow = _summary.AttackDamage;
+            var moraleDamageToShow = _summary.DirectMoraleDamage;
+
+            if (_summary.ResistedAttack)
             {
+                if (_summary.ShieldBlockedAttack)
+                {
+                    damageToShow = 0;
+                    unit.RemoveBuff(CombatBuffIcon.BuffType.BlockShield);
+                    unit.AnimateFloatingIcon(CombatUnit.FloatingIconType.Shield);
+                }
+
                 // no yield
-                unit.AnimateBlockedDamageAsync();
+                unit.AnimateShieldBlock();
                 Sounds.Play(CombatSoundType.Block);
             }
             else if (_summary.MoraleBlockedAttack)
             {
+                damageToShow = 0;
+
                 // no yield
-                unit.AnimateBlockedThroughMoraleAsync();
+                unit.AnimateFloatingIcon(CombatUnit.FloatingIconType.Morale);
                 unit.RemoveBuff(CombatBuffIcon.BuffType.MoraleShield);
                 Sounds.Play(CombatSoundType.Block);
             }
-            else
+
+            if (damageToShow > 0)
             {
-                if (_summary.AttackDamage > 0)
-                {
-                    var damage = _summary.AttackDamage.ToString();
-                    yield return unit.AnimateDamageTaken(damage, Color.red, Color.red);
+                yield return unit.AnimateDamageTaken(damageToShow.ToString(), Color.red, Color.red);
+            }
 
-                }
-
-                if (_summary.DirectMoraleDamage > 0)
-                {
-                    var damage = _summary.DirectMoraleDamage.ToString();
-                    yield return unit.AnimateDamageTaken(damage, Color.blue, Color.blue);
-                }
+            if (moraleDamageToShow > 0)
+            {
+                yield return unit.AnimateDamageTaken(moraleDamageToShow.ToString(), Color.red, Color.red);
             }
 
             unit.UpdateUIComponents();

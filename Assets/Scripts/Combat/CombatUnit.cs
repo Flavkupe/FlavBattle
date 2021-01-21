@@ -8,6 +8,15 @@ using System.Linq;
 
 public class CombatUnit : MonoBehaviour
 {
+    /// <summary>
+    /// Floating icon type to show overhead
+    /// </summary>
+    public enum FloatingIconType
+    {
+        Shield,
+        Morale,
+    }
+
     public Unit Unit { get; private set; }
 
     [Required]
@@ -19,9 +28,15 @@ public class CombatUnit : MonoBehaviour
     [Required]
     public HealthBar HealthBar;
 
-    [Tooltip("Animation for blocking an attack via high morale")]
+    [Tooltip("Animation for blocking an attack via high morale (flying morale icon)")]
     [Required]
-    public FloatingIcon MoraleTankAnimationTemplate;
+    [SerializeField]
+    private FloatingIcon _moraleTankAnimationTemplate;
+
+    [Tooltip("Animation for blocking an attack via shields (flying shield icon)")]
+    [Required]
+    [SerializeField]
+    private FloatingIcon _shieldTankAnimationTemplate;
 
     [SerializeField]
     private CombatBuffIcon[] _buffTemplates;
@@ -112,16 +127,32 @@ public class CombatUnit : MonoBehaviour
         this._skullIcon.Show();
     }
 
-    public void AnimateBlockedDamageAsync()
+    public void AnimateShieldBlock()
     {
         this.PlayAnimator(UnitAnimatorTrigger.ShieldBlock);
     }
 
-    public void AnimateBlockedThroughMoraleAsync()
+    public void AnimateFloatingIcon(FloatingIconType icon)
     {
-        var anim = Instantiate(MoraleTankAnimationTemplate, this.transform);
-        anim.PlayAnimation();
-        AnimateBlockedDamageAsync();
+        FloatingIcon template = null;
+        switch (icon)
+        {
+            case FloatingIconType.Morale:
+                template = _moraleTankAnimationTemplate;
+                break;
+            case FloatingIconType.Shield:
+                template = _shieldTankAnimationTemplate;
+                break;
+            default:
+                Debug.LogError("No implementation for icon " + icon);
+                return;
+        }
+
+        if (template != null)
+        {
+            var anim = Instantiate(template, this.transform);
+            anim.PlayAnimation();
+        }
     }
 
     /// <summary>

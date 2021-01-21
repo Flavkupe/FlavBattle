@@ -363,7 +363,7 @@ namespace FlavBattle.Combat.States
 
         private int GetTotalAttack(Combatant combatant, CombatAbilityData ability)
         {
-            var attack = combatant.GetCombatCombinedStats.Power;
+            var attack = combatant.CombatCombinedStats.Power;
             attack += ability.Damage.RandomBetween();
             attack += combatant.UnitMoraleBonus;
             if (combatant.Allies.Stance == FightingStance.Offensive)
@@ -380,7 +380,7 @@ namespace FlavBattle.Combat.States
 
         private int GetTotalDefense(Combatant combatant)
         {
-            var defense = combatant.GetCombatCombinedStats.Defense;
+            var defense = combatant.CombatCombinedStats.Defense;
             defense += combatant.UnitMoraleBonus;
             if (combatant.Allies.Stance == FightingStance.Offensive)
             {
@@ -424,36 +424,46 @@ namespace FlavBattle.Combat.States
             summary.Defense = defense;
             summary.Attack = attack;
             var targetMorale = target.UnitMorale;
-            var moraleDamage = 0;
+            var moraleDamage = 10;
+            var selfMoraleDamage = 0;
 
-            var damage = 0;
+            var damage = ability.Damage.RandomBetween();
             if (attack > defense)
             {
-                if (target.GetCombatCombinedStats.MoraleShields > 0)
+                if (target.CombatCombinedStats.MoraleShields > 0)
                 {
-                    // tank the hit due to high morale
+                    // tank the hit due to high morale (still take morale damage)
                     summary.MoraleBlockedAttack = true;
                     target.StatChanges.MoraleShields--;
-                    moraleDamage += 10;
-                }
-                else
-                {
-                    damage = 1;
-                    moraleDamage += 5;
+                    damage = 0;
                 }
             }
             else
             {
                 summary.ResistedAttack = true;
+                if (target.CombatCombinedStats.BlockShields > 0)
+                {
+                    // fully tank the hit
+                    summary.ShieldBlockedAttack = true;
+                    target.StatChanges.BlockShields--;
+                    damage = 0;
+                    moraleDamage = 0;
+                    selfMoraleDamage = 5;
+                }
+                else
+                {
+                    // Halve damage and morale
+                    damage = Math.Max(1, damage / 2);
+                    moraleDamage = 5;
+                }
             }
 
-            // do some additional morale damage
-            moraleDamage += 5;
-
+            summary.SelfMoraleDamage = selfMoraleDamage;
             summary.IndirectMoraleDamage = moraleDamage;
             summary.AttackDamage = damage;
             target.CombatUnit.TakeDamage(damage);
             target.CombatUnit.TakeMoraleDamage(moraleDamage);
+            attacker.CombatUnit.TakeMoraleDamage(selfMoraleDamage);
         }
 
         /// <summary>

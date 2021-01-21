@@ -15,7 +15,7 @@ MonoBehaviour:
   Icon: {fileID: 4280929510133602699, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
   ClassName: Peasant
   RollLow: 1
-  HP: {x: 2, y: 2}
+  HP: {x: 6, y: 6}
   Power: {x: 1, y: 1}
   Defense: {x: 0, y: 0}
   Speed: {x: 5, y: 5}
@@ -23,6 +23,7 @@ MonoBehaviour:
   PowerScaling: {x: 0, y: 0}
   DefenseScaling: {x: 0, y: 0}
   SpeedScaling: {x: 0, y: 0}
+  StartingBlockShields: 0
   Sprite: {fileID: -2550096182840164143, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
   _animatorOverride: {fileID: 22100000, guid: ac6e8f14b5c34254ba5b77864db179c7, type: 2}
   Portraits:

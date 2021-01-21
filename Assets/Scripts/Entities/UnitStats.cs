@@ -17,6 +17,11 @@ public class UnitStats
     public int Level = 1;
 
     /// <summary>
+    /// How many Block Shields the unit starts combat with.
+    /// </summary>
+    public int StartingBlockShields = 0;
+
+    /// <summary>
     /// For officers, it's how many commands they can issue.
     /// </summary>
     public int Command = 0;
@@ -59,6 +64,7 @@ public class UnitStats
 
             MoraleShields = this.MoraleShields + other.MoraleShields,
             BlockShields = this.BlockShields + other.BlockShields,
+            StartingBlockShields = this.StartingBlockShields + other.StartingBlockShields,
 
             Level = Math.Max(Level, other.Level),
         };
@@ -76,7 +82,12 @@ public class UnitStats
             Defense = (int)(this.Defense * multiplier),
             Speed = (int)(this.Speed * multiplier),
 
-            Level = this.Level, // not affected
+
+            // not affected
+            Level = this.Level,
+            MoraleShields = this.MoraleShields,
+            BlockShields = this.BlockShields,
+            StartingBlockShields = this.StartingBlockShields,
         };
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
   ClassName: Hunter
   RollLow: 1
-  HP: {x: 2, y: 3}
+  HP: {x: 6, y: 6}
   Power: {x: 1, y: 1}
   Defense: {x: 0, y: 0}
   Speed: {x: 2, y: 2}
@@ -23,6 +23,7 @@ MonoBehaviour:
   PowerScaling: {x: 0, y: 0}
   DefenseScaling: {x: 0, y: 0}
   SpeedScaling: {x: 0, y: 0}
+  StartingBlockShields: 0
   Sprite: {fileID: -4228030573731687880, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
   _animatorOverride: {fileID: 22100000, guid: bc679e314fe04614d81d2a8653d6c85a, type: 2}
   Portraits:

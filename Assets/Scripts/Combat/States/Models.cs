@@ -49,7 +49,7 @@ public class Combatant
     /// Unit.Info.CurrentStats for permanent or ApplyStatChanges for only
     /// within combat.
     /// </summary>
-    public UnitStats GetCombatCombinedStats => Unit.Info.CurrentStats.Combine(StatChanges);
+    public UnitStats CombatCombinedStats => Unit.Info.CurrentStats.Combine(StatChanges);
 
     public int UnitMoraleBonus => Unit.Info.Morale.GetDefaultBonus();
     public Morale UnitMorale => Unit.Info.Morale;

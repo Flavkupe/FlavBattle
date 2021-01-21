@@ -12,6 +12,7 @@ namespace FlavBattle.Combat
         public enum BuffType
         {
             MoraleShield,
+            BlockShield,
         }
 
         public BuffType Type;

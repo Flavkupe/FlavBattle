@@ -15,7 +15,7 @@ MonoBehaviour:
   Icon: {fileID: -8180171696930044909, guid: 416ed6c76bb86de43b12827bae3a6533, type: 3}
   ClassName: Foot Soldier
   RollLow: 1
-  HP: {x: 4, y: 5}
+  HP: {x: 8, y: 8}
   Power: {x: 1, y: 1}
   Defense: {x: 1, y: 1}
   Speed: {x: 1, y: 1}
@@ -23,6 +23,7 @@ MonoBehaviour:
   PowerScaling: {x: 0, y: 0}
   DefenseScaling: {x: 0, y: 0}
   SpeedScaling: {x: 0, y: 0}
+  StartingBlockShields: 1
   Sprite: {fileID: 63458354135009270, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
   _animatorOverride: {fileID: 22100000, guid: 99684bef27baed74ebb6ea3d0ff20417, type: 2}
   Portraits:

@@ -19,7 +19,7 @@ public class UnitData : ScriptableObject
 
     // CombatStrategyData
     [BoxGroup("Base Stats")]
-    [MinMaxSlider(1.0f, 10.0f)]
+    [MinMaxSlider(1.0f, 30.0f)]
     public Vector2 HP;
 
     [BoxGroup("Base Stats")]
@@ -49,6 +49,9 @@ public class UnitData : ScriptableObject
     [BoxGroup("Stat Scaling")]
     [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 SpeedScaling;
+
+    [BoxGroup("Special Stats")]
+    public int StartingBlockShields;
 
     [BoxGroup("Visual")]
     public Sprite Sprite;
@@ -98,6 +101,7 @@ public class UnitData : ScriptableObject
         stats.Power = GenerateStat(Power);
         stats.Defense = GenerateStat(Defense);
         stats.Speed = GenerateStat(Speed);
+        stats.StartingBlockShields = StartingBlockShields;
         for (int i = 1; i < level; i++)
         {
             var levelup = RollLevel();

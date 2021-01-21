@@ -43,7 +43,7 @@ MonoBehaviour:
     WaitForCompletion: 0
     Animations: []
   Effect: 1
-  Damage: {x: 1, y: 1}
+  Damage: {x: 2, y: 2}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
     HP: 0
@@ -51,6 +51,7 @@ MonoBehaviour:
     Defense: 0
     Speed: 0
     Level: 1
+    StartingBlockShields: 0
     Command: 0
   StartSoundClips: []
   PreHitSoundClips: []

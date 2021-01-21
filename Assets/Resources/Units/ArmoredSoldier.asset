@@ -15,14 +15,15 @@ MonoBehaviour:
   Icon: {fileID: -6334100608086486554, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   ClassName: Armored Soldier
   RollLow: 1
-  HP: {x: 10, y: 10}
+  HP: {x: 12, y: 12}
   Power: {x: 1, y: 1}
   Defense: {x: 3, y: 3}
-  Speed: {x: 6, y: 6}
+  Speed: {x: 0, y: 0}
   HPScaling: {x: 0, y: 0}
   PowerScaling: {x: 0, y: 0}
   DefenseScaling: {x: 0, y: 0}
   SpeedScaling: {x: 0, y: 0}
+  StartingBlockShields: 2
   Sprite: {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   _animatorOverride: {fileID: 22100000, guid: f24077674f5409149816b777f2c03c10, type: 2}
   Portraits:

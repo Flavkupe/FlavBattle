@@ -30,6 +30,7 @@ MonoBehaviour:
   CharacterMoveSpeed: 20
   ComabtAnimation: {fileID: 5331656751271035678, guid: f4bc414cc9329954cbab33df89d17be2,
     type: 3}
+  _animatorTriggerName: 0
   CombatAnimationSpeed: 3
   CombatAnimationRepeats: 2
   WaitForCompletion: 1
@@ -44,7 +45,7 @@ MonoBehaviour:
     WaitForCompletion: 0
     Animations: []
   Effect: 1
-  Damage: {x: 0, y: 1}
+  Damage: {x: 1, y: 1}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
     HP: 0
@@ -52,6 +53,7 @@ MonoBehaviour:
     Defense: 0
     Speed: 0
     Level: 1
+    StartingBlockShields: 0
     Command: 0
   StartSoundClips: []
   PreHitSoundClips:

@@ -29,6 +29,7 @@ MonoBehaviour:
   CharacterMoveArcHeight: 0
   CharacterMoveSpeed: 0
   ComabtAnimation: {fileID: 0}
+  _animatorTriggerName: 2
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
   WaitForCompletion: 1
@@ -42,9 +43,8 @@ MonoBehaviour:
     Type: 0
     WaitForCompletion: 0
     Animations: []
-  _animatorTriggerName: 2
   Effect: 1
-  Damage: {x: 1, y: 1}
+  Damage: {x: 2, y: 2}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
     HP: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
     Defense: 0
     Speed: 0
     Level: 1
+    StartingBlockShields: 0
     Command: 0
   StartSoundClips:
   - {fileID: 8300000, guid: c543a4a0e7af82f4e9a9434ef1a3fe78, type: 3}
