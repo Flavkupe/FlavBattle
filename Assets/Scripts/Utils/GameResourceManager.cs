@@ -35,6 +35,13 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
         };
     }
 
+    [BoxGroup("Game Constants")]
+    [Tooltip("Base threshold for an army to flee. Army will flee if morale is less than this at a certain turn.")]
+    [SerializeField]
+    private int _fleeingArmyThreshold = 75;
+    public int FleeingArmyThreshold => _fleeingArmyThreshold;
+
+
     [Serializable]
     public class CommonSoundPrefabs
     {
@@ -78,6 +85,8 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
 /// </summary>
 public static class GRM
 {
+    public static GameResourceManager Instance => GameResourceManager.Instance;
+
     public static GameResourceManager.CommonSoundPrefabs CommonSounds => GameResourceManager.Instance.CommonSounds;
 
     public static GameResourceManager.UISoundPrefabs UISounds => GameResourceManager.Instance.UISounds;

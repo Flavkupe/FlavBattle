@@ -154,18 +154,21 @@ public class BattleStatus
     }
 
     /// <summary>
-    /// Checks if any army is fleeing and sets state accordingly.
-    /// If so, returns the army and sets fleeing state. If not, returns null.
+    /// Checks if any army should be fleeing.
+    /// If so, returns the army. If not, returns null.
     /// </summary>
-    /// <returns></returns>
     public IArmy CheckForFleeingArmy()
     {
-        if (PlayerArmy.Morale.Current - OtherArmy.Morale.Current > 20.0f)
+        // TODO: incorporate Leadership stat and bravery
+        var threshold = GRM.Instance?.FleeingArmyThreshold ?? 75;
+        var playerMorale = PlayerArmy.Morale.Current;
+        var otherMorale = OtherArmy.Morale.Current;
+        if (otherMorale < threshold && otherMorale < playerMorale)
         {
             // Enemy flees due to morale diff
             return OtherArmy;
         }
-        else if (OtherArmy.Morale.Current - PlayerArmy.Morale.Current > 20.0f)
+        else if (playerMorale < threshold && playerMorale < otherMorale)
         {
             // Player flees due to morale difference
             return PlayerArmy;

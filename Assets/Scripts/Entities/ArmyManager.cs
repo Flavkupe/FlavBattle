@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 using FlavBattle.Combat;
+using FlavBattle.Core;
 
 public class ArmyEnteredGarrisonEventArgs : EventArgs
 {
@@ -311,30 +312,6 @@ public class ArmyManager : MonoBehaviour
         StartCoroutine(CombatEnded(e.Winner, e.Loser, e.VictoryType));
     }
 
-    private IEnumerator CombatEnded(IArmy winner, IArmy loser, VictoryType victoryType)
-    {
-        var loserArmy = _armies.FirstOrDefault(a => a.ID == loser.ID);
-        Debug.Assert(loserArmy != null);
-        if (loserArmy != null)
-        {
-            if (victoryType == VictoryType.Destroyed)
-            {
-                // Army vanquished
-                _armies.Remove(loserArmy);
-                yield return loserArmy.Vanish();
-                Destroy(loserArmy.gameObject);
-            }
-            else if (victoryType == VictoryType.Fled)
-            {
-                // set fleeing state
-                FleeFromOther(loser, winner);
-            }
-
-            _combatProcessed = false;
-            PauseAll(false);
-        }
-    }
-
     /// <summary>
     /// Causes army 'army' to flee from 'other' by going to the furthest valid square away from
     /// the other army, within a 1 block space.
@@ -371,13 +348,43 @@ public class ArmyManager : MonoBehaviour
     private IEnumerator StartCombat(Army player, Army enemy)
     {
         PauseAll(true);
+
+        // Adjust camera to combat
+        _camera.SetLocked(true);
         yield return _camera.PanTo(player.transform.position);
+        yield return _camera.ShiftToCombatZoom();
+
         var middle = (player.transform.position + enemy.transform.position) / 2;
         middle.y += 0.25f;
         var icon = Instantiate(BattleIndicator);
         icon.transform.position = middle;
         yield return icon.SpinAround();
         _battleManager.StartCombat(player, enemy);
+    }
+
+    private IEnumerator CombatEnded(IArmy winner, IArmy loser, VictoryType victoryType)
+    {
+        var loserArmy = _armies.FirstOrDefault(a => a.ID == loser.ID);
+        Debug.Assert(loserArmy != null);
+        if (loserArmy != null)
+        {
+            if (victoryType == VictoryType.Destroyed)
+            {
+                // Army vanquished
+                _armies.Remove(loserArmy);
+                yield return loserArmy.Vanish();
+                Destroy(loserArmy.gameObject);
+            }
+            else if (victoryType == VictoryType.Fled)
+            {
+                // set fleeing state
+                FleeFromOther(loser, winner);
+            }
+
+            _combatProcessed = false;
+            _camera.SetLocked(false);
+            PauseAll(false);
+        }
     }
 
     private bool IsPlayerArmy(Army army)

@@ -17,7 +17,7 @@ public class CombatTextCallout : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _initialPos = this.transform.position;
+        _initialPos = this.transform.localPosition;
         this.Hide();
     }
 
@@ -39,7 +39,7 @@ public class CombatTextCallout : MonoBehaviour
     public IEnumerator Animate()
     {
         this.Show();
-        this.transform.position = _initialPos;
+        this.transform.localPosition = _initialPos;
         var time = 0.0f;
         while (time < AnimationTime)
         {

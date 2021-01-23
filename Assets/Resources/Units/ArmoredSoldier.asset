@@ -27,7 +27,7 @@ MonoBehaviour:
   Sprite: {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   _animatorOverride: {fileID: 22100000, guid: f24077674f5409149816b777f2c03c10, type: 2}
   Portraits:
-  - {fileID: 21300000, guid: 887e87693b2c7409fb0d88703ed184f2, type: 3}
+  - {fileID: 21300000, guid: c73c37776753f452fa3548f287ae8abd, type: 3}
   Animations:
   - {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   - {fileID: 6013093803584149665, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}

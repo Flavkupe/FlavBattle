@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d93f5e9f6dd7e4db3701f5f94fd05f, type: 3}
+  m_Name: StartingPlayerFormation
+  m_EditorClassIdentifier: 
+  InitialFormation:
+    Level: 1
+    FL: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
+    FM: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
+    FR: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
+    ML: {fileID: 0}
+    MM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
+    MR: {fileID: 0}
+    BL: {fileID: 0}
+    BM: {fileID: 0}
+    BR: {fileID: 0}
+    OfficerPosition: 1

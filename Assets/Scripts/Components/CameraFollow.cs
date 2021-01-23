@@ -59,11 +59,35 @@ public class CameraFollow : MonoBehaviour
             return;
         }
 
-        var xPercent = Input.mousePosition.x / Screen.width;
-        var yPercent = Input.mousePosition.y / Screen.height;
+        var xTravel = 0.0f;
+        var yTravel = 0.0f;
+        var rate = Time.deltaTime * this.Speed;
+        if (Input.GetKey(KeyCode.A))
+        {
+            xTravel -= rate;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            xTravel += rate;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            yTravel -= rate;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            yTravel += rate;
+        }
 
-        var xTravel = GetAxisSpeed(xPercent);
-        var yTravel = GetAxisSpeed(yPercent);
+        if (xTravel == 0.0f && yTravel == 0.0f)
+        {
+            // Not pressing keys; use mouse on edge
+            var xPercent = Input.mousePosition.x / Screen.width;
+            var yPercent = Input.mousePosition.y / Screen.height;
+
+            xTravel = GetAxisSpeed(xPercent);
+            yTravel = GetAxisSpeed(yPercent);
+        }
 
         if (xTravel != 0.0f || yTravel != 0.0f)
         {

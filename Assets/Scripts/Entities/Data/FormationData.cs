@@ -68,7 +68,7 @@ public class InitialFormation
             var unitData = GetUnit(pos);
             if (unitData != null)
             {
-                var unit = UnitGenerator.MakeUnit(faction, Level, unitData == officer);
+                var unit = UnitGenerator.MakeUnit(unitData, faction, Level, unitData == officer);
                 formation.PutUnit(unit, FormationUtils.GetPair(pos));
             }
         }

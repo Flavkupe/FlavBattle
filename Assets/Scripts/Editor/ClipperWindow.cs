@@ -25,7 +25,6 @@ public class ClipperWindow : EditorWindow
     private string _currentPath;
 
     private int _paddingLeft = 5;
-    private int _paddingBottom = 15;
     private int _controlHeight = 15;
 
     private Vector2 _scrollPos = Vector2.zero;
