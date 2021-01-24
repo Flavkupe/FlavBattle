@@ -6,6 +6,8 @@ using UnityEngine;
 
 using FlavBattle.Combat;
 using FlavBattle.Core;
+using NaughtyAttributes;
+using FlavBattle.State;
 
 public class ArmyEnteredGarrisonEventArgs : EventArgs
 {
@@ -27,8 +29,6 @@ public class ArmyManager : MonoBehaviour
     public AnimatedSpin BattleIndicator;
 
     private List<Army> _armies = new List<Army>();
-
-    private bool _pauseAll = false;
 
     private Army _selected = null;
 

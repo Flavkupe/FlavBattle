@@ -23,6 +23,7 @@ MonoBehaviour:
   PowerScaling: {x: 0, y: 0}
   DefenseScaling: {x: 0, y: 0}
   SpeedScaling: {x: 0, y: 0}
+  BoutsToFlee: 2
   StartingBlockShields: 0
   Sprite: {fileID: -2550096182840164143, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
   _animatorOverride: {fileID: 22100000, guid: ac6e8f14b5c34254ba5b77864db179c7, type: 2}

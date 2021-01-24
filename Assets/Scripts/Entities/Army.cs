@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.State;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,10 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     private TravelPath _path = null;
     private TilemapManager _map = null;
     private bool _fleeing = false;
+
+    private bool _selected = false;
+
+    private ThrottleTimer _plotActionThrottle = new ThrottleTimer(0.25f);
 
     private GridTile _currentTile = null;
     private Vector3Int _currentTileCoords;
@@ -108,7 +113,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     // Start is called before the first frame update
     void Start()
     {
-        
         _detectors = this.GetComponentsInChildren<Detector>();
         foreach (var detector in _detectors)
         {
@@ -205,11 +209,15 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public void Select()
     {
+        _selected = true;
+        this.SetFootprints();
         _sprite.SetColor(Color.cyan);
     }
 
     public void Unselect()
     {
+        _selected = false;
+        this._map.Footprints.Clear();
         _sprite.SetColor(Color.white);
     }
 
@@ -320,7 +328,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         yield return _sprite.FadeAway();
     }
 
-    // TODO: there should be a cooldown for this
     private void PlotNextAction()
     {
         if (_aiActions.Count == 0)
@@ -331,6 +338,12 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         if (_currentAction != null && _currentAction.ShouldContinueAction)
         {
             _currentAction.DoActionTick(this, _map);
+            return;
+        }
+
+        // Throttle this to avoid spamming too much
+        if (!_plotActionThrottle.Tick(TimeUtils.FullAdjustedGameDelta))
+        {
             return;
         }
 
@@ -356,6 +369,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 this._path = null;
                 this._sprite.SetIdle(true);
                 this.SetFleeing(false);
+                this._map.Footprints.Clear();
                 return;
             }
             else
@@ -365,7 +379,28 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 this._destination = new Vector3(tile.WorldX, tile.WorldY, 0);
                 var facingLeft = tile.WorldX < this.transform.position.x;
                 this._sprite.SetFlipped(facingLeft);
+                this.SetFootprints();
             }
+        }
+    }
+
+    private void SetFootprints()
+    {
+        if (!_selected)
+        {
+            return;
+        }
+
+        this._map.Footprints.Clear();
+        var nodeList = new List<Vector3>();
+        if (_destination != null)
+        {
+            nodeList.Add(_destination.Value);
+        }
+        if (_path != null)
+        {
+            nodeList.AddRange(_path.Nodes.ToList().Select(a => a.ToWorldPos()));
+            this._map.Footprints.CreatePath(nodeList);
         }
     }
 

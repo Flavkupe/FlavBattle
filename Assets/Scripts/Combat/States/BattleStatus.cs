@@ -1,8 +1,10 @@
-﻿using System;
+﻿using FlavBattle.State;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class BattleStatus
 {
@@ -157,24 +159,58 @@ public class BattleStatus
     /// Checks if any army should be fleeing.
     /// If so, returns the army. If not, returns null.
     /// </summary>
-    public IArmy CheckForFleeingArmy()
+    public IArmy CheckForFleeingArmy(int currentBout)
     {
         // TODO: incorporate Leadership stat and bravery
-        var threshold = GRM.Instance?.FleeingArmyThreshold ?? 75;
         var playerMorale = PlayerArmy.Morale.Current;
         var otherMorale = OtherArmy.Morale.Current;
-        if (otherMorale < threshold && otherMorale < playerMorale)
+        var playerShouldFlee = ArmyShouldFlee(PlayerArmy, currentBout);
+        var otherShouldFlee = ArmyShouldFlee(OtherArmy, currentBout);
+
+        if (otherShouldFlee && playerShouldFlee)
         {
-            // Enemy flees due to morale diff
+            // If both want to flee, the one with less morale flees
+            if (otherMorale < playerMorale)
+            {
+                // Enemy flees due to morale diff
+                return OtherArmy;
+            }
+            else if (otherMorale > playerMorale)
+            {
+                return PlayerArmy;
+            }
+
+            // On equal morale, both stay
+        }
+        else if (otherShouldFlee)
+        {
             return OtherArmy;
         }
-        else if (playerMorale < threshold && playerMorale < otherMorale)
+        else if (playerShouldFlee)
         {
-            // Player flees due to morale difference
             return PlayerArmy;
         }
 
-        // Nobody is fleeing
+        // nobody flees
         return null;
+    }
+
+    private bool ArmyShouldFlee(IArmy army, int currentBout)
+    {
+        var moraleThreshold = GRM.Instance?.FleeingArmyThreshold ?? 75;
+        if (army.Morale.Current > moraleThreshold)
+        {
+            return false;
+        }
+
+        var units = army.GetUnits(true);
+        var averageBout = units.Average(a => (float)a.Data.BoutsToFlee);
+        var boutToFlee = Mathf.RoundToInt(averageBout);
+        if (boutToFlee > currentBout)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -14,3 +14,11 @@ public interface IArmy : IOwnedEntity
 
     TileInfo CurrentTileInfo { get; }
 }
+
+public static class ArmyExtensions
+{
+    public static List<Unit> GetUnits(this IArmy army, bool liveOnly = false)
+    {
+        return army.Formation.GetUnits(liveOnly);
+    }
+}

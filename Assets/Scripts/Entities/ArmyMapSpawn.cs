@@ -23,6 +23,10 @@ public class ArmyMapSpawn : MonoBehaviour
     [Tooltip("Whether the army is spawned at the map start. If false, SpawnArmy must be triggered.")]
     public bool SpawnOnStart = true;
 
+    [Tooltip("How much morale this army spawns with")]
+    [SerializeField]
+    private int _startingMorale = 100;
+
     [Required]
     public FormationData Formation;
 
@@ -60,6 +64,7 @@ public class ArmyMapSpawn : MonoBehaviour
         
         army.SetFaction(Faction);
         army.transform.position = this.transform.position;
+        army.Morale.Current = _startingMorale;
         return army;
     }
 }

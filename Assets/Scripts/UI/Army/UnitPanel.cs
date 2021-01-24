@@ -13,8 +13,6 @@ public class UnitPanel : DropTarget
 
     public event EventHandler<Unit> UnitDropped;
 
-    public event EventHandler<Unit> UnitClicked;
-
     // Start is called before the first frame update
     void Start()
     {

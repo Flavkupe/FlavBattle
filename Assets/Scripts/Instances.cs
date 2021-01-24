@@ -1,4 +1,5 @@
 ﻿using FlavBattle.Combat;
+using FlavBattle.State;
 using System;
 using System.Collections;
 using System.Collections.Generic;

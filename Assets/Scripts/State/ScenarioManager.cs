@@ -1,4 +1,6 @@
-﻿using NaughtyAttributes;
+﻿using FlavBattle.Core;
+using FlavBattle.State;
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;

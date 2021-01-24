@@ -1,4 +1,6 @@
-﻿using NaughtyAttributes;
+﻿using FlavBattle.State;
+using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +18,9 @@ public class CameraFollow : MonoBehaviour
     public float OffscreenPadding = 0.1f;
 
     public float Speed = 3.0f;
+    public float MiddlePanSpeed = 6.0f;
+
+    private Vector3? _lastMiddleClickPos;
 
     [Tooltip("Amount of padding for scroll limits, past outermost extents of tilemap (in world units)")]
     public float EdgePadding = 1.0f;
@@ -61,6 +66,65 @@ public class CameraFollow : MonoBehaviour
 
         var xTravel = 0.0f;
         var yTravel = 0.0f;
+
+        if (Input.GetMouseButtonUp(2))
+        {
+            _lastMiddleClickPos = null;
+        }
+        else if (Input.GetMouseButton(2))
+        {
+            MiddleMouseMovement(ref xTravel, ref yTravel);
+        }
+        else
+        {
+            KeyboardMouseMove(ref xTravel, ref yTravel);
+        }
+
+        if (xTravel == 0.0f && yTravel == 0.0f)
+        {
+            EdgeMouseMovement(ref xTravel, ref yTravel);
+        }
+
+        if (xTravel != 0.0f || yTravel != 0.0f)
+        {
+            MoveMap(xTravel, yTravel);
+        }
+    }
+
+    private void MiddleMouseMovement(ref float xTravel, ref float yTravel)
+    {
+        var rate = Time.deltaTime * this.MiddlePanSpeed;
+        if (_lastMiddleClickPos == null)
+        {
+            _lastMiddleClickPos = Input.mousePosition;
+        }
+        else
+        {
+            var mouse = Input.mousePosition;
+            if (_lastMiddleClickPos.Value.x < mouse.x)
+            {
+                xTravel -= rate;
+            }
+            else if (_lastMiddleClickPos.Value.x > mouse.x)
+            {
+                xTravel += rate;
+            }
+
+            if (_lastMiddleClickPos.Value.y < mouse.y)
+            {
+                yTravel -= rate;
+            }
+            else if (_lastMiddleClickPos.Value.y > mouse.y)
+            {
+                yTravel += rate;
+            }
+
+            _lastMiddleClickPos = Input.mousePosition;
+        }
+    }
+
+    private void KeyboardMouseMove(ref float xTravel, ref float yTravel)
+    {
         var rate = Time.deltaTime * this.Speed;
         if (Input.GetKey(KeyCode.A))
         {
@@ -78,33 +142,34 @@ public class CameraFollow : MonoBehaviour
         {
             yTravel += rate;
         }
+    }
 
-        if (xTravel == 0.0f && yTravel == 0.0f)
+    private void EdgeMouseMovement(ref float xTravel, ref float yTravel)
+    {
+        // Not pressing keys; use mouse on edge
+        var xPercent = Input.mousePosition.x / Screen.width;
+        var yPercent = Input.mousePosition.y / Screen.height;
+
+        xTravel = GetAxisSpeed(xPercent);
+        yTravel = GetAxisSpeed(yPercent);
+    }
+
+
+    private void MoveMap(float xTravel, float yTravel)
+    {
+        transform.position += new Vector3(xTravel, yTravel, 0.0f);
+        if (_boundsSet)
         {
-            // Not pressing keys; use mouse on edge
-            var xPercent = Input.mousePosition.x / Screen.width;
-            var yPercent = Input.mousePosition.y / Screen.height;
+            var camHeight = _cam.orthographicSize;
+            var camWidth = _cam.aspect * camHeight;
 
-            xTravel = GetAxisSpeed(xPercent);
-            yTravel = GetAxisSpeed(yPercent);
-        }
-
-        if (xTravel != 0.0f || yTravel != 0.0f)
-        {
-            transform.position += new Vector3(xTravel, yTravel, 0.0f);
-            if (_boundsSet)
-            {
-                var camHeight = _cam.orthographicSize;
-                var camWidth = _cam.aspect * camHeight;
-
-                var minX = _bounds.min.x + camWidth - EdgePadding;
-                var maxX = _bounds.max.x - camWidth + EdgePadding;
-                var minY = _bounds.min.y + camHeight - EdgePadding;
-                var maxY = _bounds.max.y - camHeight + EdgePadding;
-                var x = Mathf.Clamp(transform.position.x, minX, maxX);
-                var y = Mathf.Clamp(transform.position.y, minY, maxY);
-                transform.position = new Vector3(x, y, transform.position.z);
-            }
+            var minX = _bounds.min.x + camWidth - EdgePadding;
+            var maxX = _bounds.max.x - camWidth + EdgePadding;
+            var minY = _bounds.min.y + camHeight - EdgePadding;
+            var maxY = _bounds.max.y - camHeight + EdgePadding;
+            var x = Mathf.Clamp(transform.position.x, minX, maxX);
+            var y = Mathf.Clamp(transform.position.y, minY, maxY);
+            transform.position = new Vector3(x, y, transform.position.z);
         }
     }
 

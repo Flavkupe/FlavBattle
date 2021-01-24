@@ -50,6 +50,9 @@ public class UnitData : ScriptableObject
     [MinMaxSlider(0.0f, 5.0f)]
     public Vector2 SpeedScaling;
 
+    [Tooltip("How many bouts the unit will wait before wanting to flee combat when morale is low. 3 means they might flee on bout 3. Army calculates based on average.")]
+    public int BoutsToFlee = 3;
+
     [BoxGroup("Special Stats")]
     public int StartingBlockShields;
 

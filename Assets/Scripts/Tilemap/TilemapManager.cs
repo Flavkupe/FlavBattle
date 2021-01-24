@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using NaughtyAttributes;
 
 public class GridTile
 {
@@ -45,6 +46,12 @@ public class TilemapManager : MonoBehaviour
 {
     public Tilemap Tilemap;
     public Tilemap[] PropsTilemaps;
+
+    [Tooltip("Map object for drawing footprints")]
+    [SerializeField]
+    [Required]
+    private Footprints _footprints;
+    public Footprints Footprints => _footprints;
 
     private BFSPathfinding _pathfinding = new BFSPathfinding();
 

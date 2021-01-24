@@ -16,11 +16,11 @@ MonoBehaviour:
     Level: 1
     FL: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
     FM: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
-    FR: {fileID: 11400000, guid: 1610f9aa943b75242a5690e2e03e6f12, type: 2}
+    FR: {fileID: 0}
     ML: {fileID: 0}
     MM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
     MR: {fileID: 0}
     BL: {fileID: 0}
     BM: {fileID: 0}
     BR: {fileID: 0}
-    OfficerPosition: 1
+    OfficerPosition: 4

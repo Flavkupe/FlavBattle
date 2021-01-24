@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using NaughtyAttributes;
 using FlavBattle.Combat.States;
+using FlavBattle.State;
 
 namespace FlavBattle.Combat
 {
