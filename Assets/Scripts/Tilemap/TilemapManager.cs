@@ -92,6 +92,32 @@ public class TilemapManager : MonoBehaviour
     {
         return this._pathfinding.GetPath(this, start, end);
     }
+
+    /// <summary>
+    /// Given world coords, gets tiles at those coords and finds path
+    /// between points.
+    /// </summary>
+    public TravelPath GetPathFromWorldPos(Vector3 start, Vector3 end)
+    {
+        var startTile = GetGridTileAtWorldPos(start);
+        var endTile = GetGridTileAtWorldPos(end);
+        return this.GetPath(startTile, endTile);
+    }
+
+    /// <summary>
+    /// Given multiple endpoints, find the path with the shortest cost
+    /// </summary>
+    public TravelPath GetFastestPathFromWorldPos(Vector3 start, IEnumerable<Vector3> ends)
+    {
+        var paths = new List<TravelPath>();
+        foreach (var end in ends)
+        {
+            paths.Add(GetPathFromWorldPos(start, end));
+        }
+
+        return paths.GetMin(a => a.Cost);
+    }
+
     public GridTile GetGridTileAtWorldPos(Vector3 pos)
     {
         return GetGridTileAtWorldPos(pos.x, pos.y);

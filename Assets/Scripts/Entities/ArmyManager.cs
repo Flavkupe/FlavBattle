@@ -164,6 +164,7 @@ public class ArmyManager : MonoBehaviour
         army.ArmyEncountered += HandleArmyEncountered;
         army.EnterTile += HandleArmyEnterTile;
         army.ExitTile += HandleArmyExitTile;
+        army.ArmyFledMap += HandleArmyFledMap;
         _armies.Add(army);
 
         // Update UI
@@ -180,6 +181,11 @@ public class ArmyManager : MonoBehaviour
             Destroy(army.gameObject);
             _armies.Remove(army);
         }
+    }
+
+    private void HandleArmyFledMap(object sender, EventArgs e)
+    {
+        // TODO
     }
 
     private void HandleArmyExitTile(object sender, ExitTileEventArgs e)

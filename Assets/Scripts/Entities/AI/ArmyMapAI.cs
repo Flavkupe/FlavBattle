@@ -8,7 +8,5 @@ public abstract class ArmyMapAIBase : MonoBehaviour
 
     public abstract bool IsActionPossible(Army army, TilemapManager map);
 
-    public abstract void DoActionTick(Army army, TilemapManager map);
-
-    public abstract bool ShouldContinueAction { get; }
+    public abstract void DoAction(Army army, TilemapManager map);
 }

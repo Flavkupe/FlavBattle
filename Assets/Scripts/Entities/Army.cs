@@ -37,6 +37,8 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public event EventHandler<ArmyEncounteredEventArgs> ArmyEncountered;
 
+    public event EventHandler ArmyFledMap;
+
     public event EventHandler<EnterTileEventArgs> EnterTile;
 
     public event EventHandler<ExitTileEventArgs> ExitTile;
@@ -44,15 +46,14 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     private Vector3? _destination = null;
     private TravelPath _path = null;
     private TilemapManager _map = null;
-    private bool _fleeing = false;
-
+    
     private bool _selected = false;
-
-    private ThrottleTimer _plotActionThrottle = new ThrottleTimer(0.25f);
 
     private GridTile _currentTile = null;
     private Vector3Int _currentTileCoords;
+
     public TileInfo CurrentTileInfo => _currentTile?.Info;
+    public bool IsFleeing { get; private set; } = false;
 
     private AnimatedSprite _sprite;
     // Gets the AnimatedSprite for this, caching it if needed
@@ -84,9 +85,9 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     /// <summary>
     /// Whether the Army is in motion somewhere
     /// </summary>
-    public bool HasDestination => _destination != null;
+    public bool HasDestination => _destination != null || _path != null;
 
-    public bool IsCommandable => IsPlayerArmy && !_fleeing;
+    public bool IsCommandable => IsPlayerArmy && !IsFleeing;
 
     public FightingStance Stance { get; set; }
 
@@ -99,8 +100,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     private Detector[] _detectors;
     private bool _paused = false;
 
-    private List<ArmyMapAIBase> _aiActions = new List<ArmyMapAIBase>();
-    private ArmyMapAIBase _currentAction = null;
+
 
     void Awake()
     {
@@ -110,7 +110,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         _detectors = this.GetComponentsInChildren<Detector>();
@@ -127,9 +126,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 detector.Exited += TileDetectorExited;
             }
         }
-
-        _aiActions.AddRange(GetComponents<ArmyMapAIBase>());
-        _aiActions = _aiActions.OrderBy(a => a.Priority).ToList();
     }
 
     private void TileDetectorExited(object sender, GameObject e)
@@ -243,33 +239,23 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Causes army to full flee from map (such as into exit point),
+    /// vanishing and being destroyed.
+    /// </summary>
+    public void FleeMap()
     {
-        if (_paused || GameState.IsMapPaused)
-        {
-            return;
-        }
-
-        // TODO; some events should cause all armies to
-        // have to revisit plans
-        if (this._destination != null)
-        {
-            this.StepTowardsDestination();
-        }
-        else if (this._path != null)
-        {
-            this.PlotNextPath();
-        }
-        else
-        {
-            this.PlotNextAction();
-        }
+        ArmyFledMap?.Invoke(this, null);
+        StartCoroutine(Vanish(true));
     }
 
-    public Coroutine Vanish()
+    public IEnumerator Vanish(bool destroyOnVanish = false)
     {
-        return StartCoroutine(VanishInternal());
+        yield return StartCoroutine(_sprite.FadeAway());
+        if (destroyOnVanish)
+        {
+            Destroy(this.gameObject, 0.5f);
+        }
     }
 
     public void SetMap(TilemapManager map)
@@ -307,7 +293,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public void SetFleeing(bool fleeing)
     {
-        _fleeing = fleeing;
+        IsFleeing = fleeing;
         if (fleeing)
         {
             FlagIcon.Show();
@@ -323,39 +309,37 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         this._paused = pause;
     }
 
-    private IEnumerator VanishInternal()
+    public void StepTowardsDestination()
     {
-        yield return _sprite.FadeAway();
+        if (this._destination == null && this._path != null)
+        {
+            this.PlotNextPath();
+        }
+
+        if (this._destination != null)
+        {
+            var cost = Math.Max(1, _currentTile.Info.WalkCost);
+            var modifier = MoveStep / cost;
+            var delta = modifier * TimeUtils.AdjustedGameDelta;
+            this._sprite.SetSpeedModifier(modifier);
+            var newPos = Vector3.MoveTowards(this.transform.position, this._destination.Value, delta);
+            this.transform.position = newPos;
+            if ((newPos - this._destination.Value).magnitude <= delta)
+            {
+                this.transform.position = this._destination.Value;
+                this._destination = null;
+                this._sprite.SetIdle(true);
+            }
+
+            CheckCurrentLocation();
+        }
+
+
     }
 
-    private void PlotNextAction()
+    public void SetDestination(Vector3? position)
     {
-        if (_aiActions.Count == 0)
-        {
-            return;
-        }
-
-        if (_currentAction != null && _currentAction.ShouldContinueAction)
-        {
-            _currentAction.DoActionTick(this, _map);
-            return;
-        }
-
-        // Throttle this to avoid spamming too much
-        if (!_plotActionThrottle.Tick(TimeUtils.FullAdjustedGameDelta))
-        {
-            return;
-        }
-
-        foreach (var action in _aiActions)
-        {
-            if (action.IsActionPossible(this, _map))
-            {
-                _currentAction = action;
-                action.DoActionTick(this, _map);
-                return;
-            }
-        }
+        this._destination = position;
     }
 
     private void PlotNextPath()
@@ -368,7 +352,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 AdjustForCollisions();
                 this._path = null;
                 this._sprite.SetIdle(true);
-                this.SetFleeing(false);
                 this._map.Footprints.Clear();
                 return;
             }
@@ -451,34 +434,14 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         _currentTile = this._map.GetGridTileAtWorldPos(x, y);
     }
 
-    private void StepTowardsDestination()
-    {
-        if (this._destination != null)
-        {
-            var cost = Math.Max(1, _currentTile.Info.WalkCost);
-            var modifier = MoveStep / cost;
-            var delta = modifier * TimeUtils.AdjustedGameDelta;
-            this._sprite.SetSpeedModifier(modifier);
-            var newPos = Vector3.MoveTowards(this.transform.position, this._destination.Value, delta);
-            this.transform.position = newPos;
-            if ((newPos - this._destination.Value).magnitude <= delta)
-            {
-                this.transform.position = this._destination.Value;
-                this._destination = null;
-                this._sprite.SetIdle(true);
-            }
-
-            CheckCurrentLocation();
-        }
-    }
-
-    private void SetDestination(Vector3? position)
-    {
-        this._destination = position;
-    }
-
     public GameObject GetObject()
     {
         return this.gameObject;
+    }
+
+    [ContextMenu("Set to fleeing")]
+    public void SetToFleeing()
+    {
+        this.SetFleeing(true);
     }
 }

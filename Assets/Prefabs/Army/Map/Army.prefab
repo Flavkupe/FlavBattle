@@ -156,6 +156,10 @@ GameObject:
   - component: {fileID: 8828536160456971155}
   - component: {fileID: 8130424245700661502}
   - component: {fileID: 698847836900476792}
+  - component: {fileID: 7834535452045925564}
+  - component: {fileID: 4033046613946094174}
+  - component: {fileID: 6341988838629422653}
+  - component: {fileID: 2315189156844904385}
   m_Layer: 0
   m_Name: Army
   m_TagString: Untagged
@@ -246,6 +250,57 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7834535452045925564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463685012430697860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8ba8a779be4af439dc703baae0ef01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4033046613946094174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463685012430697860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad9586cdb12c4e64aa62eb4ba494bca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _option: 0
+  exitPoints: []
+--- !u!114 &6341988838629422653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463685012430697860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744c544930fb2a84a9ed9beb33d19508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2315189156844904385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463685012430697860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148c80fac828d6c42a2ddbd122aeb36a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _customStates: []
 --- !u!1 &4815281983412499486
 GameObject:
   m_ObjectHideFlags: 0

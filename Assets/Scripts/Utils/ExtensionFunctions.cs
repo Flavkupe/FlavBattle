@@ -250,17 +250,35 @@ public static class ExtensionFunctions
     /// </summary>
     public static T GetMax<T, R>(this IList<T> items, System.Func<T, R> selector) where R : System.IComparable
     {
+        return items.GetCompare(selector, 1);
+    }
+
+    /// <summary>
+    /// Gets the item with the smallest value based on the selector. It's like
+    /// Linq's Min but it gets the item rather than the value from the selector.
+    /// </summary>
+    public static T GetMin<T, R>(this IList<T> items, System.Func<T, R> selector) where R : System.IComparable
+    {
+        return items.GetCompare(selector, -1);
+    }
+
+    /// <summary>
+    /// Compares items with CompareTo based on compareVal (-1 for less than, 1 for
+    /// greater than, 0 for equal, etc). Use for stuff like GetMin, GetMax, etc.
+    /// </summary>
+    private static T GetCompare<T, R>(this IList<T> items, System.Func<T, R> selector, int compareVal) where R : System.IComparable
+    {
         if (items.Count == 0)
         {
             return default(T);
         }
 
         var maxIndex = 0;
-        for(var i = 1; i < items.Count; i++)
+        for (var i = 1; i < items.Count; i++)
         {
-            var maxDist = selector(items[maxIndex]);
-            var currDist = selector(items[i]);
-            if (currDist.CompareTo(maxDist) == 1)
+            var max = selector(items[maxIndex]);
+            var curr = selector(items[i]);
+            if (curr.CompareTo(max) == compareVal)
             {
                 maxIndex = i;
             }

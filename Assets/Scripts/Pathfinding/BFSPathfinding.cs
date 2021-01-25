@@ -6,6 +6,12 @@ using UnityEngine;
 public class TravelPath
 {
     public Queue<GridTile> Nodes = new Queue<GridTile>();
+
+    /// <summary>
+    /// How much this path costs to traverse (sum of all nodes, accounting
+    /// for special party options)
+    /// </summary>
+    public float Cost { get; set; }
 }
 
 
@@ -41,6 +47,7 @@ public class BFSPathfinding
 
     private Queue<TileNode> _toCheck = new Queue<TileNode>();
 
+    // TODO: Special options like unit ability to traverse tiles
     public TravelPath GetPath(TilemapManager map, Vector3Int start, Vector3Int end)
     {
         _visited.Clear();
@@ -64,21 +71,22 @@ public class BFSPathfinding
 
         var final = _visited[finalNode.ToString()];
 
+        var path = new TravelPath();
         var nodes = new List<GridTile>();
         nodes.Add(final.Tile);
+        path.Cost += final.Tile.Info.WalkCost;
+
         var prev = final.From;
         while (prev != null)
-        { 
+        {
+            path.Cost += prev.Tile.Info.WalkCost;
             nodes.Add(prev.Tile);
             prev = prev.From;
         }
 
         nodes.Reverse();
-        var path = new TravelPath()
-        {
-            Nodes = new Queue<GridTile>(nodes),
-        };
 
+        path.Nodes = new Queue<GridTile>(nodes);
         return path;
     }
 
