@@ -31,7 +31,7 @@ public class AnimatedSpin : MonoBehaviour
 
     public Coroutine SpinAround(Vector3 axis, int times, float speed)
     {
-        return StartCoroutine(SpinAroundInternal(axis, times, speed));   
+        return StartCoroutine(SpinAroundInternal(axis, times, speed));
     }
 
     private IEnumerator SpinAroundInternal(Vector3 axis, int times, float speed)

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialFormation:
     Level: 1
-    FL: {fileID: 11400000, guid: 2927b64dfcf086947aad695ef6896307, type: 2}
+    FL: {fileID: 11400000, guid: 62e04f7928a8ada4aa8662510a1baadf, type: 2}
     FM: {fileID: 0}
-    FR: {fileID: 11400000, guid: 2927b64dfcf086947aad695ef6896307, type: 2}
+    FR: {fileID: 11400000, guid: 62e04f7928a8ada4aa8662510a1baadf, type: 2}
     ML: {fileID: 0}
     MM: {fileID: 0}
     MR: {fileID: 0}

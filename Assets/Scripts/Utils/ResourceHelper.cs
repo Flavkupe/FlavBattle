@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FlavBattle.Entities.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

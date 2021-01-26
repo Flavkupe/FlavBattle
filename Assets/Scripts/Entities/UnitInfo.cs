@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Entities.Data;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,7 @@ public class UnitInfo
     public UnitInfo(UnitData data, Faction faction, int level = 1, bool isOfficer = false)
     {
         this.Data = data;
-        this.MaxStats = data.RollStats(level);
+        this.MaxStats = data.RollStartingStats(level);
         this.CurrentStats = this.MaxStats.Clone();
         this.Name = data.RollName();
         this.Portrait = data.RollPortrait();

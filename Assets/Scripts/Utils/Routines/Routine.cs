@@ -75,10 +75,20 @@ public class Routine : IEnumerator
         return _func();
     } 
 
+    protected virtual bool ShouldInterrupt()
+    {
+        return false;
+    }
+
     public bool MoveNext()
     {
         try
         {
+            if (ShouldInterrupt())
+            {
+                _rejected = true;
+            }
+
             if (_rejected)
             {
                 foreach (var doReject in _reject)
@@ -357,6 +367,11 @@ public class Routine : IEnumerator
         return new Routine<T1, T2, T3, T4>(func, arg1, arg2, arg3, arg4);
     }
 
+    public static CancellableRoutine CreateCancellable(Func<Action, IEnumerator> func, KeyCode cancelKey)
+    {
+        return new CancellableRoutine(func, cancelKey);
+    }
+
     public static CancellableRoutine CreateCancellable(Func<Action, IEnumerator> func)
     {
         return new CancellableRoutine(func);
@@ -485,10 +500,23 @@ public class Routine<T1, T2, T3, T4> : Routine
 
 public class CancellableRoutine : Routine<Action>
 {
-    public CancellableRoutine(Func<Action, IEnumerator> func)
+    private KeyCode? _cancelKey = null;
+
+    protected override bool ShouldInterrupt()
+    {
+        if (_cancelKey == null)
+        {
+            return false;
+        }
+
+        return Input.GetKey(_cancelKey.Value);
+    }
+
+    public CancellableRoutine(Func<Action, IEnumerator> func, KeyCode? cancelKey = null)
         : base(func, null)
     {
         _arg1 = CancellationCallback;
+        _cancelKey = cancelKey;
     }
 }
 

@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialFormation:
     Level: 1
-    FL: {fileID: 0}
-    FM: {fileID: 11400000, guid: 4cc4d9596e1a50940914e333060e0b96, type: 2}
-    FR: {fileID: 0}
+    FL: {fileID: 11400000, guid: de52d40e10623b84eba279373322c23d, type: 2}
+    FM: {fileID: 0}
+    FR: {fileID: 11400000, guid: de52d40e10623b84eba279373322c23d, type: 2}
     ML: {fileID: 0}
-    MM: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
+    MM: {fileID: 11400000, guid: 25dcf1f68664d584baeb9f29a2f09ec1, type: 2}
     MR: {fileID: 0}
-    BL: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
+    BL: {fileID: 11400000, guid: 25dcf1f68664d584baeb9f29a2f09ec1, type: 2}
     BM: {fileID: 0}
-    BR: {fileID: 11400000, guid: cdae5f6384a468f449b05fee7c69d881, type: 2}
-    OfficerPosition: 1
+    BR: {fileID: 11400000, guid: 25dcf1f68664d584baeb9f29a2f09ec1, type: 2}
+    OfficerPosition: 4

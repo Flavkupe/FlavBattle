@@ -9,53 +9,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af06fcb51bd3cd04c9ac136281956420, type: 3}
+  m_Script: {fileID: 11500000, guid: 101e4d77353885c4aa1b479171cc8397, type: 3}
   m_Name: Hunter
   m_EditorClassIdentifier: 
-  Icon: {fileID: 4979363154352999712, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
-  ClassName: Hunter
-  RollLow: 1
-  HP: {x: 6, y: 6}
-  Power: {x: 1, y: 1}
-  Defense: {x: 0, y: 0}
-  Speed: {x: 2, y: 2}
-  HPScaling: {x: 0, y: 0}
-  PowerScaling: {x: 0, y: 0}
-  DefenseScaling: {x: 0, y: 0}
-  SpeedScaling: {x: 0, y: 0}
-  StartingBlockShields: 0
-  Sprite: {fileID: -4228030573731687880, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
+  _icon: {fileID: -4228030573731687880, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
+  _className: Hunter
+  _rollLow: 0
+  _hp: {x: 6, y: 6}
+  _power: {x: 0, y: 0}
+  _defense: {x: 0, y: 0}
+  _speed: {x: 3, y: 3}
+  _hpScaling: {x: 0, y: 0}
+  _powerScaling: {x: 0, y: 0}
+  _defenseScaling: {x: 0, y: 0}
+  _speedScaling: {x: 0, y: 0}
+  _boutsToFlee: 3
+  _startingBlockShields: 0
+  _sprite: {fileID: -4228030573731687880, guid: 54b3992eaea39b448b4eb01c86a46239,
+    type: 3}
   _animatorOverride: {fileID: 22100000, guid: bc679e314fe04614d81d2a8653d6c85a, type: 2}
-  Portraits:
+  _portraits:
+  - {fileID: 21300000, guid: f638723232e6344b4b1eccee3510f4b0, type: 3}
   - {fileID: 21300000, guid: 94a13421e84754816bf53257ade2b30a, type: 3}
-  - {fileID: 21300000, guid: a5301e1eb821f4c1285b39d42f859e9f, type: 3}
   - {fileID: 21300000, guid: d32f1b7f4fcab4b55b0c5d1cf0672ed6, type: 3}
-  Animations:
-  - {fileID: -6278177606702991857, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
-  - {fileID: 7173849240055794619, guid: a3480ca349c7d7d41bfba3f939308621, type: 3}
-  StartingActions:
-  - Priority: 4
-    Description: Attow to back
+  _animations:
+  - {fileID: 1923901936556241170, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
+  - {fileID: 6519479576101721384, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
+  - {fileID: 1923901936556241170, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
+  - {fileID: -5649577426273951059, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
+  _startingActions:
+  - Priority: 3
+    Description: Bow back
     Target:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 7
     Ability: {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
   - Priority: 1
-    Description: Melee front
+    Description: Club front
     Target:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 1
     Ability: {fileID: 11400000, guid: 66852593919b2064688b402db09f140a, type: 2}
-  - Priority: 0
-    Description: Idle
-    Target:
-      TargetType: 0
-      ValidOpponent: 0
-      ValidTargets: 1
-    Ability: {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
-  DefaultOfficerAbilities:
-  - {fileID: 11400000, guid: 52cd095657ab02a4e9d1dd261a3ee5a0, type: 2}
-  OfficerAbilities:
-  - {fileID: 11400000, guid: dd3d08022f9ca124683766d46920995c, type: 2}
+  _defaultOfficerAbilities: []
+  _officerAbilities: []

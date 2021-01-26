@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\Utils\Models.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleUIPanel.cs" />
     <Compile Include="Assets\Scripts\Sound\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyAIDecisionState.cs" />
     <Compile Include="Assets\Scripts\Utils\ExtensionFunctions.cs" />
     <Compile Include="Assets\Footprints.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStats.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\Scripts\UI\Army\ArmyPanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FormationData.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateBase.cs" />
     <Compile Include="Assets\Scripts\UI\Map\ObjectivePanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Town.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Assets\Scripts\Utils\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\SpecialUnitData.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
@@ -131,6 +134,8 @@
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\FormationGridBase.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\FloatingIcon.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyIdleState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMovingToDestinationState.cs" />
     <Compile Include="Assets\Scripts\Combat\States\InitCombatState.cs" />
     <Compile Include="Assets\Scripts\Combat\Data\CombatAbilityData.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitGenerator.cs" />
@@ -185,13 +190,9 @@
     <Compile Include="Assets\Scripts\Combat\Event\CombatAbilityAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
-    <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateBase.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMovingToDestinationState.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyIdleState.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyAIDecisionState.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
+    <Compile Include="Assets\Scripts\Entities\Data\BasicUnitData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />
