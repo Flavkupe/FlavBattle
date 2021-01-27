@@ -121,6 +121,9 @@ public class CombatAbilityData : ScriptableObject
 
     public CombatAbilityPriority Priority = CombatAbilityPriority.Medium;
 
+    [AssetIcon]
+    public Sprite Icon;
+
     /***** Visuals ******/
 
     [BoxGroup("Visuals")]

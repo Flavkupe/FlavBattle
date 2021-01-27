@@ -20,6 +20,9 @@ namespace FlavBattle.Formation
         [Required]
         private FormationGridBase _uiTemplate;
 
+        [SerializeField]
+        private FormationOrientation _orientation = FormationOrientation.BottomRight;
+
         public void TestBuild()
         {
             for (int i = this.transform.childCount; i > 0; --i)
@@ -29,7 +32,7 @@ namespace FlavBattle.Formation
 
             if (_uiTemplate != null)
             {
-                var grid = FormationUtils.CreateFormationGrid(_uiTemplate, _gapX, _gapY, FormationOrientation.BottomRight);
+                var grid = FormationUtils.CreateFormationGrid(_uiTemplate, _gapX, _gapY, _orientation);
                 grid.transform.SetParent(this.transform);
             }
         }

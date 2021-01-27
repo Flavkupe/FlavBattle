@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Arrow
   Type: 0
   Priority: 2
+  Icon: {fileID: -8744202859135705330, guid: 890ac31627622784db63d90992e2476a, type: 3}
   VisualEffect: 0
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}

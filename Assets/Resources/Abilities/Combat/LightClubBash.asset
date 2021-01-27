@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Slash
   Type: 0
   Priority: 0
+  Icon: {fileID: 21300000, guid: 4798087309cd04d44aed5806f1b9b362, type: 3}
   VisualEffect: 1
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}

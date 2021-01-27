@@ -15,9 +15,7 @@ MonoBehaviour:
   Name: Withdraw
   Type: 1
   Priority: 0
-  Target: 2
-  ValidTargets: 0
-  ValidOpponent: 0
+  Icon: {fileID: -3860773912634225870, guid: ea8e8fa534dc1284a84510d51543ac9e, type: 3}
   VisualEffect: 2
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
@@ -33,6 +31,7 @@ MonoBehaviour:
   CharacterMoveSpeed: 40
   ComabtAnimation: {fileID: 285175196612671447, guid: 74ef84dc7e14ea64da1308c4a3ff1ebe,
     type: 3}
+  _animatorTriggerName: 0
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
   WaitForCompletion: 1
@@ -55,4 +54,9 @@ MonoBehaviour:
     Defense: 0
     Speed: 0
     Level: 1
+    StartingBlockShields: 0
     Command: 0
+  StartSoundClips: []
+  PreHitSoundClips: []
+  HitSoundClips: []
+  EndSoundClips: []

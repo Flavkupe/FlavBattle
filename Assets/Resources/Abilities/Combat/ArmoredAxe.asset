@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Armored Axe
   Type: 0
   Priority: 2
+  Icon: {fileID: -3519202879223205656, guid: 8902c50addbd07d47910008df2ae7591, type: 3}
   VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
@@ -51,6 +52,7 @@ MonoBehaviour:
     Defense: 0
     Speed: 0
     Level: 1
+    StartingBlockShields: 0
     Command: 0
   StartSoundClips: []
   PreHitSoundClips: []

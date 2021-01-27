@@ -19,6 +19,11 @@ public static class ArmyExtensions
 {
     public static List<Unit> GetUnits(this IArmy army, bool liveOnly = false)
     {
+        if (army?.Formation == null )
+        {
+            return new List<Unit>();
+        }
+
         return army.Formation.GetUnits(liveOnly);
     }
 }

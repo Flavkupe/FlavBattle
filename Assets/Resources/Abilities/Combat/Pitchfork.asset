@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Poke
   Type: 0
   Priority: 2
+  Icon: {fileID: 8489008546353363541, guid: 8902c50addbd07d47910008df2ae7591, type: 3}
   VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}

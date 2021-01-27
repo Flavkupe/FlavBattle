@@ -1,4 +1,6 @@
 ﻿using FlavBattle.State;
+using FlavBattle.UI.Army;
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +16,10 @@ public class ArmyEditWindow : MonoBehaviour
     }
 
     public DropTargetUIGrid Grid;
+
+    [Required]
+    [SerializeField]
+    private UIArmyInfoPanel _UIArmyInfoPanel;
 
     public UnitStatsPanel UnitStats;
 
@@ -151,14 +157,14 @@ public class ArmyEditWindow : MonoBehaviour
 
     private void HandleUnitClicked(object sender, Unit e)
     {
-        UnitStats.Show();
-        UnitStats.SetUnit(e);
+        SetUnitSelected(e);
     }
 
     public void SetArmy(IArmy army)
     {
         _currentArmy = army;
         Grid.SetArmy(army);
+        _UIArmyInfoPanel.SetArmy(army);
 
         DeployButton.SetActive(army != null && _mode == Mode.Garrison);
 
@@ -183,11 +189,13 @@ public class ArmyEditWindow : MonoBehaviour
         {
             UnitStats.Hide();
             UnitStats.SetUnit(null);
+            _UIArmyInfoPanel.ClearUnit();
         }
         else
         {
             UnitStats.Show();
             UnitStats.SetUnit(unit);
+            _UIArmyInfoPanel.SetUnit(unit);
         }
 
         Grid.SetUnitSelected(unit);
