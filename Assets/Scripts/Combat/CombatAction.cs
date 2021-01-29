@@ -14,6 +14,15 @@ public enum CombatAbilityPriority
     Top = 4,
 }
 
+[Flags]
+public enum CombatAbilityRequiredStance
+{
+    Neutral = 1,
+    Offensive = 2,
+    Defensive = 4,
+    Any = 7,
+}
+
 /// <summary>
 /// What the unit can choose to do in combat
 /// </summary>
@@ -27,6 +36,11 @@ public class CombatAction
 
     public CombatTargetInfo Target;
 
+    [Tooltip("Each bout, Instant abilities are used before non-instant abilities in combat.")]
+    public bool InstantAbility = false;
+
     [Tooltip("The ability that will be used if the conditions are met")]
     public CombatAbilityData Ability;
+
+    public CombatAbilityRequiredStance RequiredStance = CombatAbilityRequiredStance.Any;
 }

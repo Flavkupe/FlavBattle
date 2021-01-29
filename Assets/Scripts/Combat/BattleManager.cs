@@ -55,11 +55,14 @@ namespace FlavBattle.Combat
             // Must be before NextCombatantTurnState
             new ShowWinnerState(this),
 
-            // Before new combat turn and before bout starts
-            new StanceSelectionState(this, _battleStatus),
-
             // Should be towards the end, along with NextCombatantTurnState
             new InitRoundState(this),
+
+            // Before new combat turn and after bout starts
+            new StanceSelectionState(this, _battleStatus),
+
+            // Must be after selecting stance, and before NextCombatantTurnState
+            new DetermineTurnOrderState(this),
 
             // Should be towards the end, along with InitRoundState
             new NextCombatantTurnState(this),

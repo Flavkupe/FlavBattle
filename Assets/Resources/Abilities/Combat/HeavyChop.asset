@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
+  m_Name: HeavyChop
+  m_EditorClassIdentifier: 
+  Name: Heavy Chop
+  Type: 0
+  Priority: 2
+  Icon: {fileID: -3519202879223205656, guid: 8902c50addbd07d47910008df2ae7591, type: 3}
+  VisualEffect: 1
+  ProjectileEffect: 0
+  ArcHeight: {x: 0, y: 0}
+  TraceDirection: 0
+  ProjectileSpeed: 0
+  ProjectileObject: {fileID: 0}
+  CharacterMove: 1
+  CharacterMoveToEffect: 2
+  CharacterMoveBackEffect: 2
+  CharacterMoveTarget: 0
+  CharacterMoveArcHeight: 4
+  CharacterMoveSpeed: 10
+  ComabtAnimation: {fileID: 0}
+  _animatorTriggerName: 4
+  CombatAnimationSpeed: 1
+  CombatAnimationRepeats: 1
+  WaitForCompletion: 1
+  CombatAnimationTarget: 0
+  AnimationSequence: 0
+  PreAttackAnimations:
+    Type: 0
+    WaitForCompletion: 0
+    Animations: []
+  PostAttackAnimations:
+    Type: 0
+    WaitForCompletion: 0
+    Animations: []
+  Effect: 1
+  Damage: {x: 4, y: 4}
+  MoraleDamage: {x: 0, y: 0}
+  StatusEffect:
+    HP: 0
+    Power: 0
+    Defense: 0
+    Speed: 0
+    Level: 1
+    StartingBlockShields: 0
+    Command: 0
+  StartSoundClips: []
+  PreHitSoundClips: []
+  HitSoundClips: []
+  EndSoundClips: []

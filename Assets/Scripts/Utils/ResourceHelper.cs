@@ -13,7 +13,7 @@ public static class ResourceHelper
 
     private static Dictionary<AssetType, object> _cache = new Dictionary<AssetType, object>();
 
-    public static UnitData[] Units => GetResources<UnitData>(AssetType.Units);
+    public static UnitData[] Units => GetResources<BasicUnitData>(AssetType.Units);
 
     public static FactionData[] Factions=> GetResources<FactionData>(AssetType.Factions);
 

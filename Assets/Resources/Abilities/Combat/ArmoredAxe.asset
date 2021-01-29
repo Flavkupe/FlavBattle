@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: ArmoredAxe
   m_EditorClassIdentifier: 
-  Name: Armored Axe
+  Name: Chop
   Type: 0
   Priority: 2
   Icon: {fileID: -3519202879223205656, guid: 8902c50addbd07d47910008df2ae7591, type: 3}

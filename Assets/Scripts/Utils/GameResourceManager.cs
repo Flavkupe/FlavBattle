@@ -70,6 +70,31 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
         public AudioClip[] Block;
     }
 
+
+    [Serializable]
+    public class CommonSpritePrefabs
+    {
+        [Tooltip("For exmaple for stance")]
+        [Required]
+        [AllowNesting]
+        public Sprite OffenseIcon;
+
+        [Tooltip("For exmaple for stance")]
+        [Required]
+        [AllowNesting]
+        public Sprite DefenseIcon;
+
+        [Tooltip("For exmaple for stance")]
+        [Required]
+        [AllowNesting]
+        public Sprite NeutralIcon;
+
+        [Tooltip("For things identified by time")]
+        [Required]
+        [AllowNesting]
+        public Sprite SandClockIcon;
+    }
+
     [BoxGroup("Sounds")]
     public CommonSoundPrefabs CommonSounds;
 
@@ -78,6 +103,10 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
 
     [BoxGroup("Sounds")]
     public CombatSoundPrefabs CombatSounds;
+
+    [BoxGroup("Sprites")]
+    public CommonSpritePrefabs CommonSprites;
+
 }
 
 /// <summary>
@@ -86,6 +115,8 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
 public static class GRM
 {
     public static GameResourceManager Instance => GameResourceManager.Instance;
+
+    public static GameResourceManager.CommonSpritePrefabs CommonSprites => GameResourceManager.Instance.CommonSprites;
 
     public static GameResourceManager.CommonSoundPrefabs CommonSounds => GameResourceManager.Instance.CommonSounds;
 

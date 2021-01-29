@@ -121,8 +121,8 @@ namespace FlavBattle.Combat.States
         private CombatTurnUnitSummary GenerateTurnSummaryForUnit(BattleStatus state, Combatant combatant, CombatAction action = null)
         {
             var summary = new CombatTurnUnitSummary();
-            var pickedAction = action ?? PickAction(state, combatant);
-            var targets = PickTargets(state, combatant, pickedAction.Target);
+            var pickedAction = action ?? CombatUtils.PickAction(state, combatant);
+            var targets = CombatUtils.PickTargets(state, combatant, pickedAction.Target);
             summary.Source = combatant;
             summary.TargetInfo = pickedAction.Target;
             summary.Ability = pickedAction.Ability;
@@ -219,7 +219,7 @@ namespace FlavBattle.Combat.States
             }
 
 
-            var action = PickAction(state, next);
+            var action = CombatUtils.PickAction(state, next);
             if (action.Ability.MatchesOther(usedAbility))
             {
                 // batch with others in same team that have same attack,
@@ -239,126 +239,6 @@ namespace FlavBattle.Combat.States
             }
 
             state.BattleUIPanel.UpdateMorale(state.PlayerArmy, state.OtherArmy);
-        }
-
-        /// <summary>
-        /// Picks an attack by priority, if one exists. If not, then returns null
-        /// (meaning there is no preference).
-        /// </summary>
-        private CombatAction PickAction(BattleStatus state, Combatant combatant)
-        {
-            var actions = combatant.Unit.Info.Actions;
-
-            // First filter by possible attacks, and return default if none are possible.
-            var possible = FilterPossibleActions(state, combatant, actions);
-
-            if (possible.Count == 0)
-            {
-                Debug.Log("No valid actions! Returning global default");
-                return GameResourceManager.Instance.GetDefaultCombatAction();
-            }
-
-            // Get random action from the top priority possible action
-            var maxPriority = possible.Max(a => a.Priority);
-            return possible.Where(a => a.Priority == maxPriority).ToList().GetRandom();
-        }
-
-        private List<CombatAbilityPriority> GetPriorityValuesReversed()
-        {
-            var list = new List<CombatAbilityPriority>();
-            foreach (CombatAbilityPriority priority in Enum.GetValues(typeof(CombatAbilityPriority)))
-            {
-                list.Add(priority);
-            }
-
-            list.Reverse();
-            return list;
-        }
-
-        /// <summary>
-        /// Checks whether any units are affected by the ability. Checks both positional
-        /// and unit requirements of ability.
-        /// </summary>
-        private bool CanHitUnits(BattleStatus state, Combatant combatant, CombatAction ability)
-        {
-            return GetValidAbilityTargets(state, combatant, ability.Target).Count > 0;
-        }
-
-
-        /// <summary>
-        /// Filters abilities by those that can target enemy formation
-        /// </summary>
-        private List<CombatAction> FilterPossibleActions(BattleStatus state, Combatant combatant, List<CombatAction> actions)
-        {
-            var enemyPositions = combatant.Enemies.Formation.GetOccupiedPositions(true);
-            List<CombatAction> possible = new List<CombatAction>();
-            foreach (var action in actions)
-            {
-                // Check if ability can hit any units
-                if (CanHitUnits(state, combatant, action))
-                {
-                    possible.Add(action);
-                }
-            }
-
-            return possible;
-        }
-
-        /// <summary>
-        /// Gets the units that are affected by the ability. Checks both positional
-        /// and unit requirements of ability.
-        /// </summary>
-        private List<Combatant> GetValidAbilityTargets(BattleStatus state, Combatant combatant, CombatTargetInfo target)
-        {
-            var targetArmy = target.AffectsAllies() ? combatant.Allies : combatant.Enemies;
-            var validPositions = FormationUtils.GetFormationPairs(target.ValidTargets);
-            var validCombatants = state.GetCombatants(targetArmy.Formation.GetUnits(validPositions, true));
-            if (target.ValidOpponent == ValidOpponent.Any)
-            {
-                return validCombatants;
-            }
-
-            if (target.ValidOpponent == ValidOpponent.LowerLevel)
-            {
-                return validCombatants.Where(a => a.Unit.Info.CurrentStats.Level < combatant.Unit.Info.CurrentStats.Level).ToList();
-            }
-
-            if (target.ValidOpponent == ValidOpponent.HigherLevel)
-            {
-                return validCombatants.Where(a => a.Unit.Info.CurrentStats.Level > combatant.Unit.Info.CurrentStats.Level).ToList(); ;
-            }
-
-            Debug.LogWarning($"No check configured for ability validity type {target.ValidOpponent}; treating as 'Any'");
-            return validCombatants;
-        }
-
-        private List<Combatant> PickTargets(BattleStatus state, Combatant combatant, CombatTargetInfo target)
-        {
-            var empty = new List<Combatant>();
-            if (target.TargetType == CombatAbilityTarget.Self)
-            {
-                return new List<Combatant>() { combatant };
-            }
-
-            // TODO: pick best targets based on other things
-            var units = GetValidAbilityTargets(state, combatant, target);
-            if (units.Count == 0)
-            {
-                return empty;
-            }
-
-            switch (target.TargetType)
-            {
-                case CombatAbilityTarget.Self:
-                    return new List<Combatant> { combatant };
-                case CombatAbilityTarget.RandomEnemy:
-                case CombatAbilityTarget.RandomAlly:
-                    return new List<Combatant> { units.GetRandom() };
-                case CombatAbilityTarget.AllAllies:
-                case CombatAbilityTarget.AllEnemies:
-                default:
-                    return units;
-            }
         }
 
         private int GetTotalAttack(Combatant combatant, CombatAbilityData ability)

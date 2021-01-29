@@ -105,6 +105,7 @@ namespace FlavBattle.Entities.Data
 
         [BoxGroup("Abilities")]
         [SerializeField]
+        [ReorderableList]
         private CombatAction[] _startingActions;
         public virtual CombatAction[] StartingActions => _startingActions;
 

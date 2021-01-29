@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Combat;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,11 +42,6 @@ public class InitRoundState : BattleStateBase
         {
             Debug.Log($"Army {state.FleeingArmy.Faction.Name} is fleeing");
             yield break;
-        }        
-
-        foreach (var item in state.Combatants.OrderBy(a => a.CombatCombinedStats.Speed).Reverse())
-        {
-            state.TurnQueue.Enqueue(item);
         }
 
         state.Stage = BattleStatus.BattleStage.SelectStance;

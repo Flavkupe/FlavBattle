@@ -15,8 +15,7 @@ MonoBehaviour:
   Name: Buff Attack All
   Type: 1
   Priority: 2
-  Target: 2
-  ValidTargets: 0
+  Icon: {fileID: 9075561208994711175, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
   VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
@@ -31,8 +30,10 @@ MonoBehaviour:
   CharacterMoveSpeed: 0
   ComabtAnimation: {fileID: 285175196612671447, guid: 463fb0a2a08f64e41a0054921c770fa1,
     type: 3}
+  _animatorTriggerName: 0
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
+  WaitForCompletion: 1
   CombatAnimationTarget: 1
   AnimationSequence: 2
   PreAttackAnimations:
@@ -45,10 +46,16 @@ MonoBehaviour:
     Animations: []
   Effect: 8
   Damage: {x: 0, y: 0}
-  MoraleDamage: 0
+  MoraleDamage: {x: 0, y: 0}
   StatusEffect:
     HP: 0
     Power: 1
     Defense: 0
     Speed: 0
     Level: 0
+    StartingBlockShields: 0
+    Command: 0
+  StartSoundClips: []
+  PreHitSoundClips: []
+  HitSoundClips: []
+  EndSoundClips: []

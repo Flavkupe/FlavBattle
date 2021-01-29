@@ -9,9 +9,19 @@ public class IconLabelPair : MonoBehaviour
     public Image Icon;
     public TextMeshProUGUI Text;
 
+    public TooltipSource Tooltip;
+
     public void SetText(string text)
     {
         Text.text = text;
+    }
+
+    public void SetTooltip(string text)
+    {
+        if (Tooltip != null)
+        {
+            Tooltip.TooltipText = text;
+        }
     }
 
     public void SetIcon(Sprite sprite)

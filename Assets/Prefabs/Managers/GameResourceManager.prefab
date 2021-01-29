@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultIdleAbility: {fileID: 11400000, guid: 07168a353029ea246ab1c721ee61e091, type: 2}
+  _fleeingArmyThreshold: 75
   CommonSounds:
     SelectSound: {fileID: 8300000, guid: 53624918eebc1cb4d81c7d30178e5662, type: 3}
     FanfareSound: {fileID: 8300000, guid: 29a7ad9a61a51e248a671767108f583b, type: 3}
@@ -54,3 +55,7 @@ MonoBehaviour:
     Block:
     - {fileID: 8300000, guid: 5bf8f685f9edafa48b0a500585408d3e, type: 3}
     - {fileID: 8300000, guid: 08493eab01d2eb041a217703737b62bd, type: 3}
+  CommonSprites:
+    OffenseIcon: {fileID: 21300000, guid: 03e92acfa9936644eae9672db29b795b, type: 3}
+    DefenseIcon: {fileID: 21300074, guid: 13699c70ebaae9240ad8a214cb0c1663, type: 3}
+    NeutralIcon: {fileID: 21300000, guid: 3fb3e1b65914ffc45811c49bba7fa76f, type: 3}

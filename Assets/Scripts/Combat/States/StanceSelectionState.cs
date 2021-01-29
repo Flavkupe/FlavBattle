@@ -44,7 +44,7 @@ namespace FlavBattle.Combat.States
                 }
             }
 
-            state.Stage = BattleStatus.BattleStage.CombatPhase;
+            state.Stage = BattleStatus.BattleStage.DetermineTurnOrder;
         }
 
         private void HandleStanceChangeClicked(object source, FightingStance stance)

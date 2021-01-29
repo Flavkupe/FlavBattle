@@ -15,9 +15,7 @@ MonoBehaviour:
   Name: Buff Defense All
   Type: 1
   Priority: 2
-  Target: 2
-  ValidTargets: 0
-  ValidOpponent: 0
+  Icon: {fileID: -365713202386560821, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
   VisualEffect: 2
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
@@ -31,6 +29,7 @@ MonoBehaviour:
   CharacterMoveArcHeight: 0
   CharacterMoveSpeed: 0
   ComabtAnimation: {fileID: 0}
+  _animatorTriggerName: 0
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
   WaitForCompletion: 1
@@ -73,4 +72,9 @@ MonoBehaviour:
     Defense: 1
     Speed: 0
     Level: 0
+    StartingBlockShields: 0
     Command: 0
+  StartSoundClips: []
+  PreHitSoundClips: []
+  HitSoundClips: []
+  EndSoundClips: []

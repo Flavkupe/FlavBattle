@@ -36,11 +36,22 @@ MonoBehaviour:
   - {fileID: 6013093803584149665, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   _startingActions:
   - Priority: 3
+    Description: Turtle Up
+    Target:
+      TargetType: 0
+      ValidOpponent: 0
+      ValidTargets: 1
+    InstantAbility: 1
+    Ability: {fileID: 11400000, guid: 5cfa626876d998f49926a1a4a54f1d77, type: 2}
+    RequiredStance: 4
+  - Priority: 3
     Description: Axe front
     Target:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 1
+    InstantAbility: 0
     Ability: {fileID: 11400000, guid: 06b7f8d2fe4e4fc41a08d70627797c3e, type: 2}
+    RequiredStance: 7
   _defaultOfficerAbilities: []
   _officerAbilities: []

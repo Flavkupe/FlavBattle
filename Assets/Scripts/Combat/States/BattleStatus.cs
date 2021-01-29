@@ -26,6 +26,8 @@ public class BattleStatus
 
         SelectStance,
 
+        DetermineTurnOrder,
+
         CombatPhase,
     }
 
