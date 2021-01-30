@@ -43,7 +43,7 @@ namespace FlavBattle.Combat.Events
                 if (_summary.ShieldBlockedAttack)
                 {
                     damageToShow = 0;
-                    unit.RemoveBuff(CombatBuffIcon.BuffType.BlockShield);
+                    unit.RemoveBuffIcon(CombatBuffIcon.BuffType.BlockShield);
                     unit.AnimateFloatingIcon(CombatUnit.FloatingIconType.Shield);
                 }
 
@@ -57,7 +57,7 @@ namespace FlavBattle.Combat.Events
 
                 // no yield
                 unit.AnimateFloatingIcon(CombatUnit.FloatingIconType.Morale);
-                unit.RemoveBuff(CombatBuffIcon.BuffType.MoraleShield);
+                unit.RemoveBuffIcon(CombatBuffIcon.BuffType.MoraleShield);
                 Sounds.Play(CombatSoundType.Block);
             }
 

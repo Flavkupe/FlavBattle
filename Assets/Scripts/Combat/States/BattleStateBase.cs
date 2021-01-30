@@ -6,6 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public interface IBattleState
+{
+    void Update(BattleStatus state);
+    bool ShouldUpdate(BattleStatus state);
+}
+
 public abstract class BattleStateBase : IBattleState
 {
     public abstract bool ShouldUpdate(BattleStatus state);

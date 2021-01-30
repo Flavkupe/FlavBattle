@@ -44,6 +44,12 @@ public class InitRoundState : BattleStateBase
             yield break;
         }
 
+        foreach (var combatant in state.Combatants)
+        {
+            // Process all start-turn effects (such as buffs) for durations.
+            combatant.ProcessTurnStart();
+        }
+
         state.Stage = BattleStatus.BattleStage.SelectStance;
     }
 }

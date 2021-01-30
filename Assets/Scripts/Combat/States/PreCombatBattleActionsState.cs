@@ -47,11 +47,7 @@ public class PreCombatBattleActionsState : BattleStateBase
         //    combatant.CombatUnit.AddBuff(CombatBuffIcon.BuffType.MoraleShield);
         //}
 
-        for (var i = 0; i < combatant.Unit.Info.CurrentStats.StartingBlockShields; i++)
-        {
-            combatant.StatChanges.BlockShields++;
-            combatant.CombatUnit.AddBuff(CombatBuffIcon.BuffType.BlockShield);
-        }
+        combatant.AddBlockShields(combatant.Unit.Info.CurrentStats.StartingBlockShields);
     }
 
     private void PrepareOfficerActions(BattleStatus state)

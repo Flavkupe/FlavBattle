@@ -13,12 +13,7 @@ namespace FlavBattle.UI.Army
         [Tooltip("The layout panel that holds individual action info panels")]
         [Required]
         [SerializeField]
-        private GameObject _attackActionInfoPanel;
-
-        [Tooltip("Template for a panel that holds info a single action")]
-        [Required]
-        [SerializeField]
-        private UICombatActionInfoPanel _UICombatActionInfoPanelTemplate;
+        private UICombatActionInfoPanel _attackActionInfoPanel;
 
         [Required]
         [SerializeField]
@@ -31,19 +26,12 @@ namespace FlavBattle.UI.Army
 
         public void SetUnit(Unit unit)
         {
-            _attackActionInfoPanel.transform.DestroyChildren();
-            var count = 1;
-            foreach (var action in unit.Info.Actions)
-            {
-                var panel = Instantiate(_UICombatActionInfoPanelTemplate, _attackActionInfoPanel.transform);
-                panel.SetAction(action, count);
-                count++;
-            }
+            _attackActionInfoPanel.SetUnit(unit);
         }
 
         public void ClearUnit()
         {
-            _attackActionInfoPanel.transform.DestroyChildren();
+            _attackActionInfoPanel.ClearUnit();
         }
 
         private void ColorAttackGrid(IArmy army)

@@ -150,7 +150,7 @@ namespace FlavBattle.Combat.States
                 if (ability.Effect.HasFlag(CombatAbilityEffect.StatusChange))
                 {
                     var effect = ability.StatusEffect.Multiply(multiplier);
-                    target.ApplyStatChanges(effect);
+                    target.AddStatBuff(effect, ability.StatusEffectDuration);
                 }
 
                 if (ability.Effect.HasFlag(CombatAbilityEffect.Withdraw))

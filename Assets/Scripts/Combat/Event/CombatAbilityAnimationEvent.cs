@@ -134,11 +134,11 @@ namespace FlavBattle.Combat.Events
 
             if (target != null)
             {
-                yield return ability.StartTargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject, target.CombatFormationSlot.CurrentUnit.gameObject);
+                yield return ability.StartTargetedAbility(source.CombatUnit.gameObject, target.CombatFormationSlot.CurrentUnit.gameObject);
             }
             else
             {
-                yield return ability.StartUntargetedAbility(source.CombatFormationSlot.CurrentUnit.gameObject);
+                yield return ability.StartUntargetedAbility(source.CombatUnit.gameObject);
             }
 
             PlaySoundClip(abilityData.EndSoundClips.GetRandom());

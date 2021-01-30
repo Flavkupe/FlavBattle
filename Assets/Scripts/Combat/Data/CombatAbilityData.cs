@@ -119,8 +119,6 @@ public class CombatAbilityData : ScriptableObject
 
     public CombatAbilityType Type = CombatAbilityType.Attack;
 
-    public CombatAbilityPriority Priority = CombatAbilityPriority.Medium;
-
     [AssetIcon]
     public Sprite Icon;
 
@@ -246,6 +244,11 @@ public class CombatAbilityData : ScriptableObject
     [BoxGroup("Effect")]
     [ShowIf("ShowStatusChange")]
     public UnitStats StatusEffect;
+
+    [Tooltip("How many bouts the status effect lasts. If 0, it lasts the whole combat.")]
+    [BoxGroup("Effect")]
+    [ShowIf("ShowStatusChange")]
+    public int StatusEffectDuration = 0;
 
     [BoxGroup("Sounds")]
     [Tooltip("Possible sounds to play when attack starts")]

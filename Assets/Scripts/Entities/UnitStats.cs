@@ -19,6 +19,7 @@ public class UnitStats
     /// <summary>
     /// How many Block Shields the unit starts combat with.
     /// </summary>
+    [Tooltip("How many Block Shields the unit starts combat with. For buffs, this is a onetime bonus to block shields.")]
     public int StartingBlockShields = 0;
 
     /// <summary>

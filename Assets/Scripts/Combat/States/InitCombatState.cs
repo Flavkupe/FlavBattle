@@ -41,6 +41,14 @@ public class InitCombatState : BattleStateBase
         // Enable UI State
         state.BattleUIPanel.Show();
 
+        foreach (var combatant in state.Combatants)
+        {
+            combatant.RightClicked += (object sender, Combatant e) =>
+            {
+                state.BattleUIPanel.UnitStatsPanel.Open(e);
+            };
+        }
+
         yield return state.BattleUIPanel.AnimateInfoTextCallout("Combat Start");
         state.Stage = BattleStatus.BattleStage.PreCombatStart;
     }
@@ -48,14 +56,14 @@ public class InitCombatState : BattleStateBase
     private IEnumerable<Combatant> CreateCombatants(BattleStatus state, IArmy allies, IArmy enemies, bool left)
     {
         var combatFormation = left ? state.BattleDisplay.LeftFormation : state.BattleDisplay.RightFormation;
-        return allies.Formation.GetOccupiedPositionInfo().Select(a => new Combatant
+        return allies.Formation.GetOccupiedPositionInfo().Select(a => new Combatant(
+            combatFormation.GetFormationSlot(a.FormationPair.Row, a.FormationPair.Col))
         {
             Left = left,
             Unit = a.Unit,
             Row = a.FormationPair.Row,
             Col = a.FormationPair.Col,
             CombatFormation = combatFormation,
-            CombatFormationSlot = combatFormation.GetFormationSlot(a.FormationPair.Row, a.FormationPair.Col),
             Allies = allies,
             Enemies = enemies
         });

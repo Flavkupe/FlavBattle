@@ -35,7 +35,7 @@ MonoBehaviour:
   - {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   - {fileID: 6013093803584149665, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   _startingActions:
-  - Priority: 3
+  - Priority: 4
     Description: Turtle Up
     Target:
       TargetType: 0

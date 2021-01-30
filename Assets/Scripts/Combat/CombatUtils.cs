@@ -56,12 +56,46 @@ namespace FlavBattle.Combat
                 case CombatAbilityTarget.Self:
                     return new List<Combatant> { combatant };
                 case CombatAbilityTarget.RandomEnemy:
+                    return new List<Combatant> { PickBestFromList(state, combatant, units) };
                 case CombatAbilityTarget.RandomAlly:
                     return new List<Combatant> { units.GetRandom() };
                 case CombatAbilityTarget.AllAllies:
                 case CombatAbilityTarget.AllEnemies:
                 default:
                     return units;
+            }
+        }
+
+        /// <summary>
+        /// From the list of possible targets, gets the best target based on factors like
+        /// column (prefers same column).
+        /// </summary>
+        private static Combatant PickBestFromList(BattleStatus state, Combatant combatant, List<Combatant> possibleTargets)
+        {
+            Debug.Assert(possibleTargets.Count > 0, "Calling PickBestFromList with no targets!");
+            if (possibleTargets.Count == 1)
+            {
+                return possibleTargets[0];
+            }
+
+            // Prefer combatants from same or closest column
+            var col = combatant.Col;
+            var closest = possibleTargets.FirstOrDefault(a => a.Col == col);
+            if (closest != null)
+            {
+                return closest;
+            }
+
+            // No enemy on same column, so go for next closest
+            if (col != FormationColumn.Middle)
+            {
+                // can be either
+                return possibleTargets.GetRandom();
+            }
+            else
+            {
+                // Is either middle or get a random target
+                return possibleTargets.FirstOrDefault(a => a.Col == FormationColumn.Middle) ?? possibleTargets.GetRandom();
             }
         }
 

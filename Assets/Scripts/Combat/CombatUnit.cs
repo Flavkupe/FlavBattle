@@ -5,8 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.EventSystems;
 
-public class CombatUnit : MonoBehaviour
+public class CombatUnit : MonoBehaviour, IPointerClickHandler
 {
     /// <summary>
     /// Floating icon type to show overhead
@@ -55,6 +56,8 @@ public class CombatUnit : MonoBehaviour
     private Animator _animator;
     private bool _animating = false;
 
+    public event EventHandler RightClicked;
+
     private AudioSource _audioSource;
 
     void Awake()
@@ -92,7 +95,7 @@ public class CombatUnit : MonoBehaviour
         this.Unit.Info.Morale.ChangeMorale(-moraleDamage);
     }
 
-    public void AddBuff(CombatBuffIcon.BuffType type)
+    public void AddBuffIcon(CombatBuffIcon.BuffType type, int duration = 0)
     {
         var template = _buffTemplates.FirstOrDefault(a => a.Type == type);
         if (template == null)
@@ -104,7 +107,7 @@ public class CombatUnit : MonoBehaviour
         Instantiate(template, _buffPanel.transform);
     }
 
-    public void RemoveBuff(CombatBuffIcon.BuffType type)
+    public void RemoveBuffIcon(CombatBuffIcon.BuffType type)
     {
         var buffs = _buffPanel.GetComponentsInChildren<CombatBuffIcon>();
         var buff = buffs.FirstOrDefault(a => a.Type == type);
@@ -154,6 +157,8 @@ public class CombatUnit : MonoBehaviour
             anim.PlayAnimation();
         }
     }
+
+
 
     /// <summary>
     /// Shows text with the selected color and flashes in the chosen color
@@ -269,6 +274,14 @@ public class CombatUnit : MonoBehaviour
         if (_audioSource != null)
         {
             _audioSource.PlayOneShot(clip);
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            RightClicked?.Invoke(this, new EventArgs());
         }
     }
 }

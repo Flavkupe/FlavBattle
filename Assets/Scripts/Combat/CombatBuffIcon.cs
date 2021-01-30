@@ -15,6 +15,9 @@ namespace FlavBattle.Combat
             BlockShield,
         }
 
+        /// <summary>
+        /// Type of buff this represents
+        /// </summary>
         public BuffType Type;
     }
 }

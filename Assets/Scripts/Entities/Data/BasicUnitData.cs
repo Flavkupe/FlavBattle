@@ -11,6 +11,12 @@ namespace FlavBattle.Entities.Data
     [CreateAssetMenu(fileName = "Unit Data", menuName = "Custom/Units/Basic Unit Data", order = 1)]
     public class BasicUnitData : UnitData
     {
+        /// <summary>
+        /// Just for showing the assetIcon in the inspector; ignore this
+        /// </summary>
+        [AssetIcon]
+        public override Sprite Icon => base.Icon;
+
         private string _name = "Unnamed";
 
         public override string ToString()
