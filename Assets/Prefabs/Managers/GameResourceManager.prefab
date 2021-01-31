@@ -59,3 +59,5 @@ MonoBehaviour:
     OffenseIcon: {fileID: 21300000, guid: 03e92acfa9936644eae9672db29b795b, type: 3}
     DefenseIcon: {fileID: 21300074, guid: 13699c70ebaae9240ad8a214cb0c1663, type: 3}
     NeutralIcon: {fileID: 21300000, guid: 3fb3e1b65914ffc45811c49bba7fa76f, type: 3}
+    SandClockIcon: {fileID: 7967350256288085817, guid: 26e73af8dbba5124daea68cb16018671,
+      type: 3}

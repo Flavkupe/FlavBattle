@@ -48,9 +48,11 @@ public class InitRoundState : BattleStateBase
         {
             // Process all start-turn effects (such as buffs) for durations.
             combatant.ProcessTurnStart();
+
+            // Computer all attack/def values
+            combatant.UpdateStatSummaries();
         }
 
         state.Stage = BattleStatus.BattleStage.SelectStance;
     }
 }
-

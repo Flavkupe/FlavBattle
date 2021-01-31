@@ -4,7 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IconLabelPair : MonoBehaviour
+/// <summary>
+/// A text label and an Image, to be used in UI. Use IconTextPair for
+/// GameObjects.
+/// </summary>
+public class IconLabelPair : MonoBehaviour, IIconTextPair
 {
     public Image Icon;
     public TextMeshProUGUI Text;

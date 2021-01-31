@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: LightClubBash
   m_EditorClassIdentifier: 
-  Name: Slash
+  Name: Club
   Type: 0
-  Priority: 0
   Icon: {fileID: 21300000, guid: 4798087309cd04d44aed5806f1b9b362, type: 3}
   VisualEffect: 1
   ProjectileEffect: 1
@@ -56,6 +55,7 @@ MonoBehaviour:
     Level: 1
     StartingBlockShields: 0
     Command: 0
+  StatusEffectDuration: 0
   StartSoundClips: []
   PreHitSoundClips:
   - {fileID: 8300000, guid: 71c22bd847644334ea2ef711b1476c8a, type: 3}

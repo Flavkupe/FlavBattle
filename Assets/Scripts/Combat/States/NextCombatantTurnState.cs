@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using FlavBattle.Combat.Events;
+using FlavBattle.Entities;
 
 namespace FlavBattle.Combat.States
 {
@@ -241,39 +242,6 @@ namespace FlavBattle.Combat.States
             state.BattleUIPanel.UpdateMorale(state.PlayerArmy, state.OtherArmy);
         }
 
-        private int GetTotalAttack(Combatant combatant, CombatAbilityData ability)
-        {
-            var attack = combatant.CombatCombinedStats.Power;
-            attack += ability.Damage.RandomBetween();
-            attack += combatant.UnitMoraleBonus;
-            if (combatant.Allies.Stance == FightingStance.Offensive)
-            {
-                attack += 1;
-            }
-            else if (combatant.Allies.Stance == FightingStance.Defensive)
-            {
-                attack -= 1;
-            }
-
-            return attack;
-        }
-
-        private int GetTotalDefense(Combatant combatant)
-        {
-            var defense = combatant.CombatCombinedStats.Defense;
-            defense += combatant.UnitMoraleBonus;
-            if (combatant.Allies.Stance == FightingStance.Offensive)
-            {
-                defense -= 1;
-            }
-            else if (combatant.Allies.Stance == FightingStance.Defensive)
-            {
-                defense += 1;
-            }
-
-            return defense;
-        }
-
         /// <summary>
         /// Deals morale damage to entire army (target) based on factors. source is
         /// opposing army (that is dealing morale damage). source and target can be null,
@@ -299,8 +267,14 @@ namespace FlavBattle.Combat.States
         /// </summary>
         private void DealDirectDamageToTarget(CombatTurnActionSummary summary, Combatant attacker, Combatant target, CombatAbilityData ability)
         {
-            var defense = GetTotalDefense(target);
-            var attack = GetTotalAttack(target, ability);
+            // First update stat summaries
+            attacker.UpdateStatSummaries();
+            target.UpdateStatSummaries();
+
+            var defense = target.Unit.StatSummary.GetTotal(UnitStatSummary.SummaryItemType.Defense);
+            var attack = attacker.Unit.StatSummary.GetTotal(UnitStatSummary.SummaryItemType.Attack);
+            attack += ability.Damage.RandomBetween();
+
             summary.Defense = defense;
             summary.Attack = attack;
             var targetMorale = target.UnitMorale;

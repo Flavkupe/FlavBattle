@@ -33,6 +33,28 @@ public static class ExtensionFunctions
         return list;
     }
 
+    public static R GetValueOrDefault<T, R>(this IDictionary<T, R> dict, T key)
+    {
+        if (dict.ContainsKey(key))
+        {
+            return dict[key];
+        }
+
+        return default;
+    }
+
+    public static void SetOrAddTo<T>(this IDictionary<T, int> dict, T key, int val)
+    {
+        if (!dict.ContainsKey(key))
+        {
+            dict[key] = val;
+        }
+        else
+        {
+            dict[key] += val;
+        }
+    }
+
     public static Vector3 SetX(this Vector3 vector, float x)
     {
         return new Vector3(x, vector.y, vector.z);

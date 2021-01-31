@@ -2739,7 +2739,7 @@ GameObject:
   - component: {fileID: 8543024527907794811}
   - component: {fileID: 5399216735161198756}
   m_Layer: 5
-  m_Name: AttackStats
+  m_Name: AttackStatsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4128,7 +4128,7 @@ PrefabInstance:
     - target: {fileID: 7935951945509306053, guid: 899bed1465ad3064392c02badac930cb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 846.9
+      value: 549
       objectReference: {fileID: 0}
     - target: {fileID: 7935951945509306053, guid: 899bed1465ad3064392c02badac930cb,
         type: 3}

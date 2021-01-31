@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
+using FlavBattle.Entities;
 
 public class CombatUnit : MonoBehaviour, IPointerClickHandler
 {
@@ -28,6 +29,14 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     [Required]
     public HealthBar HealthBar;
+
+    [Required]
+    [SerializeField]
+    private IconTextPair _defenseTotalUI;
+
+    [Required]
+    [SerializeField]
+    private IconTextPair _attackTotalUI;
 
     [Tooltip("Animation for blocking an attack via high morale (flying morale icon)")]
     [Required]
@@ -66,6 +75,19 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         _audioSource = this.GetComponent<AudioSource>();
     }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            ShowAndUpdateStatUI();
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _defenseTotalUI.Hide();
+            _attackTotalUI.Hide();
+        }
+    }
+
     public void SetUnit(Unit unit, bool facingLeft)
     {
         this.Unit = unit;
@@ -75,6 +97,10 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         _facingLeft = facingLeft;
         if (facingLeft)
         {
+            // Reverse this rotation so text isn't backwards
+            this._attackTotalUI.FlipText();
+            this._defenseTotalUI.FlipText();
+
             this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
         }
 
@@ -283,5 +309,24 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         {
             RightClicked?.Invoke(this, new EventArgs());
         }
+    }
+
+    private void ShowAndUpdateStatUI()
+    {
+        if (!_defenseTotalUI.IsShowing())
+        {
+            _defenseTotalUI.Show();
+        }
+
+        if (!_attackTotalUI.IsShowing())
+        {
+            _attackTotalUI.Show();
+        }
+
+        var summary = Unit.StatSummary;
+        var def = summary.GetTotal(UnitStatSummary.SummaryItemType.Defense).ToString();
+        var att = summary.GetTotal(UnitStatSummary.SummaryItemType.Attack).ToString();
+        _defenseTotalUI.SetText(def);
+        _attackTotalUI.SetText(att);
     }
 }

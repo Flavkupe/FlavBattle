@@ -1,4 +1,5 @@
-﻿using FlavBattle.Entities.Data;
+﻿using FlavBattle.Entities;
+using FlavBattle.Entities.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,12 @@ public class Unit : IEquatable<Unit>
     public UnitData Data;
 
     public UnitInfo Info;
+
+    /// <summary>
+    /// The latest summary of stats calculated for the unit. Used to show
+    /// summary of certain stats for the UI, such as in combat.
+    /// </summary>
+    public UnitStatSummary StatSummary { get; } = new UnitStatSummary();
 
     public bool IsInFormation;
 

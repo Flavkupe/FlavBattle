@@ -1,4 +1,5 @@
 ﻿using FlavBattle.Combat;
+using FlavBattle.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -116,6 +117,87 @@ public class Combatant
                 _statBuffs.Remove(statBuff);
                 this.ApplyStatChanges(statBuff.Buff.Multiply(-1));
             }
+        }
+    }
+
+    /// <summary>
+    /// This updates the latest combat attack and defense
+    /// summaries. Use this to get the latest totals.
+    /// </summary>
+    public void UpdateStatSummaries()
+    {
+        this.Unit.StatSummary.Clear();
+        this.ComputeDefenseSummary(this);
+        this.ComputeAttackSummary(this);
+    }
+
+    /// <summary>
+    /// Updates the stat summary of attack for the unit. This can
+    /// later be acquired from the Unit's StatSummary property.
+    /// 
+    /// Does not include boosts from actual abilities.
+    /// </summary>
+    private void ComputeAttackSummary(Combatant combatant)
+    {
+        var type = UnitStatSummary.SummaryItemType.Attack;
+        var summary = combatant.Unit.StatSummary;
+
+        var baseAttack = combatant.Unit.Info.CurrentStats.Power;
+        var buffAttack = combatant.StatChanges.Power;
+        var moraleBonus = combatant.UnitMoraleBonus;
+
+        var attack = baseAttack;
+        summary.Tally(type, baseAttack, "Base attack");
+
+        attack += buffAttack;
+        summary.Tally(type, buffAttack, "Combat effects");
+
+        attack += moraleBonus;
+        summary.Tally(type, moraleBonus, "Morale");
+
+        if (combatant.Allies.Stance == FightingStance.Offensive)
+        {
+            attack += 1;
+            summary.Tally(type, 1, "Offensive stance");
+        }
+        else if (combatant.Allies.Stance == FightingStance.Defensive)
+        {
+            attack -= 1;
+            summary.Tally(type, -1, "Defensive stance");
+        }
+    }
+
+    /// <summary>
+    /// Updates the stat summary of defense for the unit. This can
+    /// later be acquired from the Unit's StatSummary property.
+    /// </summary>
+    private void ComputeDefenseSummary(Combatant combatant)
+    {
+        var type = UnitStatSummary.SummaryItemType.Defense;
+        var summary = combatant.Unit.StatSummary;
+
+        var baseDefense = combatant.Unit.Info.CurrentStats.Defense;
+        var buffDefense = combatant.StatChanges.Defense;
+        var moraleBonus = combatant.UnitMoraleBonus;
+
+        var defense = baseDefense;
+        summary.Tally(type, baseDefense, "Base defense");
+
+        defense += buffDefense;
+        summary.Tally(type, buffDefense, "Combat effects");
+
+        defense += moraleBonus;
+        summary.Tally(type, moraleBonus, "Morale");
+
+        if (combatant.Allies.Stance == FightingStance.Offensive)
+        {
+            defense -= 1;
+            summary.Tally(type, -1, "Offensive stance");
+        }
+        else if (combatant.Allies.Stance == FightingStance.Defensive)
+        {
+            defense += 1;
+            summary.Tally(type, 1, "Defensive stance");
         }
     }
 }

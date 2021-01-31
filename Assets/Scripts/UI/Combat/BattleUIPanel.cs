@@ -8,8 +8,6 @@ using FlavBattle.UI.Combat;
 
 public class BattleUIPanel : MonoBehaviour
 {
-
-
     [Required]
     [SerializeField]
     private CombatStancePanel StancePanel;

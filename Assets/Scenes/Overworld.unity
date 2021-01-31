@@ -17575,12 +17575,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameResourceManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5427778473890703097, guid: 2cb037f486f8991488d5668d1d5fd4f5,
-        type: 3}
-      propertyPath: CommonSprites.SandClockIcon
-      value: 
-      objectReference: {fileID: 7967350256288085817, guid: 26e73af8dbba5124daea68cb16018671,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cb037f486f8991488d5668d1d5fd4f5, type: 3}
 --- !u!1001 &5644780765176654239
