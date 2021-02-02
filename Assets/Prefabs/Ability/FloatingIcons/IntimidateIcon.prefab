@@ -48,6 +48,10 @@ MonoBehaviour:
   Sprite: {fileID: 641756070202738475, guid: 2ea68ca378803c444b9461264e8cedcd, type: 3}
   Duration: 0.6
   Offset: {x: 0, y: 0.4, z: 0}
+  FloatUp: 1
+  ChangeScale: 0
+  ScaleStart: {x: 0, y: 0, z: 0}
+  ScaleEnd: {x: 0, y: 0, z: 0}
 --- !u!212 &-7619559084138264115
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -63,10 +67,11 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

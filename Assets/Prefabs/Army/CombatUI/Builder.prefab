@@ -48,6 +48,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 2286250285650989856}
 --- !u!1 &507746741920888663
 GameObject:
@@ -99,7 +100,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -179,6 +180,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 1251042316453867075}
 --- !u!1 &1210142823654704386
 GameObject:
@@ -228,6 +230,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 6720366775265280555}
 --- !u!1 &1251042316453867075
 GameObject:
@@ -279,7 +282,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -361,7 +364,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -443,7 +446,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -531,6 +534,7 @@ MonoBehaviour:
   _gapX: 1
   _gapY: 0.325
   _uiTemplate: {fileID: 6684913465963728671}
+  _orientation: 0
 --- !u!114 &6684913465963728671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,7 +602,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -680,7 +684,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -762,7 +766,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -842,6 +846,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 507746741920888663}
 --- !u!1 &4235029760891321849
 GameObject:
@@ -893,7 +898,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -975,7 +980,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1055,6 +1060,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 8868621256187437947}
 --- !u!1 &6105366163128020754
 GameObject:
@@ -1106,7 +1112,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1186,6 +1192,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 6976441488761754251}
 --- !u!1 &6350379012766875241
 GameObject:
@@ -1237,7 +1244,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1317,6 +1324,7 @@ MonoBehaviour:
   _gapX: 1
   _gapY: 0.325
   _uiTemplate: {fileID: 5768434788142775298}
+  _orientation: 0
 --- !u!114 &5768434788142775298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,6 +1390,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 3442427540953590893}
 --- !u!1 &6720366775265280555
 GameObject:
@@ -1433,7 +1442,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1515,7 +1524,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1597,7 +1606,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1677,6 +1686,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 8963549046422264922}
 --- !u!1 &7640013293556996531
 GameObject:
@@ -1728,7 +1738,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1810,7 +1820,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1890,6 +1900,7 @@ MonoBehaviour:
   CombatUnitTemplate: {fileID: 6523437944500512600, guid: b527712f0c0515b4d84a130b9cf9ec00,
     type: 3}
   _yOffset: 0.42
+  HighlightRing: {fileID: 0}
   OfficerRing: {fileID: 3089464039992707465}
 --- !u!1 &8868621256187437947
 GameObject:
@@ -1941,7 +1952,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2023,7 +2034,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

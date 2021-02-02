@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\Combat\StatsBuff.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ShowWinnerState.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Assets\Scripts\Combat\WeaponAnimation.cs" />
     <Compile Include="Assets\Scripts\Entities\Morale.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\ParticleAnimation.cs" />
+    <Compile Include="Assets\Scripts\Components\IconTextPair.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\Combat\Event\CombatUnitAnimationEvent.cs" />
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Item.cs" />
@@ -116,6 +118,7 @@
     <Compile Include="Assets\Scripts\Combat\States\InitRoundState.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />
     <Compile Include="Assets\Scripts\UI\Components\IconLabelPair.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanelRow.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tooltip.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedMove.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Draggable.cs" />
@@ -197,14 +200,11 @@
     <Compile Include="Assets\Scripts\Entities\Data\OfficerAbilityData.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\RoutineChain.cs" />
     <Compile Include="Assets\Scripts\Combat\Event\CombatAbilityAnimationEvent.cs" />
+    <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
-    <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
-    <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanelRow.cs" />
-    <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanel.cs" />
-    <Compile Include="Assets\Scripts\Components\IconTextPair.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />
@@ -866,6 +866,42 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>Library\ScriptAssemblies\Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

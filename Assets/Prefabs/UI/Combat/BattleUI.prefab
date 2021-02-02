@@ -778,6 +778,8 @@ MonoBehaviour:
   _nameLabel: {fileID: 8902442797634695428}
   _unitSprite: {fileID: 2899426599295070092}
   _actionInfoPanel: {fileID: 8878655207893007074}
+  _attackSummaryPanel: {fileID: 0}
+  _defenseSummaryPanel: {fileID: 0}
 --- !u!1 &2184914513297236795
 GameObject:
   m_ObjectHideFlags: 0
