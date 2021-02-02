@@ -3,7 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AnimatedSprite : MonoBehaviour
+public interface IAnimatedSprite
+{
+    void SetFlipped(bool flipped);
+    void SetIdle(bool idle);
+    void SetAnimations(Sprite[] animations);
+    void SetColor(Color color);
+    void SetSpeedModifier(float modifier);
+}
+
+public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
 {
     public Sprite[] Animations;
 
@@ -26,7 +35,7 @@ public class AnimatedSprite : MonoBehaviour
     public void SetIdle(bool idle)
     {
         _idle = idle;
-        if (idle)
+        if (idle && Animations.Length > 0)
         {
             _currentFrame = 0;
             SetSprite(Animations[0]);
@@ -35,7 +44,10 @@ public class AnimatedSprite : MonoBehaviour
 
     public void SetFlipped(bool flipped)
     {
-        this._spriteRenderer.flipX = flipped;
+        if (this._spriteRenderer != null)
+        {
+            this._spriteRenderer.flipX = flipped;
+        }
     }
 
     public void SetAnimations(Sprite[] animations)

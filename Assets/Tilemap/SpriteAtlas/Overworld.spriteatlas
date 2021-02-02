@@ -60,7 +60,6 @@ SpriteAtlas:
   - {fileID: 1766183139497562430, guid: 575bc90800c6f614b8f2d33681e7a2e5, type: 3}
   - {fileID: 21300000, guid: d76cb438a0f07d043a5ba00234d541f9, type: 3}
   - {fileID: 21300000, guid: 5bd44f68abae7544985e0940990a6db7, type: 3}
-  - {fileID: 21300000, guid: 38f2847843686cc4ea01878020f541c8, type: 3}
   - {fileID: 21300000, guid: 934d1a7847d0820448bab251e6df3a3c, type: 3}
   - {fileID: 21300000, guid: 23127769ec36c9146bb549ff0c2b7644, type: 3}
   - {fileID: 21300000, guid: 4f70b579cb898b744a78eb0f829ee3bf, type: 3}
@@ -74,6 +73,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c6236a7dd0b59a440b480ce121451646, type: 3}
   - {fileID: 21300000, guid: d12ba31ed5a031149a96ad377975756d, type: 3}
   - {fileID: 21300000, guid: 9044d6fe1f48efe4eac24bb6c4dae0b6, type: 3}
+  - {fileID: 21300000, guid: 38f2847843686cc4ea01878020f541c8, type: 3}
   m_PackedSpriteNamesToIndex:
   - t_722
   - t_898
@@ -97,7 +97,6 @@ SpriteAtlas:
   - RustyLand_3
   - t_905
   - t_897
-  - t_731
   - t_885
   - t_890
   - t_881
@@ -111,6 +110,7 @@ SpriteAtlas:
   - t_913
   - t_892
   - t_888
+  - t_731
   m_RenderDataMap: {}
   m_Tag: Overworld
   m_IsVariant: 0

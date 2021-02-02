@@ -1,4 +1,5 @@
 ﻿using FlavBattle.State;
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,6 +56,10 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public TileInfo CurrentTileInfo => _currentTile?.Info;
     public bool IsFleeing { get; private set; } = false;
 
+    [Required]
+    [SerializeField]
+    private ZoomedArmyView _zoomedView;
+
     private AnimatedSprite _sprite;
     // Gets the AnimatedSprite for this, caching it if needed
     private AnimatedSprite AnimatedSprite
@@ -69,6 +74,8 @@ public class Army : MonoBehaviour, IDetectable, IArmy
             return _sprite;
         }
     }
+
+    private IAnimatedSprite Animation => _zoomedViewEnabled ? (IAnimatedSprite)_zoomedView : AnimatedSprite;
 
     public SpriteRenderer FactionFlag;
     public SpriteRenderer FactionMarker;
@@ -99,8 +106,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     private Detector[] _detectors;
     private bool _paused = false;
-
-
+    private bool _zoomedViewEnabled = false;
 
     void Awake()
     {
@@ -207,14 +213,14 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     {
         _selected = true;
         this.SetFootprints();
-        AnimatedSprite.SetColor(Color.cyan);
+        Animation.SetColor(Color.cyan);
     }
 
     public void Unselect()
     {
         _selected = false;
         this._map.Footprints.Clear();
-        AnimatedSprite.SetColor(Color.white);
+        Animation.SetColor(Color.white);
     }
 
     public void CopyFrom(IArmy army)
@@ -235,8 +241,10 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         var officer = formation.GetOfficer();
         if (officer != null)
         {
-            this.AnimatedSprite.SetAnimations(officer.Data.Animations);
+            this.Animation.SetAnimations(officer.Data.Animations);
         }
+
+        _zoomedView.SetArmy(this);
     }
 
     /// <summary>
@@ -251,6 +259,7 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public IEnumerator Vanish(bool destroyOnVanish = false)
     {
+        // TODO: make it work for both!
         yield return StartCoroutine(AnimatedSprite.FadeAway());
         if (destroyOnVanish)
         {
@@ -309,6 +318,22 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         this._paused = pause;
     }
 
+    public void ToggleZoomedView(bool zoomedView)
+    {
+        if (zoomedView)
+        {
+            this._zoomedViewEnabled = true;
+            this._zoomedView.Show();
+            this._sprite.Hide();
+        }
+        else
+        {
+            this._zoomedViewEnabled = false;
+            this._zoomedView.Hide();
+            this._sprite.Show();
+        }
+    }
+
     public void StepTowardsDestination()
     {
         if (this._destination == null && this._path != null)
@@ -321,20 +346,18 @@ public class Army : MonoBehaviour, IDetectable, IArmy
             var cost = Math.Max(1, _currentTile.Info.WalkCost);
             var modifier = MoveStep / cost;
             var delta = modifier * TimeUtils.AdjustedGameDelta;
-            this.AnimatedSprite.SetSpeedModifier(modifier);
+            this.Animation.SetSpeedModifier(modifier);
             var newPos = Vector3.MoveTowards(this.transform.position, this._destination.Value, delta);
             this.transform.position = newPos;
             if ((newPos - this._destination.Value).magnitude <= delta)
             {
                 this.transform.position = this._destination.Value;
                 this._destination = null;
-                this.AnimatedSprite.SetIdle(true);
+                this.Animation.SetIdle(true);
             }
 
             CheckCurrentLocation();
         }
-
-
     }
 
     public void SetDestination(Vector3? position)
@@ -351,17 +374,17 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 // Reached final destination
                 AdjustForCollisions();
                 this._path = null;
-                this.AnimatedSprite.SetIdle(true);
+                this.Animation.SetIdle(true);
                 this._map.Footprints.Clear();
                 return;
             }
             else
             {
                 var tile = this._path.Nodes.Dequeue();
-                this.AnimatedSprite.SetIdle(false);
+                this.Animation.SetIdle(false);
                 this._destination = new Vector3(tile.WorldX, tile.WorldY, 0);
                 var facingLeft = tile.WorldX < this.transform.position.x;
-                this.AnimatedSprite.SetFlipped(facingLeft);
+                this.Animation.SetFlipped(facingLeft);
                 this.SetFootprints();
             }
         }

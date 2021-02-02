@@ -21,10 +21,21 @@ namespace FlavBattle.Core
         [SerializeField]
         private float _combatZoomOutSpeed = 2.0f;
 
+        [SerializeField]
+        private float _zoomedViewSize = 2.0f;
+
         private bool _locked = false;
+
+        private Camera _cam;
+
         public void SetLocked(bool locked)
         {
             _locked = locked;
+        }
+
+        void Awake()
+        {
+            _cam = this.GetComponent<Camera>();
         }
 
         public IEnumerator ShiftToCombatZoom()
@@ -57,6 +68,11 @@ namespace FlavBattle.Core
         public Coroutine PanTo(Vector3 position)
         {
             return StartCoroutine(PanToInternal(position));
+        }
+
+        public bool IsZoomedDistance()
+        {
+            return this._cam.orthographicSize < _zoomedViewSize;
         }
 
         private IEnumerator PanToInternal(Vector3 position)

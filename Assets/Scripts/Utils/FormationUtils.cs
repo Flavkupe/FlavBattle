@@ -169,6 +169,17 @@ public static class FormationUtils
         return slot;
     }
 
+    private static IFormation MakeObject<TObjectType>(Transform parent, TObjectType formationTemplate, Vector3 localPos, FormationPair pair) where TObjectType : MonoBehaviour, IFormation
+    {
+        var newObj = UnityEngine.Object.Instantiate(formationTemplate);
+        newObj.Row = pair.Row;
+        newObj.Col = pair.Col;
+        newObj.name = pair.Row.ToString() + pair.Col.ToString();
+        newObj.transform.SetParent(parent);
+        newObj.transform.localPosition = localPos;
+        return newObj;
+    }
+
     public static TObjectType PopulateFormationGrid<TObjectType>(TObjectType grid, FormationOrientation orientation = FormationOrientation.BottomRight, float gap = 2.0f) where TObjectType : MonoBehaviour, IFormationGrid
     {
         var xGap = gap * 0.75f;
@@ -200,6 +211,34 @@ public static class FormationUtils
 
         return grid;
     }
+    
+    /// <summary>
+    /// Given some object template for a formation, makes a formation with them as
+    /// children of the passed-in parent.
+    /// </summary>
+    /// <returns></returns>
+    public static void PopulateFormation<TObjectType>(Transform parent, TObjectType formationTemplate, FormationOrientation orientation, float xGap, float yGap) where TObjectType : MonoBehaviour, IFormation
+    {
+        var orientations = Orientations[orientation];
+
+        var tv = new Vector3(0.0f, yGap);
+        var rv = new Vector3(xGap, 0.0f);
+        var bv = new Vector3(0.0f, -yGap);
+        var lv = new Vector3(-xGap, 0.0f);
+
+        // Make sure to create them in order; this matters for stuff
+        // like canvases. These are therefore top-to-bottom on hierarchy
+        // based on whats in front of what
+        MakeObject(parent, formationTemplate, tv, orientations[0]); // Top
+        MakeObject(parent, formationTemplate, (lv + tv) / 2, orientations[3]); // TL
+        MakeObject(parent, formationTemplate, (tv + rv) / 2, orientations[1]); // TR
+        MakeObject(parent, formationTemplate, lv, orientations[6]); // Left
+        MakeObject(parent, formationTemplate, Vector3.zero, MM); // MM
+        MakeObject(parent, formationTemplate, rv, orientations[2]); // Right
+        MakeObject(parent, formationTemplate, (lv + bv) / 2, orientations[7]); // BL
+        MakeObject(parent, formationTemplate, (rv + bv) / 2, orientations[5]); // BR
+        MakeObject(parent, formationTemplate, bv, orientations[8]); // Down
+    }
 
     public static TObjectType CreateFormationGrid<TObjectType>(TObjectType template, float gapX, float gapY, FormationOrientation orientation = FormationOrientation.BottomRight) where TObjectType : MonoBehaviour, IFormationGrid
     {
@@ -214,13 +253,15 @@ public static class FormationUtils
     }
 }
 
-public interface IFormationGridSlot
+public interface IFormation
+{
+    FormationRow Row { get; set; }
+    FormationColumn Col { get; set; }
+}
+
+public interface IFormationGridSlot : IFormation
 {
     MonoBehaviour Instance { get; }
-
-    FormationRow Row { get; set; }
-
-    FormationColumn Col { get; set; }
 
     void SetUnit(Unit unit);
 }

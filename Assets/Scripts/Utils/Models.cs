@@ -40,6 +40,11 @@ public struct FormationPair
     {
         return (int)Row * 10 + (int)Col;
     }
+
+    public static FormationPair From(FormationRow row, FormationColumn col)
+    {
+        return new FormationPair(row, col);
+    }
 }
 
 /// <summary>

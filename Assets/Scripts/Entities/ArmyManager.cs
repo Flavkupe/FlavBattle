@@ -35,6 +35,8 @@ public class ArmyManager : MonoBehaviour
     private bool _clickProcessed = false;
     private bool _combatProcessed = false;
 
+    private bool _zoomedView = false;
+
     private FactionData _playerFaction;
     private UIManager _ui;
     private GarrisonManager _garrisonManager;
@@ -107,7 +109,20 @@ public class ArmyManager : MonoBehaviour
     void Update()
     {
         _clickProcessed = false;
+
+        var shouldZoom = _camera.IsZoomedDistance();
+        if (_zoomedView && !shouldZoom)
+        {
+            _zoomedView = false;
+            ToggleZoomMode(false);
+        }
+        else if (!_zoomedView && shouldZoom)
+        {
+            _zoomedView = true;
+            ToggleZoomMode(true);
+        }
     }
+
 
     public IEnumerable<Army> GetPlayerArmies()
     {
@@ -436,5 +451,13 @@ public class ArmyManager : MonoBehaviour
         var army = _armies.First(a => a.ID == clickedArmy.ID);
         Camera.main.transform.position = army.transform.position.SetZ(Camera.main.transform.position.z);
         SelectArmy(army);
+    }
+
+    private void ToggleZoomMode(bool zoomedView)
+    {
+        foreach (var army in _armies)
+        {
+            army.ToggleZoomedView(zoomedView);
+        }
     }
 }
