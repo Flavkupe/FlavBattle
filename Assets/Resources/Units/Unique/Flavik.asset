@@ -15,14 +15,10 @@ MonoBehaviour:
   _icon: {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
   _className: 
   _rollLow: 0
-  _hp: {x: 2, y: 2}
-  _power: {x: 0, y: 0}
-  _defense: {x: 1, y: 1}
-  _speed: {x: 1, y: 1}
-  _hpScaling: {x: 0, y: 0}
-  _powerScaling: {x: 0, y: 0}
-  _defenseScaling: {x: 0, y: 0}
-  _speedScaling: {x: 0, y: 0}
+  _hp: 16
+  _power: 1
+  _defense: 3
+  _speed: 3
   _boutsToFlee: 3
   _startingBlockShields: 0
   _sprite: {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}

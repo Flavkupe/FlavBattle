@@ -55,16 +55,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
-    <Compile Include="Assets\Scripts\CharacterController2D.cs" />
-    <Compile Include="Assets\Scripts\LightIntensityController.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
     <Compile Include="Assets\Scripts\Instances.cs" />
     <Compile Include="Assets\Scripts\UI\Components\VisualCounter.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleUIPanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyAIDecisionState.cs" />
     <Compile Include="Assets\Scripts\Utils\ExtensionFunctions.cs" />
-    <Compile Include="Assets\Scripts\Entities\Footprints.cs" />
-    <Compile Include="Assets\Scripts\OnScreenControls.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\Footprints.cs" />
     <Compile Include="Assets\Scripts\Components\FloatingText.cs" />
     <Compile Include="Assets\Scripts\Entities\AI\ChargeToBuilding.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyPanel.cs" />
@@ -72,9 +69,9 @@
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateBase.cs" />
     <Compile Include="Assets\Scripts\UI\Map\ObjectivePanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
-    <Compile Include="Assets\Scripts\Entities\IDetectable.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\IDetectable.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAction.cs" />
-    <Compile Include="Assets\Scripts\Entities\ArmyMapSpawn.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyMapSpawn.cs" />
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Prop.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TooltipHolder.cs" />
     <Compile Include="Assets\Scripts\Entities\Morale.cs" />
@@ -83,7 +80,7 @@
     <Compile Include="Assets\Scripts\Combat\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DraggableUnitProvider.cs" />
-    <Compile Include="Assets\Scripts\Entities\GarrisonManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\GarrisonManager.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitAnimatorTrigger.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />
     <Compile Include="Assets\Scripts\Entities\IArmy.cs" />
@@ -91,9 +88,7 @@
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedMove.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Draggable.cs" />
-    <Compile Include="Assets\Scripts\VisibleOnlyDuringNight.cs" />
     <Compile Include="Assets\Scripts\Utils\Bezier.cs" />
-    <Compile Include="Assets\Scripts\MaterialVectorSetter.cs" />
     <Compile Include="Assets\Scripts\Utils\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\SpecialUnitData.cs" />
     <Compile Include="Assets\Scripts\Utils\GameResourceManager.cs" />
@@ -110,7 +105,7 @@
     <Compile Include="Assets\Scripts\Entities\TestArmy.cs" />
     <Compile Include="Assets\Scripts\State\Objectives\ScenarioObjectives.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatSummary.cs" />
-    <Compile Include="Assets\Scripts\Entities\Army.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\Army.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TooltipSource.cs" />
     <Compile Include="Assets\Scripts\Utils\TimeUtils.cs" />
     <Compile Include="Assets\Scripts\Components\RadialTimer.cs" />
@@ -126,18 +121,15 @@
     <Compile Include="Assets\Scripts\Components\WithFormation.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIUnitGridBase.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatTextCallout.cs" />
-    <Compile Include="Assets\Scripts\Entities\ArmyManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyEditWindow.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\OfficerAbilityData.cs" />
     <Compile Include="Assets\Scripts\Combat\Event\CombatAbilityAnimationEvent.cs" />
-    <Compile Include="Assets\Scripts\GameplayTrigger.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
-    <Compile Include="Assets\Scripts\CharacterAudio.cs" />
     <Compile Include="Assets\Scripts\Combat\StatsBuff.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ShowWinnerState.cs" />
-    <Compile Include="Assets\Scripts\LightColorController.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Components\HealthBar.cs" />
@@ -150,7 +142,7 @@
     <Compile Include="Assets\Scripts\Utils\Routines\Routine.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\FormationBuilder.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />
-    <Compile Include="Assets\Scripts\Entities\Town.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\Town.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatStancePanel.cs" />
     <Compile Include="Assets\Scripts\Combat\WeaponAnimation.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\ParticleAnimation.cs" />
@@ -170,17 +162,15 @@
     <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanelRow.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tooltip.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenuItem.cs" />
-    <Compile Include="Assets\Scripts\LightColorSetter.cs" />
     <Compile Include="Assets\Scripts\Components\CameraMain.cs" />
-    <Compile Include="Assets\Scripts\Entities\Garrison.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\Garrison.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
-    <Compile Include="Assets\Scripts\ObjectActivator.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\ZoomedArmyView.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyMapView.cs" />
     <Compile Include="Assets\Scripts\Combat\States\BattleStatus.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyIdleState.cs" />
@@ -189,7 +179,6 @@
     <Compile Include="Assets\Scripts\Entities\Data\BasicUnitData.cs" />
     <Compile Include="Assets\Scripts\Combat\Data\CombatAbilityData.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UICombatActionInfoPanel.cs" />
-    <Compile Include="Assets\Scripts\ParallaxLayer.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Combat\States\Combatant.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
@@ -202,7 +191,6 @@
     <Compile Include="Assets\Scripts\Combat\CombatTargetInfo.cs" />
     <Compile Include="Assets\Scripts\Entities\AI\ArmyMapAI.cs" />
     <Compile Include="Assets\Scripts\UI\Components\FacePortrait.cs" />
-    <Compile Include="Assets\Scripts\MaterialColorSetter.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DraggableUIUnit.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\ArmyMoraleBar.cs" />
     <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
@@ -219,6 +207,7 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\BattleCommandButton.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

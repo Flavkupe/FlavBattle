@@ -15,14 +15,10 @@ MonoBehaviour:
   _icon: {fileID: 3840481900236895277, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
   _className: Peasant
   _rollLow: 0
-  _hp: {x: 6, y: 6}
-  _power: {x: 0, y: 0}
-  _defense: {x: 0, y: 0}
-  _speed: {x: 3, y: 3}
-  _hpScaling: {x: 0, y: 0}
-  _powerScaling: {x: 0, y: 0}
-  _defenseScaling: {x: 0, y: 0}
-  _speedScaling: {x: 0, y: 0}
+  _hp: 6
+  _power: 0
+  _defense: 0
+  _speed: 4
   _boutsToFlee: 2
   _startingBlockShields: 0
   _sprite: {fileID: 4280929510133602699, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
@@ -41,13 +37,17 @@ MonoBehaviour:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 1
+    InstantAbility: 0
     Ability: {fileID: 11400000, guid: 188614528b1cdda498b524b1d042a25b, type: 2}
+    RequiredStance: 7
   - Priority: 1
     Description: Poke Mid
     Target:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 2
+    InstantAbility: 0
     Ability: {fileID: 11400000, guid: 188614528b1cdda498b524b1d042a25b, type: 2}
+    RequiredStance: 7
   _defaultOfficerAbilities: []
   _officerAbilities: []

@@ -111,10 +111,10 @@ namespace FlavBattle.Combat
         private void HandleBattleUIPanelOnCommandAbilityUsed(object sender, OfficerAbilityData e)
         {
             var officer = _battleStatus.GetPlayerOfficer();
-            if (e.CommandCost <= officer.Unit.Info.CurrentStats.Command)
+            if (e.CommandCost <= officer.Unit.Info.CurrentStats.Commands)
             {
                 _battleStatus.AbilityQueue.Enqueue(e);
-                officer.Unit.Info.CurrentStats.Command -= e.CommandCost;
+                officer.Unit.Info.CurrentStats.Commands -= e.CommandCost;
                 this.BattleUIPanel.CommandMenu.UpdateMenu();
             }
         }

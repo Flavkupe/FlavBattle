@@ -15,16 +15,12 @@ MonoBehaviour:
   _icon: {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   _className: Armored Knight
   _rollLow: 0
-  _hp: {x: 10, y: 10}
-  _power: {x: 0, y: 0}
-  _defense: {x: 2, y: 2}
-  _speed: {x: 0, y: 0}
-  _hpScaling: {x: 0, y: 0}
-  _powerScaling: {x: 0, y: 0}
-  _defenseScaling: {x: 0, y: 0}
-  _speedScaling: {x: 0, y: 0}
+  _hp: 12
+  _power: 0
+  _defense: 3
+  _speed: 0
   _boutsToFlee: 3
-  _startingBlockShields: 0
+  _startingBlockShields: 1
   _sprite: {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   _animatorOverride: {fileID: 22100000, guid: f24077674f5409149816b777f2c03c10, type: 2}
   _portraits:

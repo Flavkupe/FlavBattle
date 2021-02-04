@@ -28,13 +28,13 @@ public class BattleCommandMenu : MonoBehaviour
 
     private List<BattleCommandMenuItem> _items = new List<BattleCommandMenuItem>();
 
-    public void SetCommander(Unit commander)
+    public void SetOfficer(Unit officer)
     {
         _items.Clear();
-        _commander = commander;
+        _commander = officer;
         CommandArea.DestroyChildren();
 
-        var abilities = commander.Info.OfficerAbilities.Where(a =>
+        var abilities = officer.Info.OfficerAbilities.Where(a =>
             a.TriggerType != OfficerAbilityTriggerType.Passive
         );
 
@@ -64,7 +64,7 @@ public class BattleCommandMenu : MonoBehaviour
             return;
         }
 
-        var commandPoints = _commander.Info.CurrentStats.Command;
+        var commandPoints = _commander.Info.CurrentStats.Commands;
         CommandPointsArea.SetCount(commandPoints);
         foreach (var item in _items)
         {
@@ -79,7 +79,7 @@ public class BattleCommandMenu : MonoBehaviour
             return;
         }
 
-        var commandPoints = _commander.Info.CurrentStats.Command;
+        var commandPoints = _commander.Info.CurrentStats.Commands;
         if (data.CommandCost <= commandPoints)
         {
             this.OnAbilityClicked?.Invoke(this, data);

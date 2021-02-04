@@ -36,6 +36,9 @@ public class BattleUIPanel : MonoBehaviour
     [Required]
     public CombatUnitStatsPanel UnitStatsPanel;
 
+    [Required]
+    public BattleCommandButton BattleCommandButton;
+
     /// <summary>
     /// Fires an event indicating that the FightingStance has been changed from the UI
     /// </summary>
@@ -80,7 +83,8 @@ public class BattleUIPanel : MonoBehaviour
             var officer = _playerArmy.Formation.GetOfficer();
             if (officer != null)
             {
-                CommandMenu.SetCommander(officer);
+                BattleCommandButton.SetOfficer(officer);
+                CommandMenu.SetOfficer(officer);
             }
         }
     }

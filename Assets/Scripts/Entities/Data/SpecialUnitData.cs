@@ -11,6 +11,12 @@ namespace FlavBattle.Entities.Data
     [CreateAssetMenu(fileName = "Unit Data", menuName = "Custom/Units/Special Unit Data", order = 1)]
     public class SpecialUnitData : UnitData
     {
+        /// <summary>
+        /// Just for showing the assetIcon in the inspector; ignore this
+        /// </summary>
+        [AssetIcon]
+        public Sprite AssetIcon => base.Icon;
+
         [BoxGroup("Overrides")]
         [SerializeField]
         private int _startingLevel = 1;

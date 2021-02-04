@@ -3,40 +3,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum UnitStatType
+{
+    HP,
+    Power,
+    Defense,
+    Speed,
+    Level,
+    StartingBlockShields,
+    Command,
+    ActiveMoraleShields,
+    ActiveBlockShields,
+}
+
+public class UnitStatChangeEventArgs : EventArgs
+{
+    public UnitStatType Type { get; }
+    public UnitStats Current { get; }
+
+    public UnitStatChangeEventArgs(UnitStatType type, UnitStats current)
+    {
+        Type = type;
+        Current = current;
+    }
+}
+
 [Serializable]
 public class UnitStats
 {
-    public int HP;
+    [SerializeField]
+    private int _hp;
 
-    public int Power;
+    [SerializeField]
+    private int _power;
 
-    public int Defense;
+    [SerializeField]
+    private int _defense;
 
-    public int Speed;
+    [SerializeField]
+    private int _speed;
 
-    public int Level = 1;
+    [SerializeField]
+    private int _level = 1;
 
     /// <summary>
     /// How many Block Shields the unit starts combat with.
     /// </summary>
     [Tooltip("How many Block Shields the unit starts combat with. For buffs, this is a onetime bonus to block shields.")]
-    public int StartingBlockShields = 0;
+    [SerializeField]
+    private int _startingBlockShields = 0;
 
     /// <summary>
     /// For officers, it's how many commands they can issue.
     /// </summary>
-    public int Command = 0;
+    [SerializeField]
+    private int _command = 0;
 
     /// <summary>
     /// Shields available in combat start due to high morale
     /// </summary>
-    public int MoraleShields { get; set; } = 0;
+    private int _moraleShields = 0;
 
 
     /// <summary>
     /// Shields available in combat start due to defensive properties
     /// </summary>
-    public int BlockShields { get; set; } = 0;
+    private int _blockShields = 0;
+
+    public int HP { get => _hp; set { _hp = value; FireStatChange(UnitStatType.HP); } }
+    public int Power { get => _power; set { _power = value; FireStatChange(UnitStatType.Power); } }  
+    public int Defense { get => _defense; set { _defense = value; FireStatChange(UnitStatType.Defense); } }  
+    public int Speed { get => _speed; set { _speed = value; FireStatChange(UnitStatType.Speed); } }  
+    public int Level { get => _level; set { _level = value; FireStatChange(UnitStatType.Level); } }  
+    public int StartingBlockShields { get => _startingBlockShields; set { _startingBlockShields = value; FireStatChange(UnitStatType.StartingBlockShields); } }  
+    public int Commands { get => _command; set { _command = value; FireStatChange(UnitStatType.Command); } }  
+    public int ActiveMoraleShields { get => _moraleShields; set { _moraleShields = value; FireStatChange(UnitStatType.ActiveMoraleShields); } }  
+    public int ActiveBlockShields { get => _blockShields; set { _blockShields = value; FireStatChange(UnitStatType.ActiveBlockShields); } }  
+
+    public event EventHandler<UnitStatChangeEventArgs> StatChanged;
 
     public UnitStats Clone()
     {
@@ -63,8 +107,8 @@ public class UnitStats
             Defense = this.Defense + other.Defense,
             Speed = this.Speed + other.Speed,
 
-            MoraleShields = this.MoraleShields + other.MoraleShields,
-            BlockShields = this.BlockShields + other.BlockShields,
+            ActiveMoraleShields = this.ActiveMoraleShields + other.ActiveMoraleShields,
+            ActiveBlockShields = this.ActiveBlockShields + other.ActiveBlockShields,
             StartingBlockShields = this.StartingBlockShields + other.StartingBlockShields,
 
             Level = Math.Max(Level, other.Level),
@@ -86,9 +130,14 @@ public class UnitStats
 
             // not affected
             Level = this.Level,
-            MoraleShields = this.MoraleShields,
-            BlockShields = this.BlockShields,
+            ActiveMoraleShields = this.ActiveMoraleShields,
+            ActiveBlockShields = this.ActiveBlockShields,
             StartingBlockShields = this.StartingBlockShields,
         };
+    }
+
+    private void FireStatChange(UnitStatType type)
+    {
+        StatChanged?.Invoke(this, new UnitStatChangeEventArgs(type, this));
     }
 }

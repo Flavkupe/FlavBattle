@@ -10,6 +10,7 @@ public interface IAnimatedSprite
     void SetAnimations(Sprite[] animations);
     void SetColor(Color color);
     void SetSpeedModifier(float modifier);
+    void ToggleSpriteVisible(bool visible);
 }
 
 public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
@@ -44,9 +45,9 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
 
     public void SetFlipped(bool flipped)
     {
-        if (this._spriteRenderer != null)
+        if (this.SpriteRenderer != null)
         {
-            this._spriteRenderer.flipX = flipped;
+            this.SpriteRenderer.flipX = flipped;
         }
     }
 
@@ -57,9 +58,9 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
 
     public void SetColor(Color color)
     {
-        if (_spriteRenderer != null)
+        if (SpriteRenderer != null)
         {
-            _spriteRenderer.color = color;
+            SpriteRenderer.color = color;
         }
         else if (_image)
         {
@@ -68,6 +69,8 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
     }
 
     private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer SpriteRenderer => this.GetCachedComponent(ref _spriteRenderer);
+    
     private Image _image;
     private int _currentFrame = 0;
     private bool _idle = true;
@@ -76,9 +79,9 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
 
     private void SetSprite(Sprite sprite)
     {
-        if (_spriteRenderer != null)
+        if (SpriteRenderer != null)
         {
-            _spriteRenderer.sprite = sprite;
+            SpriteRenderer.sprite = sprite;
         }
         else if (_image)
         {
@@ -89,14 +92,21 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
     // Start is called before the first frame update
     void Start()
     {
-        _spriteRenderer = this.GetComponent<SpriteRenderer>() ?? this.GetComponentInChildren<SpriteRenderer>();
         _image = this.GetComponent<Image>() ?? this.GetComponentInChildren<Image>();
-        this.SetSprite(Animations[0]);
+        if (Animations.Length > 0)
+        {
+            this.SetSprite(Animations[0]);
+        }
     }
 
     void Update()
     {
         if (_idle)
+        {
+            return;
+        }
+
+        if (Animations.Length == 0)
         {
             return;
         }
@@ -112,6 +122,18 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
             }
 
             this.SetSprite(Animations[_currentFrame]);
+        }
+    }
+
+    public void ToggleSpriteVisible(bool visible)
+    {
+        if (SpriteRenderer != null)
+        {
+            SpriteRenderer.enabled = visible;
+        }
+        else if (_image != null)
+        {
+            _image.enabled = visible;
         }
     }
 }

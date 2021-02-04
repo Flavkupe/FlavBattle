@@ -23,9 +23,7 @@ public class UnitInfo
 
     public string Name { get; private set; }
 
-    public UnitInfo()
-    {
-    }
+    public event EventHandler<UnitStatChangeEventArgs> StatChanged;
 
     public UnitInfo(UnitData data, Faction faction, int level = 1, bool isOfficer = false)
     {
@@ -42,7 +40,7 @@ public class UnitInfo
         if (isOfficer)
         {
             // TODO: different command amounts
-            this.CurrentStats.Command = 3;
+            this.CurrentStats.Commands = 3;
 
             OfficerAbilities.AddRange(data.DefaultOfficerAbilities);
 
@@ -53,5 +51,7 @@ public class UnitInfo
                 OfficerAbilities.Add(ability);
             }
         }
+
+        this.CurrentStats.StatChanged += (obj, e) => StatChanged?.Invoke(obj, e);
     }
 }

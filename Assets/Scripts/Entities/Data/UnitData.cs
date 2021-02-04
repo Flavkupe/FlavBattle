@@ -24,52 +24,24 @@ namespace FlavBattle.Entities.Data
         protected bool _rollLow = false;
 
         [BoxGroup("Base Stats")]
-        [MinMaxSlider(0.0f, 30.0f)]
         [SerializeField]
-        private Vector2 _hp;
-        public Vector2 HP => _hp;
+        private int _hp;
+        public int HP => _hp;
 
         [BoxGroup("Base Stats")]
-        [MinMaxSlider(0.0f, 5.0f)]
         [SerializeField]
-        private Vector2 _power;
-        public Vector2 Power => _power;
+        private int _power;
+        public int Power => _power;
 
         [BoxGroup("Base Stats")]
-        [MinMaxSlider(0.0f, 5.0f)]
         [SerializeField]
-        private Vector2 _defense;
-        public Vector2 Defense => _defense;
+        private int _defense;
+        public int Defense => _defense;
 
         [BoxGroup("Base Stats")]
-        [MinMaxSlider(0.0f, 10.0f)]
         [SerializeField]
-        private Vector2 _speed;
-        public Vector2 Speed => _speed;
-
-        [BoxGroup("Stat Scaling")]
-        [MinMaxSlider(0.0f, 5.0f)]
-        [SerializeField]
-        private Vector2 _hpScaling;
-        public Vector2 HPScaling => _hpScaling;
-
-        [BoxGroup("Stat Scaling")]
-        [MinMaxSlider(0.0f, 5.0f)]
-        [SerializeField]
-        private Vector2 _powerScaling;
-        public Vector2 PowerScaling => _powerScaling;
-
-        [BoxGroup("Stat Scaling")]
-        [MinMaxSlider(0.0f, 5.0f)]
-        [SerializeField]
-        private Vector2 _defenseScaling;
-        public Vector2 DefenseScaling => _defenseScaling;
-
-        [BoxGroup("Stat Scaling")]
-        [MinMaxSlider(0.0f, 5.0f)]
-        [SerializeField]
-        private Vector2 _speedScaling;
-        public Vector2 SpeedScaling => _speedScaling;
+        private int _speed;
+        public int Speed => _speed;
 
         [Tooltip("How many bouts the unit will wait before wanting to flee combat when morale is low. 3 means they might flee on bout 3. Army calculates based on average.")]
         [SerializeField]
@@ -130,10 +102,10 @@ namespace FlavBattle.Entities.Data
         {
             var stats = new UnitStats();
             stats.Level = level;
-            stats.HP = GenerateStat(HP);
-            stats.Power = GenerateStat(Power);
-            stats.Defense = GenerateStat(Defense);
-            stats.Speed = GenerateStat(Speed);
+            stats.HP = HP;
+            stats.Power = Power;
+            stats.Defense = Defense;
+            stats.Speed = Speed;
             stats.StartingBlockShields = StartingBlockShields;
             for (int i = 1; i < level; i++)
             {
@@ -146,11 +118,8 @@ namespace FlavBattle.Entities.Data
 
         public virtual UnitStats RollLevel()
         {
+            // TODO - perks
             var stats = new UnitStats();
-            stats.HP = GenerateStat(HPScaling);
-            stats.Power = GenerateStat(PowerScaling);
-            stats.Defense = GenerateStat(DefenseScaling);
-            stats.Speed = GenerateStat(SpeedScaling);
             return stats;
         }
 
@@ -175,15 +144,5 @@ namespace FlavBattle.Entities.Data
         public abstract string RollName();
 
         public abstract Sprite RollPortrait();
-
-        private int GenerateStat(Vector2 stat)
-        {
-            if (_rollLow)
-            {
-                return (int)stat.x;
-            }
-
-            return (int)Mathf.Round(Utils.MathUtils.RandomNormalBetween(stat.x, stat.y));
-        }
     }
 }

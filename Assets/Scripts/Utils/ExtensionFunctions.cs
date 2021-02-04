@@ -154,6 +154,20 @@ public static class ExtensionFunctions
         }
     }
 
+    /// <summary>
+    /// Calls GetComponent if val is null, caching it on val. Otherwise returns val.
+    /// Useful as a shortcut to property getters that cache the value from a GetComponent.
+    /// </summary>
+    public static T GetCachedComponent<T>(this MonoBehaviour obj, ref T val)
+    {
+        if (val == null)
+        {
+            val = obj.GetComponent<T>();
+        }
+
+        return val;
+    }
+
     public static bool Matches(this IFormationGridSlot slot, FormationPair pair)
     {
         return slot.Col == pair.Col && slot.Row == pair.Row;

@@ -284,22 +284,22 @@ namespace FlavBattle.Combat.States
             var damage = ability.Damage.RandomBetween();
             if (attack > defense)
             {
-                if (target.CombatCombinedStats.MoraleShields > 0)
+                if (target.CombatCombinedStats.ActiveMoraleShields > 0)
                 {
                     // tank the hit due to high morale (still take morale damage)
                     summary.MoraleBlockedAttack = true;
-                    target.StatChanges.MoraleShields--;
+                    target.StatChanges.ActiveMoraleShields--;
                     damage = 0;
                 }
             }
             else
             {
                 summary.ResistedAttack = true;
-                if (target.CombatCombinedStats.BlockShields > 0)
+                if (target.CombatCombinedStats.ActiveBlockShields > 0)
                 {
                     // fully tank the hit
                     summary.ShieldBlockedAttack = true;
-                    target.StatChanges.BlockShields--;
+                    target.StatChanges.ActiveBlockShields--;
                     damage = 0;
                     moraleDamage = 0;
                     selfMoraleDamage = 5;

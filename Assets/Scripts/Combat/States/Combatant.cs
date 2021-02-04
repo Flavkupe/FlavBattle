@@ -99,7 +99,7 @@ public class Combatant
     {
         for (var i = 0; i < numBlockShields; i++)
         {
-            this.StatChanges.BlockShields++;
+            this.StatChanges.ActiveBlockShields++;
             this.CombatUnit.AddBuffIcon(CombatBuffIcon.BuffType.BlockShield);
         }
     }

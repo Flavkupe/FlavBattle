@@ -14,6 +14,8 @@ public class Formation
 {
     private Unit[,] _units = new Unit[3,3];
 
+    public event EventHandler<Formation> FormationChanged;
+
     public List<Unit> GetUnits(bool liveOnly = false)
     {
         return GetUnits(FormationUtils.AllSquares, liveOnly);
@@ -82,6 +84,7 @@ public class Formation
             current.IsInFormation = false;
         }
 
+        FormationChanged?.Invoke(this, this);
         return current;
     }
 
@@ -92,11 +95,24 @@ public class Formation
         var col = e.Formation.Col;
         var current = PutUnit(null, row, col);
         Debug.Assert(e == current, "Attempting to remove unit not in this formation!");
+        FormationChanged?.Invoke(this, this);
     }
 
-    public Unit GetOfficer()
+    /// <summary>
+    /// Gets the officer from the formation. If getRandomOnNull is true
+    /// and no officer is found, will find a random unit.
+    /// Else, will return null.
+    /// </summary>
+    public Unit GetOfficer(bool getRandomOnNull = false)
     {
-        return GetUnits().First(a => a.IsOfficer);
+        var units = GetUnits();
+        var officer = units.FirstOrDefault(a => a.IsOfficer);
+        if (officer == null && getRandomOnNull)
+        {
+            return units.GetRandom();
+        }
+
+        return officer;
     }
 
     public Unit GetUnit(FormationRow row, FormationColumn column)

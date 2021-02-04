@@ -15,14 +15,10 @@ MonoBehaviour:
   _icon: {fileID: -4228030573731687880, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
   _className: Hunter
   _rollLow: 0
-  _hp: {x: 6, y: 6}
-  _power: {x: 0, y: 0}
-  _defense: {x: 0, y: 0}
-  _speed: {x: 3, y: 3}
-  _hpScaling: {x: 0, y: 0}
-  _powerScaling: {x: 0, y: 0}
-  _defenseScaling: {x: 0, y: 0}
-  _speedScaling: {x: 0, y: 0}
+  _hp: 8
+  _power: 0
+  _defense: 0
+  _speed: 5
   _boutsToFlee: 3
   _startingBlockShields: 0
   _sprite: {fileID: -4228030573731687880, guid: 54b3992eaea39b448b4eb01c86a46239,
@@ -44,13 +40,17 @@ MonoBehaviour:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 7
+    InstantAbility: 0
     Ability: {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
+    RequiredStance: 7
   - Priority: 1
     Description: Club front
     Target:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 1
+    InstantAbility: 0
     Ability: {fileID: 11400000, guid: 66852593919b2064688b402db09f140a, type: 2}
+    RequiredStance: 7
   _defaultOfficerAbilities: []
   _officerAbilities: []

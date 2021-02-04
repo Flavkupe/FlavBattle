@@ -15,14 +15,10 @@ MonoBehaviour:
   _icon: {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
   _className: Soldier
   _rollLow: 0
-  _hp: {x: 8, y: 8}
-  _power: {x: 0, y: 0}
-  _defense: {x: 1, y: 1}
-  _speed: {x: 1, y: 1}
-  _hpScaling: {x: 0, y: 0}
-  _powerScaling: {x: 0, y: 0}
-  _defenseScaling: {x: 0, y: 0}
-  _speedScaling: {x: 0, y: 0}
+  _hp: 8
+  _power: 1
+  _defense: 1
+  _speed: 1
   _boutsToFlee: 3
   _startingBlockShields: 0
   _sprite: {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
@@ -42,13 +38,17 @@ MonoBehaviour:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 1
+    InstantAbility: 0
     Ability: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
+    RequiredStance: 7
   - Priority: 2
     Description: Sword mid
     Target:
       TargetType: 2
       ValidOpponent: 0
       ValidTargets: 2
+    InstantAbility: 0
     Ability: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
+    RequiredStance: 7
   _defaultOfficerAbilities: []
   _officerAbilities: []
