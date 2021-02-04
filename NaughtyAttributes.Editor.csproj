@@ -53,39 +53,39 @@
     <UnityVersion>2020.2.0f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\AllowNestingPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\TagPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers_SpecialCase\SpecialCasePropertyDrawerBase.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\InputAxisPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\Utility\SavedBool.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ReadOnlyPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\CurveRangePropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ScenePropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\Utility\ButtonUtility.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\DecoratorDrawers\InfoBoxDecoratorDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\Utility\NaughtyEditorGUI.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\DecoratorDrawers\HorizontalLineDecoratorDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyValidators\RequiredPropertyValidator.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ProgressBarPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers_SpecialCase\ReorderableListPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\Utility\PropertyUtility.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\MinMaxSliderPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\EnumFlagsPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\PropertyDrawerBase.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\AnimatorParamPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ExpandablePropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\NaughtyInspector.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyValidators\PropertyValidatorBase.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\Utility\ReflectionUtility.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyValidators\MinValuePropertyValidator.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyValidators\ValidateInputPropertyValidator.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ShowAssetPreviewPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyValidators\MaxValuePropertyValidator.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\DropdownPropertyDrawer.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ResizableTextAreaPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\TagPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers_SpecialCase\SpecialCasePropertyDrawerBase.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\InputAxisPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\Utility\SavedBool.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ReadOnlyPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\CurveRangePropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\DecoratorDrawers\HorizontalLineDecoratorDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers_SpecialCase\ReorderableListPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\Utility\PropertyUtility.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\PropertyDrawerBase.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ExpandablePropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\NaughtyInspector.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyValidators\PropertyValidatorBase.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyValidators\MinValuePropertyValidator.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyValidators\ValidateInputPropertyValidator.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ResizableTextAreaPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\AllowNestingPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ScenePropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\Utility\ButtonUtility.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\DecoratorDrawers\InfoBoxDecoratorDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\Utility\NaughtyEditorGUI.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyValidators\RequiredPropertyValidator.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ProgressBarPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\MinMaxSliderPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\EnumFlagsPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\AnimatorParamPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\Utility\ReflectionUtility.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\ShowAssetPreviewPropertyDrawer.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyValidators\MaxValuePropertyValidator.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Editor\PropertyDrawers\DropdownPropertyDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\NaughtyAttributes\Scripts\Editor\NaughtyAttributes.Editor.asmdef" />
+     <None Include="Assets\External\NaughtyAttributes\Scripts\Editor\NaughtyAttributes.Editor.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.2.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -332,6 +332,9 @@
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
     <Reference Include="RainbowCore">
       <HintPath>Assets\Plugins\RainbowAssets\!Core\Assemblies\RainbowCore.dll</HintPath>
     </Reference>
@@ -340,9 +343,6 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.5\net35\unity-custom\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Unity\2020.2.0f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -695,11 +695,11 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TestRunner">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

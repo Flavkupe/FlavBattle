@@ -53,13 +53,13 @@
     <UnityVersion>2020.2.0f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\External\AssetIcons\Scripts\Editor\Modules\AssetIconModule.cs" />
+    <Compile Include="Assets\External\AssetIcons\Scripts\Editor\AssetIconTools.cs" />
     <Compile Include="Assets\External\AssetIcons\Scripts\Editor\Modules\ModuleManifest.cs" />
     <Compile Include="Assets\External\AssetIcons\Scripts\Editor\AssetIconAttributeDrawer.cs" />
     <Compile Include="Assets\External\AssetIcons\Scripts\Editor\Modules\ExtensionTypeModule.cs" />
     <Compile Include="Assets\External\AssetIcons\Scripts\Editor\Modules\AssetTarget.cs" />
     <Compile Include="Assets\External\AssetIcons\Scripts\Editor\AssetIconDrawer.cs" />
-    <Compile Include="Assets\External\AssetIcons\Scripts\Editor\Modules\AssetIconModule.cs" />
-    <Compile Include="Assets\External\AssetIcons\Scripts\Editor\AssetIconTools.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\AssetIcons\Scripts\Editor\AssetIcons Editor.asmdef" />
@@ -309,6 +309,9 @@
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
     <Reference Include="RainbowCore">
       <HintPath>Assets\Plugins\RainbowAssets\!Core\Assemblies\RainbowCore.dll</HintPath>
     </Reference>
@@ -317,9 +320,6 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.5\net35\unity-custom\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:\Unity\2020.2.0f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>
@@ -672,11 +672,11 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TestRunner">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>Library\ScriptAssemblies\UnityEditor.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

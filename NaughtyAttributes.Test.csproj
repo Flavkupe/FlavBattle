@@ -53,41 +53,41 @@
     <UnityVersion>2020.2.0f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\_NaughtyScriptableObject.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\MinMaxSliderTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ResizableTextAreaTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\OnValueChangedTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\MinMaxValueTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\BoxGroupTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ValidateInputTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\RequiredTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ShowAssetPreviewTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\EnumFlagsTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\HorizontalLineTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\InfoBoxTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ExpandableTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ButtonTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\DisableIfTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\_NaughtyComponent.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\TagTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\DropdownTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ShowNativePropertyTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ReadOnlyTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\AnimatorParamTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ReorderableListTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ShowNonSerializedFieldTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\EnableIfTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ShowIfTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\LabelTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\ProgressBarTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\InputAxisTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\CurveRangeTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\SceneTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\HideIfTest.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Test\FoldoutTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\_NaughtyScriptableObject.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ResizableTextAreaTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\OnValueChangedTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\BoxGroupTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ValidateInputTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\RequiredTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ShowAssetPreviewTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ExpandableTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ButtonTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\_NaughtyComponent.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\TagTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ReadOnlyTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ShowIfTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\CurveRangeTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\SceneTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\HideIfTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\MinMaxSliderTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\MinMaxValueTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\EnumFlagsTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\HorizontalLineTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\InfoBoxTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\DisableIfTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\DropdownTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ShowNativePropertyTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\AnimatorParamTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ReorderableListTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ShowNonSerializedFieldTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\EnableIfTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\LabelTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\ProgressBarTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\InputAxisTest.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Test\FoldoutTest.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\NaughtyAttributes\Scripts\Test\NaughtyAttributes.Test.asmdef" />
+     <None Include="Assets\External\NaughtyAttributes\Scripts\Test\NaughtyAttributes.Test.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.2.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -334,6 +334,9 @@
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
     <Reference Include="RainbowCore">
       <HintPath>Assets\Plugins\RainbowAssets\!Core\Assemblies\RainbowCore.dll</HintPath>
     </Reference>
@@ -342,9 +345,6 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.5\net35\unity-custom\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Unity\2020.2.0f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

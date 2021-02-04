@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using NaughtyAttributes;
+using FlavBattle.Tilemap;
 
 public class GridTile
 {

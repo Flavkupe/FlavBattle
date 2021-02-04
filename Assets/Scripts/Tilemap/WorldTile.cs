@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Tilemap;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -9,7 +10,7 @@ using UnityEngine.Tilemaps;
 public class WorldTile : Tile
 {
     [SerializeField]
-    private TileData _data;
+    private FlavBattle.Tilemap.TileData _data;
 
     public TileInfo Info => _data?.Info;
 

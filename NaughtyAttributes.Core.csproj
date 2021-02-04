@@ -53,51 +53,51 @@
     <UnityVersion>2020.2.0f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\DropdownAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\IGroupAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\Utility\EColor.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ShowNativePropertyAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\FoldoutAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\ValidatorAttributes\MaxValueAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\AllowNestingAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\ShowAssetPreviewAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\OnValueChangedAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\MinMaxSliderAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\ShowIfAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\ProgressBarAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\LabelAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\INaughtyAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\BoxGroupAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\ValidatorAttributes\ValidateInputAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ReorderableListAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\EnumFlagsAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\HorizontalLineAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\ValidatorAttributes\MinValueAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\AnimatorParamAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\DisableIfAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\InfoBoxAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\ResizableTextAreaAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\CurveRangeAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ButtonAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\Utility\EConditionOperator.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\EnableIfAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\Expandable.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\MetaAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\InputAxisAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\SpecialCaseDrawerAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\ReadOnlyAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\ShowIfAttributeBase.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\ValidatorAttributes\RequiredAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\SceneAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\EnableIfAttributeBase.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\ValidatorAttributes\ValidatorAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ShowNonSerializedFieldAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\DrawerAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\DrawerAttributes\TagAttribute.cs" />
-    <Compile Include="Assets\NaughtyAttributes\Scripts\Core\MetaAttributes\HideIfAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\IGroupAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\AllowNestingAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\ShowAssetPreviewAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\OnValueChangedAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\MinMaxSliderAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\ShowIfAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\EnumFlagsAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\AnimatorParamAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\DisableIfAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\ResizableTextAreaAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\CurveRangeAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\Utility\EConditionOperator.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\EnableIfAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\Expandable.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\InputAxisAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\SpecialCaseDrawerAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\ReadOnlyAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\ValidatorAttributes\RequiredAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\EnableIfAttributeBase.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\DrawerAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\HideIfAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\DropdownAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\Utility\EColor.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ShowNativePropertyAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\FoldoutAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\ValidatorAttributes\MaxValueAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\ProgressBarAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\LabelAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\INaughtyAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\BoxGroupAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\ValidatorAttributes\ValidateInputAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ReorderableListAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\HorizontalLineAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\ValidatorAttributes\MinValueAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\InfoBoxAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ButtonAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\MetaAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\MetaAttributes\ShowIfAttributeBase.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\SceneAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\ValidatorAttributes\ValidatorAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes_SpecialCase\ShowNonSerializedFieldAttribute.cs" />
+    <Compile Include="Assets\External\NaughtyAttributes\Scripts\Core\DrawerAttributes\TagAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\NaughtyAttributes\Scripts\Core\NaughtyAttributes.Core.asmdef" />
+     <None Include="Assets\External\NaughtyAttributes\Scripts\Core\NaughtyAttributes.Core.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\2020.2.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -344,6 +344,9 @@
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
     <Reference Include="RainbowCore">
       <HintPath>Assets\Plugins\RainbowAssets\!Core\Assemblies\RainbowCore.dll</HintPath>
     </Reference>
@@ -352,9 +355,6 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.5\net35\unity-custom\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.2.2\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Unity\2020.2.0f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

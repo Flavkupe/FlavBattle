@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FlavBattle.Tilemap;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -7,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class PropsTile : Tile
 {
     [SerializeField]
-    private TileData _data;
+    private FlavBattle.Tilemap.TileData _data;
 
     public TileInfo Info => _data?.Info;
 
