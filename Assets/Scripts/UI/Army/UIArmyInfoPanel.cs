@@ -10,11 +10,6 @@ namespace FlavBattle.UI.Army
     /// </summary>
     public class UIArmyInfoPanel : MonoBehaviour
     {
-        [Tooltip("The layout panel that holds individual action info panels")]
-        [Required]
-        [SerializeField]
-        private UICombatActionInfoPanel _attackActionInfoPanel;
-
         [Required]
         [SerializeField]
         private UIAttackGrid _armyAttackGrid;
@@ -22,16 +17,6 @@ namespace FlavBattle.UI.Army
         public void SetArmy(IArmy army)
         {
             ColorAttackGrid(army);
-        }
-
-        public void SetUnit(Unit unit)
-        {
-            _attackActionInfoPanel.SetUnit(unit);
-        }
-
-        public void ClearUnit()
-        {
-            _attackActionInfoPanel.ClearUnit();
         }
 
         private void ColorAttackGrid(IArmy army)

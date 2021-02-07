@@ -19,6 +19,8 @@ public class UnitInfo
 
     public List<OfficerAbilityData> OfficerAbilities { get; } = new List<OfficerAbilityData>();
 
+    public List<PerkData> Perks = new List<PerkData>();
+
     public bool IsOfficer { get; private set; } = false;
 
     public string Name { get; private set; }
@@ -33,6 +35,15 @@ public class UnitInfo
         this.Name = data.RollName();
         this.Portrait = data.RollPortrait();
         this.Faction = faction;
+
+        for (var i = 1; i <= level; i++)
+        {
+            var perk = Data.RollPerk(i);
+            if (perk != null)
+            {
+                Perks.Add(perk);
+            }
+        }
 
         this.Actions.AddRange(data.StartingActions);
         this.IsOfficer = isOfficer;

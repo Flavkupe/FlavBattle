@@ -7,7 +7,7 @@ namespace FlavBattle.UI.Army
 {
     public class UICombatActionInfoPanel : MonoBehaviour
     {
-        [Tooltip("Template for a panel that holds info a single action")]
+        [Tooltip("Template for a panel that holds info about a single action")]
         [Required]
         [SerializeField]
         private UICombatActionInfoItem _UICombatActionInfoPanelTemplate;

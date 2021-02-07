@@ -50,7 +50,7 @@ public class InitRoundState : BattleStateBase
             combatant.ProcessTurnStart();
 
             // Computer all attack/def values
-            combatant.UpdateStatSummaries();
+            combatant.UpdateAttDefStatSummaries();
         }
 
         state.Stage = BattleStatus.BattleStage.SelectStance;

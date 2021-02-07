@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,7 +51,6 @@ public class UnitStats
     /// How many Block Shields the unit starts combat with.
     /// </summary>
     [Tooltip("How many Block Shields the unit starts combat with. For buffs, this is a onetime bonus to block shields.")]
-    [SerializeField]
     private int _startingBlockShields = 0;
 
     /// <summary>
@@ -82,37 +82,58 @@ public class UnitStats
 
     public event EventHandler<UnitStatChangeEventArgs> StatChanged;
 
+    /// <summary>
+    /// Does a memberwise clone.
+    /// DOES NOT maintain the event handlers.
+    /// </summary>
     public UnitStats Clone()
     {
         return this.MemberwiseClone() as UnitStats;
     }
 
-    public UnitStats Combine(params UnitStats[] others)
+    /// <summary>
+    /// Creates a new instance of this combining stats with others.
+    /// DOES NOT maintain the event handlers.
+    /// </summary>
+    public UnitStats GetCombined(params UnitStats[] others)
     {
         var combined = new UnitStats();
         foreach (var stats in others)
         {
-            combined = combined.Combine(stats);
+            combined = combined.GetCombined(stats);
         }
 
-        return combined;
+        return this.GetCombined(combined);
     }
 
-    public UnitStats Combine(UnitStats other)
+    /// <summary>
+    /// Creates a new instance of this combining stats with other.
+    /// DOES NOT maintain the event handlers.
+    /// </summary>
+    public UnitStats GetCombined(UnitStats other)
     {
-        return new UnitStats()
-        {
-            HP = this.HP + other.HP,
-            Power = this.Power + other.Power,
-            Defense = this.Defense + other.Defense,
-            Speed = this.Speed + other.Speed,
+        var newStats = new UnitStats();
+        newStats.Combine(other);
+        newStats.Combine(this);
+        return newStats;
+    }
 
-            ActiveMoraleShields = this.ActiveMoraleShields + other.ActiveMoraleShields,
-            ActiveBlockShields = this.ActiveBlockShields + other.ActiveBlockShields,
-            StartingBlockShields = this.StartingBlockShields + other.StartingBlockShields,
+    /// <summary>
+    /// Adds stats to this object without creating a new instance.
+    /// Preserves event handlers.
+    /// </summary>
+    public void Combine(UnitStats other)
+    {
+        this.HP += other.HP;
+        this.Power += other.Power;
+        this.Defense += other.Defense;
+        this.Speed += other.Speed;
 
-            Level = Math.Max(Level, other.Level),
-        };
+        this.ActiveMoraleShields += other.ActiveMoraleShields;
+        this.ActiveBlockShields += other.ActiveBlockShields;
+        this.StartingBlockShields += other.StartingBlockShields;
+
+        this.Level = Math.Max(this.Level, other.Level);
     }
 
     /// <summary>

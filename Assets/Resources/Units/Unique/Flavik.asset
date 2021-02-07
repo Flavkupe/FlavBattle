@@ -30,6 +30,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 52cd095657ab02a4e9d1dd261a3ee5a0, type: 2}
   _officerAbilities:
   - {fileID: 11400000, guid: dd3d08022f9ca124683766d46920995c, type: 2}
+  _perksByLevel:
+  - Level: 1
+    Perks:
+    - {fileID: 11400000, guid: 5c6d31d5cdff1ae43a73f4ff11a940e0, type: 2}
   _startingLevel: 1
   _unitName: Flavik
   _portrait: {fileID: 21300000, guid: 8387bc92e163f492185dd04d517a7f20, type: 3}

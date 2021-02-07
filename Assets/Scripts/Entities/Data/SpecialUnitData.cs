@@ -40,10 +40,11 @@ namespace FlavBattle.Entities.Data
         public override Sprite Icon => GetNonNull(base.Icon, _baseData.Icon);
         public override string ClassName => GetNonEmpty(base.ClassName, _baseData.ClassName);
         public override Sprite[] Animations => GetNonEmpty(base.Animations, _baseData.Animations);
+        
 
         public override UnitStats RollLevel()
         {
-            return base.RollLevel().Combine(_baseData.RollLevel());
+            return base.RollLevel().GetCombined(_baseData.RollLevel());
         }
 
         public override string RollName()
@@ -91,10 +92,18 @@ namespace FlavBattle.Entities.Data
             return _portrait;
         }
 
+        /// <summary>
+        /// Prefer special type perks but apply base class otherwise.
+        /// </summary>
+        public override PerkData RollPerk(int level)
+        {
+            return GetNonNull(base.RollPerk(level), _baseData.RollPerk(level));
+        }
+
         public override UnitStats RollStartingStats(int level)
         {
             level = Math.Max(level, _startingLevel);
-            return base.RollStartingStats(level).Combine(_baseData.RollStartingStats(level));
+            return base.RollStartingStats(level).GetCombined(_baseData.RollStartingStats(level));
         }
     }
 }

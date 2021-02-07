@@ -267,9 +267,9 @@ namespace FlavBattle.Combat.States
         /// </summary>
         private void DealDirectDamageToTarget(CombatTurnActionSummary summary, Combatant attacker, Combatant target, CombatAbilityData ability)
         {
-            // First update stat summaries
-            attacker.UpdateStatSummaries();
-            target.UpdateStatSummaries();
+            // First sync stat summaries
+            attacker.UpdateAttDefStatSummaries();
+            target.UpdateAttDefStatSummaries();
 
             var defense = target.Unit.StatSummary.GetTotal(UnitStatSummary.SummaryItemType.Defense);
             var attack = attacker.Unit.StatSummary.GetTotal(UnitStatSummary.SummaryItemType.Attack);

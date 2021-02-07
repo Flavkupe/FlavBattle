@@ -31,6 +31,7 @@ public class PreCombatBattleActionsState : BattleStateBase
         foreach (var combatant in state.Combatants)
         {
             PrepareUnitShields(combatant);
+            combatant.ApplyPerkStatBonuses();
         }
     }
 

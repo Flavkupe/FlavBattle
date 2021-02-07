@@ -46,7 +46,7 @@ public class InitCombatState : BattleStateBase
             combatant.RightClicked += (object sender, Combatant e) =>
             {
                 // first, ensure summaries are current before opening dialog
-                e.UpdateStatSummaries();
+                e.UpdateAttDefStatSummaries();
                 state.BattleUIPanel.UnitStatsPanel.Open(e);
             };
         }

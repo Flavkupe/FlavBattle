@@ -17,5 +17,6 @@ MonoBehaviour:
     Passable: 1
     WalkCost: 1
     SpecialProperty: 0
+    _biomeType: 9
     OverrideWalk: 1
     OverridePassable: 1

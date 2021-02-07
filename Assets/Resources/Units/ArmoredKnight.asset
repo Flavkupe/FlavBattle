@@ -51,3 +51,7 @@ MonoBehaviour:
     RequiredStance: 7
   _defaultOfficerAbilities: []
   _officerAbilities: []
+  _perksByLevel:
+  - Level: 1
+    Perks:
+    - {fileID: 11400000, guid: 2f18aa8dca612e94e90a311301af136b, type: 2}

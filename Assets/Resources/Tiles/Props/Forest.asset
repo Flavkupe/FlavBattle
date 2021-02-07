@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Forest
   m_EditorClassIdentifier: 
   Info:
+    _slotModel: {fileID: 0}
     Passable: 1
     WalkCost: 2
     SpecialProperty: 0
+    _biomeType: 7
+    OverrideWalk: 0
     OverridePassable: 0

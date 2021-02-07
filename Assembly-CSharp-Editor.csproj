@@ -821,21 +821,21 @@
       <Project>{D9D1D100-55AE-8B20-6044-4EC9AED2C8C8}</Project>
       <Name>AssetIcons-Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="AssetIcons.csproj">
-      <Project>{8C349005-418D-0915-632A-56F3B1C6FB83}</Project>
-      <Name>AssetIcons</Name>
-    </ProjectReference>
     <ProjectReference Include="NaughtyAttributes.Editor.csproj">
       <Project>{F140D247-9B6C-89E2-7712-6130B15F31A8}</Project>
       <Name>NaughtyAttributes.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="NaughtyAttributes.Core.csproj">
-      <Project>{964C6CE1-AD24-F873-227B-74CFEAFF96E5}</Project>
-      <Name>NaughtyAttributes.Core</Name>
+    <ProjectReference Include="AssetIcons.csproj">
+      <Project>{8C349005-418D-0915-632A-56F3B1C6FB83}</Project>
+      <Name>AssetIcons</Name>
     </ProjectReference>
     <ProjectReference Include="NaughtyAttributes.Test.csproj">
       <Project>{90C2A066-11FD-E67E-0D3C-D1E72BB191F0}</Project>
       <Name>NaughtyAttributes.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="NaughtyAttributes.Core.csproj">
+      <Project>{964C6CE1-AD24-F873-227B-74CFEAFF96E5}</Project>
+      <Name>NaughtyAttributes.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

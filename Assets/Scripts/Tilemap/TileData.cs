@@ -31,16 +31,22 @@ namespace FlavBattle.Tilemap
 
         public SpecialTileProperty SpecialProperty;
 
+        [SerializeField]
+        private BiomeType _biomeType;
+        public BiomeType BiomeType => _biomeType;
+
         /// <summary>
         /// If true, the walk cost of this is used for computations
         /// rather than other stuff on the same tile.
         /// </summary>
+        [Tooltip("Overrides walk cost of any other tiles.")]
         public bool OverrideWalk = false;
 
         /// <summary>
         /// If true, then the tile is passable no matter what else
         /// is here. Bridges are a good example.
         /// </summary>
+        [Tooltip("If true, tile is passable no matter what else is here (example: bridge)")]
         public bool OverridePassable = false;
 
         public TileInfo Combine(TileInfo data)

@@ -58,7 +58,7 @@ public class Combatant
     /// Unit.Info.CurrentStats for permanent or ApplyStatChanges for only
     /// within combat.
     /// </summary>
-    public UnitStats CombatCombinedStats => Unit.Info.CurrentStats.Combine(StatChanges);
+    public UnitStats CombatCombinedStats => Unit.Info.CurrentStats.GetCombined(StatChanges);
 
     public int UnitMoraleBonus => Unit.Info.Morale.GetDefaultBonus();
     public Morale UnitMorale => Unit.Info.Morale;
@@ -70,7 +70,7 @@ public class Combatant
     /// </summary>
     private void ApplyStatChanges(UnitStats changes)
     {
-        StatChanges = StatChanges.Combine(changes);
+        StatChanges.Combine(changes);
     }
 
     /// <summary>
@@ -105,6 +105,18 @@ public class Combatant
     }
 
     /// <summary>
+    /// Applies perk bonuses to Stats. Should be used when combat starts
+    /// to set stats for combat.
+    /// 
+    /// This call is NOT idempotent; calling it multiple times will stack.
+    /// </summary>
+    public void ApplyPerkStatBonuses()
+    {
+        var perkStats = StatsUtils.GetStatBonusesFromPerks(Unit, Allies);
+        StatChanges.Combine(perkStats);
+    }
+
+    /// <summary>
     /// Ticks the combatant for a new turn (such as for buffs)
     /// </summary>
     public void ProcessTurnStart()
@@ -124,80 +136,11 @@ public class Combatant
     /// This updates the latest combat attack and defense
     /// summaries. Use this to get the latest totals.
     /// </summary>
-    public void UpdateStatSummaries()
+    public void UpdateAttDefStatSummaries()
     {
         this.Unit.StatSummary.Clear();
-        this.ComputeDefenseSummary(this);
-        this.ComputeAttackSummary(this);
-    }
-
-    /// <summary>
-    /// Updates the stat summary of attack for the unit. This can
-    /// later be acquired from the Unit's StatSummary property.
-    /// 
-    /// Does not include boosts from actual abilities.
-    /// </summary>
-    private void ComputeAttackSummary(Combatant combatant)
-    {
-        var type = UnitStatSummary.SummaryItemType.Attack;
-        var summary = combatant.Unit.StatSummary;
-
-        var baseAttack = combatant.Unit.Info.CurrentStats.Power;
-        var buffAttack = combatant.StatChanges.Power;
-        var moraleBonus = combatant.UnitMoraleBonus;
-
-        var attack = baseAttack;
-        summary.Tally(type, baseAttack, "Base attack");
-
-        attack += buffAttack;
-        summary.Tally(type, buffAttack, "Combat effects");
-
-        attack += moraleBonus;
-        summary.Tally(type, moraleBonus, "Morale");
-
-        if (combatant.Allies.Stance == FightingStance.Offensive)
-        {
-            attack += 1;
-            summary.Tally(type, 1, "Offensive stance");
-        }
-        else if (combatant.Allies.Stance == FightingStance.Defensive)
-        {
-            attack -= 1;
-            summary.Tally(type, -1, "Defensive stance");
-        }
-    }
-
-    /// <summary>
-    /// Updates the stat summary of defense for the unit. This can
-    /// later be acquired from the Unit's StatSummary property.
-    /// </summary>
-    private void ComputeDefenseSummary(Combatant combatant)
-    {
-        var type = UnitStatSummary.SummaryItemType.Defense;
-        var summary = combatant.Unit.StatSummary;
-
-        var baseDefense = combatant.Unit.Info.CurrentStats.Defense;
-        var buffDefense = combatant.StatChanges.Defense;
-        var moraleBonus = combatant.UnitMoraleBonus;
-
-        var defense = baseDefense;
-        summary.Tally(type, baseDefense, "Base defense");
-
-        defense += buffDefense;
-        summary.Tally(type, buffDefense, "Combat effects");
-
-        defense += moraleBonus;
-        summary.Tally(type, moraleBonus, "Morale");
-
-        if (combatant.Allies.Stance == FightingStance.Offensive)
-        {
-            defense -= 1;
-            summary.Tally(type, -1, "Offensive stance");
-        }
-        else if (combatant.Allies.Stance == FightingStance.Defensive)
-        {
-            defense += 1;
-            summary.Tally(type, 1, "Defensive stance");
-        }
+        StatsUtils.ComputeDefenseSummary(Unit, Allies, StatChanges);
+        StatsUtils.ComputeAttackSummary(Unit, Allies, StatChanges);
+        StatsUtils.ApplyPerkBonusesToSummary(Unit, Allies);
     }
 }

@@ -189,13 +189,11 @@ public class ArmyEditWindow : MonoBehaviour
         {
             UnitStats.Hide();
             UnitStats.SetUnit(null);
-            _UIArmyInfoPanel.ClearUnit();
         }
         else
         {
             UnitStats.Show();
             UnitStats.SetUnit(unit);
-            _UIArmyInfoPanel.SetUnit(unit);
         }
 
         Grid.SetUnitSelected(unit);

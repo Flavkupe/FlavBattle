@@ -94,6 +94,13 @@ namespace FlavBattle.Entities.Data
         private OfficerAbilityData[] _officerAbilities;
         public OfficerAbilityData[] OfficerAbilities => _officerAbilities;
 
+        [BoxGroup("Abilities")]
+        [Tooltip("Perks available by level")]
+        [SerializeField]
+        [ReorderableList]
+        private PerksByLevel[] _perksByLevel;
+        public PerksByLevel[] PerksByLevel => _perksByLevel;
+
         /// <summary>
         /// Roll unit stats from the possible base props
         /// </summary>
@@ -110,7 +117,7 @@ namespace FlavBattle.Entities.Data
             for (int i = 1; i < level; i++)
             {
                 var levelup = RollLevel();
-                stats = stats.Combine(levelup);
+                stats.Combine(levelup);
             }
 
             return stats;
@@ -141,8 +148,29 @@ namespace FlavBattle.Entities.Data
             return available.GetRandom();
         }
 
+        public virtual PerkData RollPerk(int level)
+        {
+            var perkInfo = this.PerksByLevel.FirstOrDefault(a => a.Level == level);
+            if (perkInfo != null && perkInfo.Perks.Length > 0)
+            {
+                return perkInfo.Perks.GetRandom();
+            }
+
+            return null;
+        }
+
         public abstract string RollName();
 
         public abstract Sprite RollPortrait();
+    }
+
+    [Serializable]
+    public class PerksByLevel
+    {
+        public int Level;
+
+        [ReorderableList]
+        [AllowNesting]
+        public PerkData[] Perks;
     }
 }

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ee9b9e686fad443a8357f20497f685, type: 3}
+  m_Name: Ambitious
+  m_EditorClassIdentifier: 
+  _icon: {fileID: -6436234111012599980, guid: 5e125f43e4019e24b824797058d49d2d, type: 3}
+  _name: Ambitious
+  _description: Increases <sprite name="def">, <sprite name="att"> and <sprite name="spd">
+    while <sprite name="morale"> is over 50.
+  _effects:
+  - _effect: 0
+    _stats:
+      _hp: 0
+      _power: 1
+      _defense: 1
+      _speed: 1
+      _level: 0
+      _command: 0
+    _boostCondition: 4
+    _mapBonus: 0
+    _biome: 0
+    _threshold: 50

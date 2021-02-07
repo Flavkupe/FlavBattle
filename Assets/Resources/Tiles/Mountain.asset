@@ -18,4 +18,6 @@ MonoBehaviour:
     Passable: 0
     WalkCost: 8
     SpecialProperty: 0
+    _biomeType: 3
+    OverrideWalk: 0
     OverridePassable: 0
