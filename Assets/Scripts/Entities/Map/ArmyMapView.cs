@@ -3,6 +3,7 @@ using FlavBattle.Formation;
 using NaughtyAttributes;
 using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -170,5 +171,11 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
         {
             sprite.ToggleSpriteVisible(zoomedIn);
         }
+    }
+
+    public Transform GetObjectAtFormationPair(FormationPair pair)
+    {
+        var items = GetComponentsInChildren<WithFormation>(false);
+        return items.FirstOrDefault(a => a.Matches(pair))?.transform;
     }
 }

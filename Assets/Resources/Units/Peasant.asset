@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Peasant
   m_EditorClassIdentifier: 
   _icon: {fileID: 3840481900236895277, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
+  _unitID: peasant
   _className: Peasant
   _rollLow: 0
   _hp: 6
@@ -51,3 +52,4 @@ MonoBehaviour:
     RequiredStance: 7
   _defaultOfficerAbilities: []
   _officerAbilities: []
+  _perksByLevel: []

@@ -117,6 +117,7 @@
     <Compile Include="Assets\Scripts\UI\Combat\MoraleIcon.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
     <Compile Include="Assets\Scripts\Utils\Enums.cs" />
+    <Compile Include="Assets\Scripts\Entities\Data\PerkData.cs" />
     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DropTargetUIGrid.cs" />
     <Compile Include="Assets\Scripts\Components\WithFormation.cs" />
@@ -128,10 +129,12 @@
     <Compile Include="Assets\Scripts\Combat\Event\CombatAbilityAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
+    <Compile Include="Assets\Scripts\UI\Army\UIUnitPerksPanelItem.cs" />
     <Compile Include="Assets\Scripts\Combat\StatsBuff.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ShowWinnerState.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
+    <Compile Include="Assets\Scripts\UI\Army\UIUnitPerksPanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Components\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatBuffIcon.cs" />
@@ -167,11 +170,13 @@
     <Compile Include="Assets\Scripts\Entities\Map\Garrison.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
+    <Compile Include="Assets\Scripts\Entities\StatsUtils.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyMapView.cs" />
+    <Compile Include="Assets\Scripts\Tilemap\BiomeType.cs" />
     <Compile Include="Assets\Scripts\Combat\States\BattleStatus.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyIdleState.cs" />
@@ -208,11 +213,10 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Entities\Data\PerkData.cs" />
-    <Compile Include="Assets\Scripts\Tilemap\BiomeType.cs" />
-    <Compile Include="Assets\Scripts\Entities\StatsUtils.cs" />
-    <Compile Include="Assets\Scripts\UI\Army\UIUnitPerksPanel.cs" />
-    <Compile Include="Assets\Scripts\UI\Army\UIUnitPerksPanelItem.cs" />
+    <Compile Include="Assets\Scripts\Dialog\DialogBox.cs" />
+    <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
+    <Compile Include="Assets\Scripts\Dialog\DialogEvent.cs" />
+    <Compile Include="Assets\Scripts\Dialog\MapArmyDialogEvent.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

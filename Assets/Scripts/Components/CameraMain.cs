@@ -40,14 +40,30 @@ namespace FlavBattle.Core
 
         public IEnumerator ShiftToCombatZoom()
         {
+            yield return ZoomTo(_combatZoomDefault);
+        }
+
+        /// <summary>
+        /// View where units show up as formation on map.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator ShiftToFormationView()
+        {
+            yield return ZoomTo(_zoomedViewSize);
+        }
+
+        private IEnumerator ZoomTo(float targetCamSize)
+        {
+            SetLocked(true);
             var cam = this.GetComponent<Camera>();
-            while (Mathf.Abs(_combatZoomDefault - cam.orthographicSize) > 0.05f)
+            while (Mathf.Abs(targetCamSize - cam.orthographicSize) > 0.05f)
             {
-                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, _combatZoomDefault, TimeUtils.FullAdjustedGameDelta * _combatZoomOutSpeed);
+                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetCamSize, TimeUtils.FullAdjustedGameDelta * _combatZoomOutSpeed);
                 yield return null;
             }
 
-            cam.orthographicSize = _combatZoomDefault;
+            cam.orthographicSize = targetCamSize;
+            SetLocked(false);
         }
 
         void Update()
@@ -65,19 +81,16 @@ namespace FlavBattle.Core
             }
         }
 
-        public Coroutine PanTo(Vector3 position)
+        public IEnumerator PanTo(Vector3 position)
         {
-            return StartCoroutine(PanToInternal(position));
+            SetLocked(true);
+            yield return this.MoveTo(position, 20.0f);
+            SetLocked(false);
         }
 
         public bool IsZoomedDistance()
         {
-            return this._cam.orthographicSize < _zoomedViewSize;
-        }
-
-        private IEnumerator PanToInternal(Vector3 position)
-        {
-            yield return this.MoveTo(position, 20.0f);
+            return this._cam.orthographicSize <= _zoomedViewSize;
         }
     }
 }

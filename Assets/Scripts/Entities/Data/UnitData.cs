@@ -15,6 +15,14 @@ namespace FlavBattle.Entities.Data
         private Sprite _icon;
         public virtual Sprite Icon => _icon;
 
+        [Tooltip("ID to identify this special unit or basic class uniquely.")]
+        [SerializeField]
+        [ValidateInput("NonNullID", "UnitID must be filled")]
+        private string _unitID;
+        public string UnitID => _unitID;
+
+        private bool NonNullID() => !string.IsNullOrWhiteSpace(_unitID);
+
         [SerializeField]
         private string _className;
         public virtual string ClassName => _className;

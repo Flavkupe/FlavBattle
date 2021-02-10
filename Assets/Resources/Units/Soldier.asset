@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Soldier
   m_EditorClassIdentifier: 
   _icon: {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
+  _unitID: soldier
   _className: Soldier
   _rollLow: 0
   _hp: 8
@@ -52,3 +53,4 @@ MonoBehaviour:
     RequiredStance: 7
   _defaultOfficerAbilities: []
   _officerAbilities: []
+  _perksByLevel: []

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ArmoredKnight
   m_EditorClassIdentifier: 
   _icon: {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
+  _unitID: armor_knight
   _className: Armored Knight
   _rollLow: 0
   _hp: 12

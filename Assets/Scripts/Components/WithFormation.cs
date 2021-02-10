@@ -25,5 +25,7 @@ namespace FlavBattle.Formation
         private FormationColumn _col;
 
         public FormationPair Pair => FormationPair.From(Row, Col);
+
+        public bool Matches(FormationPair pair) => pair.Equals(Row, Col);
     }
 }

@@ -215,6 +215,15 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     }
 
     /// <summary>
+    /// Gets the zoomed-in sprite representation for the unit in
+    /// the formation pair location. Returns null if nothing there.
+    /// </summary>
+    public Transform GetSpriteAtFormationPair(FormationPair pair)
+    {
+        return _mapView.GetObjectAtFormationPair(pair);
+    }
+
+    /// <summary>
     /// Replaces the formation with the provided one.
     /// NOTE: Should ONLY be used for initialization.
     /// </summary>
