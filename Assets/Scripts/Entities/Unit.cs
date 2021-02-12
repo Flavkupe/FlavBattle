@@ -40,8 +40,22 @@ public class Unit : IEquatable<Unit>
         return this.Info.CurrentStats.HP <= 0;
     }
 
+    /// <summary>
+    /// Returns true if the unit is exactly the same as the
+    /// one passed in (matches specific unit ID)
+    /// </summary>
     public bool Equals(Unit other)
     {
         return this == other || this.ID == other.ID;
+    }
+
+    /// <summary>
+    /// Returns true if the unit is the same type as the other
+    /// unit. For example, exact same class unit ID. That is,
+    /// same special type or base type if not a special unit.
+    /// </summary>
+    public bool SameType(UnitData other)
+    {
+        return this.Data.UnitID == other.UnitID;
     }
 }

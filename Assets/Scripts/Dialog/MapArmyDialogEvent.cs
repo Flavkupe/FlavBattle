@@ -22,6 +22,9 @@ namespace FlavBattle.Dialog
         {
             ArmyInstance,
             FirstArmyMatchingUnit,
+
+            // Event provides the params (via unity event)
+            TriggeredExternally,
         }
 
         [SerializeField]
@@ -70,6 +73,13 @@ namespace FlavBattle.Dialog
                     AdditionalDialogOffset = sprite.transform.position - DialogSource.position;
                 }
             }
+        }
+
+        public void TriggerWithArmy(Army army)
+        {
+            _unit = null;
+            _army = army;
+            StartEvent();
         }
 
         public override bool DialogPossible()

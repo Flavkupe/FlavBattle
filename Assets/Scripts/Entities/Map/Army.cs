@@ -1,4 +1,5 @@
-﻿using FlavBattle.State;
+﻿using FlavBattle.Entities.Data;
+using FlavBattle.State;
 using FlavBattle.Tilemap;
 using NaughtyAttributes;
 using System;
@@ -447,5 +448,20 @@ public class Army : MonoBehaviour, IDetectable, IArmy
     public void SetToFleeing()
     {
         this.SetFleeing(true);
+    }
+
+    /// <summary>
+    /// Checks if the unit of UnitData type is present in the
+    /// formation.
+    /// </summary>
+    public bool HasUnitType(UnitData data)
+    {
+        if (data == null)
+        {
+            return false;
+        }
+
+        var units = this.GetUnits();
+        return units.Any(a => a.SameType(data));
     }
 }
