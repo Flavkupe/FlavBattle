@@ -11,6 +11,7 @@ public class Detector : MonoBehaviour
 
     public event EventHandler<GameObject> Detected;
     public event EventHandler<GameObject> Exited;
+    public event EventHandler<MouseButton> Clicked;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,6 +28,21 @@ public class Detector : MonoBehaviour
         if (other != null && other.Type == this.Detects)
         {
             Exited?.Invoke(this, other.GetObject());
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        if (Detects.HasFlag(DetectableType.MouseClick))
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Clicked?.Invoke(this, MouseButton.LeftButton);
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                Clicked?.Invoke(this, MouseButton.RightButton);
+            }
         }
     }
 

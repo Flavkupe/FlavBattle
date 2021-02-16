@@ -9,6 +9,7 @@ public enum DetectableType
     None = 0,
     Army = 1,
     Tile = 2,
+    MouseClick = 4,
 }
 
 public interface IDetectable

@@ -1,6 +1,8 @@
-﻿using FlavBattle.Entities.Data;
+﻿using FlavBattle.Core;
+using FlavBattle.Entities.Data;
 using NaughtyAttributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +40,12 @@ namespace FlavBattle.Dialog
 
         private Unit _unit;
 
+        private DialogBox _box;
+
+        private bool _triggered = false;
+
+        private CameraMain _cam;
+
         public override Transform DialogSource => _army?.transform;
 
         public override DialogBox CreateDialogBox()
@@ -54,8 +62,10 @@ namespace FlavBattle.Dialog
             return box;
         }
 
-        public override void Init()
+        public override void PreStartEvent()
         {
+            _cam = CameraMain.Instance;
+
             if (SourceType == EventSourceType.FirstArmyMatchingUnit)
             {
                 var armies = FindObjectsOfType<Army>(false);
@@ -79,11 +89,23 @@ namespace FlavBattle.Dialog
         {
             _unit = null;
             _army = army;
-            StartEvent();
+            TriggerEvent();
         }
 
-        public override bool DialogPossible()
+        public override bool EventPossible()
         {
+            if (_triggered)
+            {
+                // already was triggered before
+                return false;
+            }
+
+            if (DialogSource == null)
+            {
+                Debug.LogWarning("DialogSource null for event");
+                return false;
+            }
+
             // possible as long as needed army unit is not null
             return FindMatchingUnit() != null;
         }
@@ -116,6 +138,29 @@ namespace FlavBattle.Dialog
             {
                 return army.GetUnits(true).FirstOrDefault(a => a.Data.UnitID == _character.UnitID);
             }
+        }
+
+        public override IEnumerator DoEvent()
+        {
+            _triggered = true;
+            var sourcePos = DialogSource.position;
+            yield return _cam.PanTo(sourcePos);
+            yield return _cam.ShiftToFormationView();
+            yield return new WaitForSeconds(0.5f);
+
+            _box = CreateDialogBox();
+            var shiftedSourcePos = sourcePos.ShiftY(_box.VerticalTextboxOffset);
+            var offset = AdditionalDialogOffset;
+            _box.transform.position = shiftedSourcePos + offset;
+            _box.DialogEnd += HandleDialogEnd;
+        }
+
+        private void HandleDialogEnd(object sender, DialogBox e)
+        {
+            // TEMP?
+            Destroy(e.gameObject);
+            _box = null;
+            InvokeEventFinished();
         }
     }
 }

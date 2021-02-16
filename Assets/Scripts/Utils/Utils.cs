@@ -35,10 +35,15 @@ public static class Utils
         return point;
     }
 
-    public static TType MakeOfType<TType>(string name) where TType : MonoBehaviour
+    public static TType MakeOfType<TType>(string name, Transform parent = null) where TType : MonoBehaviour
     {
         var obj = new GameObject(name ?? typeof(TType).Name);
         var component = obj.AddComponent<TType>();
+        if (parent != null)
+        {
+            obj.transform.SetParent(parent);
+        }
+
         return component;
     }
 

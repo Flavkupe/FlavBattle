@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace FlavBattle.Core
 {
-    public class CameraMain : MonoBehaviour
+    public class CameraMain : SingletonObject<CameraMain>
     {
         [SerializeField]
         [Range(0.0f, 1.0f)]
@@ -36,6 +36,7 @@ namespace FlavBattle.Core
         void Awake()
         {
             _cam = this.GetComponent<Camera>();
+            SetSingleton(this);
         }
 
         public IEnumerator ShiftToCombatZoom()

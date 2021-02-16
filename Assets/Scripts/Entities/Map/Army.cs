@@ -32,7 +32,7 @@ public class ExitTileEventArgs : EventArgs
     public GameObject Tile;
 }
 
-public class Army : MonoBehaviour, IDetectable, IArmy
+public class Army : MonoBehaviour, IArmy
 {
     public float MoveStep = 1.0f;
 
@@ -88,8 +88,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
 
     public GameObject FlagIcon;
 
-    public DetectableType Type => DetectableType.Army;
-
     private Detector[] _detectors;
     private bool _paused = false;
 
@@ -116,7 +114,17 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 detector.Detected += TileDetectorEntered;
                 detector.Exited += TileDetectorExited;
             }
+
+            if (detector.Detects.HasFlag(DetectableType.MouseClick))
+            {
+                detector.Clicked += HandleDetectorClicked;
+            }
         }
+    }
+
+    private void HandleDetectorClicked(object sender, MouseButton e)
+    {
+        ArmyClicked?.Invoke(this, new ArmyClickedEventArgs() { Clicked = this, Button = e });
     }
 
     private void TileDetectorExited(object sender, GameObject e)
@@ -179,18 +187,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
                 Initiator = this,
                 Opponent = otherArmy,
             });
-        }
-    }
-
-    private void OnMouseOver()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            ArmyClicked?.Invoke(this, new ArmyClickedEventArgs() { Clicked = this, Button = MouseButton.LeftButton });
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            ArmyClicked?.Invoke(this, new ArmyClickedEventArgs() { Clicked = this, Button = MouseButton.RightButton });
         }
     }
 
@@ -437,11 +433,6 @@ public class Army : MonoBehaviour, IDetectable, IArmy
         var y = this.transform.position.y;
         _currentTileCoords = this._map.GetGridCoordsAtWorldPos(x, y);
         _currentTile = this._map.GetGridTileAtWorldPos(x, y);
-    }
-
-    public GameObject GetObject()
-    {
-        return this.gameObject;
     }
 
     [ContextMenu("Set to fleeing")]

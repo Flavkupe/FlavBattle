@@ -58,7 +58,12 @@ namespace FlavBattle.State
         /// <summary>
         /// Whether or not the map is paused (for example, Armies should not move)
         /// </summary>
-        public static bool IsMapPaused { get; private set; }
+        public static bool IsMapPaused => _mapPauseStack > 0;
+
+        /// <summary>
+        /// Counts how many times map was paused (in case multiple things pause and then unpause).
+        /// </summary>
+        private static int _mapPauseStack = 0;
 
         // Start is called before the first frame update
         void Start()
@@ -100,12 +105,17 @@ namespace FlavBattle.State
         {
             if (mapEvent == MapEventType.MapPaused)
             {
-                IsMapPaused = true;
+                Debug.Log("Map paused");
+                _mapPauseStack++;
             }
             else if (mapEvent == MapEventType.MapUnpaused)
             {
-                IsMapPaused = false;
+                Debug.Log("Map unpaused");
+                _mapPauseStack--;
             }
+
+            Debug.Assert(_mapPauseStack >= 0, "Should never unpause more times than paused!");
+            _mapPauseStack = Math.Max(0, _mapPauseStack); // floor it at 0, just in case
 
             MapEvent?.Invoke(this, mapEvent);
         }

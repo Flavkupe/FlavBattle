@@ -158,6 +158,7 @@
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGridTile.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUtils.cs" />
     <Compile Include="Assets\Scripts\State\ScenarioManager.cs" />
+    <Compile Include="Assets\Scripts\State\Triggers\TriggerConditions.cs" />
     <Compile Include="Assets\Scripts\Utils\ResourceHelper.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIAttackGrid.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleDisplay.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
     <Compile Include="Assets\Scripts\Utils\SingletonObject.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\DropTarget.cs" />
+    <Compile Include="Assets\Scripts\State\Triggers\TileTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGrid.cs" />
     <Compile Include="Assets\Scripts\Combat\Event\CombatEvent.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatUnitStatsPanel.cs" />
@@ -217,8 +219,9 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\State\Triggers\TileTrigger.cs" />
-    <Compile Include="Assets\Scripts\State\Triggers\TriggerConditions.cs" />
+    <Compile Include="Assets\Scripts\State\IGameEvent.cs" />
+    <Compile Include="Assets\Scripts\State\GameEventQueue.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\SubDetectable.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

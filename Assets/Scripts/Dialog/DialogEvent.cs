@@ -1,4 +1,5 @@
 using FlavBattle.Entities.Data;
+using FlavBattle.State;
 using NaughtyAttributes;
 using System;
 using System.Collections;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace FlavBattle.Dialog
 {
-    public abstract class DialogEvent : MonoBehaviour
+    public abstract class DialogEvent : MonoBehaviour, IGameEvent
     {
         [SerializeField]
         [Required]
@@ -24,15 +25,18 @@ namespace FlavBattle.Dialog
 
         [SerializeField]
         private DialogEvent _followupEvent;
-        public DialogEvent FollowupEvent => _followupEvent;
+        public IGameEvent FollowupEvent => _followupEvent;
 
         /// <summary>
         /// Fires when this event is ready to invoke; queues up
         /// this event.
         /// </summary>
-        public event EventHandler<DialogEvent> TriggerDialog;
+        public event EventHandler<IGameEvent> EventTriggered;
 
-        private bool _started = false;
+        /// <summary>
+        /// Fires when the event completes.
+        /// </summary>
+        public event EventHandler<IGameEvent> EventFinished;
 
         public abstract DialogBox CreateDialogBox();
 
@@ -40,7 +44,7 @@ namespace FlavBattle.Dialog
         /// Whether or not this dialog event is possible
         /// (for example, if a needed character is alive).
         /// </summary>
-        public abstract bool DialogPossible();
+        public abstract bool EventPossible();
 
         /// <summary>
         /// An extra offset from the source for which to offset the
@@ -52,18 +56,19 @@ namespace FlavBattle.Dialog
         /// Initializes the event, such as by looking for relevant objects
         /// in map.
         /// </summary>
-        public abstract void Init();
+        public abstract void PreStartEvent();
 
-        [ContextMenu("Start Event")]
-        public void StartEvent()
+        [ContextMenu("Trigger Event")]
+        public void TriggerEvent()
         {
-            if (_started)
-            {
-                return;
-            }
+            EventTriggered?.Invoke(this, this);
+        }
 
-            _started = true;
-            TriggerDialog?.Invoke(this, this);
+        public abstract IEnumerator DoEvent();
+
+        protected void InvokeEventFinished()
+        {
+            EventFinished?.Invoke(this, this);
         }
     }
 }
