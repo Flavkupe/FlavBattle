@@ -100,14 +100,14 @@ namespace FlavBattle.Entities.Map.State
                         }
 
                         // Switching out of a different state
-                        Debug.Log($"{_army.name} exiting state {CurrentState.State}");
+                        // Debug.Log($"{_army.name} exiting state {CurrentState.State}");
                         CurrentState.SetActive(false);
                         CurrentState.ExitState(_army);
                     }
 
 
                     // Entering a new state
-                    Debug.Log($"{_army.name} entering state {state.State}");
+                    // Debug.Log($"{_army.name} entering state {state.State}");
                     state.SetActive(true);
                     state.EnterState(_army);
                     CurrentState = state;

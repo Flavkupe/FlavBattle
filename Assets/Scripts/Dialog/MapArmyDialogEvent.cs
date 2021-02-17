@@ -42,8 +42,6 @@ namespace FlavBattle.Dialog
 
         private DialogBox _box;
 
-        private bool _triggered = false;
-
         private CameraMain _cam;
 
         public override Transform DialogSource => _army?.transform;
@@ -94,7 +92,7 @@ namespace FlavBattle.Dialog
 
         public override bool EventPossible()
         {
-            if (_triggered)
+            if (IsCompleted)
             {
                 // already was triggered before
                 return false;
@@ -142,7 +140,6 @@ namespace FlavBattle.Dialog
 
         public override IEnumerator DoEvent()
         {
-            _triggered = true;
             var sourcePos = DialogSource.position;
             yield return _cam.PanTo(sourcePos);
             yield return _cam.ShiftToFormationView();
@@ -153,6 +150,17 @@ namespace FlavBattle.Dialog
             var offset = AdditionalDialogOffset;
             _box.transform.position = shiftedSourcePos + offset;
             _box.DialogEnd += HandleDialogEnd;
+        }
+
+        public override void CancelEvent()
+        {
+            base.CancelEvent();
+
+            if (_box != null)
+            {
+                Destroy(_box.gameObject);
+                _box = null;
+            }
         }
 
         private void HandleDialogEnd(object sender, DialogBox e)

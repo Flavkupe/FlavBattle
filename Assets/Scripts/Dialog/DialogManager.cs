@@ -43,7 +43,7 @@ namespace FlavBattle.Dialog
 
         public void TriggerDialog(object o, IGameEvent e)
         {
-            if (_queue.Empty)
+            if (_queue.IsEmpty)
             {
                 _gem.TriggerMapEvent(MapEventType.MapPaused);
             }

@@ -11,11 +11,12 @@ namespace FlavBattle.State
 
         private KeyCode _cancelKey = KeyCode.Escape;
 
-        private Coroutine _currentEvent = null;
+        private Coroutine _currentRoutine = null;
+        private IGameEvent _currentEvent = null;
 
         public event EventHandler AllDone;
 
-        public bool Empty => _eventQueue.Count == 0 && _currentEvent == null;
+        public bool IsEmpty => _eventQueue.Count == 0 && _currentRoutine == null;
 
         public void SetCancelKey(KeyCode key)
         {
@@ -29,7 +30,7 @@ namespace FlavBattle.State
                 CancelEvents();
             }
 
-            if (_currentEvent == null && _eventQueue.Count > 0)
+            if (_currentRoutine == null && _eventQueue.Count > 0)
             {
                 // No event running, but more queued; fetch next event
                 NextEvent();
@@ -38,14 +39,19 @@ namespace FlavBattle.State
 
         public void CancelEvents()
         {
-            if (Empty)
+            if (IsEmpty)
             {
                 return;
             }
 
+            if (_currentRoutine != null)
+            {
+                StopCoroutine(_currentRoutine);
+            }
+
             if (_currentEvent != null)
             {
-                StopCoroutine(_currentEvent);
+                _currentEvent.CancelEvent();
             }
 
             _eventQueue.Clear();
@@ -54,6 +60,7 @@ namespace FlavBattle.State
 
         private void AllEventsDone()
         {
+            _currentRoutine = null;
             _currentEvent = null;
             AllDone?.Invoke(this, EventArgs.Empty);
         }
@@ -63,7 +70,7 @@ namespace FlavBattle.State
         /// </summary>
         public void AddOrStartEvent(IGameEvent e)
         {
-            if (_currentEvent != null)
+            if (_currentRoutine != null)
             {
                 _eventQueue.Enqueue(e);
             }
@@ -83,11 +90,13 @@ namespace FlavBattle.State
             }
 
             e.EventFinished += HandleEventFinished;
-            _currentEvent = StartCoroutine(e.DoEvent());
+            _currentEvent = e;
+            _currentRoutine = StartCoroutine(e.DoEvent());
         }
 
         private void HandleEventFinished(object sender, IGameEvent e)
         {
+            _currentRoutine = null;
             _currentEvent = null;
             if (e.FollowupEvent != null)
             {
