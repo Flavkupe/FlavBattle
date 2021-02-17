@@ -8,6 +8,7 @@ using FlavBattle.Combat;
 using FlavBattle.Core;
 using NaughtyAttributes;
 using FlavBattle.State;
+using FlavBattle.Triggers;
 
 public class ArmyEnteredGarrisonEventArgs : EventArgs
 {
@@ -43,6 +44,11 @@ public class ArmyManager : MonoBehaviour
     private GameEventManager _gameEvents;
     private BattleManager _battleManager;
     private CameraMain _camera;
+
+    /// <summary>
+    /// An action delayed until after events are done running.
+    /// </summary>
+    private Action _delayedAction = null;
 
     /// <summary>
     /// Event indicating that the Army has reached a specific garrison
@@ -93,7 +99,11 @@ public class ArmyManager : MonoBehaviour
         _ui.ArmyPanel.ArmyClicked += HandleArmyClickedFromPanel;
         _ui.ArmyPanel.ArmyEditRequested += OnEditArmy;
         _gameEvents.CombatEndedEvent += HandleCombatEndedEvent;
+
+        _gameEvents.AllGameEventsDone += HandleAllGameEventsDone;
     }
+
+    
 
     private void HandleSpawnTriggered(object sender, ArmyMapSpawn e)
     {
@@ -322,10 +332,58 @@ public class ArmyManager : MonoBehaviour
             return;
         }
 
-        _combatProcessed = true;
+        
         var player = IsPlayerArmy(e.Initiator) ? e.Initiator : e.Opponent;
         var other = IsPlayerArmy(e.Initiator) ? e.Opponent : e.Initiator;
-        StartCoroutine(StartCombat(player, other));
+        ProcessCombatStart(player, other);
+    }
+
+    /// <summary>
+    /// Prepares to start combat between two players. If there are triggered
+    /// events, sets those into action and then queues up combat for the next possible
+    /// chance.
+    /// </summary>
+    private void ProcessCombatStart(Army player, Army other)
+    {
+        _combatProcessed = true;
+
+        // Get trigger from either other army or player army
+        var playerTrigger = player.GetComponent<ArmyEncounterTrigger>();
+        var otherTrigger = other.GetComponent<ArmyEncounterTrigger>();
+
+        var playerShouldTrigger = playerTrigger != null && playerTrigger.ArmyFullfillsCondition(other);
+        var otherShouldTrigger = otherTrigger != null && otherTrigger.ArmyFullfillsCondition(player);
+        
+
+        if (!otherShouldTrigger && !playerShouldTrigger)
+        {
+            StartCoroutine(StartCombat(player, other));
+        }
+        else
+        {
+            _delayedAction = () =>
+            {
+                StartCoroutine(StartCombat(player, other));
+            };
+
+            if (otherShouldTrigger)
+            {
+                otherTrigger.TriggerWithArmy(player);
+            }
+            if (playerShouldTrigger)
+            {
+                playerTrigger.TriggerWithArmy(other);
+            }
+        }
+    }
+
+    private void HandleAllGameEventsDone(object sender, EventArgs e)
+    {
+        if (_delayedAction != null)
+        {
+            _delayedAction();
+            _delayedAction = null;
+        }
     }
 
     private void HandleCombatEndedEvent(object sender, CombatEndedEventArgs e)

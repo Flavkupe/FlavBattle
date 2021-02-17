@@ -55,6 +55,11 @@ namespace FlavBattle.State
 
         public event EventHandler<Unit> UnitGarrisoned;
 
+        public event EventHandler AllGameEventsDone;
+
+        [SerializeField]
+        private KeyCode _cancelKey = KeyCode.Escape;
+
         /// <summary>
         /// Whether or not the map is paused (for example, Armies should not move)
         /// </summary>
@@ -65,9 +70,14 @@ namespace FlavBattle.State
         /// </summary>
         private static int _mapPauseStack = 0;
 
+        private GameEventQueue _queue;
+
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
+            _queue = Utils.MakeOfType<GameEventQueue>("EventQueue", this.transform);
+            _queue.AllDone += HandleAllEventsDone;
+            _queue.SetCancelKey(_cancelKey);
         }
 
         // Update is called once per frame
@@ -99,6 +109,17 @@ namespace FlavBattle.State
             {
                 TimeUtils.GameSpeed.TogglePause();
             }
+        }
+
+        public void AddOrStartGameEvent(IGameEvent e)
+        {
+            if (_queue.IsEmpty)
+            {
+                // TODO: event-dependent
+                TriggerMapEvent(MapEventType.MapPaused);
+            }
+
+            _queue.AddOrStartEvent(e);
         }
 
         public void TriggerMapEvent(MapEventType mapEvent)
@@ -146,6 +167,13 @@ namespace FlavBattle.State
         public void TriggerUnitGarrisoned(Unit e)
         {
             UnitGarrisoned?.Invoke(this, e);
+        }
+
+        private void HandleAllEventsDone(object sender, EventArgs e)
+        {
+            // TODO: event-dependent
+            TriggerMapEvent(MapEventType.MapUnpaused);
+            AllGameEventsDone?.Invoke(this, e);
         }
     }
 }

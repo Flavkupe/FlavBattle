@@ -7371,7 +7371,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1676775317}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &463635476
+--- !u!114 &463635475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7380,9 +7380,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 463635469}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 744c544930fb2a84a9ed9beb33d19508, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d328b7a50333874396212c7605a0c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _conditions:
+    _conditions:
+    - _type: 1
+      SpecificUnit: {fileID: 11400000, guid: c0d72d44231488c49a9c40d74120b7a3, type: 2}
+  _armyTriggered:
+    m_PersistentCalls:
+      m_Calls: []
+  _gameEventOnTrigger: {fileID: 1548710960}
 --- !u!1 &469489184 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5806486492491847270, guid: 049a4c8d025c3804daae3b0e2ec443e0,
@@ -8007,6 +8015,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile Trigger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248619309696586403, guid: 5856fc7f485f9be4b97694c10d3359e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5856fc7f485f9be4b97694c10d3359e0, type: 3}
@@ -9668,12 +9681,12 @@ PrefabInstance:
     - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.11
+      value: 2.175
       objectReference: {fileID: 0}
     - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.19
+      value: -0.667
       objectReference: {fileID: 0}
     - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
         type: 3}
@@ -9914,9 +9927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3543ac61fc4dca84b82aaec7b67ab25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _followupEvent: {fileID: 0}
   _dialogBoxTemplate: {fileID: 0}
   _text: []
-  _followupEvent: {fileID: 0}
   _character: {fileID: 0}
   SourceType: 0
   _army: {fileID: 0}
@@ -11194,12 +11207,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3543ac61fc4dca84b82aaec7b67ab25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _followupEvent: {fileID: 2122822843}
   _dialogBoxTemplate: {fileID: -468972612823838324, guid: a6cf2194920013c4994212edc0ccbfcd,
     type: 3}
   _text:
   - I am the second convo
   - This is my second text
-  _followupEvent: {fileID: 2122822843}
   _character: {fileID: 11400000, guid: 62e04f7928a8ada4aa8662510a1baadf, type: 2}
   SourceType: 1
   _army: {fileID: 0}
@@ -11641,6 +11654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugTrace: 1
+  _cancelKey: 27
 --- !u!1 &1305484441
 GameObject:
   m_ObjectHideFlags: 0
@@ -13186,7 +13200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gem: {fileID: 1294381007}
-  _cancelKey: 27
 --- !u!1 &1631164598
 GameObject:
   m_ObjectHideFlags: 0
@@ -15305,7 +15318,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1907517870}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146869459}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc2bea685aedc744d8390052abe8bbc6, type: 3}
@@ -16358,11 +16371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3543ac61fc4dca84b82aaec7b67ab25c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _followupEvent: {fileID: 0}
   _dialogBoxTemplate: {fileID: -468972612823838324, guid: a6cf2194920013c4994212edc0ccbfcd,
     type: 3}
   _text:
   - Ok, let's end this!
-  _followupEvent: {fileID: 0}
   _character: {fileID: 11400000, guid: c0d72d44231488c49a9c40d74120b7a3, type: 2}
   SourceType: 1
   _army: {fileID: 0}
@@ -16590,24 +16603,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131277447}
   m_CullTransparentMesh: 1
---- !u!1 &2146869459 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3463685012430697860, guid: df47d50954b567f449f73f9f8718e121,
-    type: 3}
-  m_PrefabInstance: {fileID: 1907517870}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2146869466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146869459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 744c544930fb2a84a9ed9beb33d19508, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1305112211132836822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17163,6 +17158,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile Trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248619309696586403, guid: 5856fc7f485f9be4b97694c10d3359e0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5856fc7f485f9be4b97694c10d3359e0, type: 3}

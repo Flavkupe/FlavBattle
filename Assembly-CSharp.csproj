@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\Components\WithFormation.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIUnitGridBase.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatTextCallout.cs" />
+    <Compile Include="Assets\Scripts\State\IGameEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyEditWindow.cs" />
     <Compile Include="Assets\Scripts\Dialog\MapArmyDialogEvent.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Assets\Scripts\Combat\States\InitRoundState.cs" />
     <Compile Include="Assets\Scripts\UI\Components\IconLabelPair.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanelRow.cs" />
+    <Compile Include="Assets\Scripts\State\GameEventQueue.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tooltip.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenuItem.cs" />
     <Compile Include="Assets\Scripts\Components\CameraMain.cs" />
@@ -215,13 +217,12 @@
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\IPlayableAnimation.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormationSlot.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\RoutineChain.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\SubDetectable.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogBox.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\State\IGameEvent.cs" />
-    <Compile Include="Assets\Scripts\State\GameEventQueue.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\SubDetectable.cs" />
+    <Compile Include="Assets\Scripts\State\Triggers\ArmyEncounterTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />
