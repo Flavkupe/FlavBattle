@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using FlavBattle.State;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,6 +56,7 @@ namespace FlavBattle.Core
 
         private IEnumerator ZoomTo(float targetCamSize)
         {
+            var wasLocked = _locked;
             SetLocked(true);
             var cam = this.GetComponent<Camera>();
             while (Mathf.Abs(targetCamSize - cam.orthographicSize) > 0.05f)
@@ -64,7 +66,11 @@ namespace FlavBattle.Core
             }
 
             cam.orthographicSize = targetCamSize;
-            SetLocked(false);
+
+            if (!wasLocked)
+            {
+                SetLocked(false);
+            }
         }
 
         void Update()
@@ -84,9 +90,14 @@ namespace FlavBattle.Core
 
         public IEnumerator PanTo(Vector3 position)
         {
+            var wasLocked = _locked;
             SetLocked(true);
             yield return this.MoveTo(position, 20.0f);
-            SetLocked(false);
+
+            if (!wasLocked)
+            {
+                SetLocked(false);
+            }
         }
 
         public bool IsZoomedDistance()

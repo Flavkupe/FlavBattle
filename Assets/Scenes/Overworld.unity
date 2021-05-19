@@ -16736,13 +16736,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1430963076382199490, guid: 01dc735a16778294eb2b2da04e576b27,
         type: 3}
+      propertyPath: SourceType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1430963076382199490, guid: 01dc735a16778294eb2b2da04e576b27,
+        type: 3}
       propertyPath: _followupEvent
       value: 
       objectReference: {fileID: 1156411613}
     - target: {fileID: 1430963076382199516, guid: 01dc735a16778294eb2b2da04e576b27,
         type: 3}
       propertyPath: m_Name
-      value: DialogEvent
+      value: Convo1
       objectReference: {fileID: 0}
     - target: {fileID: 1430963076382199517, guid: 01dc735a16778294eb2b2da04e576b27,
         type: 3}

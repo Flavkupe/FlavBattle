@@ -70,6 +70,11 @@ public static class ExtensionFunctions
         return new Vector3(vector.x, vector.y, z);
     }
 
+    public static Vector3 SetXY(this Vector3 vector, float x, float y)
+    {
+        return new Vector3(x, y, vector.z);
+    }
+
     public static Vector3 ShiftX(this Vector3 vector, float x)
     {
         return new Vector3(vector.x + x, vector.y, vector.z);

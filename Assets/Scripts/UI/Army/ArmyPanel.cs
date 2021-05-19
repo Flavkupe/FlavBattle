@@ -65,7 +65,7 @@ public class ArmyPanel : MonoBehaviour
         {
             this.SetSelected(null);
         }
-        else
+        else if (army.IsPlayerOwned())
         {
             var grid = _grids.FirstOrDefault(a => a.Army.ID == army.ID);
             if (grid == null)

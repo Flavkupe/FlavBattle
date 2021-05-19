@@ -53,7 +53,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     [Tooltip("Component used to display buffs")]
     [SerializeField]
-    private GameObject _buffPanel;
+    private FlowLayout _buffPanel;
 
     [Tooltip("Icon which represents this guy being dead")]
     [SerializeField]
@@ -130,7 +130,8 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
             return;
         }
 
-        Instantiate(template, _buffPanel.transform);
+        var icon = Instantiate(template);
+        _buffPanel.AddObject(icon.gameObject);
     }
 
     public void RemoveBuffIcon(CombatBuffIcon.BuffType type)
@@ -139,7 +140,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         var buff = buffs.FirstOrDefault(a => a.Type == type);
         if (buff != null)
         {
-            Destroy(buff.gameObject);
+            _buffPanel.RemoveObject(buff.gameObject, true);
         }
     }
 
