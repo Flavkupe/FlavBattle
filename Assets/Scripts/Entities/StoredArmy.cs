@@ -36,7 +36,7 @@ public class StoredArmy : IArmy
     {
         
         ID = Guid.NewGuid().ToString();
-        Formation = new Formation();
+        Formation = new Formation(this);
         Faction = faction;
     }
 }

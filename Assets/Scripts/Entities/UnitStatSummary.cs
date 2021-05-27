@@ -13,19 +13,13 @@ namespace FlavBattle.Entities
     /// </summary>
     public class UnitStatSummary
     {
-        public enum SummaryItemType
-        {
-            Attack,
-            Defense,
-        }
-
         public List<SummaryItem> Items { get; } = new List<SummaryItem>();
 
-        private Dictionary<SummaryItemType, int> _totals = new Dictionary<SummaryItemType, int>();
+        private Dictionary<UnitStatType, int> _totals = new Dictionary<UnitStatType, int>();
 
         public class SummaryItem
         {
-            public SummaryItem(SummaryItemType type, int amount, string description)
+            public SummaryItem(UnitStatType type, int amount, string description)
             {
                 Type = type;
                 Amount = amount;
@@ -35,9 +29,17 @@ namespace FlavBattle.Entities
             /// <summary>
             /// What kind of item this is a summary of
             /// </summary>
-            public SummaryItemType Type;
+            public UnitStatType Type;
             public int Amount;
             public string Description;
+        }
+
+        public UnitStatSummary()
+        {
+            foreach (var stat in UnitStats.Types)
+            {
+                _totals[stat] = 0;
+            }
         }
 
         public void Clear()
@@ -50,7 +52,7 @@ namespace FlavBattle.Entities
         /// Adds a stat and amount to the tally for the summary.
         /// Amounts of 0 are ignored.
         /// </summary>
-        public void Tally(SummaryItemType type, int amount, string description)
+        public void Tally(UnitStatType type, int amount, string description)
         {
             if (amount == 0)
             {
@@ -61,9 +63,40 @@ namespace FlavBattle.Entities
             Items.Add(new SummaryItem(type, amount, description));
         }
 
-        public int GetTotal(SummaryItemType type)
+        /// <summary>
+        /// Goes through each stat and tallies it with the provided description.
+        /// </summary>
+        /// <param name="stats"></param>
+        /// <param name="description"></param>
+        public void Tally(UnitStats stats, string description)
+        {
+            foreach (var stat in UnitStats.Types)
+            {
+                var value = stats.GetStatValue(stat);
+                if (value != 0)
+                {
+                    Tally(stat, value, description);
+                }
+            }
+        }
+
+        public int GetTotal(UnitStatType type)
         {
             return _totals.GetValueOrDefault(type);
+        }
+
+        public UnitStats GetAccumulatedStats()
+        {
+            var stats = new UnitStats();
+            stats.Power = _totals[UnitStatType.Power];
+            stats.Defense = _totals[UnitStatType.Defense];
+            stats.Speed = _totals[UnitStatType.Speed];
+            stats.HP = _totals[UnitStatType.HP];
+            stats.ActiveMoraleShields = _totals[UnitStatType.ActiveMoraleShields];
+            stats.ActiveBlockShields = _totals[UnitStatType.ActiveBlockShields];
+            stats.Commands = _totals[UnitStatType.Command];
+            stats.StartingBlockShields = _totals[UnitStatType.StartingBlockShields];
+            return stats;
         }
     }
 }

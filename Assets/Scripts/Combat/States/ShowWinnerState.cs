@@ -32,6 +32,11 @@ public class ShowWinnerState : BattleStateBase
     /// <returns></returns>
     private IEnumerator DoShowWinner(BattleStatus state)
     {
+        foreach (var combatant in state.Combatants)
+        {
+            combatant.ProcessCombatEnd();
+        }
+
         var winner = state.CheckWinner();
         var victory = winner == BattleStatus.Winner.Left;
         yield return state.BattleDisplay.ShowCombatEndSign(victory);

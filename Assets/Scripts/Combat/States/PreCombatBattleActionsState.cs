@@ -30,25 +30,8 @@ public class PreCombatBattleActionsState : BattleStateBase
     {
         foreach (var combatant in state.Combatants)
         {
-            PrepareUnitShields(combatant);
-            combatant.ApplyPerkStatBonuses();
+            combatant.ProcessCombatStart();
         }
-    }
-
-    private void PrepareUnitShields(Combatant combatant)
-    {
-        // High morale shield - uncomment later?
-        //if (combatant.UnitMorale.GetTier() == Morale.Tier.High)
-        //{
-        //    combatant.ApplyStatChanges(new UnitStats()
-        //    {
-        //        MoraleShields = 1
-        //    });
-
-        //    combatant.CombatUnit.AddBuff(CombatBuffIcon.BuffType.MoraleShield);
-        //}
-
-        combatant.AddBlockShields(combatant.Unit.Info.CurrentStats.StartingBlockShields);
     }
 
     private void PrepareOfficerActions(BattleStatus state)

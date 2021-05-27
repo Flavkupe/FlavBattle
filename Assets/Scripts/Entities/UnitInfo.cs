@@ -1,4 +1,6 @@
-﻿using FlavBattle.Entities.Data;
+﻿using FlavBattle.Entities;
+using FlavBattle.Entities.Data;
+using FlavBattle.Entities.Modifiers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +23,8 @@ public class UnitInfo
 
     public List<PerkData> Perks = new List<PerkData>();
 
+    public ModifierSet ModifierSet { get; } = new ModifierSet();
+
     public bool IsOfficer { get; private set; } = false;
 
     public string Name { get; private set; }
@@ -42,8 +46,12 @@ public class UnitInfo
             if (perk != null)
             {
                 Perks.Add(perk);
+                ModifierSet.AddModifier(new PerkModifier(perk));
             }
         }
+
+        // TODO: based on race or class or stuff
+        ModifierSet.AddModifier(new DefaultModifier());
 
         this.Actions.AddRange(data.StartingActions);
         this.IsOfficer = isOfficer;

@@ -12,6 +12,16 @@ public struct FormationInfo
 
 public class Formation
 {
+    /// <summary>
+    /// Army that owns this formation.
+    /// </summary>
+    private IArmy _owningArmy;
+
+    public Formation(IArmy owningArmy)
+    {
+        _owningArmy = owningArmy;
+    }
+
     private Unit[,] _units = new Unit[3,3];
 
     public event EventHandler<Formation> FormationChanged;
@@ -77,11 +87,13 @@ public class Formation
         {
             unit.Formation = new FormationPair { Row = row, Col = column };
             unit.IsInFormation = true;
+            unit.CurrentArmy = _owningArmy;
         }
         else if (current != null)
         {
             // Unit replaced with null; it is no longer in formation
             current.IsInFormation = false;
+            current.CurrentArmy = null;
         }
 
         FormationChanged?.Invoke(this, this);
@@ -146,6 +158,7 @@ public class Formation
         else if (current != null)
         {
             current.IsInFormation = false;
+            current.CurrentArmy = null;
         }
 
         return current;

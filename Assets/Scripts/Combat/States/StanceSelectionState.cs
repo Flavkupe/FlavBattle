@@ -40,6 +40,7 @@ namespace FlavBattle.Combat.States
                 if (_stanceSelected.HasValue)
                 {
                     state.PlayerArmy.Stance = _stanceSelected.Value;
+                    state.UpdateCombatantStats();
                     break;
                 }
             }

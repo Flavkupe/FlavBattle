@@ -1,12 +1,7 @@
 ﻿using FlavBattle.Combat;
 using FlavBattle.Entities;
+using FlavBattle.Entities.Modifiers;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 public class Combatant
 {
@@ -20,8 +15,6 @@ public class Combatant
     {
         RightClicked?.Invoke(this, this);
     }
-
-    private List<StatsBuff> _statBuffs = new List<StatsBuff>();
 
     /// <summary>
     /// Fires when the representation of this unit is right-clicked
@@ -39,18 +32,19 @@ public class Combatant
     public IArmy Allies;
 
     /// <summary>
-    /// Stat changes due to buffs and temporary combat effects
-    /// </summary>
-    public UnitStats StatChanges { get; private set; } = new UnitStats
-    {
-        // Level not affected by stat changes
-        Level = 0
-    };
-
-    /// <summary>
     /// Visual stuff for this unit
     /// </summary>
     public CombatUnit CombatUnit => CombatFormationSlot?.CurrentUnit;
+
+    /// <summary>
+    /// Stat changes due to buffs and temporary combat effects
+    /// </summary>
+    private UnitStats _modifierStats = new UnitStats();
+
+    /// <summary>
+    /// Latest stat summary for unit.
+    /// </summary>
+    public UnitStatSummary StatSummary { get; private set; } = new UnitStatSummary();
 
     /// <summary>
     /// Use this to get the current unit stats combined with stat changes.
@@ -58,7 +52,7 @@ public class Combatant
     /// Unit.Info.CurrentStats for permanent or ApplyStatChanges for only
     /// within combat.
     /// </summary>
-    public UnitStats CombatCombinedStats => Unit.Info.CurrentStats.GetCombined(StatChanges);
+    public UnitStats CombatCombinedStats => Unit.Info.CurrentStats.GetCombined(_modifierStats);
 
     public int UnitMoraleBonus => Unit.Info.Morale.GetDefaultBonus();
     public Morale UnitMorale => Unit.Info.Morale;
@@ -68,9 +62,11 @@ public class Combatant
     /// <summary>
     /// Change Stats for the Combatant temporarily, just for the combat duration.
     /// </summary>
-    private void ApplyStatChanges(UnitStats changes)
+    public void RefreshStatChanges()
     {
-        StatChanges.Combine(changes);
+        StatSummary = this.Unit.GetStatSummary();
+        var stats = StatSummary.GetAccumulatedStats();
+        _modifierStats = stats;
     }
 
     /// <summary>
@@ -79,41 +75,14 @@ public class Combatant
     /// </summary>
     /// <param name="buff"></param>
     /// <param name="duration"></param>
-    public void AddStatBuff(UnitStats buff, int duration = 0)
+    public void AddStatBuff(string name, UnitStats buff, int duration = 0)
     {
-        ApplyStatChanges(buff);
-        if (duration > 0)
-        {
-            var statBuff = new StatsBuff(this, buff, duration);
-            _statBuffs.Add(statBuff);
-        }
+        var type = duration == 0 ? CombatEffectModifierDuration.AllCombat : CombatEffectModifierDuration.Turns;
+        var modifier = new CombatEffectModifier(name, buff, type, duration);
+        this.Unit.Info.ModifierSet.AddModifier(modifier);
 
-        // Add block shields for this buff
-        AddBlockShields(buff.StartingBlockShields);
-    }
-
-    /// <summary>
-    /// Adds a number of block shields and adds the buff icons for them.
-    /// </summary>
-    public void AddBlockShields(int numBlockShields)
-    {
-        for (var i = 0; i < numBlockShields; i++)
-        {
-            this.StatChanges.ActiveBlockShields++;
-            this.CombatUnit.AddBuffIcon(CombatBuffIcon.BuffType.BlockShield);
-        }
-    }
-
-    /// <summary>
-    /// Applies perk bonuses to Stats. Should be used when combat starts
-    /// to set stats for combat.
-    /// 
-    /// This call is NOT idempotent; calling it multiple times will stack.
-    /// </summary>
-    public void ApplyPerkStatBonuses()
-    {
-        var perkStats = StatsUtils.GetStatBonusesFromPerks(Unit, Allies);
-        StatChanges.Combine(perkStats);
+        // TODO add block shields for buff
+        RefreshStatChanges();
     }
 
     /// <summary>
@@ -121,26 +90,42 @@ public class Combatant
     /// </summary>
     public void ProcessTurnStart()
     {
-        foreach (var statBuff in _statBuffs.ToList())
-        {
-            statBuff.TickDuration();
-            if (statBuff.Expired)
-            {
-                _statBuffs.Remove(statBuff);
-                this.ApplyStatChanges(statBuff.Buff.Multiply(-1));
-            }
-        }
+        this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatTurnStart);
+        RefreshStatChanges();
+    }
+
+    public void ProcessStanceChanged()
+    {
+        RefreshStatChanges();
+    }
+
+    public void ProcessCombatStart()
+    {
+        this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatStart);
+        RefreshStatChanges();
+
+        // like HP, this goes on CurrentStats
+        var startingShields = _modifierStats.StartingBlockShields + Unit.Info.CurrentStats.StartingBlockShields;
+        Unit.Info.CurrentStats.ActiveBlockShields = startingShields;
+
+        // TODO: can we do this some other way?
+        AddBlockShieldIcons(startingShields);
+    }
+
+    public void ProcessCombatEnd()
+    {
+        this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatEnd);
+        Unit.Info.CurrentStats.ActiveBlockShields = 0;
     }
 
     /// <summary>
-    /// This updates the latest combat attack and defense
-    /// summaries. Use this to get the latest totals.
+    /// Adds a number of block shields and adds the buff icons for them.
     /// </summary>
-    public void UpdateAttDefStatSummaries()
+    private void AddBlockShieldIcons(int numBlockShields)
     {
-        this.Unit.StatSummary.Clear();
-        StatsUtils.ComputeDefenseSummary(Unit, Allies, StatChanges);
-        StatsUtils.ComputeAttackSummary(Unit, Allies, StatChanges);
-        StatsUtils.ApplyPerkBonusesToSummary(Unit, Allies);
+        for (var i = 0; i < numBlockShields; i++)
+        {
+            this.CombatUnit.AddBuffIcon(CombatBuffIcon.BuffType.BlockShield);
+        }
     }
 }

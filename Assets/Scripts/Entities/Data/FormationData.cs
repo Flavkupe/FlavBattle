@@ -54,7 +54,7 @@ public class InitialFormation
         }
     }
 
-    public Formation CreateFormation(Faction faction)
+    public Formation CreateFormation(Faction faction, IArmy army)
     {
         var officer = GetOfficer();
         if (officer == null)
@@ -63,7 +63,7 @@ public class InitialFormation
             return null;
         }
 
-        var formation = new Formation();
+        var formation = new Formation(army);
         foreach (var pos in (FormationRowAndCol[])Enum.GetValues(typeof(FormationRowAndCol)))
         {
             var unitData = GetUnit(pos);
@@ -86,8 +86,8 @@ public class FormationData : ScriptableObject
     [AssetIcon]
     public Sprite Icon => InitialFormation?.GetOfficer()?.Sprite;
 
-    public Formation CreateFormation(Faction faction)
+    public Formation CreateFormation(Faction faction, IArmy army)
     {
-        return InitialFormation?.CreateFormation(faction);
+        return InitialFormation?.CreateFormation(faction, army);
     }
 }

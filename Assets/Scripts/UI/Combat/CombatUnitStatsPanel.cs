@@ -66,8 +66,8 @@ namespace FlavBattle.UI.Combat
 
             _actionInfoPanel.SetUnit(combatant.Unit);
 
-            _attackSummaryPanel.SetSummary(combatant.Unit.StatSummary);
-            _defenseSummaryPanel.SetSummary(combatant.Unit.StatSummary);
+            _attackSummaryPanel.SetSummary(combatant.StatSummary);
+            _defenseSummaryPanel.SetSummary(combatant.StatSummary);
         }
 
         public void Close()

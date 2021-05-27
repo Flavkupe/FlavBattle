@@ -41,11 +41,13 @@ public static class UnitGenerator
     public static void PopulateArmy(IArmy army, Faction faction, RandomArmyOptions options)
     {
         var rand = Random.Range(options.MinUnitNum, options.MaxUnitNum + 1);
-        army.Formation.PutUnit(MakeUnit(faction, options.MaxLevel, true));
+        var officer = MakeUnit(faction, options.MaxLevel, true);
+        army.Formation.PutUnit(officer);
         for (var i = 1; i < rand; i++)
         {
             var randLevel = Random.Range(options.MinLevel, options.MaxLevel + 1);
-            army.Formation.PutUnit(MakeUnit(faction, randLevel));
+            var unit = MakeUnit(faction, randLevel);
+            army.Formation.PutUnit(unit);
         }
     }
 }

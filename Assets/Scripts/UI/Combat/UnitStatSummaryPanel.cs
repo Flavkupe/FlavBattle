@@ -12,7 +12,7 @@ namespace FlavBattle.UI.Combat
     {
         [Tooltip("What stat this panel is for.")]
         [SerializeField]
-        private UnitStatSummary.SummaryItemType _statType;
+        private UnitStatType _statType;
 
         [Required]
         [SerializeField]

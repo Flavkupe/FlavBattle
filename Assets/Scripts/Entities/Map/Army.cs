@@ -34,6 +34,11 @@ public class ExitTileEventArgs : EventArgs
 
 public class Army : MonoBehaviour, IArmy
 {
+    public Army()
+    {
+        Formation = new Formation(this);
+    }
+
     public float MoveStep = 1.0f;
 
     public event EventHandler<ArmyClickedEventArgs> ArmyClicked;
@@ -67,7 +72,7 @@ public class Army : MonoBehaviour, IArmy
     public SpriteRenderer FactionMarker;
 
     public FactionData Faction { get; private set; }
-    public Formation Formation { get; private set; } = new Formation();
+    public Formation Formation { get; private set; }
 
     public string ID { get; private set; }
 

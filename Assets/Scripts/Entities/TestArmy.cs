@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class TestArmy : IArmy
 {
+    public TestArmy()
+    {
+        Formation = new Formation(this);
+    }
+
     public string ID { get; } = Guid.NewGuid().ToString();
 
-    public Formation Formation { get; set; } = new Formation();
+    public Formation Formation { get; private set; }
 
     public FactionData Faction { get; set; }
 

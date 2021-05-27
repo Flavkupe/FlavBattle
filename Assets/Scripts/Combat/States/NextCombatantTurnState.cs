@@ -151,7 +151,7 @@ namespace FlavBattle.Combat.States
                 if (ability.Effect.HasFlag(CombatAbilityEffect.StatusChange))
                 {
                     var effect = ability.StatusEffect.Multiply(multiplier);
-                    target.AddStatBuff(effect, ability.StatusEffectDuration);
+                    target.AddStatBuff(ability.Name, effect, ability.StatusEffectDuration);
                 }
 
                 if (ability.Effect.HasFlag(CombatAbilityEffect.Withdraw))
@@ -267,12 +267,8 @@ namespace FlavBattle.Combat.States
         /// </summary>
         private void DealDirectDamageToTarget(CombatTurnActionSummary summary, Combatant attacker, Combatant target, CombatAbilityData ability)
         {
-            // First sync stat summaries
-            attacker.UpdateAttDefStatSummaries();
-            target.UpdateAttDefStatSummaries();
-
-            var defense = target.Unit.StatSummary.GetTotal(UnitStatSummary.SummaryItemType.Defense);
-            var attack = attacker.Unit.StatSummary.GetTotal(UnitStatSummary.SummaryItemType.Attack);
+            var defense = target.StatSummary.GetTotal(UnitStatType.Defense);
+            var attack = attacker.StatSummary.GetTotal(UnitStatType.Power);
             attack += ability.Damage.RandomBetween();
 
             summary.Defense = defense;
@@ -281,25 +277,27 @@ namespace FlavBattle.Combat.States
             var moraleDamage = 10;
             var selfMoraleDamage = 0;
 
+            var currentStats = target.Unit.Info.CurrentStats;
+
             var damage = ability.Damage.RandomBetween();
             if (attack > defense)
             {
-                if (target.CombatCombinedStats.ActiveMoraleShields > 0)
+                if (currentStats.ActiveMoraleShields > 0)
                 {
                     // tank the hit due to high morale (still take morale damage)
                     summary.MoraleBlockedAttack = true;
-                    target.StatChanges.ActiveMoraleShields--;
+                    currentStats.ActiveMoraleShields--;
                     damage = 0;
                 }
             }
             else
             {
                 summary.ResistedAttack = true;
-                if (target.CombatCombinedStats.ActiveBlockShields > 0)
+                if (currentStats.ActiveBlockShields > 0)
                 {
                     // fully tank the hit
                     summary.ShieldBlockedAttack = true;
-                    target.StatChanges.ActiveBlockShields--;
+                    currentStats.ActiveBlockShields--;
                     damage = 0;
                     moraleDamage = 0;
                     selfMoraleDamage = 5;

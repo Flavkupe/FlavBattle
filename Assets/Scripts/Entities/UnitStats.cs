@@ -78,7 +78,37 @@ public class UnitStats
     public int StartingBlockShields { get => _startingBlockShields; set { _startingBlockShields = value; FireStatChange(UnitStatType.StartingBlockShields); } }  
     public int Commands { get => _command; set { _command = value; FireStatChange(UnitStatType.Command); } }  
     public int ActiveMoraleShields { get => _moraleShields; set { _moraleShields = value; FireStatChange(UnitStatType.ActiveMoraleShields); } }  
-    public int ActiveBlockShields { get => _blockShields; set { _blockShields = value; FireStatChange(UnitStatType.ActiveBlockShields); } }  
+    public int ActiveBlockShields { get => _blockShields; set { _blockShields = value; FireStatChange(UnitStatType.ActiveBlockShields); } }
+
+    public static UnitStatType[] Types => Enum.GetValues(typeof(UnitStatType)) as UnitStatType[];
+
+    public int GetStatValue(UnitStatType type)
+    {
+        switch (type)
+        {
+            case UnitStatType.HP:
+                return HP;
+            case UnitStatType.Power:
+                return Power;
+            case UnitStatType.Defense:
+                return Defense;
+            case UnitStatType.Speed:
+                return Speed;
+            case UnitStatType.Level:
+                return Level;
+            case UnitStatType.StartingBlockShields:
+                return StartingBlockShields;
+            case UnitStatType.Command:
+                return Commands;
+            case UnitStatType.ActiveMoraleShields:
+                return ActiveMoraleShields;
+            case UnitStatType.ActiveBlockShields:
+                return ActiveBlockShields;
+            default:
+                Debug.LogError($"Unit type {type} does not return a stat value");
+                return 0;
+        }
+    }
 
     public event EventHandler<UnitStatChangeEventArgs> StatChanged;
 

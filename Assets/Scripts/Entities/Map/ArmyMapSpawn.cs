@@ -52,8 +52,8 @@ public class ArmyMapSpawn : MonoBehaviour
 
         _spawned = true;
 
-        var formation = Formation.CreateFormation(Faction.Faction);
         var army = CreateNewInstance ? Instantiate(ArmyTemplate) : ArmyTemplate;
+        var formation = Formation.CreateFormation(Faction.Faction, army);
         army.SetFormation(formation);
 
         // Unparent so that it doesn't disappear after spawner is destroyed

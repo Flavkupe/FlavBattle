@@ -133,7 +133,6 @@
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UIUnitPerksPanelItem.cs" />
-    <Compile Include="Assets\Scripts\Combat\StatsBuff.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ShowWinnerState.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
@@ -176,7 +175,6 @@
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
-    <Compile Include="Assets\Scripts\Entities\StatsUtils.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
@@ -194,6 +192,7 @@
     <Compile Include="Assets\Scripts\UI\Army\UICombatActionInfoPanel.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Combat\States\Combatant.cs" />
+    <Compile Include="Assets\FlowLayout.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\ParallelRoutineSet.cs" />
@@ -223,7 +222,11 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\FlowLayout.cs" />
+    <Compile Include="Assets\Scripts\Entities\Modifiers\PerkModifier.cs" />
+    <Compile Include="Assets\Scripts\Entities\Modifiers\Modifier.cs" />
+    <Compile Include="Assets\Scripts\Entities\Modifiers\CombatEffectModifier.cs" />
+    <Compile Include="Assets\Scripts\Entities\Modifiers\DefaultModifier.cs" />
+    <Compile Include="Assets\Scripts\Entities\Modifiers\ModifierSet.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

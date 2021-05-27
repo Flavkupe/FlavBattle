@@ -14,10 +14,9 @@ public class Unit : IEquatable<Unit>
     public UnitInfo Info;
 
     /// <summary>
-    /// The latest summary of stats calculated for the unit. Used to show
-    /// summary of certain stats for the UI, such as in combat.
+    /// Current army unit is in. Can be null if unit is not in an army.
     /// </summary>
-    public UnitStatSummary StatSummary { get; } = new UnitStatSummary();
+    public IArmy CurrentArmy { get; set; }
 
     public bool IsInFormation;
 
@@ -57,5 +56,13 @@ public class Unit : IEquatable<Unit>
     public bool SameType(UnitData other)
     {
         return this.Data.UnitID == other.UnitID;
+    }
+
+    // TODO: remove army and make private field eventually
+    public UnitStatSummary GetStatSummary()
+    {
+        var summary = new UnitStatSummary();
+        this.Info.ModifierSet.ApplyToStatSummary(summary, this, CurrentArmy);
+        return summary;
     }
 }
