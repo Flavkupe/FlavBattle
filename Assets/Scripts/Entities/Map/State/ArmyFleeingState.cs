@@ -10,6 +10,8 @@ namespace FlavBattle.Entities.Map.State
 {
     public class ArmyFleeingState : ArmyMapStateBase
     {
+        public override ArmyStatePriority Priority => ArmyStatePriority.Highest;
+
         public enum ArmyFleeingOption
         {
             /// <summary>

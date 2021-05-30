@@ -17,10 +17,6 @@ namespace FlavBattle.Entities.Map.State
     {
         public IArmyMapState CurrentState { get; private set; }
 
-        [Tooltip("Ordered list of additional states to be in (if possible).")]
-        [SerializeField]
-        private ArmyMapStateBase[] _customStates;
-
         private List<IArmyMapState> _allStates = new List<IArmyMapState>();
 
         private Army _army;
@@ -35,9 +31,10 @@ namespace FlavBattle.Entities.Map.State
                 Debug.LogError("No _tilemapManager found for controller!");
             }
 
-            InitStates();
 
             _army = GetComponent<Army>();
+
+            InitStates(_army);            
             foreach (var state in _allStates)
             {
                 state.Init(_army, _tilemapManager);
@@ -62,52 +59,43 @@ namespace FlavBattle.Entities.Map.State
             CheckStates();
         }
 
-        private void InitStates()
+        private void InitStates(Army army)
         {
             _allStates.Clear();
-
-            // If not available as custom states, add the "defaults".
-            if (!_customStates.Any(a => a.State == ArmyMapState.MovingToNode))
-            {
-                _allStates.Add(GetComponent<ArmyMovingToDestinationState>());
-            }
-            if (!_customStates.Any(a => a.State == ArmyMapState.Fleeing))
-            {
-                _allStates.Add(GetComponent<ArmyFleeingState>());
-            }
-
-            _allStates.AddRange(_customStates);
-
-            // Idle state should always be last one
-            if (!_customStates.Any(a => a.State == ArmyMapState.Idle))
-            {
-                _allStates.Add(GetComponent<ArmyIdleState>());
-            }
+            _allStates.AddRange(GetComponentsInChildren<IArmyMapState>());
+            _allStates = _allStates.OrderByDescending((a) => a.Priority).ToList();
         }
 
         private void CheckStates()
         {
             foreach (var state in _allStates)
             {
+                if (state.ShouldSkip())
+                {
+                    // If checking a state with throttling, wait before
+                    // checking that state again
+                    continue;   
+                }
+
                 if (state.ShouldTransitionToState(_army))
                 {
                     if (CurrentState != null)
                     {
-                        if (state.State == CurrentState.State)
+                        if (state.Equals(CurrentState))
                         {
                             // Should stay at current state
-                            break; ;
+                            break;
                         }
 
                         // Switching out of a different state
-                        // Debug.Log($"{_army.name} exiting state {CurrentState.State}");
+                        Debug.Log($"{_army.name} exiting state {CurrentState.State}");
                         CurrentState.SetActive(false);
                         CurrentState.ExitState(_army);
                     }
 
 
                     // Entering a new state
-                    // Debug.Log($"{_army.name} entering state {state.State}");
+                    Debug.Log($"{_army.name} entering state {state.State}");
                     state.SetActive(true);
                     state.EnterState(_army);
                     CurrentState = state;

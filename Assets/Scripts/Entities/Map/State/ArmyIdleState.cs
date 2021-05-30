@@ -10,6 +10,8 @@ namespace FlavBattle.Entities.Map.State
     {
         public override ArmyMapState State => ArmyMapState.Idle;
 
+        public override ArmyStatePriority Priority => ArmyStatePriority.Last;
+
         public override bool ShouldTransitionToState(Army army)
         {
             // Idle state is when army is doing nothing

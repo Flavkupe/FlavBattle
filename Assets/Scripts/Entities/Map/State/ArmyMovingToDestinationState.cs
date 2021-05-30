@@ -8,6 +8,7 @@ namespace FlavBattle.Entities.Map.State
 {
     public class ArmyMovingToDestinationState : ArmyMapStateBase
     {
+        public override ArmyStatePriority Priority => ArmyStatePriority.Default;
         public override ArmyMapState State => ArmyMapState.MovingToNode;
 
         public override bool ShouldTransitionToState(Army army)

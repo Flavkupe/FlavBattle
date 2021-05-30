@@ -1262,7 +1262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5689163656475682268}
   - component: {fileID: 8828536160456971155}
-  - component: {fileID: 7834535452045925564}
+  - component: {fileID: 8866836467154713294}
   - component: {fileID: 4033046613946094174}
   - component: {fileID: 6341988838629422653}
   - component: {fileID: 2315189156844904385}
@@ -1312,7 +1312,7 @@ MonoBehaviour:
   FactionFlag: {fileID: 6903624859579811919}
   FactionMarker: {fileID: 5188505644332697726}
   FlagIcon: {fileID: 199460706679316097}
---- !u!114 &7834535452045925564
+--- !u!114 &8866836467154713294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1363,7 +1363,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148c80fac828d6c42a2ddbd122aeb36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _customStates: []
 --- !u!1 &4815281983412499486
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 using NaughtyAttributes;
 using FlavBattle.Tilemap;
 
-public class GridTile
+public class GridTile : IEquatable<GridTile>
 {
     public TileInfo Info;
     public int GridX;
@@ -33,6 +33,11 @@ public class GridTile
     public override string ToString()
     {
         return $"({GridX},{GridY})";
+    }
+
+    public bool Equals(GridTile other)
+    {
+        return this.GridX == other.GridX && this.GridY == other.GridY;
     }
 }
 
@@ -87,6 +92,13 @@ public class TilemapManager : MonoBehaviour
     public TravelPath GetPath(GridTile start, GridTile end)
     {
         return GetPath(new Vector3Int(start.GridX, start.GridY, 0), new Vector3Int(end.GridX, end.GridY, 0));
+    }
+
+    public TravelPath GetPath(GameObject start, GameObject end)
+    {
+        var startTile = GetGridTileAtWorldPos(start);
+        var endTile = GetGridTileAtWorldPos(end);
+        return GetPath(startTile, endTile);
     }
 
     public TravelPath GetPath(Vector3Int start, Vector3Int end)
