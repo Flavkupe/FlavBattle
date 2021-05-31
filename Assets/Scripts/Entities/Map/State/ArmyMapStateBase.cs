@@ -17,6 +17,7 @@ namespace FlavBattle.Entities.Map.State
 
         AIChargeToTarget = 6,
         AIPatrol = 7,
+        AIChase = 8,
     }
 
     public enum ArmyStatePriority
@@ -30,7 +31,7 @@ namespace FlavBattle.Entities.Map.State
         // Low prio AI choices - patrolling, etc
         LowAI = 2,
 
-        // Primary AI choices - following, etc
+        // Primary AI choices - chasing, etc
         MidAI = 3,
 
         // Overrides all - fleeing, etc

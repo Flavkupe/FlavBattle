@@ -60,6 +60,12 @@ public class Detector : MonoBehaviour
             return GetDetected<T>(circleCollider);
         }
 
+        var polyCollider = GetComponent<PolygonCollider2D>();
+        if (polyCollider != null)
+        {
+            return GetDetected<T>(polyCollider);
+        }
+
         // no colliders; empty list
         Debug.LogWarning("Trying to detect with no colliders");
         return new T[] { };
@@ -99,13 +105,26 @@ public class Detector : MonoBehaviour
     public T[] GetDetected<T>(BoxCollider2D collider) where T : MonoBehaviour
     {
         var all = Physics2D.OverlapBoxAll(transform.position + collider.offset.ToVector3(), collider.size, 0);
-        return all.Where(a => a.gameObject.HasComponent<T>()).Select(b => b.GetComponent<T>()).ToArray();
+        return all.Select(a => a.gameObject.GetComponentInParent<T>()).Where(b => b != null).ToArray();
     }
 
     public T[] GetDetected<T>(CircleCollider2D collider) where T : MonoBehaviour
     {
         var all = Physics2D.OverlapCircleAll(transform.position + collider.offset.ToVector3(), collider.radius);
-        return all.Where(a => a.gameObject.HasComponent<T>()).Select(b => b.GetComponent<T>()).ToArray();
+        return all.Select(a => a.gameObject.GetComponentInParent<T>()).Where(b => b != null).ToArray();
+    }
+
+    public T[] GetDetected<T>(PolygonCollider2D collider) where T : MonoBehaviour
+    {
+        List<Collider2D> results = new List<Collider2D>();
+        var filter = new ContactFilter2D();
+        var numResults = Physics2D.OverlapCollider(collider, filter.NoFilter(), results);
+        if (results == null || numResults == 0)
+        {
+            return new T[] { };
+        }
+
+        return results.Select(a => a.gameObject.GetComponentInParent<T>()).Where(b => b != null).ToArray();
     }
 }
 

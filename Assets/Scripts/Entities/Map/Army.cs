@@ -34,6 +34,22 @@ public class ExitTileEventArgs : EventArgs
 
 public class Army : MonoBehaviour, IArmy
 {
+    [Serializable]
+    private class Detectors
+    {
+        [Required]
+        [AllowNesting]
+        public Detector AttackRangeDetector;
+
+        [Required]
+        [AllowNesting]
+        public Detector ClickDetector;
+
+        [Required]
+        [AllowNesting]
+        public Detector TileDetector;
+    }
+
     public Army()
     {
         Formation = new Formation(this);
@@ -50,6 +66,9 @@ public class Army : MonoBehaviour, IArmy
     public event EventHandler<EnterTileEventArgs> EnterTile;
 
     public event EventHandler<ExitTileEventArgs> ExitTile;
+
+    [SerializeField]
+    private Detectors _detectors;
 
     private Vector3? _destination = null;
     private TravelPath _path = null;
@@ -93,7 +112,6 @@ public class Army : MonoBehaviour, IArmy
 
     public GameObject FlagIcon;
 
-    private Detector[] _detectors;
     private bool _paused = false;
 
     void Awake()
@@ -106,25 +124,10 @@ public class Army : MonoBehaviour, IArmy
 
     void Start()
     {
-        _detectors = this.GetComponentsInChildren<Detector>();
-        foreach (var detector in _detectors)
-        {
-            if (detector.Detects.HasFlag(DetectableType.Army))
-            {
-                detector.Detected += ArmyDetectorDetected;
-            }
-
-            if (detector.Detects.HasFlag(DetectableType.Tile))
-            {
-                detector.Detected += TileDetectorEntered;
-                detector.Exited += TileDetectorExited;
-            }
-
-            if (detector.Detects.HasFlag(DetectableType.MouseClick))
-            {
-                detector.Clicked += HandleDetectorClicked;
-            }
-        }
+        _detectors.AttackRangeDetector.Detected += ArmyDetectorDetected;
+        _detectors.TileDetector.Detected += TileDetectorEntered;
+        _detectors.TileDetector.Exited += TileDetectorExited;
+        _detectors.ClickDetector.Clicked += HandleDetectorClicked;
     }
 
     private void HandleDetectorClicked(object sender, MouseButton e)

@@ -1308,6 +1308,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveStep: 1
+  _detectors:
+    AttackRangeDetector: {fileID: 8130424245700661503}
+    ClickDetector: {fileID: 246149411203339786}
+    TileDetector: {fileID: 4718273400054647223}
   _mapView: {fileID: 1743538751}
   FactionFlag: {fileID: 6903624859579811919}
   FactionMarker: {fileID: 5188505644332697726}
