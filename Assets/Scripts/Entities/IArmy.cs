@@ -14,6 +14,8 @@ public interface IArmy : IOwnedEntity
     Morale Morale { get; }
 
     TileInfo CurrentTileInfo { get; }
+
+    bool IsDestroyed { get; }
 }
 
 public static class ArmyExtensions

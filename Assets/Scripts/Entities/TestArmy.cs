@@ -22,4 +22,6 @@ public class TestArmy : IArmy
     public Morale Morale { get; } = new Morale();
 
     public TileInfo CurrentTileInfo { get; set; }
+
+    public bool IsDestroyed => false;
 }

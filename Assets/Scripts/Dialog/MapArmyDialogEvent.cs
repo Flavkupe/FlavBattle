@@ -14,7 +14,7 @@ namespace FlavBattle.Dialog
     /// <summary>
     /// Creates dialog from an army in the map.
     /// </summary>
-    public class MapArmyDialogEvent : DialogEvent
+    public class MapArmyDialogEvent : MapDialogEvent
     {
         [Tooltip("Matching UnitData to have the dialog. If null, will be random unit in army.")]
         [SerializeField]
@@ -40,10 +40,6 @@ namespace FlavBattle.Dialog
 
         private Unit _unit;
 
-        private DialogBox _box;
-
-        private CameraMain _cam;
-
         public override Transform DialogSource => _army?.transform;
 
         public override DialogBox CreateDialogBox()
@@ -62,8 +58,6 @@ namespace FlavBattle.Dialog
 
         public override void PreStartEvent()
         {
-            _cam = CameraMain.Instance;
-
             if (SourceType == EventSourceType.FirstArmyMatchingUnit)
             {
                 var armies = FindObjectsOfType<Army>(false);
@@ -136,39 +130,6 @@ namespace FlavBattle.Dialog
             {
                 return army.GetUnits(true).FirstOrDefault(a => a.Data.UnitID == _character.UnitID);
             }
-        }
-
-        public override IEnumerator DoEvent()
-        {
-            var sourcePos = DialogSource.position;
-            yield return _cam.PanTo(sourcePos);
-            yield return _cam.ShiftToFormationView();
-            yield return new WaitForSeconds(0.5f);
-
-            _box = CreateDialogBox();
-            var shiftedSourcePos = sourcePos.ShiftY(_box.VerticalTextboxOffset);
-            var offset = AdditionalDialogOffset;
-            _box.transform.position = shiftedSourcePos + offset;
-            _box.DialogEnd += HandleDialogEnd;
-        }
-
-        public override void CancelEvent()
-        {
-            base.CancelEvent();
-
-            if (_box != null)
-            {
-                Destroy(_box.gameObject);
-                _box = null;
-            }
-        }
-
-        private void HandleDialogEnd(object sender, DialogBox e)
-        {
-            // TEMP?
-            Destroy(e.gameObject);
-            _box = null;
-            InvokeEventFinished();
         }
     }
 }

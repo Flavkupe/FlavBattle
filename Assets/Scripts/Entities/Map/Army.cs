@@ -67,6 +67,8 @@ public class Army : MonoBehaviour, IArmy
 
     public event EventHandler<ExitTileEventArgs> ExitTile;
 
+    public event EventHandler ArmyDestroyed;
+
     [SerializeField]
     private Detectors _detectors;
 
@@ -81,6 +83,12 @@ public class Army : MonoBehaviour, IArmy
 
     public TileInfo CurrentTileInfo => _currentTile?.Info;
     public bool IsFleeing { get; private set; } = false;
+
+    /// <summary>
+    /// Whether the army is no longer part of the map, either due
+    /// to having fled or having been destroyed in combat
+    /// </summary>
+    public bool IsDestroyed { get; private set; } = false;
 
     [Required]
     [SerializeField]
@@ -349,6 +357,13 @@ public class Army : MonoBehaviour, IArmy
     public void SetDestination(Vector3? position)
     {
         this._destination = position;
+    }
+
+    public void DestroyArmy()
+    {
+        IsDestroyed = true;
+        ArmyDestroyed?.Invoke(this, EventArgs.Empty);
+        this.gameObject.SetActive(false);
     }
 
     private void PlotNextPath()

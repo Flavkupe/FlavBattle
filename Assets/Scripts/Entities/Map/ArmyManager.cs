@@ -452,7 +452,7 @@ public class ArmyManager : MonoBehaviour
                 // Army vanquished
                 _armies.Remove(loserArmy);
                 yield return loserArmy.Vanish();
-                Destroy(loserArmy.gameObject);
+                loserArmy.DestroyArmy();
             }
             else if (victoryType == VictoryType.Fled)
             {

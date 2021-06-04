@@ -83,8 +83,17 @@ namespace FlavBattle.Dialog
 
         public void SetUnit(Unit unit)
         {
-            this._portrait.sprite = unit.Info.Portrait;
-            this._nameText.text = unit.Info.Name;
+            this.SetSource(unit.Info.Portrait, unit.Info.Name);
+        }
+
+        /// <summary>
+        /// Sets the source for the dialog using a static portrait
+        /// and a static name.
+        /// </summary>
+        public void SetSource(Sprite portrait, string name)
+        {
+            this._portrait.sprite = portrait;
+            this._nameText.text = name;
         }
     }
 }

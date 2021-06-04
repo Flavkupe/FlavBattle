@@ -15,8 +15,8 @@ MonoBehaviour:
   InitialFormation:
     Level: 1
     FL: {fileID: 11400000, guid: 3a27f55de579a764a98b4eaaa14d663d, type: 2}
-    FM: {fileID: 11400000, guid: 3a27f55de579a764a98b4eaaa14d663d, type: 2}
-    FR: {fileID: 0}
+    FM: {fileID: 0}
+    FR: {fileID: 11400000, guid: 3a27f55de579a764a98b4eaaa14d663d, type: 2}
     ML: {fileID: 0}
     MM: {fileID: 11400000, guid: c0d72d44231488c49a9c40d74120b7a3, type: 2}
     MR: {fileID: 0}

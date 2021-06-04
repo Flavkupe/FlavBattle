@@ -1,6 +1,7 @@
 ﻿using FlavBattle.State;
 using NaughtyAttributes;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ public class Town : MonoBehaviour, IDetectable, IOwnedEntity
     [Required]
     public RadialTimer Timer;
 
-    private float _process = 0;
+    private float _progress = 0;
 
     public List<IArmy> _visitors = new List<IArmy>();
 
@@ -44,6 +45,27 @@ public class Town : MonoBehaviour, IDetectable, IOwnedEntity
             return;
         }
 
+        foreach (var army in this._visitors.ToList())
+        {
+            if (army.IsDestroyed)
+            {
+                // remove destroyed armies from lists of visitors
+                _visitors.Remove(army);
+            }
+        }
+
+        if (_visitors.Any(army => army.Faction.Faction == Faction?.Faction))
+        {
+            // if an army of the same faction is in the town, the town cannot be taken
+            // and prgress is reset
+            if (_progress != 0.0f)
+            {
+                SetProgress(0.0f);
+            }
+
+            return;
+        }
+
         foreach (var army in this._visitors)
         {
             if (army.Faction.Faction != Faction?.Faction)
@@ -58,19 +80,19 @@ public class Town : MonoBehaviour, IDetectable, IOwnedEntity
         // TODO: based on leadership and morale
         var tick = TimeUtils.AdjustedGameDelta;
         
-        if (_process + tick >= this.RequiredToTake)
+        if (_progress + tick >= this.RequiredToTake)
         {
             Conquered(army);
         }
         else
         {
-            SetProcess(_process + tick);
+            SetProgress(_progress + tick);
         }
     }
 
     private void Conquered(IArmy army)
     {
-        SetProcess(0.0f);
+        SetProgress(0.0f);
         SetFaction(army.Faction);
 
         Sounds.Play(GRM.CommonSounds.FanfareSound);
@@ -85,7 +107,7 @@ public class Town : MonoBehaviour, IDetectable, IOwnedEntity
         _visitors.Remove(army);
         if (_visitors.Count == 0)
         {
-            SetProcess(0.0f);
+            SetProgress(0.0f);
         }
     }
 
@@ -94,12 +116,12 @@ public class Town : MonoBehaviour, IDetectable, IOwnedEntity
         _visitors.Add(army);
     }
 
-    public void SetProcess(float process)
+    public void SetProgress(float progress)
     {
-        _process = process;
+        _progress = progress;
         if (RequiredToTake > 0.0f)
         {
-            Timer.SetPercentage(_process / RequiredToTake);
+            Timer.SetPercentage(_progress / RequiredToTake);
         }
     }
 

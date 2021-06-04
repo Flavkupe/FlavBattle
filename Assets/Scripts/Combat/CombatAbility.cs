@@ -233,14 +233,20 @@ public class CombatAbility : MonoBehaviour
 
     private Vector3 GetTargetPos(GameObject target, CombatAbilityCharacterMoveTarget targetPos, float distance)
     {
+        var jitterMin = -0.1f;
+        var jitterMax = 0.1f;
+        var jitter = new Vector3(
+            UnityEngine.Random.Range(jitterMin, jitterMax),
+            UnityEngine.Random.Range(jitterMin, jitterMax),
+            0);
         if (targetPos == CombatAbilityCharacterMoveTarget.Front)
         {
             // Note: since left-facing units are flipped, this should still work since "right" is
             // facing towards *their* right.
-            return target.transform.position + (target.transform.right * distance);
+            return target.transform.position + (target.transform.right * distance) + jitter;
         }
 
         // TEMP
-        return  target.transform.position + (target.transform.right * distance);
+        return  target.transform.position + (target.transform.right * distance) + jitter;
     }
 }

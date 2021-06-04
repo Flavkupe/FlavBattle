@@ -18,6 +18,14 @@ public class StoredArmy : IArmy
 
     public Morale Morale { get; } = new Morale();
 
+    public bool IsDestroyed
+    {
+        get
+        {
+            return Formation == null || Formation.GetUnits().TrueForAll(a => a.IsDead());
+        }
+    }
+
     public StoredArmy(Army army)
     {
         ID = army.ID;
