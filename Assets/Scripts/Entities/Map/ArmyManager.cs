@@ -437,7 +437,7 @@ public class ArmyManager : MonoBehaviour
         middle.y += 0.25f;
         var icon = Instantiate(BattleIndicator);
         icon.transform.position = middle;
-        yield return icon.SpinAround();
+        yield return icon.Animate();
         _battleManager.StartCombat(player, enemy);
     }
 

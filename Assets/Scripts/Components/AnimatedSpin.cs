@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FlavBattle.Components;
+using System.Collections;
 using UnityEngine;
 
-public class AnimatedSpin : MonoBehaviour
+public class AnimatedSpin : CancellableAnimation
 {
     public float Speed = 600.0f;
 
@@ -18,23 +18,13 @@ public class AnimatedSpin : MonoBehaviour
     public AccelOption Acceleration = AccelOption.MouseAndGameSpeed;
 
     public float FadeDelay = 2.0f;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    public Coroutine SpinAround()
+    protected override IEnumerator DoAnimation()
     {
         return SpinAround(Axis, Times, Speed);
     }
 
-    public Coroutine SpinAround(Vector3 axis, int times, float speed)
-    {
-        return StartCoroutine(SpinAroundInternal(axis, times, speed));
-    }
-
-    private IEnumerator SpinAroundInternal(Vector3 axis, int times, float speed)
+    private IEnumerator SpinAround(Vector3 axis, int times, float speed)
     {
         var angle = 0.0f;
         while (times > 0)
@@ -66,11 +56,11 @@ public class AnimatedSpin : MonoBehaviour
 
         if (this.FadeAndDestroyOnComplete)
         {
-            yield return FadeAndDestroy();
+            yield return Fade();
         }
     }
 
-    private IEnumerator FadeAndDestroy()
+    private IEnumerator Fade()
     {
         var renderers = this.GetComponentsInChildren<SpriteRenderer>();
         var timer = FadeDelay;
@@ -91,7 +81,5 @@ public class AnimatedSpin : MonoBehaviour
 
             yield return null;
         }
-
-        Destroy(this.gameObject);
     }
 }

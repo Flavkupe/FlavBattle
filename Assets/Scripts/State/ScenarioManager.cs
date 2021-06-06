@@ -88,7 +88,7 @@ public class ScenarioManager : SingletonObject<ScenarioManager>
         Debug.Log("Victory achieved");
         GameEventManager.TriggerMapEvent(MapEventType.MapPaused);
         VictorySign.Show();
-        VictorySign.SpinAround();
+        VictorySign.Animate();
     }
 }
 

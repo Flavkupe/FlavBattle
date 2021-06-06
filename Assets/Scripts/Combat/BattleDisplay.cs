@@ -88,6 +88,6 @@ public class BattleDisplay : MonoBehaviour
         var sign = victory ? VictorySign : DefeatSign;
         var instance = Instantiate(sign);
         instance.transform.position = this.transform.position;
-        yield return instance.SpinAround();
+        yield return instance.Animate();
     }
 }

@@ -35,7 +35,7 @@ public class ObjectivePanel : MonoBehaviour
         }
 
         this.Show();
-        yield return _animation.DoMove();
+        yield return _animation.Animate();
         this.Hide();
     }
 }

@@ -96,6 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22c3ff8bad8aca45882f44fc6cbf3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canCancel: 1
+  _cancelKey: 27
+  _destroyOnComplete: 1
   Speed: 800
   Times: 1
   Axis: {x: 1, y: 0, z: 0}

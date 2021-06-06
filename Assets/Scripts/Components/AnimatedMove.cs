@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using NaughtyAttributes;
+using FlavBattle.Components;
 
-public class AnimatedMove : MonoBehaviour
+public class AnimatedMove : CancellableAnimation
 {
     public Vector3[] Positions;
 
@@ -15,16 +16,6 @@ public class AnimatedMove : MonoBehaviour
     public bool UseLocalPos = true;
 
     public float Speed = 5.0f;
-
-    [SerializeField]
-    private bool _allowKeyInterrupt;
-
-    [Tooltip("Key used to interrupt moving animation")]
-    [ShowIf("InteruptAllowed")]
-    [SerializeField]
-    private KeyCode _interruptKey;
-    private bool _interrupted = false;
-    private bool InteruptAllowed() => _allowKeyInterrupt;
 
     private bool ReachedDestination(Vector3 destination)
     {
@@ -50,17 +41,13 @@ public class AnimatedMove : MonoBehaviour
         }
     }
 
-    void Update()
+    protected override IEnumerator DoAnimation()
     {
-        if (InteruptAllowed() && Input.GetKey(_interruptKey))
-        {
-            _interrupted = true;
-        }
+        yield return DoMove();
     }
 
-    public IEnumerator DoMove()
+    private IEnumerator DoMove()
     {
-        _interrupted = false;
         if (Positions.Length < 2)
         {
             Debug.LogWarning("Need at least 2 nodes for movement");
@@ -71,7 +58,6 @@ public class AnimatedMove : MonoBehaviour
 
         // Ensure it's at the end pos by end (even after interrupt)
         SetPos(Positions.Last());
-        _interrupted = false;
     }
 
     private IEnumerator DoMoveInternal()
@@ -94,18 +80,13 @@ public class AnimatedMove : MonoBehaviour
                     SetPos(Vector3.MoveTowards(this.transform.position, pos, tick));
                 }
 
-                if (_interrupted)
-                {
-                    yield break;
-                }
-
                 yield return null;
             }
 
             if (i < Positions.Length - 1)
             {
                 // Wait between steps unless it's the last step
-                yield return new WaitForSecondsAccelerated(SecondsBetween, _interruptKey);
+                yield return new WaitForSecondsAccelerated(SecondsBetween);
             }
         }
     }
