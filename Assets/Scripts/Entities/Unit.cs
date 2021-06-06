@@ -55,6 +55,11 @@ public class Unit : IEquatable<Unit>
     /// </summary>
     public bool SameType(UnitData other)
     {
+        if (other == null)
+        {
+            return false;
+        }
+
         return this.Data.UnitID == other.UnitID;
     }
 

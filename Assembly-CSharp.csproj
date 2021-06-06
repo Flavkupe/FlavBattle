@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
+    <Compile Include="Assets\Scripts\Dialog\MapObjectDialogEvent.cs" />
     <Compile Include="Assets\Scripts\Instances.cs" />
     <Compile Include="Assets\Scripts\UI\Components\VisualCounter.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleUIPanel.cs" />
@@ -219,7 +220,7 @@
     <Compile Include="Assets\Scripts\UI\Dragging\DropTarget.cs" />
     <Compile Include="Assets\Scripts\State\Triggers\TileTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGrid.cs" />
-    <Compile Include="Assets\Scripts\Combat\Event\CombatEvent.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\CombatAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\External\RoundedBoxCollider2D.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatUnitStatsPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\States\NextCombatantTurnState.cs" />
@@ -233,7 +234,11 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Dialog\MapObjectDialogEvent.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\CombatConditionalEvent.cs" />
+    <Compile Include="Assets\Scripts\Dialog\MapDialogEvent.cs" />
+    <Compile Include="Assets\Scripts\Dialog\CombatDialogEvent.cs" />
+    <Compile Include="Assets\Scripts\Combat\States\CombatEventsState.cs" />
+    <Compile Include="Assets\Scripts\Combat\Event\ICombatGameEvent.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

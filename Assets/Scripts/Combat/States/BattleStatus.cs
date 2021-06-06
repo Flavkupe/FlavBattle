@@ -1,4 +1,5 @@
-﻿using FlavBattle.State;
+﻿using FlavBattle.Combat.Event;
+using FlavBattle.State;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ public class BattleStatus
 
         SelectStance,
 
+        CombatConditionalEvents,
+
         DetermineTurnOrder,
 
         CombatPhase,
@@ -42,6 +45,8 @@ public class BattleStatus
     public Queue<Combatant> TurnQueue { get; } = new Queue<Combatant>();
     public Queue<OfficerAbilityData> AbilityQueue { get; } = new Queue<OfficerAbilityData>();
 
+    public List<CombatConditionalEvent> ConditionalEvents { get; } = new List<CombatConditionalEvent>();
+
     public GameEventManager GameEventManager { get; }
     public BattleDisplay BattleDisplay { get; }
     public BattleUIPanel BattleUIPanel { get; }
@@ -53,7 +58,7 @@ public class BattleStatus
         this.BattleUIPanel = buip;
     }
 
-    public void Init(IArmy playerArmy, IArmy otherArmy)
+    public void Init(ICombatArmy playerArmy, ICombatArmy otherArmy)
     {
         this.PlayerArmy = playerArmy;
         this.OtherArmy = otherArmy;
@@ -63,6 +68,14 @@ public class BattleStatus
         this.TurnQueue.Clear();
         this.AbilityQueue.Clear();
         this.Round = 0;
+
+        this.ConditionalEvents.Clear();
+        this.ConditionalEvents.AddRange(playerArmy.CombatEvents);
+        this.ConditionalEvents.AddRange(otherArmy.CombatEvents);
+        foreach (var combatEvent in ConditionalEvents.Select(a => a.Event).OfType<ICombatGameEvent>())
+        {
+            combatEvent.SetBattleContext(this);
+        }
     }
 
     public Combatant GetPlayerOfficer()
@@ -228,3 +241,4 @@ public class BattleStatus
         return true;
     }
 }
+

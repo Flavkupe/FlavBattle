@@ -23,7 +23,7 @@ namespace FlavBattle.State
             _cancelKey = key;
         }
 
-        public void Update()
+        void Update()
         {
             if (Input.GetKeyUp(_cancelKey))
             {

@@ -11,6 +11,12 @@ namespace FlavBattle.State
         MapUnpaused,
     }
 
+    public enum GameEventQueueType
+    {
+        Main,
+        Combat,
+    }
+
     public class CombatEndedEventArgs
     {
         public IArmy Winner { get; set; }
@@ -56,6 +62,7 @@ namespace FlavBattle.State
         public event EventHandler<Unit> UnitGarrisoned;
 
         public event EventHandler AllGameEventsDone;
+        public event EventHandler AllCombatEventsDone;
 
         [SerializeField]
         private KeyCode _cancelKey = KeyCode.Escape;
@@ -71,6 +78,7 @@ namespace FlavBattle.State
         private static int _mapPauseStack = 0;
 
         private GameEventQueue _queue;
+        private GameEventQueue _combatQueue;
 
         // Start is called before the first frame update
         void Awake()
@@ -78,6 +86,10 @@ namespace FlavBattle.State
             _queue = Utils.MakeOfType<GameEventQueue>("EventQueue", this.transform);
             _queue.AllDone += HandleAllEventsDone;
             _queue.SetCancelKey(_cancelKey);
+
+            _combatQueue = Utils.MakeOfType<GameEventQueue>("CombatEventQueue", this.transform);
+            _combatQueue.AllDone += HandleCombatEventsDone;
+            _combatQueue.SetCancelKey(_cancelKey);
         }
 
         // Update is called once per frame
@@ -111,15 +123,16 @@ namespace FlavBattle.State
             }
         }
 
-        public void AddOrStartGameEvent(IGameEvent e)
+        public void AddOrStartGameEvent(IGameEvent e, GameEventQueueType queue = GameEventQueueType.Main)
         {
-            if (_queue.IsEmpty)
+            if (_queue.IsEmpty && queue == GameEventQueueType.Main)
             {
                 // TODO: event-dependent
                 TriggerMapEvent(MapEventType.MapPaused);
             }
 
-            _queue.AddOrStartEvent(e);
+            var specificQueue = queue == GameEventQueueType.Main ? _queue : _combatQueue;
+            specificQueue.AddOrStartEvent(e);
         }
 
         public void TriggerMapEvent(MapEventType mapEvent)
@@ -174,6 +187,11 @@ namespace FlavBattle.State
             // TODO: event-dependent
             TriggerMapEvent(MapEventType.MapUnpaused);
             AllGameEventsDone?.Invoke(this, e);
+        }
+
+        private void HandleCombatEventsDone(object sender, EventArgs e)
+        {
+            AllCombatEventsDone?.Invoke(this, e);
         }
     }
 }

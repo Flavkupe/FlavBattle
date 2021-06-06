@@ -1,10 +1,11 @@
-﻿using FlavBattle.Tilemap;
+﻿using FlavBattle.Combat.Event;
+using FlavBattle.Tilemap;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestArmy : IArmy
+public class TestArmy : ICombatArmy
 {
     public TestArmy()
     {
@@ -24,4 +25,6 @@ public class TestArmy : IArmy
     public TileInfo CurrentTileInfo { get; set; }
 
     public bool IsDestroyed => false;
+
+    public IEnumerable<CombatConditionalEvent> CombatEvents => new List<CombatConditionalEvent>();
 }

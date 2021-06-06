@@ -50,6 +50,6 @@ public class InitRoundState : BattleStateBase
             combatant.ProcessTurnStart();
         }
 
-        state.Stage = BattleStatus.BattleStage.SelectStance;
+        state.Stage = BattleStatus.BattleStage.CombatConditionalEvents;
     }
 }

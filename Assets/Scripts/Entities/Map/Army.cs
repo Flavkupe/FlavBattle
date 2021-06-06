@@ -1,4 +1,5 @@
-﻿using FlavBattle.Entities.Data;
+﻿using FlavBattle.Combat.Event;
+using FlavBattle.Entities.Data;
 using FlavBattle.State;
 using FlavBattle.Tilemap;
 using NaughtyAttributes;
@@ -32,7 +33,7 @@ public class ExitTileEventArgs : EventArgs
     public GameObject Tile;
 }
 
-public class Army : MonoBehaviour, IArmy
+public class Army : MonoBehaviour, IArmy, ICombatArmy
 {
     [Serializable]
     private class Detectors
@@ -75,7 +76,7 @@ public class Army : MonoBehaviour, IArmy
     private Vector3? _destination = null;
     private TravelPath _path = null;
     private TilemapManager _map = null;
-    
+
     private bool _selected = false;
 
     private GridTile _currentTile = null;
@@ -94,6 +95,11 @@ public class Army : MonoBehaviour, IArmy
     [SerializeField]
     private ArmyMapView _mapView;
     private ArmyMapView Animation => _mapView;
+
+    [Tooltip("Events that happen in combat with this unit")]
+    [SerializeField]
+    private CombatConditionalEvent[] _combatEvents;
+    public IEnumerable<CombatConditionalEvent> CombatEvents => _combatEvents;
 
     public SpriteRenderer FactionFlag;
     public SpriteRenderer FactionMarker;

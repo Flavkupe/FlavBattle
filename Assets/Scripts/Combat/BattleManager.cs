@@ -42,33 +42,34 @@ namespace FlavBattle.Combat
 
             // Add states in order. The order here matters! Top-most will always override if applicable.
             _states.AddRange(new List<IBattleState>()
-        {
-            // Must be first
-            new InitCombatState(this),
+            {
+                // Must be first
+                new InitCombatState(this),
             
-            // Should happen soon after init
-            new PreCombatBattleActionsState(this),
+                // Should happen soon after init
+                new PreCombatBattleActionsState(this),
 
-            // Most importantly should happen before NextCombatantTurnState
-            new ArmyFleeingState(this),
+                // Most importantly should happen before NextCombatantTurnState
+                new ArmyFleeingState(this),
 
-            // Must be before NextCombatantTurnState
-            new ShowWinnerState(this),
+                // Must be before NextCombatantTurnState
+                new ShowWinnerState(this),
 
-            // Should be towards the end, along with NextCombatantTurnState
-            new InitRoundState(this),
+                // Should be towards the end, along with NextCombatantTurnState
+                new InitRoundState(this),
 
-            // Before new combat turn and after bout starts
-            new StanceSelectionState(this, _battleStatus),
+                // Before selecting stance
+                new CombatEventsState(this),
 
-            // Must be after selecting stance, and before NextCombatantTurnState
-            new DetermineTurnOrderState(this),
+                // Before new combat turn and after bout starts
+                new StanceSelectionState(this, _battleStatus),
 
-            // Should be towards the end, along with InitRoundState
-            new NextCombatantTurnState(this),
-        });
+                // Must be after selecting stance, and before NextCombatantTurnState
+                new DetermineTurnOrderState(this),
 
-
+                // Should be towards the end, along with InitRoundState
+                new NextCombatantTurnState(this),
+            });
         }
 
         // Update is called once per frame
@@ -90,7 +91,7 @@ namespace FlavBattle.Combat
             }
         }
 
-        public void StartCombat(IArmy player, IArmy enemy)
+        public void StartCombat(ICombatArmy player, ICombatArmy enemy)
         {
             _battleStatus.Init(player, enemy);
             _battleStatus.Stage = BattleStatus.BattleStage.InitCombat;

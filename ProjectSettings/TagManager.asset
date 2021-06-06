@@ -71,3 +71,6 @@ TagManager:
   - name: BattleUI
     uniqueID: 3631178937
     locked: 0
+  - name: DialogBox
+    uniqueID: 3416785593
+    locked: 0

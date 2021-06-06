@@ -1,10 +1,5 @@
-using FlavBattle.Core;
-using FlavBattle.Entities.Data;
 using FlavBattle.State;
 using NaughtyAttributes;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlavBattle.Dialog
@@ -33,26 +28,8 @@ namespace FlavBattle.Dialog
         /// dialog box.
         /// </summary>
         public Vector3 AdditionalDialogOffset { get; protected set; }
-    }
 
-    public abstract class MapDialogEvent : DialogEvent
-    {
-        public override IEnumerator DoEvent()
-        {
-            var cam = CameraMain.Instance;
-            var sourcePos = DialogSource.position;
-            yield return cam.PanTo(sourcePos);
-            yield return cam.ShiftToFormationView();
-            yield return new WaitForSeconds(0.5f);
-
-            Box = CreateDialogBox();
-            var shiftedSourcePos = sourcePos.ShiftY(Box.VerticalTextboxOffset);
-            var offset = AdditionalDialogOffset;
-            Box.transform.position = shiftedSourcePos + offset;
-            Box.DialogEnd += HandleDialogEnd;
-        }
-
-        private void HandleDialogEnd(object sender, DialogBox e)
+        protected void HandleDialogEnd(object sender, DialogBox e)
         {
             // TEMP?
             Destroy(e.gameObject);
