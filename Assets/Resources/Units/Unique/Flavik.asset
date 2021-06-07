@@ -26,6 +26,7 @@ MonoBehaviour:
   _animatorOverride: {fileID: 22100000, guid: 99684bef27baed74ebb6ea3d0ff20417, type: 2}
   _portraits: []
   _animations: []
+  _race: {fileID: 11400000, guid: c2651d70c7acd8a4389e74d757e2258e, type: 2}
   _startingActions: []
   _defaultOfficerAbilities:
   - {fileID: 11400000, guid: 52cd095657ab02a4e9d1dd261a3ee5a0, type: 2}

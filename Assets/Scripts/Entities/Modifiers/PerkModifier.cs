@@ -36,7 +36,7 @@ namespace FlavBattle.Entities.Modifiers
 
                 if (UnitFullfillsPerkCondition(unit, army, effect))
                 {
-                    var perkName = $"{_data.Name} (Perk)";
+                    var perkName = $"{_data.Name} {_data.DescriptionSuffix}";
                     summary.Tally(effect.Stats, perkName);
                 }
             }

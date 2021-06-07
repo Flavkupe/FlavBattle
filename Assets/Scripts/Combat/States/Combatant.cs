@@ -101,6 +101,9 @@ public class Combatant
 
     public void ProcessCombatStart()
     {
+        // Cap starting morale to army morale
+        Unit.Info.Morale.Current = Math.Min(Unit.Info.Morale.Current, Allies.Morale.Current);
+
         this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatStart);
         RefreshStatChanges();
 
@@ -110,6 +113,9 @@ public class Combatant
 
         // TODO: can we do this some other way?
         AddBlockShieldIcons(startingShields);
+
+        // Update morale etc to match new values
+        CombatUnit.UpdateUIComponents();
     }
 
     public void ProcessCombatEnd()

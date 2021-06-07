@@ -34,6 +34,7 @@ MonoBehaviour:
   - {fileID: 6519479576101721384, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
   - {fileID: 1923901936556241170, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
   - {fileID: -5649577426273951059, guid: 54b3992eaea39b448b4eb01c86a46239, type: 3}
+  _race: {fileID: 11400000, guid: c2651d70c7acd8a4389e74d757e2258e, type: 2}
   _startingActions:
   - Priority: 3
     Description: Bow back

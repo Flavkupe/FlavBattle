@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Buff Speed All
   Type: 1
-  Priority: 2
   Icon: {fileID: 8238237791709833633, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
   VisualEffect: 1
   ProjectileEffect: 0
@@ -48,13 +47,13 @@ MonoBehaviour:
   Damage: {x: 0, y: 0}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
-    HP: 0
-    Power: 0
-    Defense: 0
-    Speed: 1
-    Level: 0
-    StartingBlockShields: 0
-    Command: 0
+    _hp: 0
+    _power: 0
+    _defense: 0
+    _speed: 1
+    _level: 0
+    _command: 0
+  StatusEffectDuration: 2
   StartSoundClips: []
   PreHitSoundClips: []
   HitSoundClips: []

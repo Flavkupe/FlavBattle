@@ -12,6 +12,7 @@ public class Morale
         Low = 2,
         Med = 3,
         High = 4,
+        VeryHigh = 5,
     }
 
     public int Current = 100;
@@ -32,6 +33,8 @@ public class Morale
         var tier = GetTier();
         switch (tier)
         {
+            case Tier.VeryHigh:
+                return 2;
             case Tier.High:
                 return 1;
             case Tier.Med:
@@ -46,6 +49,11 @@ public class Morale
 
     public Tier GetTier()
     {
+        if (Current > 90)
+        {
+            return Tier.VeryHigh;
+        }
+
         if (Current > 75)
         {
             return Tier.High;
@@ -69,8 +77,10 @@ public class Morale
         var tier = GetTier();
         switch (tier)
         {
-            case Tier.High:
+            case Tier.VeryHigh:
                 return Color.green;
+            case Tier.High:
+                return Color.cyan;
             case Tier.Med:
                 return Color.yellow;
             case Tier.Low:

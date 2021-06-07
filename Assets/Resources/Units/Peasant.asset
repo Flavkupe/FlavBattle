@@ -31,6 +31,7 @@ MonoBehaviour:
   - {fileID: 2628601155498533952, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
   - {fileID: 4280929510133602699, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
   - {fileID: 3840481900236895277, guid: fe7b041f6db8d3444950316169b18d69, type: 3}
+  _race: {fileID: 11400000, guid: c2651d70c7acd8a4389e74d757e2258e, type: 2}
   _startingActions:
   - Priority: 2
     Description: Poke Front

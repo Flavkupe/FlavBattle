@@ -85,10 +85,14 @@ namespace FlavBattle.Entities.Data
 
         [BoxGroup("Abilities")]
         [SerializeField]
+        private RaceData _race;
+        public virtual RaceData Race => _race;
+
+        [BoxGroup("Abilities")]
+        [SerializeField]
         [ReorderableList]
         private CombatAction[] _startingActions;
         public virtual CombatAction[] StartingActions => _startingActions;
-
 
         [BoxGroup("Abilities")]
         [Tooltip("Officer abilities that are always available by default")]

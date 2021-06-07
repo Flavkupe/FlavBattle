@@ -1,8 +1,6 @@
-﻿using FlavBattle.Entities;
-using FlavBattle.Entities.Data;
+﻿using FlavBattle.Entities.Data;
 using FlavBattle.Entities.Modifiers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,18 +38,9 @@ public class UnitInfo
         this.Portrait = data.RollPortrait();
         this.Faction = faction;
 
-        for (var i = 1; i <= level; i++)
-        {
-            var perk = Data.RollPerk(i);
-            if (perk != null)
-            {
-                Perks.Add(perk);
-                ModifierSet.AddModifier(new PerkModifier(perk));
-            }
-        }
+        InitPerks(level);
 
-        // TODO: based on race or class or stuff
-        ModifierSet.AddModifier(new DefaultModifier());
+        InitModifiers();
 
         this.Actions.AddRange(data.StartingActions);
         this.IsOfficer = isOfficer;
@@ -72,5 +61,34 @@ public class UnitInfo
         }
 
         this.CurrentStats.StatChanged += (obj, e) => StatChanged?.Invoke(obj, e);
+    }
+
+    private void InitPerks(int level)
+    {
+        for (var i = 1; i <= level; i++)
+        {
+            var perk = Data.RollPerk(i);
+            if (perk != null)
+            {
+                Perks.Add(perk);
+
+            }
+        }
+
+        var racePerks = Data.Race.RacePerks;
+        foreach (var perk in racePerks)
+        {
+            Perks.Add(perk);
+        }
+    }
+
+    private void InitModifiers()
+    {
+        foreach (var perk in Perks)
+        {
+            ModifierSet.AddModifier(new PerkModifier(perk));
+        }
+
+        ModifierSet.AddModifier(new DefaultModifier());
     }
 }

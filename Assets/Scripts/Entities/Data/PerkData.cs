@@ -96,5 +96,9 @@ namespace FlavBattle.Entities.Data
         [ReorderableList]
         private PerkBonus[] _effects;
         public PerkBonus[] Effects => _effects;
+
+        [SerializeField]
+        private string _descriptionSuffix = "(Perk)";
+        public string DescriptionSuffix => _descriptionSuffix;
     }
 }

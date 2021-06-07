@@ -66,15 +66,15 @@ MonoBehaviour:
   Damage: {x: 0, y: 0}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
-    HP: 0
-    Power: 0
-    Defense: 1
-    Speed: 0
-    Level: 0
-    StartingBlockShields: 1
-    Command: 0
-  StatusEffectDuration: 0
-  StartSoundClips: []
+    _hp: 0
+    _power: 0
+    _defense: 1
+    _speed: 0
+    _level: 0
+    _command: 0
+  StatusEffectDuration: 2
+  StartSoundClips:
+  - {fileID: 8300000, guid: 1efc02899c08d114b812a420f163663a, type: 3}
   PreHitSoundClips: []
   HitSoundClips: []
   EndSoundClips: []

@@ -7782,6 +7782,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22c3ff8bad8aca45882f44fc6cbf3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canCancel: 1
+  _cancelKey: 27
+  _destroyOnComplete: 1
   Speed: 800
   Times: 5
   Axis: {x: 1, y: 0, z: 0}
@@ -9717,6 +9720,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02289bae8ee55df478e7b2f6b3aefa1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canCancel: 1
+  _cancelKey: 27
+  _destroyOnComplete: 1
   Positions:
   - {x: 0, y: -750, z: 0}
   - {x: 0, y: 0, z: 0}
@@ -9724,8 +9730,6 @@ MonoBehaviour:
   SecondsBetween: 5
   UseLocalPos: 1
   Speed: 500
-  _allowKeyInterrupt: 1
-  _interruptKey: 27
 --- !u!114 &772990425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18661,12 +18665,12 @@ PrefabInstance:
     - target: {fileID: 6104582356458597791, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}
       propertyPath: _gridXGap
-      value: 1
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 6104582356458597791, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}
       propertyPath: _gridYGap
-      value: 0.325
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6104582356555520743, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}
@@ -18676,12 +18680,12 @@ PrefabInstance:
     - target: {fileID: 6104582356643393605, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}
       propertyPath: _gridXGap
-      value: 1
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 6104582356643393605, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}
       propertyPath: _gridYGap
-      value: 0.325
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6104582356643393606, guid: a142ca29ab85c98468281adb2e1cd328,
         type: 3}

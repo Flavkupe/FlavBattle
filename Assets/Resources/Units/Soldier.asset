@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: -1839323964325251070, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
   - {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
   - {fileID: -1603908247639142068, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
+  _race: {fileID: 11400000, guid: c2651d70c7acd8a4389e74d757e2258e, type: 2}
   _startingActions:
   - Priority: 3
     Description: Sword front

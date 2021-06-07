@@ -32,7 +32,7 @@ namespace FlavBattle.Entities.Modifiers
 
         public override ModifierType Type => ModifierType.Effect;
 
-        public override bool IsExpired => _durationLeft > 0;
+        public override bool IsExpired => _durationLeft < 0;
 
         // TODO
         public override bool AllowDuplicate => true;

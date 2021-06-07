@@ -31,6 +31,7 @@ MonoBehaviour:
   - {fileID: -6334100608086486554, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   - {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   - {fileID: 6013093803584149665, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
+  _race: {fileID: 11400000, guid: c2651d70c7acd8a4389e74d757e2258e, type: 2}
   _startingActions:
   - Priority: 4
     Description: Turtle Up

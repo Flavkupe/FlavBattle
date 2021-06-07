@@ -534,6 +534,8 @@ MonoBehaviour:
   _gapX: 1
   _gapY: 0.325
   _uiTemplate: {fileID: 6684913465963728671}
+  useObject: 0
+  _formation: {fileID: 0}
   _orientation: 0
 --- !u!114 &6684913465963728671
 MonoBehaviour:
@@ -1324,6 +1326,8 @@ MonoBehaviour:
   _gapX: 1
   _gapY: 0.325
   _uiTemplate: {fileID: 5768434788142775298}
+  useObject: 0
+  _formation: {fileID: 0}
   _orientation: 0
 --- !u!114 &5768434788142775298
 MonoBehaviour:
