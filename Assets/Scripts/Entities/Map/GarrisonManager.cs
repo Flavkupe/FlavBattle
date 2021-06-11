@@ -122,7 +122,7 @@ public class GarrisonManager : MonoBehaviour
     /// Adds the army to the garrison, creating a record of it.
     /// Does NOT destroy the Army object.
     /// </summary>
-    public void GarrisonArmy(Army army)
+    public void GarrisonArmy(IArmy army)
     {
         _garrisonedArmies.Add(new StoredArmy(army));
     }
@@ -134,5 +134,14 @@ public class GarrisonManager : MonoBehaviour
         newArmy.transform.position = pos.ShiftY(-0.25f);
         _garrisonedArmies.Remove(army);
         _ui.UpdateGarrisonWindow(_garrisonedArmies.ToArray(), _garrisonedUnits.ToArray());
+    }
+
+    /// <summary>
+    /// Creates an army directly into the Garrison.
+    /// </summary>
+    public void CreateGarrisonedArmy(FormationData data)
+    {
+        var army = new StoredArmy(_playerFaction, data);
+        _garrisonedArmies.Add(army);
     }
 }

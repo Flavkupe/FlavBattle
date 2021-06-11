@@ -35,7 +35,7 @@ public class TooltipSource : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             return;
         }
 
-        Tooltip.Show();
+        Tooltip.ShowTooltip(this);
         Tooltip.SetText(TooltipText, Icon);
     }
 
@@ -47,6 +47,6 @@ public class TooltipSource : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             return;
         }
 
-        Tooltip.Hide();
+        Tooltip.HideTooltip();
     }
 }

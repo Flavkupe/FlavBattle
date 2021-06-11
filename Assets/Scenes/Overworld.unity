@@ -5509,6 +5509,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7276557510579115890, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: VerticalOffset
+      value: -0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7326591124208195534, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_Camera
@@ -18296,27 +18301,38 @@ PrefabInstance:
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 992845197}
+      objectReference: {fileID: 1044260658}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TriggerEvent
+      value: CreateGarrisonedArmy
       objectReference: {fileID: 0}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: FlavBattle.State.GameEventBase, Assembly-CSharp
+      value: GarrisonManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
+        type: 3}
+      propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 95dc6b0e9243e514f8d47db84409c9a4,
+        type: 2}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
+        type: 3}
+      propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: FormationData, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5248619309696586403, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
@@ -18326,7 +18342,7 @@ PrefabInstance:
     - target: {fileID: 5248619309696586403, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5856fc7f485f9be4b97694c10d3359e0, type: 3}

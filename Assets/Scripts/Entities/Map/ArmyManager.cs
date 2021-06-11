@@ -190,6 +190,10 @@ public class ArmyManager : MonoBehaviour
         army.EnterTile += HandleArmyEnterTile;
         army.ExitTile += HandleArmyExitTile;
         army.ArmyFledMap += HandleArmyFledMap;
+
+        // Init formation graphics
+        army.SetFormation(army.Formation);
+
         _armies.Add(army);
 
         // Update UI

@@ -18,6 +18,8 @@ public class Tooltip : MonoBehaviour
     public float HorizontalPadding = 20.0f;
     public float VerticalOffset = -30.0f;
 
+    private TooltipSource _currentSource = null;
+
     private void Awake()
     {
         this.Hide();
@@ -37,6 +39,24 @@ public class Tooltip : MonoBehaviour
 
         this.transform.position = this.transform.position.ShiftY(VerticalOffset);
         this.transform.position = this.transform.position.SetZ(0);
+
+        if (_currentSource != null && !_currentSource.gameObject.activeInHierarchy)
+        {
+            // If source goes away, hide tooltip
+            this.HideTooltip();
+        }
+    }
+
+    public void HideTooltip()
+    {
+        _currentSource = null;
+        this.Hide();
+    }
+
+    public void ShowTooltip(TooltipSource source)
+    {
+        _currentSource = source;
+        this.Show();
     }
 
     public void SetText(string text, Sprite icon = null)

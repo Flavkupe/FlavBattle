@@ -26,7 +26,7 @@ public class StoredArmy : IArmy
         }
     }
 
-    public StoredArmy(Army army)
+    public StoredArmy(IArmy army)
     {
         ID = army.ID;
         Formation = army.Formation;
@@ -42,9 +42,15 @@ public class StoredArmy : IArmy
 
     public StoredArmy(FactionData faction)
     {
-        
         ID = Guid.NewGuid().ToString();
         Formation = new Formation(this);
+        Faction = faction;
+    }
+
+    public StoredArmy(FactionData faction, FormationData data)
+    {
+        ID = Guid.NewGuid().ToString();
+        Formation = data.CreateFormation(faction.Faction, this);
         Faction = faction;
     }
 }
