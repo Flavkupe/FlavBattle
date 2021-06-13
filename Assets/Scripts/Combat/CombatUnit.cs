@@ -197,6 +197,14 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     }
 
     /// <summary>
+    /// Shows text overhead with the selected color
+    /// </summary>
+    public void AnimateOverheadText(string text, Color textColor)
+    {
+        this.CreateDamageTextOverHead(text, textColor);
+    }
+
+    /// <summary>
     /// Plays the animator trigger without waiting for it to finish.
     /// </summary>
     /// <param name="animatorTrigger"></param>

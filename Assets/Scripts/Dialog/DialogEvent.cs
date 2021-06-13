@@ -12,6 +12,8 @@ namespace FlavBattle.Dialog
 
         protected DialogBox Box { get; set;  }
 
+        public override bool IsAsyncEvent => true;
+
         /// <summary>
         /// Where the dialog comes from (what to center on)
         /// </summary>

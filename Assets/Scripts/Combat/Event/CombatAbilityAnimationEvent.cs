@@ -42,6 +42,7 @@ namespace FlavBattle.Combat.Events
 
             if (_type == AnimationType.PreAttack)
             {
+                OverheadText();
                 yield return PlayAdditionalAnimations(combatant, _summary.Ability.PreAttackAnimations, targets);
             }
             else if (_type == AnimationType.PostAttack)
@@ -51,6 +52,19 @@ namespace FlavBattle.Combat.Events
             else if (_type == AnimationType.Ability)
             {
                 yield return PlayAbilityAnimation(_summary.Ability, _summary.TargetInfo, _summary.Results);
+            }
+        }
+
+        /// <summary>
+        /// If enabled, shows the name of the attack as floating text prior to attack.
+        /// </summary>
+        private void OverheadText()
+        {
+            var ability = _summary.Ability;
+            if (ability.AnimateName)
+            {
+                var unit = _summary.Source.CombatUnit;
+                unit.AnimateOverheadText(ability.Name, Color.blue);
             }
         }
 

@@ -135,6 +135,15 @@ namespace FlavBattle.State
             specificQueue.AddOrStartEvent(e);
         }
 
+        /// <summary>
+        /// Quickly triggers an event in the main loop. Can be called from
+        /// Unity inspector.
+        /// </summary>
+        public void TriggerEvent(GameEventBase gameEvent)
+        {
+            AddOrStartGameEvent(gameEvent);
+        }
+
         public void TriggerMapEvent(MapEventType mapEvent)
         {
             if (mapEvent == MapEventType.MapPaused)

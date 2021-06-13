@@ -1590,6 +1590,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208155727}
   m_CullTransparentMesh: 0
+--- !u!1 &243753466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243753468}
+  - component: {fileID: 243753467}
+  m_Layer: 6
+  m_Name: TileChangeEvent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &243753467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243753466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0564c92ca15bef847954b9a963cc383c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _followupEvent: {fileID: 0}
+  _tilemap: {fileID: 287567664}
+  _tileCoords: {x: 5, y: 2, z: 0}
+  _changeTo: {fileID: 11400000, guid: 33945c39d80d9c948a16784bc9c3e366, type: 2}
+--- !u!4 &243753468
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243753466}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1343234544}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &266558574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5806486492491847265, guid: 049a4c8d025c3804daae3b0e2ec443e0,
@@ -9529,8 +9576,8 @@ Tilemap:
   - first: {x: 2, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 2
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
@@ -9539,18 +9586,18 @@ Tilemap:
   - first: {x: 3, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 2
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 2, y: 0, z: 0}
+  - first: {x: 4, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 2
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
@@ -9559,8 +9606,18 @@ Tilemap:
   - first: {x: 3, y: 0, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 2
+      m_TileColorIndex: 2
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 4, y: 0, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 2
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
@@ -9570,22 +9627,22 @@ Tilemap:
   m_TileAssetArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 4
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 5
     m_Data: {fileID: 11400000, guid: 8f2c7406eaef50b47a791a0a331027ad, type: 2}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 4
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 5
     m_Data: {fileID: 5595747086137543514, guid: c9e0f8c1950cf734fb9cf6d273d0846f,
       type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
@@ -9623,7 +9680,7 @@ Tilemap:
       e31: 6.87e-43
       e32: 0
       e33: 4.5914e-41
-  - m_RefCount: 4
+  - m_RefCount: 5
     m_Data:
       e00: 1
       e01: 0
@@ -9646,14 +9703,14 @@ Tilemap:
     m_Data: {r: 5.0120416e+32, g: 5.0120416e+32, b: 5.0120416e+32, a: 5.0120416e+32}
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
-  - m_RefCount: 4
+  - m_RefCount: 5
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -7, y: -9, z: 0}
   m_Size: {x: 17, y: 15, z: 5}
-  m_TileAnchor: {x: 1, y: 1, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -12761,6 +12818,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35486d28f53ba941b940a2ed5df19fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1343234544 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5248619309696586400, guid: 5856fc7f485f9be4b97694c10d3359e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5248619309012262431}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1359014826
 GameObject:
   m_ObjectHideFlags: 0
@@ -17166,7 +17229,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 2
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
@@ -17246,7 +17309,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 2
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
@@ -17286,7 +17349,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 3
       m_TileMatrixIndex: 2
       m_TileColorIndex: 2
       m_TileObjectToInstantiateIndex: 65535
@@ -17304,13 +17367,17 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 3f5acd6bbb47ce2439a26c87f1b336cd, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 2950c41a56bb78d46b884677c3b391b1, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: a7cebe85c3e47954296015ac6b294c50, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 8
     m_Data: {fileID: 21300000, guid: dcc23fdb3d32dd24591a12b8205d6498, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 934d1a7847d0820448bab251e6df3a3c, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: a7cebe85c3e47954296015ac6b294c50, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 4489838820935638777, guid: c9e0f8c1950cf734fb9cf6d273d0846f,
       type: 3}
@@ -18307,23 +18374,22 @@ PrefabInstance:
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1044260658}
+      objectReference: {fileID: 1294381007}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CreateGarrisonedArmy
+      value: TriggerEvent
       objectReference: {fileID: 0}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GarrisonManager, Assembly-CSharp
+      value: FlavBattle.State.GameEventManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 11400000, guid: 95dc6b0e9243e514f8d47db84409c9a4,
-        type: 2}
+      objectReference: {fileID: 243753467}
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -18332,7 +18398,7 @@ PrefabInstance:
     - target: {fileID: 5248619309696586402, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}
       propertyPath: _armyTriggered.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: FormationData, Assembly-CSharp
+      value: FlavBattle.State.GameEventBase, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5248619309696586403, guid: 5856fc7f485f9be4b97694c10d3359e0,
         type: 3}

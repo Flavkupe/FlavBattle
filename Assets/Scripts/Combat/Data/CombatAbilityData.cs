@@ -144,6 +144,10 @@ public class CombatAbilityData : ScriptableObject
     public bool TraceDirection = false;
 
     [BoxGroup("Visuals")]
+    [Tooltip("Whether to show the name of the attack overhead before the attack")]
+    public bool AnimateName = false;
+
+    [BoxGroup("Visuals")]
     [ShowIf("ShowProjectileVisualEffect")]
     public float ProjectileSpeed;
 

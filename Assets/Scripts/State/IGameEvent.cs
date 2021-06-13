@@ -11,6 +11,14 @@ namespace FlavBattle.State
     public interface IGameEvent
     {
         bool EventPossible();
+
+        /// <summary>
+        /// Whether the event will announce when it ends (true),
+        /// or whether it will be run to completion (false). If this
+        /// is true, event must call EventFinished when done.
+        /// </summary>
+        bool IsAsyncEvent { get; }
+
         void TriggerEvent();
 
         /// <summary>
@@ -75,6 +83,8 @@ namespace FlavBattle.State
         [SerializeField]
         private GameEventBase _followupEvent;
         public IGameEvent FollowupEvent => _followupEvent;
+
+        public abstract bool IsAsyncEvent { get; }
 
         /// <summary>
         /// Whether the event has ran to completion or has been cancelled.

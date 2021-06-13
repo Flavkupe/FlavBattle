@@ -91,7 +91,23 @@ namespace FlavBattle.State
 
             e.EventFinished += HandleEventFinished;
             _currentEvent = e;
-            _currentRoutine = StartCoroutine(e.DoEvent());
+
+            if (e.IsAsyncEvent)
+            {
+                // do event in background
+                _currentRoutine = StartCoroutine(e.DoEvent());
+            }
+            else
+            {
+                // do event all at once and announce that it's complete
+                _currentRoutine = StartCoroutine(DoEntireEvent(e));
+            }
+        }
+
+        private IEnumerator DoEntireEvent(IGameEvent e)
+        {
+            yield return StartCoroutine(e.DoEvent());
+            HandleEventFinished(e, e);
         }
 
         private void HandleEventFinished(object sender, IGameEvent e)

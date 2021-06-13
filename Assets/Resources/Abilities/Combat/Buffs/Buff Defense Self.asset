@@ -19,6 +19,7 @@ MonoBehaviour:
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
   TraceDirection: 0
+  AnimateName: 1
   ProjectileSpeed: 0
   ProjectileObject: {fileID: 0}
   CharacterMove: 0
