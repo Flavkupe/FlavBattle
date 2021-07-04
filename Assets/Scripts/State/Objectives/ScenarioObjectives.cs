@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+﻿using FlavBattle.State;
+using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,44 +15,30 @@ public enum ScenarioObjectiveType
     SurviveMinutes,
 }
 
-public class ScenarioObjectives : MonoBehaviour
-{
-    public ScenarioObjective[] Objectives;
-
-    private Queue<ScenarioObjective> _objectiveQueue = new Queue<ScenarioObjective>();
-
-    void Awake()
-    {
-        foreach (var obj in Objectives)
-        {
-            _objectiveQueue.Enqueue(obj);
-        }
-    }
-
-    public ScenarioObjective GetNextObjective()
-    {
-        if (_objectiveQueue.Count == 0)
-        {
-            return null;
-        }
-
-        // TODO: multiple simultaneous objectives
-        var objective = _objectiveQueue.Dequeue();
-        objective.InitializeObjective();
-        return objective;
-    }
-}
-
 [Serializable]
 public class ScenarioObjective
 {
-    public ScenarioObjectiveType Type;
+    [SerializeField]
+    private GameEventBase _objectiveCompletedEvent;
 
-    // TODO: make this allow multiple starting objectives
-    public bool StartingObjective = true;
+    /// <summary>
+    /// The Event that should happen after this objective is completed.
+    /// </summary>
+    public IGameEvent ObjectiveCompletedEvent => _objectiveCompletedEvent;
+
+    public ScenarioObjectiveType Type;
 
     [Required]
     public string DescriptionText;
+
+    [SerializeField]
+    [Tooltip("Whether completing this objective should complete the level.")]
+    private bool _isVictoryCondition = false;
+    
+    /// <summary>
+    /// Whether completing this objective should complete the level.
+    /// </summary>
+    public bool IsVictoryCondition => _isVictoryCondition;
 
     private bool IsEntityCondition() => GetObjective()?.Fields.HasFlag(Fields.GameObjects) == true;
     private bool IsNumCondition() => GetObjective()?.Fields.HasFlag(Fields.Number) == true;
@@ -69,8 +56,6 @@ public class ScenarioObjective
                 return null;
         }
     }
-
-    public UnityEvent ObjectiveCompletedEvent;
 
     [AllowNesting]
     [ShowIf("IsEntityCondition")]
@@ -96,8 +81,6 @@ public class ScenarioObjective
         {
             if (objective.CheckCompleted())
             {
-                Debug.Log("Objective completed");
-                ObjectiveCompletedEvent?.Invoke();
                 return true;
             }
         }

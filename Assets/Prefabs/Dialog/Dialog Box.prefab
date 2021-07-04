@@ -369,8 +369,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.243, y: -0.458}
-  m_SizeDelta: {x: 1.14, y: 0.1231}
+  m_AnchoredPosition: {x: -0.0307, y: -0.458}
+  m_SizeDelta: {x: 3.5646, y: 0.1231}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1129023586215946127
 MeshRenderer:
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

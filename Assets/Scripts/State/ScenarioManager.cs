@@ -1,15 +1,8 @@
-﻿using FlavBattle.Core;
-using FlavBattle.State;
+﻿using FlavBattle.State;
 using NaughtyAttributes;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-[RequireComponent(typeof(ScenarioObjectives))]
 public class ScenarioManager : SingletonObject<ScenarioManager>
 {
     [Required]
@@ -23,29 +16,52 @@ public class ScenarioManager : SingletonObject<ScenarioManager>
 
     private ThrottleTimer _throttle = new ThrottleTimer(2.0f);
 
-    private ScenarioObjectives _objectives;
+    [SerializeField]
+    [Tooltip("First event that will happen when level starts.")]
+    [Required]
+    private GameEventBase _startingEvent;
 
     private ScenarioObjective _currentObjective;
+
+    public IEnumerator SetAndShowObjective(ScenarioObjective objective)
+    {
+        if (objective == null)
+        {
+            Debug.Log("Setting to null objective");
+            yield break;
+        }
+
+        SetObjective(objective);
+        yield return StartCoroutine(ShowObjectivesUI());
+    }
+
+    public void SetObjective(ScenarioObjective objective)
+    {
+        if (objective == null)
+        {
+            Debug.Log("Setting to null objective");
+            return;
+        }
+
+        _currentObjective = objective;
+        _currentObjective.InitializeObjective();
+    }
 
     private void Awake()
     {
         this.SetSingleton(this);
-
-        _objectives = GetComponent<ScenarioObjectives>();
         VictorySign.Hide();
     }
 
     private void Start()
     {
-        _currentObjective = _objectives.GetNextObjective();
-
-        if (_currentObjective == null)
+        if (_startingEvent == null)
         {
-            Debug.LogError("No Objective found!!");
+            Debug.LogError("No starting event provided!");
             return;
         }
 
-        StartCoroutine(ShowObjectivesUI());
+        GameEventManager.AddOrStartGameEvent(_startingEvent);
     }
 
     void Update()
@@ -60,16 +76,16 @@ public class ScenarioManager : SingletonObject<ScenarioManager>
         {
             if (_currentObjective.Check())
             {
-                _currentObjective = _objectives.GetNextObjective();
-                if (_currentObjective == null)
+                var followup = _currentObjective.ObjectiveCompletedEvent;
+                if (_currentObjective.IsVictoryCondition)
                 {
-                    // No more objectives
                     this.VictoryAchieved();
-                    return;
                 }
-                else
+
+                _currentObjective = null;
+                if (followup != null)
                 {
-                    StartCoroutine(ShowObjectivesUI());
+                    GameEventManager.AddOrStartGameEvent(followup);
                 }
             }
         }

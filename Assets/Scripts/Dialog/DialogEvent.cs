@@ -39,15 +39,17 @@ namespace FlavBattle.Dialog
             InvokeEventFinished();
         }
 
-        public override void CancelEvent()
+        public override IGameEvent TrySkipEvent()
         {
-            base.CancelEvent();
+            var result = base.TrySkipEvent();
 
             if (Box != null)
             {
                 Destroy(Box.gameObject);
                 Box = null;
             }
+
+            return result;
         }
     }
 }

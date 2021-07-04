@@ -15,7 +15,7 @@ namespace FlavBattle.Dialog
 
         void Start()
         {
-            foreach (var dialogEvent in GetComponentsInChildren<DialogEvent>())
+            foreach (var dialogEvent in FindObjectsOfType<DialogEvent>(true))
             {
                 dialogEvent.EventTriggered += TriggerDialog;
             }

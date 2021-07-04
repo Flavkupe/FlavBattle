@@ -332,10 +332,13 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
             _attackTotalUI.Show();
         }
 
-        var summary = Unit.GetStatSummary();
-        var def = summary.GetTotal(UnitStatType.Defense).ToString();
-        var att = summary.GetTotal(UnitStatType.Power).ToString();
-        _defenseTotalUI.SetText(def);
-        _attackTotalUI.SetText(att);
+        if (Unit != null)
+        {
+            var summary = Unit.GetStatSummary();
+            var def = summary.GetTotal(UnitStatType.Defense).ToString();
+            var att = summary.GetTotal(UnitStatType.Power).ToString();
+            _defenseTotalUI.SetText(def);
+            _attackTotalUI.SetText(att);
+        }
     }
 }

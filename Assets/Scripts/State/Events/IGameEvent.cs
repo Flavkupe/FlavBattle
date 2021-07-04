@@ -55,9 +55,15 @@ namespace FlavBattle.State
         bool IsCompleted { get; }
 
         /// <summary>
-        /// Marks event to be cancelled. Sets Triggered to true.
+        /// Whether the event can be skipped
         /// </summary>
-        void CancelEvent();
+        bool IsSkippable { get; }
+
+        /// <summary>
+        /// Marks event to be cancelled. Sets Triggered to true.
+        /// If a followup event cannot be skipped, will return that event.
+        /// </summary>
+        IGameEvent TrySkipEvent();
     }
 
     public abstract class GameEventBase : MonoBehaviour, IGameEvent
@@ -91,6 +97,8 @@ namespace FlavBattle.State
         /// </summary>
         public bool IsCompleted { get; protected set; } = false;
 
+        public virtual bool IsSkippable => true;
+
         /// <summary>
         /// Whether or not this dialog event is possible
         /// (for example, if a needed character is alive).
@@ -115,14 +123,31 @@ namespace FlavBattle.State
             EventFinished?.Invoke(this, this);
         }
 
-        public virtual void CancelEvent()
+        /// <summary>
+        /// Recursively attempts to skip the event and each
+        /// followup event. If the event cannot be skipped,
+        /// will run that event next.
+        /// </summary>
+        public virtual IGameEvent TrySkipEvent()
         {
+            if (!IsSkippable)
+            {
+                // If the event cannot be skipped, return this event
+                return this;
+            }
+
             IsCompleted = true;
             if (FollowupEvent != null && !FollowupEvent.IsCompleted)
             {
                 // recursively cancels events for followups
-                FollowupEvent.CancelEvent();
+                var result = FollowupEvent.TrySkipEvent();
+                if (result != null)
+                {
+                    return result;
+                }
             }
+
+            return null;
         }
     }
 }

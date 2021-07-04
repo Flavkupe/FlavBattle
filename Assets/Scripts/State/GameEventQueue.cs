@@ -39,8 +39,14 @@ namespace FlavBattle.State
 
         public void CancelEvents()
         {
-            if (IsEmpty)
+            if (IsEmpty || _currentEvent == null)
             {
+                return;
+            }
+
+            if (!_currentEvent.IsSkippable)
+            {
+                // Cannot skip
                 return;
             }
 
@@ -49,9 +55,13 @@ namespace FlavBattle.State
                 StopCoroutine(_currentRoutine);
             }
 
-            if (_currentEvent != null)
+            var followup = _currentEvent.TrySkipEvent();
+            if (followup != null)
             {
-                _currentEvent.CancelEvent();
+                // This indicates that a subevent cannot be skipped
+                _currentEvent = followup;
+                StartEvent(followup);
+                return;
             }
 
             _eventQueue.Clear();

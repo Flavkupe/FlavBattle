@@ -53,6 +53,9 @@
     <UnityVersion>2020.2.0f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\Dialog\CombatDialogEvent.cs" />
@@ -134,7 +137,7 @@
     <Compile Include="Assets\Scripts\UI\Formation\UIUnitGridBase.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatTextCallout.cs" />
     <Compile Include="Assets\Scripts\Components\CancellableAnimation.cs" />
-    <Compile Include="Assets\Scripts\State\IGameEvent.cs" />
+    <Compile Include="Assets\Scripts\State\Events\IGameEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyEditWindow.cs" />
     <Compile Include="Assets\Scripts\Dialog\MapArmyDialogEvent.cs" />
@@ -152,6 +155,7 @@
     <Compile Include="Assets\Scripts\UI\Army\UIUnitPerksPanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Components\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Tilemap\Events\TileChangeEvent.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatBuffIcon.cs" />
     <Compile Include="Assets\Scripts\Utils\Models.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UIArmyInfoPanel.cs" />
@@ -241,7 +245,10 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Tilemap\Events\TileChangeEvent.cs" />
+    <Compile Include="Assets\Scripts\State\Events\GenericGameEvent.cs" />
+    <Compile Include="Assets\Scripts\State\Events\SetObjectiveEvent.cs" />
+    <Compile Include="Assets\Scripts\State\Events\PanAndIndicateEvent.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimatedBounce.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />
