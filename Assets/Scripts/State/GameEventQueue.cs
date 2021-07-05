@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FlavBattle.Trace;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlavBattle.State
 {
-    public class GameEventQueue : MonoBehaviour
+    public class GameEventQueue : MonoBehaviour, IHasTraceData
     {
         private Queue<IGameEvent> _eventQueue = new Queue<IGameEvent>();
 
@@ -95,6 +96,7 @@ namespace FlavBattle.State
             e.PreStartEvent();
             if (!e.EventPossible())
             {
+                Logger.Trace(LogType.GameEvents, $"Event {e.EventName} not possible, skipping!");
                 NextEvent();
                 return;
             }
@@ -102,6 +104,7 @@ namespace FlavBattle.State
             e.EventFinished += HandleEventFinished;
             _currentEvent = e;
 
+            Logger.Trace(LogType.GameEvents, $"Starting event {e.EventName}!");
             if (e.IsAsyncEvent)
             {
                 // do event in background
@@ -144,6 +147,15 @@ namespace FlavBattle.State
             {
                 AllEventsDone();
             }
+        }
+
+        public TraceData GetTrace()
+        {
+            var data = TraceData.ChildTrace($"GameEventQueue ({this.name})",
+                TraceData.ChildTrace("Current", _currentEvent?.EventName ?? "<None>")
+            );
+
+            return data;
         }
     }
 }

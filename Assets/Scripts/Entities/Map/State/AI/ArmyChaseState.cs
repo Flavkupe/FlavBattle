@@ -31,7 +31,7 @@ namespace FlavBattle.Entities.Map.State
                 return;
             }
 
-            var path = Tilemap.GetPath(army.gameObject, _target.gameObject);
+            var path = Tilemap.GetPath(army.gameObject, _target.gameObject, army.GetPathModifiers());
             army.SetPath(path);
         }
 

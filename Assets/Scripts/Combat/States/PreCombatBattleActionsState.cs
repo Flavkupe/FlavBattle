@@ -52,7 +52,7 @@ public class PreCombatBattleActionsState : BattleStateBase
         }
         else
         {
-            Debug.Log($"{combatant.Unit.Info.Faction}: officer {combatant.Unit.Info.Name} has no officer actions!");
+            Logger.Log(LogType.Combat, $"{combatant.Unit.Info.Faction}: officer {combatant.Unit.Info.Name} has no officer actions!");
         }
     }
 }

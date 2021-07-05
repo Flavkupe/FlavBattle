@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ee9b9e686fad443a8357f20497f685, type: 3}
+  m_Name: SwampWalker
+  m_EditorClassIdentifier: 
+  _icon: {fileID: -3205016062122913235, guid: 5e125f43e4019e24b824797058d49d2d, type: 3}
+  _name: Swamp Walker
+  _description: Faster movement over swamps.
+  _effects:
+  - _effect: 1
+    _stats:
+      _hp: 0
+      _power: 0
+      _defense: 1
+      _speed: 1
+      _level: 0
+      _command: 0
+    _boostCondition: 0
+    _mapBonus: 0
+    _biome: 2
+    _threshold: 50
+    _amount: 0.5
+    _isSet: 0
+  _descriptionSuffix: (Perk)

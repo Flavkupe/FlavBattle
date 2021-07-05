@@ -22,6 +22,8 @@ namespace FlavBattle.Tilemap
         Urban,
 
         Bridge,
+
+        Any,
     }
 }
 

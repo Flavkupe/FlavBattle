@@ -10,6 +10,11 @@ namespace FlavBattle.State
 {
     public interface IGameEvent
     {
+        /// <summary>
+        /// A name of the event, for logging purposes.
+        /// </summary>
+        string EventName { get; }
+
         bool EventPossible();
 
         /// <summary>
@@ -68,6 +73,8 @@ namespace FlavBattle.State
 
     public abstract class GameEventBase : MonoBehaviour, IGameEvent
     {
+        public string EventName => this.name;
+
         /// <summary>
         /// Fires when this event is ready to invoke; queues up
         /// this event.

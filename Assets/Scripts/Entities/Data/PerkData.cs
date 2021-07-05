@@ -1,8 +1,6 @@
 using FlavBattle.Tilemap;
 using NaughtyAttributes;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FlavBattle.Entities.Data
@@ -19,7 +17,12 @@ namespace FlavBattle.Entities.Data
         public enum MapBonusType
         {
             MoveBonus,
-            MakePassable,
+
+            /// <summary>
+            /// Inverts passable state for a passable/impassable
+            /// biome.
+            /// </summary>
+            ReversePassable,
         }
 
         public enum StatBoostConditionType
@@ -44,11 +47,14 @@ namespace FlavBattle.Entities.Data
         private bool ShowThreshold() => BoostCondition == StatBoostConditionType.MoraleOver
             || BoostCondition == StatBoostConditionType.MoraleUnder;
 
+        private bool ShowAmount() => ShowMapffects() && MapBonus == MapBonusType.MoveBonus;
+
+        private bool ShowBoolean() => ShowMapffects() && MapBonus == MapBonusType.ReversePassable;
+
         [SerializeField]
         private UnitStats _stats;
         public UnitStats Stats => _stats;
 
-        [ShowIf("ShowStatEffects")]
         [SerializeField]
         [AllowNesting]
         private StatBoostConditionType _boostCondition;
@@ -71,8 +77,25 @@ namespace FlavBattle.Entities.Data
         [SerializeField]
         [ReorderableList]
         [AllowNesting]
+        [Tooltip("Threshold for condition")]
         private int _threshold;
         public int Threshold => _threshold;
+
+        [ShowIf("ShowAmount")]
+        [SerializeField]
+        [ReorderableList]
+        [AllowNesting]
+        [Tooltip("Value for modifier")]
+        private float _amount;
+        public float Amount => _amount;
+
+        [ShowIf("ShowBoolean")]
+        [SerializeField]
+        [ReorderableList]
+        [AllowNesting]
+        [Tooltip("True/False state for modifier")]
+        private bool _isSet;
+        public bool IsSet =>_isSet;
     }
 
     [CreateAssetMenu(fileName = "Perk", menuName = "Custom/Perks/Perk Data", order = 1)]

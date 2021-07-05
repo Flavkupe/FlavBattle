@@ -132,6 +132,11 @@ namespace FlavBattle.Dialog
         public void SetBattleContext(BattleStatus status)
         {
             _battleStatus = status;
+            var followup = this.FollowupEvent as ICombatGameEvent;
+            if (followup != null)
+            {
+                followup.SetBattleContext(status);
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace FlavBattle.Entities.Modifiers
     {
         string Name { get; }
         ModifierType Type { get; }
-        void Apply(UnitStatSummary summary, Unit unit, IArmy army);
+        void Apply(UnitStatSummary summary, Unit unit);
         bool IsExpired { get; }
         bool AllowDuplicate { get; }
         void Tick(ModifierTickType type);
@@ -42,7 +42,7 @@ namespace FlavBattle.Entities.Modifiers
         public abstract bool AllowDuplicate { get; }
         public abstract string Name {get; }
 
-        public abstract void Apply(UnitStatSummary summary, Unit unit, IArmy army);
+        public abstract void Apply(UnitStatSummary summary, Unit unit);
 
         public virtual void Tick(ModifierTickType type)
         {

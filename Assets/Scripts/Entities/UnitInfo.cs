@@ -67,11 +67,10 @@ public class UnitInfo
     {
         for (var i = 1; i <= level; i++)
         {
-            var perk = Data.RollPerk(i);
-            if (perk != null)
+            var perks = Data.RollPerks(i);
+            if (perks != null)
             {
-                Perks.Add(perk);
-
+                Perks.AddRange(perks);
             }
         }
 

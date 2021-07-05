@@ -1,11 +1,12 @@
 ﻿using FlavBattle.Entities;
 using FlavBattle.Entities.Data;
+using FlavBattle.Trace;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : IEquatable<Unit>
+public class Unit : IEquatable<Unit>, IHasTraceData
 {
     public FormationPair Formation;
 
@@ -63,11 +64,17 @@ public class Unit : IEquatable<Unit>
         return this.Data.UnitID == other.UnitID;
     }
 
-    // TODO: remove army and make private field eventually
     public UnitStatSummary GetStatSummary()
     {
         var summary = new UnitStatSummary();
-        this.Info.ModifierSet.ApplyToStatSummary(summary, this, CurrentArmy);
+        this.Info.ModifierSet.ApplyToStatSummary(summary, this);
         return summary;
+    }
+
+    public TraceData GetTrace()
+    {
+        var trace = TraceData.ChildTrace($"Unit [{this.UnitName}]");
+        trace.Key = this.ID;
+        return trace;
     }
 }

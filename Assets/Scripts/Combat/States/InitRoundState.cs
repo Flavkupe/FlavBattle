@@ -34,13 +34,13 @@ public class InitRoundState : BattleStateBase
         state.Round++;
         state.BattleUIPanel.SetBoutCounterNumber(state.Round);
         yield return state.BattleUIPanel.AnimateInfoTextCallout($"Bout {state.Round}");
-        Debug.Log($"BOUT {state.Round} STARTED");
+        Logger.Log(LogType.Combat, $"BOUT {state.Round} STARTED");
 
         // During the third bout and onward, army with low enough morale will run
         state.FleeingArmy = state.CheckForFleeingArmy(state.Round);
         if (state.FleeingArmy != null)
         {
-            Debug.Log($"Army {state.FleeingArmy.Faction.Name} is fleeing");
+            Logger.Log(LogType.Combat, $"Army {state.FleeingArmy.Faction.Name} is fleeing");
             yield break;
         }
 

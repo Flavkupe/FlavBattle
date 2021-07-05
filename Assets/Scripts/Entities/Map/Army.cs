@@ -1,7 +1,9 @@
 ﻿using FlavBattle.Combat.Event;
 using FlavBattle.Entities.Data;
+using FlavBattle.Pathfinding;
 using FlavBattle.State;
 using FlavBattle.Tilemap;
+using FlavBattle.Trace;
 using NaughtyAttributes;
 using System;
 using System.Collections;
@@ -33,7 +35,7 @@ public class ExitTileEventArgs : EventArgs
     public GameObject Tile;
 }
 
-public class Army : MonoBehaviour, IArmy, ICombatArmy
+public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
 {
     [Serializable]
     private class Detectors
@@ -81,8 +83,9 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy
 
     private GridTile _currentTile = null;
     private Vector3Int _currentTileCoords;
+    private PathModifiers _cachedPathModifiers = null;
 
-    public TileInfo CurrentTileInfo => _currentTile?.Info;
+    public GridTile CurrentTileInfo => _currentTile;
     public bool IsFleeing { get; private set; } = false;
 
     /// <summary>
@@ -343,7 +346,14 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy
 
         if (this._destination != null)
         {
-            var cost = Math.Max(1, _currentTile.Info.WalkCost);
+            var cost = _currentTile.GetTileCost(this.GetPathModifiers());
+            if (cost <= 0.0f)
+            {
+                // Just a failsafe to avoid catastrophe
+                Debug.LogError("Tile with cost 0 or less! Setting to 1");
+                cost = 1.0f;
+            }
+
             var modifier = MoveStep / cost;
             var delta = modifier * TimeUtils.AdjustedGameDelta;
             this.Animation.SetSpeedModifier(modifier);
@@ -370,6 +380,17 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy
         IsDestroyed = true;
         ArmyDestroyed?.Invoke(this, EventArgs.Empty);
         this.gameObject.SetActive(false);
+    }
+
+    public PathModifiers GetPathModifiers()
+    {
+        // TODO: this won't update when perks change
+        if (_cachedPathModifiers == null)
+        {
+            _cachedPathModifiers = PathModifiers.CreateFromArmy(this);
+        }
+
+        return _cachedPathModifiers;
     }
 
     private void PlotNextPath()
@@ -483,5 +504,13 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy
 
         var units = this.GetUnits();
         return units.Any(a => a.SameType(data));
+    }
+
+    public TraceData GetTrace()
+    {
+        var unitTraces = this.GetUnits(false).Select(a => a.GetTrace());
+        var data = TraceData.ChildTrace($"Army [{this.name}]", unitTraces.ToArray());
+        data.Key = this.ID;
+        return data;
     }
 }

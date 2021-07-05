@@ -72,16 +72,16 @@ namespace FlavBattle.Combat.Events
         {
             if (ability == null)
             {
-                Debug.Log("No ability available!");
+                Logger.Log(LogType.Combat, "No ability available!");
                 yield break;
             }
             else
             {
-                Debug.Log($"Using ability {ability.Name}");
+                Logger.Log(LogType.Combat, $"Using ability {ability.Name}");
             }
 
             // Targets
-            Debug.Log($"Targets: {string.Join(", ", results.Select(a => a.Target.Unit.Data.ClassName)) }");
+            Logger.Log(LogType.Combat, $"Targets: {string.Join(", ", results.Select(a => a.Target.Unit.Data.ClassName)) }");
             yield return AnimateAbilities(ability, results);
         }
 

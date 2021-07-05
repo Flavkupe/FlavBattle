@@ -22,7 +22,7 @@ public class TestArmy : ICombatArmy
 
     public Morale Morale { get; } = new Morale();
 
-    public TileInfo CurrentTileInfo { get; set; }
+    public GridTile CurrentTileInfo { get; set; }
 
     public bool IsDestroyed => false;
 

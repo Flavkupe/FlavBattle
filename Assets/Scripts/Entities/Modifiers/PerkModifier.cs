@@ -25,16 +25,20 @@ namespace FlavBattle.Entities.Modifiers
 
         public override string Name => _data.Name;
 
-        public override void Apply(UnitStatSummary summary, Unit unit, IArmy army)
+        public override void Apply(UnitStatSummary summary, Unit unit)
         {
             foreach (var effect in _data.Effects)
             {
-                if (effect.Effect != PerkBonus.Type.StatBonus)
+                if (effect.Effect == PerkBonus.Type.MapBonus)
                 {
-                    continue;
+                    var tile = unit.CurrentArmy?.CurrentTileInfo;
+                    if (tile == null || !tile.ContainsBiome(effect.Biome))
+                    {
+                        continue;
+                    }
                 }
 
-                if (UnitFullfillsPerkCondition(unit, army, effect))
+                if (UnitFullfillsPerkCondition(unit, unit?.CurrentArmy, effect))
                 {
                     var perkName = $"{_data.Name} {_data.DescriptionSuffix}";
                     summary.Tally(effect.Stats, perkName);

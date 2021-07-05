@@ -27,7 +27,7 @@ public class ScenarioManager : SingletonObject<ScenarioManager>
     {
         if (objective == null)
         {
-            Debug.Log("Setting to null objective");
+            Logger.Log(LogType.State, "Setting to null objective");
             yield break;
         }
 
@@ -39,7 +39,7 @@ public class ScenarioManager : SingletonObject<ScenarioManager>
     {
         if (objective == null)
         {
-            Debug.Log("Setting to null objective");
+            Logger.Log(LogType.State, "Setting to null objective");
             return;
         }
 
@@ -101,7 +101,7 @@ public class ScenarioManager : SingletonObject<ScenarioManager>
 
     private void VictoryAchieved()
     {
-        Debug.Log("Victory achieved");
+        Logger.Log(LogType.State, "Victory achieved");
         GameEventManager.TriggerMapEvent(MapEventType.MapPaused);
         VictorySign.Show();
         VictorySign.Animate();

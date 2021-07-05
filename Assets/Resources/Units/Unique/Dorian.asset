@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56f89d8c2e5a70d4da460c853682b4d7, type: 3}
-  m_Name: Flavik
+  m_Name: Dorian
   m_EditorClassIdentifier: 
   _icon: {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
-  _unitID: flavik
+  _unitID: dorian
   _className: 
   _rollLow: 0
   _hp: 16
@@ -35,8 +35,9 @@ MonoBehaviour:
   _perksByLevel:
   - Level: 1
     Perks:
-    - {fileID: 11400000, guid: 5c6d31d5cdff1ae43a73f4ff11a940e0, type: 2}
+    - {fileID: 11400000, guid: 09bb0013a90f0584482583f77f659afc, type: 2}
+    GetAllPerks: 0
   _startingLevel: 1
-  _unitName: Flavik
-  _portrait: {fileID: 21300000, guid: 8387bc92e163f492185dd04d517a7f20, type: 3}
+  _unitName: Dorian
+  _portrait: {fileID: 21300000, guid: ed73a981fddd74246a57fe6f455bf5cf, type: 3}
   _baseData: {fileID: 11400000, guid: de52d40e10623b84eba279373322c23d, type: 2}

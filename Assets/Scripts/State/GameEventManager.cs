@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Trace;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -47,10 +48,8 @@ namespace FlavBattle.State
         public static bool IsMapPaused => GameEventManager.IsMapPaused;
     }
 
-    public class GameEventManager : MonoBehaviour
+    public class GameEventManager : MonoBehaviour, IHasTraceData
     {
-        public bool DebugTrace = false;
-
         public event EventHandler<MapEventType> MapEvent;
 
         public event EventHandler<CombatEndedEventArgs> CombatEndedEvent;
@@ -95,8 +94,6 @@ namespace FlavBattle.State
         // Update is called once per frame
         void Update()
         {
-            Utils.TraceEnabled = DebugTrace;
-
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
                 TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Slow);
@@ -148,12 +145,12 @@ namespace FlavBattle.State
         {
             if (mapEvent == MapEventType.MapPaused)
             {
-                Debug.Log("Map paused");
+                Logger.Log(LogType.GameEvents, "Map paused");
                 _mapPauseStack++;
             }
             else if (mapEvent == MapEventType.MapUnpaused)
             {
-                Debug.Log("Map unpaused");
+                Logger.Log(LogType.GameEvents, "Map unpaused");
                 _mapPauseStack--;
             }
 
@@ -201,6 +198,12 @@ namespace FlavBattle.State
         private void HandleCombatEventsDone(object sender, EventArgs e)
         {
             AllCombatEventsDone?.Invoke(this, e);
+        }
+
+        public TraceData GetTrace()
+        {
+            var trace = _queue?.GetTrace();
+            return TraceData.TopLevelTrace("GameEventManager", trace);
         }
     }
 }

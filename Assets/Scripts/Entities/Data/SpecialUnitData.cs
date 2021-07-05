@@ -95,9 +95,11 @@ namespace FlavBattle.Entities.Data
         /// <summary>
         /// Prefer special type perks but apply base class otherwise.
         /// </summary>
-        public override PerkData RollPerk(int level)
+        public override IEnumerable<PerkData> RollPerks(int level)
         {
-            return GetNonNull(base.RollPerk(level), _baseData.RollPerk(level));
+            var perks = new List<PerkData>(base.RollPerks(level));
+            perks.AddRange(_baseData.RollPerks(level));
+            return perks;
         }
 
         public override UnitStats RollStartingStats(int level)

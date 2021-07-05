@@ -9,6 +9,8 @@ using FlavBattle.Core;
 using NaughtyAttributes;
 using FlavBattle.State;
 using FlavBattle.Triggers;
+using FlavBattle.Pathfinding;
+using FlavBattle.Trace;
 
 public class ArmyEnteredGarrisonEventArgs : EventArgs
 {
@@ -22,7 +24,7 @@ public class ArmyLeftGarrisonEventArgs : EventArgs
     public Garrison Garrison;
 }
 
-public class ArmyManager : MonoBehaviour
+public class ArmyManager : MonoBehaviour, IHasTraceData
 {
     public TilemapManager TileMap;
 
@@ -219,7 +221,7 @@ public class ArmyManager : MonoBehaviour
 
     private void HandleArmyExitTile(object sender, ExitTileEventArgs e)
     {
-        Utils.LogTrace("Army exited tile", this);
+        Logger.Trace(LogType.State, "Army exited tile", this);
         var garrison = e.Tile.GetComponent<Garrison>();
         if (garrison != null)
         {
@@ -233,7 +235,7 @@ public class ArmyManager : MonoBehaviour
 
     private void HandleArmyEnterTile(object sender, EnterTileEventArgs e)
     {
-        Utils.LogTrace("Army entered tile", this);
+        Logger.Trace(LogType.State, "Army entered tile", this);
         var garrison = e.Tile.GetComponent<Garrison>();
         if (garrison != null)
         {
@@ -259,7 +261,7 @@ public class ArmyManager : MonoBehaviour
                 }
 
                 var start = TileMap.GetGridTileAtWorldPos(_selected.transform.position);
-                var path = TileMap.GetPath(start, e.Tile);
+                var path = TileMap.GetPath(start, e.Tile, _selected.GetPathModifiers());
                 _selected.SetPath(path);
             }
             else if (e.Button == MouseButton.LeftButton)
@@ -408,12 +410,14 @@ public class ArmyManager : MonoBehaviour
         var enemyTile = TileMap.GetGridTileAtWorldPos(otherObj.transform.position);
         var tiles = TileMap.GetNeighborTileData(currTile.GridX, currTile.GridY);
 
+        var pathModifiers = PathModifiers.CreateFromArmy(army);
+
         // Filter by only passable tiles
-        tiles = tiles.Where(a => a.Info.Passable).ToList();
+        tiles = tiles.Where(a => a.GetPassableState(pathModifiers) == true).ToList();
 
         // Get the tile with the highest distance from the other unit.
         var furthest = tiles.GetMax(a => Vector2.Distance(enemyTile.ToGridPos(), a.ToGridPos()));
-        var path = TileMap.GetPath(currTile, furthest);
+        var path = TileMap.GetPath(currTile, furthest, PathModifiers.CreateFromArmy(army));
         armyObj.SetPath(path);
         armyObj.SetFleeing(true);        
     }
@@ -521,5 +525,13 @@ public class ArmyManager : MonoBehaviour
         {
             army.ToggleZoomedView(zoomedView);
         }
+    }
+
+    public TraceData GetTrace()
+    {
+        var armyData = _armies.Select(a => a.GetTrace()).ToArray();
+        return TraceData.TopLevelTrace("ArmyManager",
+            TraceData.ChildTrace("Armies", armyData)
+        );
     }
 }

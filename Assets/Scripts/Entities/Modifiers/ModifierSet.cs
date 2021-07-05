@@ -10,11 +10,11 @@ namespace FlavBattle.Entities.Modifiers
     {
         public List<IModifier> Modifiers { get; private set; } = new List<IModifier>();
 
-        public UnitStatSummary ApplyToStatSummary(UnitStatSummary summary, Unit unit, IArmy army)
+        public UnitStatSummary ApplyToStatSummary(UnitStatSummary summary, Unit unit)
         {
             foreach (var modifier in Modifiers)
             {
-                modifier.Apply(summary, unit, army);
+                modifier.Apply(summary, unit);
             }
 
             return summary;

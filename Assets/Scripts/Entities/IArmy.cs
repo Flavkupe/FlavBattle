@@ -14,7 +14,7 @@ public interface IArmy : IOwnedEntity
 
     Morale Morale { get; }
 
-    TileInfo CurrentTileInfo { get; }
+    GridTile CurrentTileInfo { get; }
 
     bool IsDestroyed { get; }
 }

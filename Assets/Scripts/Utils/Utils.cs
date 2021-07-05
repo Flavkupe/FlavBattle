@@ -6,28 +6,6 @@ using System;
 
 public static class Utils
 {
-    public static bool TraceEnabled = false;
-
-    public static void LogTrace(string message, UnityEngine.Object context)
-    {
-        if (TraceEnabled)
-        {
-            if (context == null)
-            {
-                Debug.Log(message);
-            }
-            else
-            {
-                Debug.Log(message, context);
-            }
-        }
-    }
-
-    public static void LogTrace(string message)
-    {
-        LogTrace(message, null);
-    }
-
     public static Vector3 MouseToWorldPoint()
     {
         var point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -47,6 +25,11 @@ public static class Utils
         return component;
     }
 
+    public static IEnumerable<TType> FindOfType<TType>()
+    {
+        return UnityEngine.Object.FindObjectsOfType<MonoBehaviour>(false).OfType<TType>();
+    }
+
     public static TResourceType[] LoadAssets<TResourceType>(string folder) where TResourceType : UnityEngine.Object
     {
         var resources = Resources.LoadAll<TResourceType>(folder);
@@ -57,7 +40,7 @@ public static class Utils
 
         var assets = string.Join<TResourceType>(", ", resources);
         
-        Debug.Log($"Loaded assets {assets}");
+        Logger.Log(LogType.Misc, $"Loaded assets {assets}");
         return resources;
     }
 

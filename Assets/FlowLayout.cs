@@ -9,7 +9,7 @@ public class FlowLayout : MonoBehaviour
     {
         if (!obj.HasComponent<SpriteRenderer>())
         {
-            Debug.LogWarning($"Object {obj.name} does not have a SpriteRenderer - ignoring");
+            Logger.Warning(LogType.Misc, $"Object {obj.name} does not have a SpriteRenderer - ignoring");
             return;
         }
 

@@ -53,7 +53,7 @@ namespace FlavBattle.Entities.Modifiers
             }
         }
 
-        public override void Apply(UnitStatSummary summary, Unit unit, IArmy army)
+        public override void Apply(UnitStatSummary summary, Unit unit)
         {
             if (_buff == null)
             {

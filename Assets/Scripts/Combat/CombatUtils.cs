@@ -166,7 +166,7 @@ namespace FlavBattle.Combat
 
             if (possible.Count == 0)
             {
-                Debug.Log("No valid actions! Returning global default");
+                Logger.Log(LogType.Combat, "No valid actions! Returning global default");
                 return GameResourceManager.Instance.GetDefaultCombatAction();
             }
 

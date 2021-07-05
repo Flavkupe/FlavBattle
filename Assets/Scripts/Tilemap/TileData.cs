@@ -26,7 +26,18 @@ namespace FlavBattle.Tilemap
         [SerializeField]
         private CombatFormationSlot _slotModel;
 
+        /// <summary>
+        /// Whether the tile is passable by default. Use GridTile's GetPassableState
+        /// to get the passable state while accounting for army modifiers
+        /// and such.
+        /// </summary>
         public bool Passable;
+
+        /// <summary>
+        /// Default walk cost of tile. Use GridTile's GetTileCost
+        /// to get the cost while accounting for army modifiers
+        /// and such. Cost of 1.0f is the default cost.
+        /// </summary>
         public float WalkCost = 1.0f;
 
         public SpecialTileProperty SpecialProperty;
@@ -48,28 +59,5 @@ namespace FlavBattle.Tilemap
         /// </summary>
         [Tooltip("If true, tile is passable no matter what else is here (example: bridge)")]
         public bool OverridePassable = false;
-
-        public TileInfo Combine(TileInfo data)
-        {
-            var walkCost = WalkCost + data.WalkCost;
-            if (OverrideWalk && !data.OverrideWalk)
-            {
-                walkCost = WalkCost;
-            }
-            else if (!OverrideWalk && data.OverrideWalk)
-            {
-                walkCost = data.WalkCost;
-            }
-
-            return new TileInfo()
-            {
-                Passable = OverridePassable || data.OverridePassable || (Passable && data.Passable),
-                WalkCost = walkCost,
-
-                // Technically this will randomly pick the first slot model to be non-null,
-                // depending on order
-                _slotModel = _slotModel ?? data._slotModel,
-            };
-        }
     }
 }

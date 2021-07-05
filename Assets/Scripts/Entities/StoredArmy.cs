@@ -14,7 +14,7 @@ public class StoredArmy : IArmy
 
     public FightingStance Stance { get; set; }
 
-    public TileInfo CurrentTileInfo => null;
+    public GridTile CurrentTileInfo => null;
 
     public Morale Morale { get; } = new Morale();
 

@@ -6,40 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using NaughtyAttributes;
 using FlavBattle.Tilemap;
-
-public class GridTile : IEquatable<GridTile>
-{
-    public TileInfo Info;
-    public int GridX;
-    public int GridY;
-    public float WorldX;
-    public float WorldY;
-
-    public Vector3 ToWorldPos(float z = 0.0f)
-    {
-        return new Vector3(WorldX, WorldY, 0.0f);
-    }
-
-    public Vector2 ToWorldPos2D()
-    {
-        return new Vector2(WorldX, WorldY);
-    }
-
-    public Vector2 ToGridPos()
-    {
-        return new Vector2(GridX, GridY);
-    }
-
-    public override string ToString()
-    {
-        return $"({GridX},{GridY})";
-    }
-
-    public bool Equals(GridTile other)
-    {
-        return this.GridX == other.GridX && this.GridY == other.GridY;
-    }
-}
+using FlavBattle.Pathfinding;
 
 public class TileClickedEventArgs : EventArgs
 {
@@ -89,43 +56,43 @@ public class TilemapManager : MonoBehaviour
         }
     }
 
-    public TravelPath GetPath(GridTile start, GridTile end)
+    public TravelPath GetPath(GridTile start, GridTile end, PathModifiers pathModifiers)
     {
-        return GetPath(new Vector3Int(start.GridX, start.GridY, 0), new Vector3Int(end.GridX, end.GridY, 0));
+        return GetPath(new Vector3Int(start.GridX, start.GridY, 0), new Vector3Int(end.GridX, end.GridY, 0), pathModifiers);
     }
 
-    public TravelPath GetPath(GameObject start, GameObject end)
+    public TravelPath GetPath(GameObject start, GameObject end, PathModifiers pathModifiers)
     {
         var startTile = GetGridTileAtWorldPos(start);
         var endTile = GetGridTileAtWorldPos(end);
-        return GetPath(startTile, endTile);
+        return GetPath(startTile, endTile, pathModifiers);
     }
 
-    public TravelPath GetPath(Vector3Int start, Vector3Int end)
+    public TravelPath GetPath(Vector3Int start, Vector3Int end, PathModifiers pathModifiers)
     {
-        return this._pathfinding.GetPath(this, start, end);
+        return this._pathfinding.GetPath(this, start, end, pathModifiers);
     }
 
     /// <summary>
     /// Given world coords, gets tiles at those coords and finds path
     /// between points.
     /// </summary>
-    public TravelPath GetPathFromWorldPos(Vector3 start, Vector3 end)
+    public TravelPath GetPathFromWorldPos(Vector3 start, Vector3 end, PathModifiers pathModifiers)
     {
         var startTile = GetGridTileAtWorldPos(start);
         var endTile = GetGridTileAtWorldPos(end);
-        return this.GetPath(startTile, endTile);
+        return this.GetPath(startTile, endTile, pathModifiers);
     }
 
     /// <summary>
     /// Given multiple endpoints, find the path with the shortest cost
     /// </summary>
-    public TravelPath GetFastestPathFromWorldPos(Vector3 start, IEnumerable<Vector3> ends)
+    public TravelPath GetFastestPathFromWorldPos(Vector3 start, IEnumerable<Vector3> ends, PathModifiers pathModifiers)
     {
         var paths = new List<TravelPath>();
         foreach (var end in ends)
         {
-            paths.Add(GetPathFromWorldPos(start, end));
+            paths.Add(GetPathFromWorldPos(start, end, pathModifiers));
         }
 
         return paths.GetMin(a => a.Cost);
@@ -161,21 +128,22 @@ public class TilemapManager : MonoBehaviour
             return null;
         }
 
-        var info = tile.Info;
+        var props = new List<TileInfo>();
         foreach (var propMap in PropsTilemaps)
         {
             // Get all props data
             var propsTile = propMap.GetTile<PropsTile>(new Vector3Int(x, y, 0));
             if (propsTile != null)
             {
-                info = info.Combine(propsTile.Info);
+                props.Add(propsTile.Info);
             }
         }
 
         Vector3 worldLoc = Tilemap.GetCellCenterWorld(new Vector3Int(x, y, 0));
         return new GridTile()
         {
-            Info = info,
+            Props = props,
+            MainTile = tile.Info,
             GridX = x,
             GridY = y,
             WorldX = worldLoc.x,

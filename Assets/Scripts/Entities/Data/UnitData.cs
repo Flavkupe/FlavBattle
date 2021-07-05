@@ -113,6 +113,7 @@ namespace FlavBattle.Entities.Data
         private PerksByLevel[] _perksByLevel;
         public PerksByLevel[] PerksByLevel => _perksByLevel;
 
+
         /// <summary>
         /// Roll unit stats from the possible base props
         /// </summary>
@@ -160,16 +161,24 @@ namespace FlavBattle.Entities.Data
             return available.GetRandom();
         }
 
-        public virtual PerkData RollPerk(int level)
+        public virtual IEnumerable<PerkData> RollPerks(int level)
         {
             var perkInfo = this.PerksByLevel.FirstOrDefault(a => a.Level == level);
-            if (perkInfo != null && perkInfo.Perks.Length > 0)
+            if (perkInfo == null || perkInfo.Perks.Length == 0)
             {
-                return perkInfo.Perks.GetRandom();
+                // No perks for level
+                return new PerkData[] { };
             }
 
-            return null;
-        }
+            if (perkInfo.GetAllPerks)
+            {
+                // Get all the perks
+                return perkInfo.Perks;
+            }
+
+            // Get a single random perk for the level
+            return new PerkData[] { perkInfo.Perks.GetRandom() };
+        }   
 
         public abstract string RollName();
 
@@ -184,5 +193,8 @@ namespace FlavBattle.Entities.Data
         [ReorderableList]
         [AllowNesting]
         public PerkData[] Perks;
+
+        [Tooltip("If true, will get all perks in list rather than a random one.")]
+        public bool GetAllPerks = false;
     }
 }

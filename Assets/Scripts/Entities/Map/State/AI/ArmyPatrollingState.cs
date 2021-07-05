@@ -50,7 +50,7 @@ namespace FlavBattle.Entities.Map.State
                     targetTile = Tilemap.GetGridTileAtWorldPos(patrolPoint.gameObject);
                 }
 
-                var path = Tilemap.GetPath(currentTile, targetTile);
+                var path = Tilemap.GetPath(currentTile, targetTile, army.GetPathModifiers());
                 if (path == null)
                 {
                     this.Skip(2.0f);

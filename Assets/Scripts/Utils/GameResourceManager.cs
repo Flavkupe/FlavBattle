@@ -123,5 +123,4 @@ public static class GRM
     public static GameResourceManager.UISoundPrefabs UISounds => GameResourceManager.Instance.UISounds;
 
     public static GameResourceManager.CombatSoundPrefabs CombatSounds => GameResourceManager.Instance.CombatSounds;
-
 }

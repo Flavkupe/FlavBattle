@@ -1,9 +1,5 @@
 ﻿using NaughtyAttributes;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace FlavBattle.Entities.Map.State
@@ -87,7 +83,7 @@ namespace FlavBattle.Entities.Map.State
         private void SetPathToExitPoints(Army army)
         {
             var exits = _exitPoints.Select(a => a.position);
-            var path = Tilemap.GetFastestPathFromWorldPos(army.transform.position, exits);
+            var path = Tilemap.GetFastestPathFromWorldPos(army.transform.position, exits, army.GetPathModifiers());
             army.SetPath(path);
         }
     }

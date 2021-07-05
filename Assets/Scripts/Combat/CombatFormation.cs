@@ -14,9 +14,9 @@ public class CombatFormation : FormationGridBase
     {
         // Get default template or get template populated by current army
         var template = SlotTemplate;
-        if (_army?.CurrentTileInfo?.SlotModel != null)
+        if (_army?.CurrentTileInfo?.MainTile?.SlotModel != null)
         {
-            template = _army.CurrentTileInfo.SlotModel;
+            template = _army.CurrentTileInfo.MainTile.SlotModel;
         }
 
         var slot = Instantiate(template);
