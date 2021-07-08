@@ -27,6 +27,12 @@ namespace FlavBattle.Combat.States
 
         protected override IEnumerator Run(BattleStatus state)
         {
+            if (state.IsStanceLocked)
+            {
+                state.Stage = BattleStatus.BattleStage.DetermineTurnOrder;
+                yield break;
+            }
+
             yield return AwaitStanceSelection(state);
         }
 

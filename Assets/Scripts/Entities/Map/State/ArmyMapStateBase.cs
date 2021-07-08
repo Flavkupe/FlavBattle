@@ -13,11 +13,12 @@ namespace FlavBattle.Entities.Map.State
         Idle = 2,
         MovingToNode = 3,
         Fleeing = 4,
-        AI = 5,
+        Preparing = 5,
 
-        AIChargeToTarget = 6,
-        AIPatrol = 7,
-        AIChase = 8,
+        AI = 100,
+        AIChargeToTarget = 101,
+        AIPatrol = 102,
+        AIChase = 103,
     }
 
     public enum ArmyStatePriority
@@ -33,6 +34,9 @@ namespace FlavBattle.Entities.Map.State
 
         // Primary AI choices - chasing, etc
         MidAI = 3,
+
+        // Preparation, etc
+        Higher = 50,
 
         // Overrides all - fleeing, etc
         Highest = 100,

@@ -419,7 +419,10 @@ public class ArmyManager : MonoBehaviour, IHasTraceData
         var furthest = tiles.GetMax(a => Vector2.Distance(enemyTile.ToGridPos(), a.ToGridPos()));
         var path = TileMap.GetPath(currTile, furthest, PathModifiers.CreateFromArmy(army));
         armyObj.SetPath(path);
-        armyObj.SetFleeing(true);        
+        armyObj.SetFleeing(true);
+
+        // By default, other army stuck preparing after opponent flees
+        otherObj.SetPreparing(true);
     }
 
     /// <summary>

@@ -6,7 +6,7 @@ public class BattleCommandButton : MonoBehaviour
     private Unit _current;
 
     [SerializeField]
-    private Text _commandsCounterLabel; 
+    private Text _commandsCounterLabel;
 
     // Start is called before the first frame update
     void Start()

@@ -21,6 +21,8 @@ namespace FlavBattle.Combat
 
         private BattleStatus _battleStatus;
 
+        private bool _stanceLocked = true;
+
         private List<IBattleState> _states = new List<IBattleState>();
 
         public BattleStatus GetBattleStatus()
@@ -33,8 +35,10 @@ namespace FlavBattle.Combat
         {
             var gameEventManager = FindObjectOfType<GameEventManager>();
             _battleStatus = new BattleStatus(gameEventManager, BattleDisplay, BattleUIPanel);
+            _battleStatus.IsStanceLocked = _stanceLocked;
+            this.BattleUIPanel.CombatStanceButton.SetLocked(_stanceLocked);
 
-            BattleUIPanel.OnStanceChangeClicked += (object o, FightingStance stance) => HandleStanceChanged(stance);
+            BattleUIPanel.OnCombatStanceToggled += HandleBattleUIPanelOnCombatStanceToggled;
             BattleUIPanel.OnCommandAbilityUsed += HandleBattleUIPanelOnCommandAbilityUsed;
             BattleUIPanel.Hide();
 
@@ -98,15 +102,6 @@ namespace FlavBattle.Combat
         }
 
         /// <summary>
-        /// Handles a UI stance change, such as from the UI or combat start
-        /// </summary>
-        /// <param name="stance"></param>
-        private void HandleStanceChanged(FightingStance stance)
-        {
-            
-        }
-
-        /// <summary>
         /// Handles clicking on a command item from the CommandAbility panel.
         /// </summary>
         private void HandleBattleUIPanelOnCommandAbilityUsed(object sender, OfficerAbilityData e)
@@ -118,6 +113,16 @@ namespace FlavBattle.Combat
                 officer.Unit.Info.CurrentStats.Commands -= e.CommandCost;
                 this.BattleUIPanel.CommandMenu.UpdateMenu();
             }
+        }
+
+        /// <summary>
+        /// Handle the stance changed from UI
+        /// </summary>
+        private void HandleBattleUIPanelOnCombatStanceToggled()
+        {
+            _stanceLocked = !_stanceLocked;
+            _battleStatus.IsStanceLocked = _stanceLocked;
+            this.BattleUIPanel.CombatStanceButton.SetLocked(_stanceLocked);
         }
     }
 }

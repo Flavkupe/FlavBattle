@@ -39,12 +39,17 @@ public class BattleUIPanel : MonoBehaviour
     [Required]
     public BattleCommandButton BattleCommandButton;
 
+    [Required]
+    public CombatStanceButton CombatStanceButton;
+
     /// <summary>
     /// Fires an event indicating that the FightingStance has been changed from the UI
     /// </summary>
     public event EventHandler<FightingStance> OnStanceChangeClicked;
 
     public event EventHandler<OfficerAbilityData> OnCommandAbilityUsed;
+
+    public event Action OnCombatStanceToggled;
 
     private IArmy _playerArmy;
 
@@ -86,6 +91,8 @@ public class BattleUIPanel : MonoBehaviour
                 BattleCommandButton.SetOfficer(officer);
                 CommandMenu.SetOfficer(officer);
             }
+
+            CombatStanceButton.SetStance(_playerArmy.Stance);
         }
     }
 
@@ -149,5 +156,21 @@ public class BattleUIPanel : MonoBehaviour
     {
         StancePanel.Close();
         OnStanceChangeClicked?.Invoke(source, e);
+        CombatStanceButton.SetStance(e);
+    }
+
+    public void ToggleStanceLocked()
+    {
+        OnCombatStanceToggled.Invoke();
+    }
+
+    public void PlayClickSound()
+    {
+        var source = this.GetComponentInParent<AudioSource>();
+        if (source != null)
+        {
+            var clip = GRM.UISounds.Open;
+            source.PlayOneShot(clip);
+        }
     }
 }

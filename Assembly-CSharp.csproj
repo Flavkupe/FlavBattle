@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\State\Events\PanAndIndicateEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\Footprints.cs" />
     <Compile Include="Assets\Scripts\Dialog\MapDialogEvent.cs" />
+    <Compile Include="Assets\Scripts\Utils\Logger.cs" />
     <Compile Include="Assets\Scripts\Components\FloatingText.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandButton.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\AI\ArmyChargeToTargetState.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Assets\Scripts\State\GameEventQueue.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tooltip.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenuItem.cs" />
+    <Compile Include="Assets\Scripts\Pathfinding\PathModifiers.cs" />
     <Compile Include="Assets\Scripts\Components\CameraMain.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\Garrison.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
@@ -214,11 +216,13 @@
     <Compile Include="Assets\Scripts\Entities\Data\BasicUnitData.cs" />
     <Compile Include="Assets\Scripts\Combat\Data\CombatAbilityData.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UICombatActionInfoPanel.cs" />
+    <Compile Include="Assets\Scripts\Tilemap\GridTile.cs" />
     <Compile Include="Assets\Scripts\Entities\Modifiers\ModifierSet.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
     <Compile Include="Assets\Scripts\Combat\States\Combatant.cs" />
     <Compile Include="Assets\FlowLayout.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
+    <Compile Include="Assets\Scripts\Utils\TraceData.cs" />
     <Compile Include="Assets\Scripts\External\StarCollider2D.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\ParallelRoutineSet.cs" />
@@ -249,10 +253,8 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Pathfinding\PathModifiers.cs" />
-    <Compile Include="Assets\Scripts\Tilemap\GridTile.cs" />
-    <Compile Include="Assets\Scripts\Utils\Logger.cs" />
-    <Compile Include="Assets\Scripts\Utils\TraceData.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\CombatStanceButton.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyPreparingState.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

@@ -61,3 +61,4 @@ MonoBehaviour:
     NeutralIcon: {fileID: 21300000, guid: 3fb3e1b65914ffc45811c49bba7fa76f, type: 3}
     SandClockIcon: {fileID: 7967350256288085817, guid: 26e73af8dbba5124daea68cb16018671,
       type: 3}
+    HourglassIcon: {fileID: 21300000, guid: cd72681368dca48458f00ff269968a8f, type: 3}

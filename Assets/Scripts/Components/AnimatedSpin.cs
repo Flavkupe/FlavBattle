@@ -1,23 +1,43 @@
 ﻿using FlavBattle.Components;
+using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
 
 public class AnimatedSpin : CancellableAnimation
 {
-    public float Speed = 600.0f;
+    [Tooltip("If true, then this will just constantly spin around.")]
+    public bool Continuous = false;
 
-    public int Times = 3;
+    public float Speed = 600.0f;
 
     public Vector3 Axis;
 
+    [HideIf("Continuous")]
     public float SlowdownBase = 3.0f;
 
+    [HideIf("Continuous")]
+    public int Times = 3;
+
+    [HideIf("Continuous")]
     public bool FadeAndDestroyOnComplete;
+
+    [HideIf("Continuous")]
+    public float FadeDelay = 2.0f;
 
     [Tooltip("Which sort of acceleration is applied to the spin (mouse, gamespeed, etc). Defaults to all.")]
     public AccelOption Acceleration = AccelOption.MouseAndGameSpeed;
 
-    public float FadeDelay = 2.0f;
+    private void Update()
+    {
+        if (!Continuous)
+        {
+            return;
+        }
+
+        var delta = TimeUtils.AdjustedDelta(Acceleration);
+        var rate = Speed * delta;
+        this.transform.Rotate(Axis, rate);
+    }
 
     protected override IEnumerator DoAnimation()
     {

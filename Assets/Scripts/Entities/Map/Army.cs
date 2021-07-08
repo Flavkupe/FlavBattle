@@ -89,6 +89,16 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
     public bool IsFleeing { get; private set; } = false;
 
     /// <summary>
+    /// Army is stuck preparing, such as after winning a battle.
+    /// </summary>
+    public bool IsPreparing { get; private set; } = false;
+
+    /// <summary>
+    /// How many seconds it takes for the preparation to finish
+    /// </summary>
+    public float PreparationTime { get; private set; } = 1.0f; 
+
+    /// <summary>
     /// Whether the army is no longer part of the map, either due
     /// to having fled or having been destroyed in combat
     /// </summary>
@@ -128,6 +138,13 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
     public Morale Morale { get; } = new Morale();
 
     public GameObject FlagIcon;
+
+    /// <summary>
+    /// Icon used to show special status like waiting or preparing.
+    /// </summary>
+    [Required]
+    [SerializeField]
+    private SpriteRenderer _spinningIcon;
 
     private bool _paused = false;
 
@@ -325,6 +342,28 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
         {
             FlagIcon.Hide();
         }
+    }
+
+    public void SetPreparing(bool preparing)
+    {
+        // TODO: compute prep time
+        IsPreparing = preparing;
+
+        if (_spinningIcon == null)
+        {
+            return;
+        }
+
+        if (preparing)
+        {
+            _spinningIcon.sprite = GRM.CommonSprites.HourglassIcon;
+            _spinningIcon.gameObject.Show();
+        }
+        else
+        {
+            _spinningIcon.gameObject.Hide();
+        }
+
     }
 
     public void SetPaused(bool pause)

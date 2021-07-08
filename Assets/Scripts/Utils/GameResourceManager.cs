@@ -93,6 +93,11 @@ public class GameResourceManager : SingletonObject<GameResourceManager>
         [Required]
         [AllowNesting]
         public Sprite SandClockIcon;
+
+        [Tooltip("Alternative sand clock icon")]
+        [Required]
+        [AllowNesting]
+        public Sprite HourglassIcon;
     }
 
     [BoxGroup("Sounds")]

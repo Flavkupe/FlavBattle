@@ -51,6 +51,12 @@ public class BattleStatus
     public BattleDisplay BattleDisplay { get; }
     public BattleUIPanel BattleUIPanel { get; }
 
+    /// <summary>
+    /// Whether or not the player's stance is locked. If
+    /// false, it will prompt for a stance change on the next turn.
+    /// </summary>
+    public bool IsStanceLocked { get; set; }
+
     public BattleStatus(GameEventManager gem, BattleDisplay bd, BattleUIPanel buip)
     {
         this.GameEventManager = gem;

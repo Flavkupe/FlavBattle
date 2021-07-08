@@ -21,11 +21,6 @@ public class UIManager : MonoBehaviour
 
     private GameEventManager _gameEvents;
 
-    private void Awake()
-    {
-
-    }
-
     void Start()
     {
         ArmyEditWindow.Hide();
