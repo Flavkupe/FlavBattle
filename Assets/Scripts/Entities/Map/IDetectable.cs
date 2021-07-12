@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Components;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,16 +13,10 @@ public enum DetectableType
     MouseClick = 4,
 }
 
-public interface IDetectable
+/// <summary>
+/// Interface for an object that can be detected by a Detector.
+/// </summary>
+public interface IDetectable : IHasGameObject
 {
-    GameObject GetObject();
     DetectableType Type { get; }
-}
-
-public static class IDetectableExtensions
-{
-    public static T GetComponent<T>(this IDetectable obj) where T : Component 
-    {
-        return obj.GetObject()?.GetComponent<T>();
-    }
 }

@@ -1,15 +1,11 @@
 ﻿using NaughtyAttributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace FlavBattle.Entities.Map
 {
     /// <summary>
-    /// A child component that can be used to "detect" a parent component
+    /// A child component that can be used to "detect" a different component.
+    /// For example, for a child component of Army to detect the Army object itself.
     /// </summary>
     public class SubDetectable : MonoBehaviour, IDetectable
     {

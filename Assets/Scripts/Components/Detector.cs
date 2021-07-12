@@ -4,6 +4,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using System;
 using System.Linq;
+using FlavBattle.Components;
 
 public class Detector : MonoBehaviour
 {
@@ -13,12 +14,22 @@ public class Detector : MonoBehaviour
     public event EventHandler<GameObject> Exited;
     public event EventHandler<MouseButton> Clicked;
 
+    private List<ITrackableObject> _trackedObjects = new List<ITrackableObject>();
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var other = collision.GetComponent<IDetectable>();
         if (other != null && other.Type == this.Detects)
         {
+            var obj = other.GetObject();
             Detected?.Invoke(this, other.GetObject());
+
+            var trackable = obj.GetComponent<ITrackableObject>();
+            if (trackable != null)
+            {
+                _trackedObjects.Add(trackable);
+                trackable.Destroyed += HandleTrackableDestroyed;
+            }
         }
     }
 
@@ -27,7 +38,15 @@ public class Detector : MonoBehaviour
         var other = collision.GetComponent<IDetectable>();
         if (other != null && other.Type == this.Detects)
         {
-            Exited?.Invoke(this, other.GetObject());
+            var obj = other.GetObject();
+            Exited?.Invoke(this, obj);
+
+            var trackable = obj.GetComponent<ITrackableObject>();
+            if (trackable != null)
+            {
+                _trackedObjects.Remove(trackable);
+                trackable.Destroyed -= HandleTrackableDestroyed;
+            }
         }
     }
 
@@ -44,6 +63,18 @@ public class Detector : MonoBehaviour
                 Clicked?.Invoke(this, MouseButton.RightButton);
             }
         }
+    }
+
+    /// <summary>
+    /// Handles situation where trackable object becomes destroyed before
+    /// exiting the Detector
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void HandleTrackableDestroyed(object sender, ITrackableObject e)
+    {
+        _trackedObjects.Remove(e);
+        Exited.Invoke(sender, e.GetObject());
     }
 
     public T[] GetDetected<T>() where T : MonoBehaviour

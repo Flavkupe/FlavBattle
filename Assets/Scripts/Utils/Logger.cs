@@ -17,6 +17,7 @@ public enum LogType
     Combat = 2,
     State = 4,
     GameEvents = 8,
+    Init = 16,
 }
 
 public class Logger : SingletonObject<Logger>

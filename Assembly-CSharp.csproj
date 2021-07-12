@@ -131,6 +131,7 @@
     <Compile Include="Assets\Scripts\UI\Components\NameTag.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\MoraleIcon.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyPreparingState.cs" />
     <Compile Include="Assets\Scripts\Utils\Enums.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\PerkData.cs" />
     <Compile Include="Assets\Scripts\External\ArcCollider2D.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Assets\Scripts\UI\Combat\ArmyMoraleBar.cs" />
     <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
     <Compile Include="Assets\Scripts\Utils\SingletonObject.cs" />
+    <Compile Include="Assets\Scripts\UI\Combat\CombatStanceButton.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\DropTarget.cs" />
     <Compile Include="Assets\Scripts\State\Triggers\TileTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGrid.cs" />
@@ -253,8 +255,10 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\UI\Combat\CombatStanceButton.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\State\ArmyPreparingState.cs" />
+    <Compile Include="Assets\Scripts\Components\BezierCurve.cs" />
+    <Compile Include="Assets\Scripts\Components\IHasGameObject.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyTracker.cs" />
+    <Compile Include="Assets\Scripts\Components\ITrackableObject.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

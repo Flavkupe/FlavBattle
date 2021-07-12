@@ -47,4 +47,3 @@ public class Bezier
         return GetFirstDerivative(t).normalized;
     }
 }
-

@@ -1,4 +1,5 @@
 ﻿using FlavBattle.Combat.Event;
+using FlavBattle.Components;
 using FlavBattle.Entities.Data;
 using FlavBattle.Pathfinding;
 using FlavBattle.State;
@@ -35,7 +36,7 @@ public class ExitTileEventArgs : EventArgs
     public GameObject Tile;
 }
 
-public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
+public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
 {
     [Serializable]
     private class Detectors
@@ -70,7 +71,11 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
 
     public event EventHandler<ExitTileEventArgs> ExitTile;
 
-    public event EventHandler ArmyDestroyed;
+    public event EventHandler<ITrackableObject> Destroyed;
+
+    public event Action Selected;
+
+    public event Action Deselected;
 
     [SerializeField]
     private Detectors _detectors;
@@ -80,6 +85,7 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
     private TilemapManager _map = null;
 
     private bool _selected = false;
+    public bool IsSelected => _selected;
 
     private GridTile _currentTile = null;
     private Vector3Int _currentTileCoords;
@@ -158,7 +164,7 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
 
     void Start()
     {
-        _detectors.AttackRangeDetector.Detected += ArmyDetectorDetected;
+        _detectors.AttackRangeDetector.Detected += AttackRangeDetectorDetected;
         _detectors.TileDetector.Detected += TileDetectorEntered;
         _detectors.TileDetector.Exited += TileDetectorExited;
         _detectors.ClickDetector.Clicked += HandleDetectorClicked;
@@ -219,7 +225,7 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
         }
     }
 
-    private void ArmyDetectorDetected(object sender, GameObject e)
+    private void AttackRangeDetectorDetected(object sender, GameObject e)
     {
         var otherArmy = e.GetComponent<Army>();
         if (otherArmy != null)
@@ -237,6 +243,7 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
         _selected = true;
         this.SetFootprints();
         Animation.SetColor(Color.cyan);
+        Selected?.Invoke();
     }
 
     public void Unselect()
@@ -244,6 +251,7 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
         _selected = false;
         this._map.Footprints.Clear();
         Animation.SetColor(Color.white);
+        Deselected?.Invoke();
     }
 
     public void CopyFrom(IArmy army)
@@ -414,10 +422,11 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
         this._destination = position;
     }
 
+    [ContextMenu("Destroy Army")]
     public void DestroyArmy()
     {
         IsDestroyed = true;
-        ArmyDestroyed?.Invoke(this, EventArgs.Empty);
+        Destroyed?.Invoke(this, this);
         this.gameObject.SetActive(false);
     }
 
@@ -551,5 +560,10 @@ public class Army : MonoBehaviour, IArmy, ICombatArmy, IHasTraceData
         var data = TraceData.ChildTrace($"Army [{this.name}]", unitTraces.ToArray());
         data.Key = this.ID;
         return data;
+    }
+
+    public GameObject GetObject()
+    {
+        return this.gameObject;
     }
 }

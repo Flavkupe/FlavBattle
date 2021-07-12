@@ -39,4 +39,15 @@ public static class ArmyExtensions
 
         return army.Formation.GetUnits(liveOnly);
     }
+
+    public static bool SameFaction(this IArmy army, IArmy other)
+    {
+        if (army == null || other == null || 
+            army?.Faction?.Faction == null || other?.Faction?.Faction == null)
+        {
+            return false;
+        }
+
+        return army.Faction.Faction == other.Faction.Faction;
+    }
 }

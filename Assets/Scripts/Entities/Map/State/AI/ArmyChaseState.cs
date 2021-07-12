@@ -48,7 +48,7 @@ namespace FlavBattle.Entities.Map.State
         {
             var detected = false;
             foreach (var other in _chaseRange.GetDetected<Army>(DetectableType.Army)) {
-                if (other != null && other.Faction.Faction != army.Faction.Faction)
+                if (other != null && army.SameFaction(other))
                 {
                     detected = true;
                     _target = other.gameObject;
