@@ -302,7 +302,8 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
         yield return StartCoroutine(Animation.FadeAway());
         if (destroyOnVanish)
         {
-            Destroy(this.gameObject, 0.5f);
+            // Destroy(this.gameObject, 0.5f);
+            DestroyArmy();
         }
     }
 
@@ -422,6 +423,11 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
         this._destination = position;
     }
 
+    /// <summary>
+    /// Marks the army as destroyed and fires the Destroyed event,
+    /// then setting the object as inactive. Basically deactivates
+    /// the army without destroying the gameObject.
+    /// </summary>
     [ContextMenu("Destroy Army")]
     public void DestroyArmy()
     {

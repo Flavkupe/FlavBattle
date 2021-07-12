@@ -73,8 +73,9 @@ public class Detector : MonoBehaviour
     /// <param name="e"></param>
     private void HandleTrackableDestroyed(object sender, ITrackableObject e)
     {
+        e.Destroyed -= HandleTrackableDestroyed;
         _trackedObjects.Remove(e);
-        Exited.Invoke(sender, e.GetObject());
+        Exited?.Invoke(sender, e.GetObject());
     }
 
     public T[] GetDetected<T>() where T : MonoBehaviour
