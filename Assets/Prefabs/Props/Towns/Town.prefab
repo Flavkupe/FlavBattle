@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 5806486492491847271}
   - component: {fileID: 2669183095296874618}
   - component: {fileID: 6461374788667443946}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Town
   m_TagString: Untagged
   m_Icon: {fileID: 0}

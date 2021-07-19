@@ -11,6 +11,11 @@ public enum DetectableType
     Army = 1,
     Tile = 2,
     MouseClick = 4,
+
+    /// <summary>
+    /// Area that detemines whether two units are flanking you.
+    /// </summary>
+    FlankRegion = 8,
 }
 
 /// <summary>

@@ -62,15 +62,26 @@ public class TraceWindow : EditorWindow
     {
         var style = new GUIStyle(GUI.skin.label);
         EditorGUI.indentLevel = depth * LEFT_INDENT;
+
+        if (trace.Context != null)
+        {
+            EditorGUILayout.BeginHorizontal();
+        }
+
         if (trace.Detail != null)
         {
             style.richText = true;
-           
             EditorGUILayout.LabelField($"<b>{trace.Name}:</b> {trace.Detail}", style);
         }
         else
         {
             EditorGUILayout.LabelField(trace.Name, style);
+        }
+
+        if (trace.Context != null)
+        {
+            EditorGUILayout.ObjectField(trace.Context, typeof(GameObject), true);
+            EditorGUILayout.EndHorizontal();
         }
     }
 
@@ -80,8 +91,21 @@ public class TraceWindow : EditorWindow
         var key = parentKey != null ? $"{parentKey}_{identifier}" : identifier;
 
         EditorGUI.indentLevel = depth * LEFT_INDENT;
+
+        if (trace.Context != null)
+        {
+            EditorGUILayout.BeginHorizontal();
+        }
+
         var expanded = _expanded.Contains(key);
         expanded = EditorGUILayout.Foldout(expanded, trace.Name);
+
+        if (trace.Context != null)
+        {
+            EditorGUILayout.ObjectField(trace.Context, typeof(GameObject), true);
+            EditorGUILayout.EndHorizontal();
+        }
+
         if (expanded)
         {
             _expanded.Add(key);

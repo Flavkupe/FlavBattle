@@ -47,9 +47,11 @@ namespace FlavBattle.Entities.Map.State
         private bool DetectsEnemy(Army army)
         {
             var detected = false;
-            foreach (var other in _chaseRange.GetDetected<Army>(DetectableType.Army)) {
-                if (other != null && army.SameFaction(other))
+            foreach (var other in _chaseRange.GetDetected<Army>())
+            {
+                if (other != null && !army.SameFaction(other))
                 {
+                    Logger.Trace(LogType.State, $"[{army.name}] detected {other.name} for chase!", army.gameObject);
                     detected = true;
                     _target = other.gameObject;
                     break;

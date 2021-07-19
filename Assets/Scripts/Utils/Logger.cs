@@ -29,7 +29,7 @@ public class Logger : SingletonObject<Logger>
     public LogSeverity Severity;
 
 
-    private void Start()
+    private void Awake()
     {
         SetSingleton(this);
     }

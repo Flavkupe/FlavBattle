@@ -58,6 +58,18 @@ namespace FlavBattle.Trace
             return ChildTrace(name, null, data);
         }
 
+        public static TraceData ChildTraceWithContext(string name, UnityEngine.Object context, params TraceData[] data)
+        {
+            var trace = ChildTrace(name, null, data);
+            trace.Context = context;
+            return trace;
+        }
+
+        public void Add(TraceData data)
+        {
+            _data.Add(data);
+        }
+
         public IReadOnlyList<TraceData> Data => _data.AsReadOnly();
         private List<TraceData> _data = new List<TraceData>();
 
@@ -70,5 +82,7 @@ namespace FlavBattle.Trace
         public string Key { get; set; }
 
         public string Detail { get; set; }
+
+        public UnityEngine.Object Context { get; set; }
     }
 }

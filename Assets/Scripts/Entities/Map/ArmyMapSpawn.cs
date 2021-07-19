@@ -65,6 +65,16 @@ public class ArmyMapSpawn : MonoBehaviour
         army.SetFaction(Faction);
         army.transform.position = this.transform.position;
         army.Morale.Current = _startingMorale;
+
+        var unit = army.Formation?.GetOfficer();
+        if (unit == null)
+        {
+            unit = army.Formation.GetUnits(false).GetRandom();
+        }
+
+        var name = unit?.UnitName ?? "Empty";
+        army.name = $"Army [{name}]";
+
         return army;
     }
 }

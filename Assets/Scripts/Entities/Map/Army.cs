@@ -1,6 +1,7 @@
 ﻿using FlavBattle.Combat.Event;
 using FlavBattle.Components;
 using FlavBattle.Entities.Data;
+using FlavBattle.Map;
 using FlavBattle.Pathfinding;
 using FlavBattle.State;
 using FlavBattle.Tilemap;
@@ -563,7 +564,15 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
     public TraceData GetTrace()
     {
         var unitTraces = this.GetUnits(false).Select(a => a.GetTrace());
-        var data = TraceData.ChildTrace($"Army [{this.name}]", unitTraces.ToArray());
+        var data = TraceData.ChildTrace($"Army", unitTraces.ToArray());
+        data.Context = this.gameObject;
+
+        var tracker = this.GetComponentInChildren<ArmyTracker>();
+        if (tracker != null)
+        {
+            data.Add(tracker.GetTrace());
+        }
+
         data.Key = this.ID;
         return data;
     }
