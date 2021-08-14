@@ -464,6 +464,13 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
             else
             {
                 var tile = this._path.Nodes.Dequeue();
+                if (tile.Equals(_currentTile) && this._path.Nodes.Count > 0)
+                {
+                    // If we are already in the next tile and there are more tiles,
+                    // move on to the next one in the path. This can happen when repathing.
+                    tile = this._path.Nodes.Dequeue();
+                }
+
                 this.Animation.SetIdle(false);
                 this._destination = new Vector3(tile.WorldX, tile.WorldY, 0);
                 var facingLeft = tile.WorldX < this.transform.position.x;
