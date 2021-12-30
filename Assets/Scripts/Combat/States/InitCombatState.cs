@@ -54,7 +54,7 @@ public class InitCombatState : BattleStateBase
         state.Stage = BattleStatus.BattleStage.PreCombatStart;
     }
 
-    private IEnumerable<Combatant> CreateCombatants(BattleStatus state, IArmy allies, IArmy enemies, bool left)
+    private IEnumerable<Combatant> CreateCombatants(BattleStatus state, ICombatArmy allies, ICombatArmy enemies, bool left)
     {
         var combatFormation = left ? state.BattleDisplay.LeftFormation : state.BattleDisplay.RightFormation;
         return allies.Formation.GetOccupiedPositionInfo().Select(a => new Combatant(

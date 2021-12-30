@@ -37,9 +37,9 @@ public class BattleStatus
     public bool TurnExecuting { get; set; } = false;
 
     public BattleStage Stage { get; set; } = BattleStage.NotInCombat;
-    public IArmy PlayerArmy { get; set; }
-    public IArmy OtherArmy { get; set; }
-    public IArmy FleeingArmy { get; set; }    
+    public ICombatArmy PlayerArmy { get; set; }
+    public ICombatArmy OtherArmy { get; set; }
+    public ICombatArmy FleeingArmy { get; set; }    
     public int Round { get; set; } = 0;
     public List<Combatant> Combatants { get; } = new List<Combatant>();
     public Queue<Combatant> TurnQueue { get; } = new Queue<Combatant>();
@@ -192,7 +192,7 @@ public class BattleStatus
     /// Checks if any army should be fleeing.
     /// If so, returns the army. If not, returns null.
     /// </summary>
-    public IArmy CheckForFleeingArmy(int currentBout)
+    public ICombatArmy CheckForFleeingArmy(int currentBout)
     {
         // TODO: incorporate Leadership stat and bravery
         var playerMorale = PlayerArmy.Morale.Current;

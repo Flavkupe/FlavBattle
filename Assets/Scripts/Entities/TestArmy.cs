@@ -27,4 +27,14 @@ public class TestArmy : ICombatArmy
     public bool IsDestroyed => false;
 
     public IEnumerable<CombatConditionalEvent> CombatEvents => new List<CombatConditionalEvent>();
+
+    public IEnumerable<IArmy> GetFlankingArmies()
+    {
+        return new List<IArmy>();
+    }
+
+    public IEnumerable<IArmy> GetLinkedArmies()
+    {
+        return new List<IArmy>();
+    }
 }

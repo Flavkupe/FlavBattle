@@ -1,6 +1,7 @@
 ﻿using FlavBattle.Combat;
 using FlavBattle.Entities;
 using FlavBattle.Entities.Modifiers;
+using System.Linq;
 using System;
 
 public class Combatant
@@ -28,8 +29,8 @@ public class Combatant
     public CombatFormation CombatFormation;
     public CombatFormationSlot CombatFormationSlot { get; private set; }
 
-    public IArmy Enemies;
-    public IArmy Allies;
+    public ICombatArmy Enemies;
+    public ICombatArmy Allies;
 
     /// <summary>
     /// Visual stuff for this unit
@@ -104,6 +105,8 @@ public class Combatant
         // Cap starting morale to army morale
         Unit.Info.Morale.Current = Math.Min(Unit.Info.Morale.Current, Allies.Morale.Current);
 
+        AddNearbyArmyBonuses();
+
         this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatStart);
         RefreshStatChanges();
 
@@ -132,6 +135,29 @@ public class Combatant
         for (var i = 0; i < numBlockShields; i++)
         {
             this.CombatUnit.AddBuffIcon(CombatBuffIcon.BuffType.BlockShield);
+        }
+    }
+
+    private void AddNearbyArmyBonuses()
+    {
+        var linked = this.Allies.GetLinkedArmies();
+        var flanking = this.Allies.GetFlankingArmies();
+        var linkedNum = linked.Count();
+        var flankingNum = flanking.Count();
+        if (linkedNum > 0)
+        {
+            this.AddStatBuff("Allies nearby", new UnitStats()
+            {
+                Power = linkedNum
+            });
+        }
+
+        if (flankingNum > 0)
+        {
+            this.AddStatBuff("Flanked", new UnitStats()
+            {
+                Defense = flankingNum * -1
+            });
         }
     }
 }

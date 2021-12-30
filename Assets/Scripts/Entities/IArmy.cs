@@ -26,6 +26,10 @@ public interface IArmy : IOwnedEntity
 public interface ICombatArmy : IArmy
 {
     IEnumerable<CombatConditionalEvent> CombatEvents { get; }
+
+    IEnumerable<IArmy> GetFlankingArmies();
+
+    IEnumerable<IArmy> GetLinkedArmies();
 }
 
 public static class ArmyExtensions

@@ -19,6 +19,7 @@ namespace FlavBattle.Map
         {
             public Army Army;
             public BezierCurve Curve;
+            public bool Visible;
         }
 
         [SerializeField]
@@ -36,13 +37,43 @@ namespace FlavBattle.Map
         [Required]
         private BezierCurve _playerFlankCurveTemplate;
 
-        private List<Army> _allies = new List<Army>();
-        private List<Army> _enemies = new List<Army>();
+        /// <summary>
+        /// All allies in range (not just linked)
+        /// </summary>
+        private List<Army> _alliesInRange = new List<Army>();
+
+        /// <summary>
+        /// All enemies in range (not just flanking)
+        /// </summary>
+        private List<Army> _enemiesInRange = new List<Army>();
 
         private Army _army;
 
+        /// <summary>
+        /// Nearby allies that are actually linked (due to being close enough)
+        /// </summary>
         private HashSet<TrackedArmy> _linkedArmies = new HashSet<TrackedArmy>();
+
+        /// <summary>
+        /// Nearby enemies that are actually flanking this one.
+        /// </summary>
         private HashSet<TrackedArmy> _flankingArmies = new HashSet<TrackedArmy>();
+
+        /// <summary>
+        /// Gets armies that are flanking this one.
+        /// </summary>
+        public IEnumerable<IArmy> GetFlankingArmies()
+        {
+            return _flankingArmies.Select(a => a.Army);
+        }
+
+        /// <summary>
+        /// Gets armies that are linked to this one.
+        /// </summary>
+        public IEnumerable<IArmy> GetLinkedArmies()
+        {
+            return _linkedArmies.Select(a => a.Army);
+        }
 
         [SerializeField]
         [Tooltip("Area for which this army can link to other allies")]
@@ -81,16 +112,19 @@ namespace FlavBattle.Map
         {
             CheckFlanks();
 
-            foreach (var tracked in _linkedArmies)
-            {
-                // update curves
-                tracked.Curve.DrawCurveTo(tracked.Army.gameObject);
-            }
+            UpdateCurves(_linkedArmies);
+            UpdateCurves(_flankingArmies);
+        }
 
-            foreach (var tracked in _flankingArmies)
+        private void UpdateCurves(IEnumerable<TrackedArmy> list)
+        {
+            foreach (var tracked in list)
             {
-                // update curves
-                tracked.Curve.DrawCurveTo(tracked.Army.gameObject);
+                if (tracked.Visible)
+                {
+                    // update curves
+                    tracked.Curve.DrawCurveTo(tracked.Army.gameObject);
+                }
             }
         }
 
@@ -100,7 +134,7 @@ namespace FlavBattle.Map
         private void CheckFlanks()
         {
             _gizmoLines.Clear();
-            if (_enemies.Count < 2)
+            if (_enemiesInRange.Count < 2)
             {
                 // 2 or more enemies required for flank
                 ClearAllFlanks();
@@ -108,16 +142,15 @@ namespace FlavBattle.Map
             }
             
             var currentFlankingArmies = new HashSet<Army>();
-            foreach (var enemy in _enemies)
+            foreach (var enemy in _enemiesInRange)
             {
-                foreach (var otherEnemy in _enemies)
+                foreach (var otherEnemy in _enemiesInRange)
                 {
                     if (enemy == otherEnemy || currentFlankingArmies.Contains(otherEnemy))
                     {
                         // already checked this
                         continue;
                     }
-
 
                     var flanking = false;
                     if (AreFlanking(enemy, otherEnemy))
@@ -137,6 +170,11 @@ namespace FlavBattle.Map
 
         private void ClearAllFlanks()
         {
+            if (_flankingArmies.Count == 0)
+            {
+                return;
+            }
+
             foreach (var flank in _flankingArmies.ToList())
             {
                 StopTracking(_flankingArmies, flank.Army);
@@ -201,38 +239,42 @@ namespace FlavBattle.Map
 
         private void HandleArmyDeselected()
         {
-            foreach (var tracked in _linkedArmies)
-            {
-                Destroy(tracked.Curve.gameObject);
-            }
-
-            _linkedArmies.Clear();
+            HideTracking(_linkedArmies);
         }
 
         private void HandleSelected()
         {
-            if (_linkedArmies.Count > 0)
-            {
-                Logger.Warning(LogType.GameEvents, "Army selected twice!");
-                return;
-            }
-
-            foreach (var ally in _allies)
+            foreach (var ally in _alliesInRange)
             {
                 Track(_linkedArmies, ally, _allyCurveTemplate);
             }
         }
 
-        private void Track(ICollection<TrackedArmy> list, Army other, BezierCurve curveTemplate)
+        private void Track(ICollection<TrackedArmy> list, Army army, BezierCurve curveTemplate)
         {
-            var curve = Instantiate(curveTemplate, this.gameObject.transform);
-            curve.transform.localPosition = Vector3.zero;
-            curve.DrawCurveTo(other.gameObject);
-            list.Add(new TrackedArmy()
+            var tracked = list.FirstOrDefault(a => a.Army == army);
+            if (tracked != null)
             {
-                Army = other,
-                Curve = curve
-            });
+                tracked.Visible = true;
+            }
+            else
+            {
+                tracked = new TrackedArmy()
+                {
+                    Army = army,
+                    Visible = true,
+                };
+                
+                list.Add(tracked);
+            }
+
+            if (tracked.Curve == null)
+            {
+                var curve = Instantiate(curveTemplate, this.gameObject.transform);
+                curve.transform.localPosition = Vector3.zero;
+                curve.DrawCurveTo(army.gameObject);
+                tracked.Curve = curve;
+            }
         }
 
         private void StopTracking(ICollection<TrackedArmy> list, Army current)
@@ -240,8 +282,26 @@ namespace FlavBattle.Map
             var tracked = list.FirstOrDefault(a => a.Army == current);
             if (tracked != null)
             {
-                Destroy(tracked.Curve.gameObject);
+                DestroyCurve(tracked);
                 list.Remove(tracked);
+            }
+        }
+
+        private void HideTracking(ICollection<TrackedArmy> list)
+        {
+            foreach (var tracked in list)
+            {
+                DestroyCurve(tracked);
+                tracked.Visible = false;
+            }
+        }
+
+        private void DestroyCurve(TrackedArmy tracked)
+        {
+            if (tracked?.Curve?.gameObject != null)
+            {
+                Destroy(tracked.Curve.gameObject);
+                tracked.Curve = null;
             }
         }
 
@@ -255,7 +315,7 @@ namespace FlavBattle.Map
 
             if (other.SameFaction(_army))
             {
-                _allies.Add(other);
+                _alliesInRange.Add(other);
                 Logger.Trace(LogType.State, "Ally entered tracked range");
 
                 if (_army.IsSelected)
@@ -275,7 +335,7 @@ namespace FlavBattle.Map
 
             if (other.SameFaction(_army))
             {
-                _allies.Remove(other);
+                _alliesInRange.Remove(other);
                 Logger.Trace(LogType.State, "Ally no longer in range");
 
                 StopTracking(_linkedArmies, other);
@@ -292,7 +352,7 @@ namespace FlavBattle.Map
 
             if (!other.SameFaction(_army))
             {
-                _enemies.Add(other);
+                _enemiesInRange.Add(other);
                 Logger.Trace(LogType.State, "Enemy entered flank range", other);
             }
         }
@@ -307,7 +367,7 @@ namespace FlavBattle.Map
 
             if (!other.SameFaction(_army))
             {
-                _enemies.Remove(other);
+                _enemiesInRange.Remove(other);
                 Logger.Trace(LogType.State, "Enemy left flank range", other);
 
                 StopTracking(_flankingArmies, other);
@@ -345,8 +405,8 @@ namespace FlavBattle.Map
 
         public TraceData GetTrace()
         {
-            var allies = _allies.Select(a => TraceData.ChildTraceWithContext(a.name, a.gameObject));
-            var enemies = _enemies.Select(a => TraceData.ChildTraceWithContext(a.name, a.gameObject));
+            var allies = _alliesInRange.Select(a => TraceData.ChildTraceWithContext(a.name, a.gameObject));
+            var enemies = _enemiesInRange.Select(a => TraceData.ChildTraceWithContext(a.name, a.gameObject));
 
             var linkedArmies = new List<TraceData>();
             foreach (var item in _linkedArmies)

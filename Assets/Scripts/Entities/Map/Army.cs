@@ -588,4 +588,26 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
     {
         return this.gameObject;
     }
+
+    public IEnumerable<IArmy> GetFlankingArmies()
+    {
+        var tracker = this.GetComponentInChildren<ArmyTracker>();
+        if (tracker != null)
+        {
+            return tracker.GetFlankingArmies();
+        }
+
+        return new List<IArmy>();
+    }
+
+    public IEnumerable<IArmy> GetLinkedArmies()
+    {
+        var tracker = this.GetComponentInChildren<ArmyTracker>();
+        if (tracker != null)
+        {
+            return tracker.GetLinkedArmies();
+        }
+
+        return new List<IArmy>();
+    }
 }
