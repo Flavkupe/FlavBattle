@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using FlavBattle.Resources;
 
 public class Town : MonoBehaviour, IDetectable, IOwnedEntity
 {
@@ -13,6 +14,8 @@ public class Town : MonoBehaviour, IDetectable, IOwnedEntity
 
     [Required]
     public FloatingText RedTextTemplate;
+
+    public StringResource TestStr;
 
     public DetectableType Type => DetectableType.Tile;
 

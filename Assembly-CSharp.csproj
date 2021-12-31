@@ -47,13 +47,10 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.9</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2021.1.16f1</UnityVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <CodeAnalysisRuleSet></CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="E:\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
@@ -207,6 +204,7 @@
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedBounce.cs" />
+    <Compile Include="Assets\Scripts\Utils\StringResource.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
@@ -272,6 +270,7 @@
     <None Include="Assets\External\PixelFonts\ReadMe.txt" />
     <None Include="Assets\External\DawnLike\README.txt" />
     <None Include="Assets\External\AssetIcons\Demo\Demos\Docs Demo\demo.txt.txt" />
+    <None Include="Assets\Resources\BillingMode.json" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\External\Shikashi&apos;s Fantasy Icons Pack\Shikashi&apos;s Fantasy Icons Pack.txt" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
@@ -283,12 +282,15 @@
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\External\AssetIcons\Demo\Demos\Docs Demo\text.txt.txt" />
     <None Include="Assets\External\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\External\NaughtyAttributes\package.json" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\External\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\External\TextMesh Pro\Sprites\EmojiOne.json" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\Resources\Strings\strings.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -526,7 +528,7 @@
       <HintPath>Library\PackageCache\com.unity.analytics@3.5.3\AnalyticsStandardEvents\Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="clipper_library">
-      <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.4\Runtime\ThirdParty\clipper_library.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.cinemachine@2.7.5\Runtime\ThirdParty\clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
@@ -923,9 +925,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.InputSystem">
-      <HintPath>Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>

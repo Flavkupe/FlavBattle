@@ -1,0 +1,16 @@
+{
+  "General": {
+    "str1": "hello",
+    "str2": "world!",
+    "woo": "wee!",
+    "wei": "woo"
+  },
+  "Dialog": {
+    "STAGE_1_PLAYER_REMARK1": "sup yoooo",
+    "STAGE_1_PLAYER_REMARK2": "yo dawg"
+  },
+  "UI": {
+    "VICTORY": "Victory!!!",
+    "DEPLOY": "Deploy"
+  }
+}
