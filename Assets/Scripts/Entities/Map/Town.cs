@@ -15,8 +15,6 @@ public class Town : MonoBehaviour, IDetectable, IOwnedEntity
     [Required]
     public FloatingText RedTextTemplate;
 
-    public StringResource TestStr;
-
     public DetectableType Type => DetectableType.Tile;
 
     public FactionData Faction { get; private set; }

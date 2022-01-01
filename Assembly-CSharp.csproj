@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,9 +52,6 @@
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2021.1.16f1</UnityVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Analyzer Include="E:\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
@@ -261,6 +258,7 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
+    <Compile Include="Assets\Scripts\UI\Components\TextFromResources.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

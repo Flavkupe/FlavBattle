@@ -6,61 +6,112 @@ using System.Linq;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System.IO;
+using System;
 
 [CustomPropertyDrawer(typeof(StringResource))]
 public class StringResourceAttributeDrawer : PropertyDrawer
 {
-    private StringResourceMap _resources = null;
+    private static StringResourceMap _resources = null;
 
     private float _fieldHeight = EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
     private string _currentText = null;
 
+    private int _indent = 8;
+    private int _padding = 4;
+
+    private bool _toggle = false;
+
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        return _fieldHeight * 4;
+        return _toggle ? _fieldHeight * 4 : _fieldHeight;
     }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        var valueChanged = false;
-
-        // width for controls, based on original allocation
-        var width = position.width / 2.0f;
-        var halfWidth = width / 2.0f;
-
         if (_resources == null)
         {
             this.Refresh();
         }
 
         var rectHeight = GetPropertyHeight(property, label);
-        position = new Rect(position.x, position.y, position.width, rectHeight);
 
         EditorGUI.BeginProperty(position, label, property);
 
-        position = EditorGUI.PrefixLabel(position, label);
+        var foldoutPos = new Rect(position.x, position.y, position.width, _fieldHeight);
+        
+        _toggle = EditorGUI.Foldout(foldoutPos, _toggle, label, true);
+
+        // var position = new Rect(position.x + _indent, position.y, position.width, rectHeight);
 
         var indent = EditorGUI.indentLevel;
         EditorGUI.indentLevel = 0;
 
-        var updateTextButtonWidth = 60;
-
-        var categoryRect = new Rect(position.x, position.y + _fieldHeight, halfWidth, _fieldHeight);
-        var buttonRect = new Rect(position.x + halfWidth + 5, position.y + _fieldHeight, 70, _fieldHeight);
-        var keyRect = new Rect(position.x, position.y + (2 * _fieldHeight), width, _fieldHeight);
-        var textRect = new Rect(position.x, position.y + (3 * _fieldHeight), width, _fieldHeight);
-        var updateTextRect = new Rect(position.x + width, position.y + (3 * _fieldHeight), updateTextButtonWidth, _fieldHeight);
-
+        // get actual values of props
         var categoryProp = property.FindPropertyRelative(nameof(StringResource.Category));
         var keyProp = property.FindPropertyRelative(nameof(StringResource.Key));
-        var currentKey = keyProp.stringValue;
 
+        if (_toggle)
+        {
+            RenderExpandedView(position, categoryProp, keyProp);
+        }
+        else
+        {
+            RenderSimplifiedView(position, categoryProp, keyProp);
+        }
+
+        EditorGUI.indentLevel = indent;
+
+        EditorGUI.EndProperty();
+    }
+
+    private StringResourceCategory GetCategoryFromProp(SerializedProperty categoryProp)
+    {
         var currentCategory = StringResourceCategory.General;
         if (categoryProp.enumValueIndex != -1)
         {
             currentCategory = (StringResourceCategory)categoryProp.enumValueIndex;
         }
+
+        return currentCategory;
+    }
+
+    private void RenderSimplifiedView(Rect position, SerializedProperty categoryProp, SerializedProperty keyProp)
+    {
+        var currentKey = keyProp.stringValue;
+        var currentCategory = GetCategoryFromProp(categoryProp);
+        _currentText = string.Empty;
+        if (!string.IsNullOrEmpty(currentKey))
+        {
+            _currentText = _resources.Get(currentCategory, currentKey) ?? string.Empty;
+        }
+
+        var width = position.width;
+        var labelWidth = EditorGUIUtility.labelWidth;
+
+        var textRect = new Rect(position.x + labelWidth, position.y, width - labelWidth, _fieldHeight);
+
+        _currentText = EditorGUI.TextArea(textRect, _currentText);
+    }
+
+
+    private void RenderExpandedView(Rect position, SerializedProperty categoryProp, SerializedProperty keyProp)
+    {
+        var currentKey = keyProp.stringValue;
+        var currentCategory = GetCategoryFromProp(categoryProp);
+
+        var valueChanged = false;
+
+        // width for controls, based on original allocation
+        var width = position.width - _indent;
+        var buttonWidth = Math.Min(60.0f, width / 4.0f);
+        var widthMinusButton = width - buttonWidth;
+
+        var categoryRect = new Rect(position.x, position.y + _fieldHeight, widthMinusButton - _padding, _fieldHeight);
+        var buttonRect = new Rect(position.x + widthMinusButton, position.y + _fieldHeight, buttonWidth, _fieldHeight - 2);
+        var keyRect = new Rect(position.x, position.y + (2 * _fieldHeight), width, _fieldHeight);
+        var textRect = new Rect(position.x, position.y + (3 * _fieldHeight), widthMinusButton - _padding, _fieldHeight);
+        var updateTextRect = new Rect(position.x + widthMinusButton, position.y + (3 * _fieldHeight), buttonWidth, _fieldHeight - 2);
 
         currentCategory = (StringResourceCategory)EditorGUI.EnumPopup(categoryRect, currentCategory);
 
@@ -73,7 +124,7 @@ public class StringResourceAttributeDrawer : PropertyDrawer
         if (GUI.Button(buttonRect, "Refresh"))
         {
             this.Refresh();
-            return;
+            valueChanged = true;
         }
 
         var keys = _resources.GetKeys(currentCategory).ToList();
@@ -102,34 +153,18 @@ public class StringResourceAttributeDrawer : PropertyDrawer
 
         if (GUI.Button(updateTextRect, "Change"))
         {
-            this.WriteToFile(currentCategory, currentKey, _currentText);
+            ChangeString(currentCategory, currentKey);
             return;
         }
-
-        EditorGUI.indentLevel = indent;
-
-        EditorGUI.EndProperty();
-    }
-
-    private void WriteToFile(StringResourceCategory category, string key, string content)
-    {
-        var textAsset = StringResources.GetTextAsset();
-        if (textAsset == null) 
-        {
-            Debug.LogWarning("Error getting text asset");
-            return;
-        }
-
-        _resources.Set(category, key, content);
-        var json = _resources.ToJSON();
-
-        File.WriteAllText(AssetDatabase.GetAssetPath(textAsset), json);
-
-        StringResources.UpdateStrings(_resources);
     }
 
     private void Refresh()
     {
-        _resources = StringResources.GetStrings(true);
+        _resources = StringResources.GetStrings();
+    }
+
+    private void ChangeString(StringResourceCategory category, string key)
+    {
+        ResourceUtils.WriteToFile(_resources, category, key, _currentText);
     }
 }

@@ -1,13 +1,14 @@
 {
   "General": {
-    "str1": "hello",
-    "str2": "world!",
-    "woo": "wee!",
-    "wei": "woo"
+    "str1": "helloo",
+    "str2": "world!!!!!",
+    "woo": "hellooo",
+    "wei": "woo",
+    "newstr": "hello world"
   },
   "Dialog": {
     "STAGE_1_PLAYER_REMARK1": "sup yoooo",
-    "STAGE_1_PLAYER_REMARK2": "yo dawg"
+    "STAGE_1_PLAYER_REMARK2": "yo dawgggg"
   },
   "UI": {
     "VICTORY": "Victory!!!",
