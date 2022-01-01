@@ -13,5 +13,21 @@
   "UI": {
     "VICTORY": "Victory!!!",
     "DEPLOY": "Deploy"
+  },
+  "Actions": {
+    "ACTION_SWING_NAME": "Swing",
+    "ACTION_SLASH_NAME": "Slash",
+    "ACTION_CHOP_NAME": "Chop",
+    "ACTION_HEAVY_CHOP_NAME": "Heavy Chop",
+    "ACTION_IDLE_NAME": "Idle",
+    "ACTION_BASH_NAME": "Bash",
+    "ACTION_POKE_NAME": "Poke",
+    "ACTION_WITHDRAW_NAME": "Withdraw",
+    "ACTION_ARROW_NAME": "Arrow",
+    "ACTION_INTIMIDATE_NAME": "Intimidate",
+    "ACTION_BUFF_ALL_NAME": "Buff Attack",
+    "ACTION_DEFENSE_NAME": "Buff Defense",
+    "ACTION_SPEED_NAME": "Buff Speed",
+    "ACTION_BUFF_ATTACK_NAME": "Buff Attack"
   }
 }

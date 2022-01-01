@@ -16,6 +16,7 @@ namespace FlavBattle.Resources
         General = 0,
         Dialog = 1,
         UI = 2,
+        Actions = 3,
     }
 
     [Serializable]
@@ -48,18 +49,23 @@ namespace FlavBattle.Resources
 
         public void Set(StringResourceCategory category, string key, string value)
         {
-            if (!_values.ContainsKey(category)) 
+            if (!_values.ContainsKey(category) || !_sortedKeys.ContainsKey(category)) 
             {
-                _values[category] = new CategoryMap();    
-            }
-
-            if (!_sortedKeys.ContainsKey(category))
-            {
-                _sortedKeys[category] = new SortedSet<string>();
+                InitCategory(category);
             }
 
             _sortedKeys[category].Add(key);
             _values[category][key] = value;
+        }
+
+        /// <summary>
+        /// Sets category to empty map. Used to initialize when no keys exist.
+        /// </summary>
+        /// <param name="category"></param>
+        public void InitCategory(StringResourceCategory category)
+        {
+            _values[category] = new CategoryMap();
+            _sortedKeys[category] = new SortedSet<string>();
         }
 
         private CategoryMap GetCategoryMap(StringResourceCategory category)
@@ -110,7 +116,6 @@ namespace FlavBattle.Resources
 
         public IEnumerable<string> GetKeys(StringResourceCategory category)
         {
-
             var set = _sortedKeys.GetValueOrDefault(category);
             if (set == null)
             {
@@ -159,9 +164,9 @@ namespace FlavBattle.Resources
         /// <param name="refresh">If false, will get cached value of strings if available. If true,
         /// will acquire and parse it (such as if it's expected to be updated).</param>
         /// <returns></returns>
-        public static StringResourceMap GetStrings()
+        public static StringResourceMap GetStrings(bool forceReset = false)
         {
-            if (_cache != null)
+            if (_cache != null && !forceReset)
             {
                 return _cache;
             }
@@ -174,7 +179,14 @@ namespace FlavBattle.Resources
             
             foreach (StringResourceCategory categoryType in Enum.GetValues(typeof(StringResourceCategory)))
             {
-                var category = parsed[categoryType.ToString()];
+                var key = categoryType.ToString();
+                if (!parsed.ContainsKey(key))
+                {
+                    resources.InitCategory(categoryType);
+                    continue;
+                }
+
+                var category = parsed[key];
                 if (category == null) {
                     Debug.LogWarning($"Warning: No category found in strings for {categoryType}");
                     continue;

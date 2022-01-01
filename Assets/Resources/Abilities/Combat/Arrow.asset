@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
-  Name: Arrow
+  _displayName:
+    Category: 3
+    Key: ACTION_ARROW_NAME
   Type: 0
-  Priority: 2
   Icon: {fileID: -8744202859135705330, guid: 890ac31627622784db63d90992e2476a, type: 3}
   VisualEffect: 0
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
   TraceDirection: 1
+  AnimateName: 0
   ProjectileSpeed: 8
   ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
     type: 3}
@@ -48,13 +50,13 @@ MonoBehaviour:
   Damage: {x: 2, y: 2}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
-    HP: 0
-    Power: 0
-    Defense: 0
-    Speed: 0
-    Level: 1
-    StartingBlockShields: 0
-    Command: 0
+    _hp: 0
+    _power: 0
+    _defense: 0
+    _speed: 0
+    _level: 1
+    _command: 0
+  StatusEffectDuration: 0
   StartSoundClips:
   - {fileID: 8300000, guid: c543a4a0e7af82f4e9a9434ef1a3fe78, type: 3}
   - {fileID: 8300000, guid: 2cbbc258d080834448f34539c20a038e, type: 3}

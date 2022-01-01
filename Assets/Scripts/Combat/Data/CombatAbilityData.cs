@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using FlavBattle.Combat;
+using FlavBattle.Resources;
 
 public enum CombatAbilityType
 {
@@ -115,7 +116,10 @@ public class CombatCharacterAnimations
 [CreateAssetMenu(fileName = "Ability", menuName = "Custom/Abilities/Combat Ability Data", order = 1)]
 public class CombatAbilityData : ScriptableObject
 {
-    public string Name;
+    public string Name => _displayName.Text;
+
+    [SerializeField]
+    private StringResource _displayName;
 
     public CombatAbilityType Type = CombatAbilityType.Attack;
 

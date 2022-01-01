@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: Buff Defense Self
   m_EditorClassIdentifier: 
-  Name: Turtle Up
+  _displayName:
+    Category: 3
+    Key: ACTION_DEFENSE_NAME
   Type: 1
   Icon: {fileID: -365713202386560821, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
   VisualEffect: 2

@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: Pitchfork
   m_EditorClassIdentifier: 
-  Name: Poke
+  _displayName:
+    Category: 3
+    Key: ACTION_POKE_NAME
   Type: 0
-  Priority: 2
   Icon: {fileID: 8489008546353363541, guid: 8902c50addbd07d47910008df2ae7591, type: 3}
   VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
   TraceDirection: 0
+  AnimateName: 0
   ProjectileSpeed: 0
   ProjectileObject: {fileID: 0}
   CharacterMove: 1
@@ -47,13 +49,13 @@ MonoBehaviour:
   Damage: {x: 2, y: 2}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
-    HP: 0
-    Power: 0
-    Defense: 0
-    Speed: 0
-    Level: 1
-    StartingBlockShields: 0
-    Command: 0
+    _hp: 0
+    _power: 0
+    _defense: 0
+    _speed: 0
+    _level: 1
+    _command: 0
+  StatusEffectDuration: 0
   StartSoundClips: []
   PreHitSoundClips: []
   HitSoundClips: []

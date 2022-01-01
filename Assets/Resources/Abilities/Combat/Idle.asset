@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: Idle
   m_EditorClassIdentifier: 
-  Name: No moves
+  _displayName:
+    Category: 3
+    Key: ACTION_IDLE_NAME
   Type: 2
-  Priority: 0
-  Target: 1
-  ValidTargets: 0
-  PreferredTargets: 1
+  Icon: {fileID: 0}
   VisualEffect: 1
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
   TraceDirection: 1
+  AnimateName: 0
   ProjectileSpeed: 15
   ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
     type: 3}
@@ -33,8 +33,12 @@ MonoBehaviour:
   CharacterMoveSpeed: 40
   ComabtAnimation: {fileID: 285175196612671447, guid: 74ef84dc7e14ea64da1308c4a3ff1ebe,
     type: 3}
+  _animatorTriggerName: 0
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
+  WaitForCompletion: 1
+  CombatAnimationTarget: 0
+  AnimationSequence: 0
   PreAttackAnimations:
     Type: 0
     WaitForCompletion: 0
@@ -45,4 +49,16 @@ MonoBehaviour:
     Animations: []
   Effect: 0
   Damage: {x: 2, y: 4}
-  MoraleDamage: 0
+  MoraleDamage: {x: 0, y: 0}
+  StatusEffect:
+    _hp: 0
+    _power: 0
+    _defense: 0
+    _speed: 0
+    _level: 1
+    _command: 0
+  StatusEffectDuration: 0
+  StartSoundClips: []
+  PreHitSoundClips: []
+  HitSoundClips: []
+  EndSoundClips: []

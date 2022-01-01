@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: Buff Speed All
   m_EditorClassIdentifier: 
-  Name: Buff Speed All
+  _displayName:
+    Category: 3
+    Key: ACTION_SPEED_NAME
   Type: 1
   Icon: {fileID: 8238237791709833633, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
   VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
   TraceDirection: 0
+  AnimateName: 0
   ProjectileSpeed: 0
   ProjectileObject: {fileID: 0}
   CharacterMove: 0

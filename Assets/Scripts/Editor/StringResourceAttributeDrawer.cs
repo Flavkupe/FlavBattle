@@ -160,7 +160,7 @@ public class StringResourceAttributeDrawer : PropertyDrawer
 
     private void Refresh()
     {
-        _resources = StringResources.GetStrings();
+        _resources = StringResources.GetStrings(true);
     }
 
     private void ChangeString(StringResourceCategory category, string key)

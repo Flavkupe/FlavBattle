@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: LightClubBash
   m_EditorClassIdentifier: 
-  Name: Club
+  _displayName:
+    Category: 3
+    Key: ACTION_BASH_NAME
   Type: 0
   Icon: {fileID: 21300000, guid: 4798087309cd04d44aed5806f1b9b362, type: 3}
   VisualEffect: 1
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}
   TraceDirection: 1
+  AnimateName: 0
   ProjectileSpeed: 15
   ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
     type: 3}
@@ -48,13 +51,12 @@ MonoBehaviour:
   Damage: {x: 1, y: 1}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
-    HP: 0
-    Power: 0
-    Defense: 0
-    Speed: 0
-    Level: 1
-    StartingBlockShields: 0
-    Command: 0
+    _hp: 0
+    _power: 0
+    _defense: 0
+    _speed: 0
+    _level: 1
+    _command: 0
   StatusEffectDuration: 0
   StartSoundClips: []
   PreHitSoundClips:

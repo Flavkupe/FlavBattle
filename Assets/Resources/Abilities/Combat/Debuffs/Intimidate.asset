@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
   m_Name: Intimidate
   m_EditorClassIdentifier: 
-  Name: Intimidate
+  _displayName:
+    Category: 3
+    Key: ACTION_INTIMIDATE_NAME
   Type: 0
-  Priority: 3
-  Target: 1
-  ValidTargets: 0
-  ValidOpponent: 1
+  Icon: {fileID: 0}
   VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
   TraceDirection: 0
+  AnimateName: 0
   ProjectileSpeed: 0
   ProjectileObject: {fileID: 0}
   CharacterMove: 0
@@ -32,6 +32,7 @@ MonoBehaviour:
   CharacterMoveSpeed: 0
   ComabtAnimation: {fileID: 750596751060774699, guid: 7a01b52c2b19c2546a04a9547eeedea0,
     type: 3}
+  _animatorTriggerName: 0
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
   WaitForCompletion: 0
@@ -59,9 +60,14 @@ MonoBehaviour:
   Damage: {x: 0, y: 0}
   MoraleDamage: {x: 10, y: 20}
   StatusEffect:
-    HP: 0
-    Power: 0
-    Defense: 0
-    Speed: 0
-    Level: 1
-    Command: 0
+    _hp: 0
+    _power: 0
+    _defense: 0
+    _speed: 0
+    _level: 1
+    _command: 0
+  StatusEffectDuration: 0
+  StartSoundClips: []
+  PreHitSoundClips: []
+  HitSoundClips: []
+  EndSoundClips: []

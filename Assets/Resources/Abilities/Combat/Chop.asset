@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d74de03f0f881d4f9ec3361dc3dd014, type: 3}
-  m_Name: WidthdrawArmy
+  m_Name: Chop
   m_EditorClassIdentifier: 
-  Name: Withdraw
-  Type: 1
-  Priority: 0
-  Icon: {fileID: -3860773912634225870, guid: ea8e8fa534dc1284a84510d51543ac9e, type: 3}
-  VisualEffect: 2
-  ProjectileEffect: 1
-  ArcHeight: {x: 3, y: 5}
-  TraceDirection: 1
-  ProjectileSpeed: 15
-  ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
-    type: 3}
-  CharacterMove: 0
+  _displayName:
+    Category: 3
+    Key: ACTION_CHOP_NAME
+  Type: 0
+  Icon: {fileID: -3519202879223205656, guid: 8902c50addbd07d47910008df2ae7591, type: 3}
+  VisualEffect: 1
+  ProjectileEffect: 0
+  ArcHeight: {x: 0, y: 0}
+  TraceDirection: 0
+  AnimateName: 0
+  ProjectileSpeed: 0
+  ProjectileObject: {fileID: 0}
+  CharacterMove: 1
   CharacterMoveToEffect: 2
   CharacterMoveBackEffect: 2
   CharacterMoveTarget: 0
   CharacterMoveArcHeight: 1
-  CharacterMoveSpeed: 40
-  ComabtAnimation: {fileID: 285175196612671447, guid: 74ef84dc7e14ea64da1308c4a3ff1ebe,
-    type: 3}
-  _animatorTriggerName: 0
+  CharacterMoveSpeed: 10
+  ComabtAnimation: {fileID: 0}
+  _animatorTriggerName: 4
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
   WaitForCompletion: 1
@@ -45,17 +45,17 @@ MonoBehaviour:
     Type: 0
     WaitForCompletion: 0
     Animations: []
-  Effect: 16
-  Damage: {x: 2, y: 4}
+  Effect: 1
+  Damage: {x: 2, y: 2}
   MoraleDamage: {x: 0, y: 0}
   StatusEffect:
-    HP: 0
-    Power: 0
-    Defense: 0
-    Speed: 0
-    Level: 1
-    StartingBlockShields: 0
-    Command: 0
+    _hp: 0
+    _power: 0
+    _defense: 0
+    _speed: 0
+    _level: 1
+    _command: 0
+  StatusEffectDuration: 0
   StartSoundClips: []
   PreHitSoundClips: []
   HitSoundClips: []

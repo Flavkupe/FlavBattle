@@ -56,7 +56,8 @@ public class StringResourceWindow : EditorWindow
         // Key dropdown, used only to help with inputs
         var keys = _resources.GetKeys(category).ToArray();
         var dropdownKeyIndex = EditorGUILayout.Popup("ID", _dropdownKeyIndex, keys);
-        if (_dropdownKeyIndex != dropdownKeyIndex || changed)
+        if (dropdownKeyIndex != -1 && keys.Length > dropdownKeyIndex && 
+            (_dropdownKeyIndex != dropdownKeyIndex || changed))
         {
             changed = true;
             _key = keys[dropdownKeyIndex];
@@ -97,7 +98,7 @@ public class StringResourceWindow : EditorWindow
 
     private void Refresh()
     {
-        _resources = StringResources.GetStrings();
+        _resources = StringResources.GetStrings(true);
     }
 
     private void ChangeString(StringResourceCategory category, string key, string text)
