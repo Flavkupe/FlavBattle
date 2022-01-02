@@ -120,11 +120,8 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
             _animatedCharacter.AnimationEventDispatcher.OnAnimationStart.AddListener(AnimationStarted);
             _animatedCharacter.AnimationEventDispatcher.OnAnimationComplete.AddListener(AnimationEnded);
 
-            if (!facingLeft)
-            {
-                // these face left by default
-                _animatedCharacter.transform.localRotation = Quaternion.Euler(0, 180.0f, 0);
-            }
+            // these face left by default
+            _animatedCharacter.SetFlippedLeft(facingLeft);
         }
         else
         {

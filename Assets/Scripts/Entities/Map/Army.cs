@@ -278,13 +278,6 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
     public void SetFormation(Formation formation)
     {
         this.Formation = formation;
-
-        var officer = formation.GetOfficer();
-        if (officer != null)
-        {
-            this.Animation.SetAnimations(officer.Data.Animations);
-        }
-
         _mapView.SetArmy(this);
     }
 
@@ -474,7 +467,7 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
                 this.Animation.SetIdle(false);
                 this._destination = new Vector3(tile.WorldX, tile.WorldY, 0);
                 var facingLeft = tile.WorldX < this.transform.position.x;
-                this.Animation.SetFlipped(facingLeft);
+                this.Animation.SetFlippedLeft(facingLeft);
                 this.SetFootprints();
             }
         }

@@ -42,7 +42,10 @@ namespace FlavBattle.Components
             switch (trigger)
             {
                 case UnitAnimatorTrigger.None:
+                    this._prefab.PlayAnimation(0);
+                    break;
                 case UnitAnimatorTrigger.ShieldBlock:
+                    this._prefab.PlayAnimation(10);
                     break;
                 case UnitAnimatorTrigger.Die:
                     this._prefab.PlayAnimation(2);
@@ -56,29 +59,17 @@ namespace FlavBattle.Components
             }
         }
 
-        [ContextMenu("Preview to Texture")]
-        private void PreviewToTexture()
+        public void SetFlippedLeft(bool flippedLeft)
         {
-            var path = Path.GetDirectoryName(AssetDatabase.GetAssetPath(Selection.activeObject));
-            var name = Selection.activeObject.name;
-            var texture = AssetPreview.GetAssetPreview(this.gameObject);
-            var bytes = texture.EncodeToPNG();
-            File.WriteAllBytes(Path.Combine(path, name + ".png"), bytes);
-        }
-
-        public void SetAnimations(Sprite[] animations)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetColor(Color color)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetFlipped(bool flipped)
-        {
-            throw new NotImplementedException();
+            // The SPUM animated chars face left by default
+            if (flippedLeft)
+            {
+                this.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
+            }
         }
 
         public void SetIdle(bool idle)
@@ -95,12 +86,31 @@ namespace FlavBattle.Components
 
         public void SetSpeedModifier(float modifier)
         {
-            throw new NotImplementedException();
+            // TODO
+        }
+
+        public void SetColor(Color color)
+        {
+            var children = _prefab.GetComponentsInChildren<SpriteRenderer>();
+            foreach(var child in children)
+            {
+                child.color = color;
+            }
         }
 
         public void ToggleSpriteVisible(bool visible)
         {
-            throw new NotImplementedException();
+            _prefab.gameObject.SetActive(visible);
+        }
+
+        [ContextMenu("Preview to Texture")]
+        private void PreviewToTexture()
+        {
+            var path = Path.GetDirectoryName(AssetDatabase.GetAssetPath(Selection.activeObject));
+            var name = Selection.activeObject.name;
+            var texture = AssetPreview.GetAssetPreview(this.gameObject);
+            var bytes = texture.EncodeToPNG();
+            File.WriteAllBytes(Path.Combine(path, name + ".png"), bytes);
         }
     }
 }

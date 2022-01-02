@@ -1,14 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public interface IAnimatedSprite
 {
-    void SetFlipped(bool flipped);
-    void SetIdle(bool idle);
-    void SetAnimations(Sprite[] animations);
     void SetColor(Color color);
+
+    /// <summary>
+    /// Sets the animated object to face left
+    /// </summary>
+    /// <param name="flippedLeft">If true, object should flip to face left.</param>
+    void SetFlippedLeft(bool flippedLeft);
+    void SetIdle(bool idle);
+
     void SetSpeedModifier(float modifier);
     void ToggleSpriteVisible(bool visible);
 }
@@ -43,7 +46,7 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
         }
     }
 
-    public void SetFlipped(bool flipped)
+    public void SetFlippedLeft(bool flipped)
     {
         if (this.SpriteRenderer != null)
         {

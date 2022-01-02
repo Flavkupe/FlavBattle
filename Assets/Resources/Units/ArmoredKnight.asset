@@ -24,6 +24,8 @@ MonoBehaviour:
   _startingBlockShields: 1
   _sprite: {fileID: 4993298124884556812, guid: 6dc79ced1c80cd947aea27c969595440, type: 3}
   _animatorOverride: {fileID: 22100000, guid: f24077674f5409149816b777f2c03c10, type: 2}
+  _animatedCharacter: {fileID: 6736017752432704449, guid: dc7fa452b93dfd94f9a4a9fea8815456,
+    type: 3}
   _portraits:
   - {fileID: 21300000, guid: c73c37776753f452fa3548f287ae8abd, type: 3}
   _animations:
@@ -57,3 +59,4 @@ MonoBehaviour:
   - Level: 1
     Perks:
     - {fileID: 11400000, guid: 2f18aa8dca612e94e90a311301af136b, type: 2}
+    GetAllPerks: 0

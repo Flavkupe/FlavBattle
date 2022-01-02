@@ -57,6 +57,8 @@ MonoBehaviour:
     _command: 0
   StatusEffectDuration: 0
   StartSoundClips: []
+  PostAnimatorSoundClips:
+  - {fileID: 8300000, guid: d351fb21d5df89f4fa59baf95b534611, type: 3}
   PreHitSoundClips: []
   HitSoundClips: []
   EndSoundClips: []

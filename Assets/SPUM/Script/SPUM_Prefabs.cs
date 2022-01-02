@@ -70,6 +70,10 @@ public class SPUM_Prefabs : MonoBehaviour
             _anim.SetFloat("AttackState",1.0f);
             _anim.SetFloat("SkillState",1.0f);
             break;
+
+            case 10: //Block
+            _anim.SetTrigger("Block");
+            break;
         }
     }
 }

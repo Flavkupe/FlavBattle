@@ -51,8 +51,6 @@ public class AnimationEventDispatcher : MonoBehaviour
                 continue;
             }
 
-            Debug.Log("clip: " + clip.name);
-
             AnimationEvent animationStartEvent = new AnimationEvent();
             animationStartEvent.time = 0;
             animationStartEvent.functionName = "AnimationStartHandler";
