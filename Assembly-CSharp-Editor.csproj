@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,21 +53,30 @@
     <UnityVersion>2021.1.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="E:\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\Editor\SPUM_SpriteEdit.cs" />
     <Compile Include="Assets\Scripts\Editor\RoundedBoxCollider2D_Editor.cs" />
+    <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\Editor\SPUM_Eye.cs" />
+    <Compile Include="Assets\Scripts\Editor\ResourceUtils.cs" />
     <Compile Include="Assets\Scripts\Editor\ArcCollider2D_Editor.cs" />
+    <Compile Include="Assets\Scripts\Editor\StringResourceWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\InitialFormationEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\FormationBuilderEditor.cs" />
     <Compile Include="Assets\Scripts\Editor\StarCollider2D_Editor.cs" />
+    <Compile Include="Assets\SPUM\Script\Editor\SPUM_Editor.cs" />
     <Compile Include="Assets\Scripts\Editor\EllipseCollider2D_Editor.cs" />
     <Compile Include="Assets\Scripts\Editor\StringResourceAttributeDrawer.cs" />
+    <Compile Include="Assets\SPUM\Script\Editor\SPUM_SpriteEditor.cs" />
+    <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\Editor\SPUM_Sync.cs" />
     <Compile Include="Assets\Scripts\Editor\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\Editor\BezierCurveCollider2D_Editor.cs" />
     <Compile Include="Assets\Scripts\Editor\TraceWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\ImageScripts.cs" />
     <Compile Include="Assets\Scripts\Editor\CombatDebugWindow.cs" />
     <Compile Include="Assets\Scripts\Editor\ClipperWindow.cs" />
-    <Compile Include="Assets\Scripts\Editor\ResourceUtils.cs" />
-    <Compile Include="Assets\Scripts\Editor\StringResourceWindow.cs" />
+    <Compile Include="Assets\SPUM\Sprite_SheetExporter(Beta)\Script\Editor\SPUM_Exporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

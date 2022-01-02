@@ -137,6 +137,11 @@ namespace FlavBattle.Combat.Events
                 PlaySoundClip(abilityData.PreHitSoundClips.GetRandom());
             };
 
+            ability.AttackAnimatorCompleted += (object o, EventArgs e) =>
+            {
+                PlaySoundClip(abilityData.PostAnimatorSoundClips.GetRandom());
+            };
+
             ability.TargetHit += (object o, EventArgs e) =>
             {
                 // When/if the animation hits a target, play the anim

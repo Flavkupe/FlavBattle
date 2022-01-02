@@ -263,6 +263,10 @@ public class CombatAbilityData : ScriptableObject
     public AudioClip[] StartSoundClips;
 
     [BoxGroup("Sounds")]
+    [Tooltip("Possible sounds to play as soon as animator animation completes (eg drew bow, about to shoot arrow)")]
+    public AudioClip[] PostAnimatorSoundClips;
+
+    [BoxGroup("Sounds")]
     [Tooltip("Possible sounds to play right before hit animation starts (such as for swords)")]
     public AudioClip[] PreHitSoundClips;
 

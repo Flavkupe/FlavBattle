@@ -17,6 +17,11 @@ public class CombatAbility : MonoBehaviour
     /// </summary>
     public event EventHandler AttackAnimationStarting;
 
+    /// <summary>
+    /// Fires when the animator finishes its effect (such as drawing a bow)
+    /// </summary>
+    public event EventHandler AttackAnimatorCompleted;
+
     public void InitData(CombatAbilityData data)
     {
         _data = data;
@@ -136,6 +141,7 @@ public class CombatAbility : MonoBehaviour
             else
             {
                 yield return combatUnit.PlayAnimatorToCompletion(_data.AnimatorTrigger);
+                AttackAnimatorCompleted?.Invoke(this, new EventArgs());
             }
         }
     }

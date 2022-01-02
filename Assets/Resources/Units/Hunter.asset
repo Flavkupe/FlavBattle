@@ -25,6 +25,8 @@ MonoBehaviour:
   _sprite: {fileID: -4228030573731687880, guid: 54b3992eaea39b448b4eb01c86a46239,
     type: 3}
   _animatorOverride: {fileID: 22100000, guid: bc679e314fe04614d81d2a8653d6c85a, type: 2}
+  _animatedCharacter: {fileID: 3155542746271129138, guid: 38e70abb68f22844a96c27ede75622a1,
+    type: 3}
   _portraits:
   - {fileID: 21300000, guid: f638723232e6344b4b1eccee3510f4b0, type: 3}
   - {fileID: 21300000, guid: 94a13421e84754816bf53257ade2b30a, type: 3}

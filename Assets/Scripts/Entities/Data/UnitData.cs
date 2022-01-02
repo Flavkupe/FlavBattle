@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using FlavBattle.Components;
 
 namespace FlavBattle.Entities.Data
 {
@@ -68,9 +69,13 @@ namespace FlavBattle.Entities.Data
 
         [BoxGroup("Visual")]
         [SerializeField]
-        [Required]
         private AnimatorOverrideController _animatorOverride;
         public virtual AnimatorOverrideController Animator => _animatorOverride;
+
+        [BoxGroup("Visual")]
+        [SerializeField]
+        private AnimatedCharacter _animatedCharacter;
+        public virtual AnimatedCharacter AnimatedCharacter => _animatedCharacter;
 
         [BoxGroup("Visual")]
         [SerializeField]

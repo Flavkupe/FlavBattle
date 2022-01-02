@@ -57,6 +57,7 @@
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\Dialog\CombatDialogEvent.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_EyeSet.cs" />
     <Compile Include="Assets\Scripts\Dialog\MapObjectDialogEvent.cs" />
     <Compile Include="Assets\Scripts\Components\BezierCurve.cs" />
     <Compile Include="Assets\Scripts\Instances.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Assets\Scripts\State\Events\PanAndIndicateEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyTracker.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\Footprints.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_Prefabs.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_Manager.cs" />
     <Compile Include="Assets\Scripts\Dialog\MapDialogEvent.cs" />
     <Compile Include="Assets\Scripts\Utils\Logger.cs" />
     <Compile Include="Assets\Scripts\Components\FloatingText.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateBase.cs" />
     <Compile Include="Assets\Scripts\UI\Map\ObjectivePanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
+    <Compile Include="Assets\SPUM\Sample\Script\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\IDetectable.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyMapSpawn.cs" />
@@ -87,20 +91,23 @@
     <Compile Include="Assets\Scripts\Combat\Event\CombatUnitAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
+    <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\SpriteSync.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DraggableUnitProvider.cs" />
     <Compile Include="Assets\Scripts\Utils\GizmoLine.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\GarrisonManager.cs" />
-    <Compile Include="Assets\Scripts\Entities\UnitAnimatorTrigger.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />
+    <Compile Include="Assets\SPUM\Script\Ect\SpritePos.cs" />
     <Compile Include="Assets\Scripts\Entities\IArmy.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitStatsPanel.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TilemapManager.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedMove.cs" />
     <Compile Include="Assets\Scripts\UI\Dragging\Draggable.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
     <Compile Include="Assets\Scripts\State\Triggers\ArmyEncounterTrigger.cs" />
     <Compile Include="Assets\Scripts\Utils\Bezier.cs" />
     <Compile Include="Assets\Scripts\Utils\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\Combat\Event\ICombatGameEvent.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_PackageButton.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\SpecialUnitData.cs" />
     <Compile Include="Assets\Scripts\Utils\GameResourceManager.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSprite.cs" />
@@ -109,6 +116,7 @@
     <Compile Include="Assets\Scripts\UI\Formation\FormationGridBase.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\FloatingIcon.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\AI\ArmyChaseState.cs" />
+    <Compile Include="Assets\SPUM\Sample\Script\PlayerObj.cs" />
     <Compile Include="Assets\Scripts\Entities\Modifiers\PerkModifier.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitGenerator.cs" />
     <Compile Include="Assets\Scripts\UI\Components\ToggleableButton.cs" />
@@ -160,6 +168,8 @@
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
     <Compile Include="Assets\Scripts\Components\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Tilemap\Events\TileChangeEvent.cs" />
+    <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\SpriteEyeSync.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_SpriteButtonST.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatBuffIcon.cs" />
     <Compile Include="Assets\Scripts\Utils\Models.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UIArmyInfoPanel.cs" />
@@ -176,6 +186,7 @@
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\ParticleAnimation.cs" />
     <Compile Include="Assets\Scripts\Components\IconTextPair.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\PatrolPoint.cs" />
+    <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\SPUM_SpriteEditManager.cs" />
     <Compile Include="Assets\External\AssetIcons\Demo\Demo Resources\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Entities\IOwnedEntity.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\FormationPanel.cs" />
@@ -186,6 +197,7 @@
     <Compile Include="Assets\Scripts\Entities\Modifiers\Modifier.cs" />
     <Compile Include="Assets\Scripts\Utils\ResourceHelper.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIAttackGrid.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_HorseSpriteList.cs" />
     <Compile Include="Assets\Scripts\State\Events\SetObjectiveEvent.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleDisplay.cs" />
     <Compile Include="Assets\Scripts\Combat\States\StanceSelectionState.cs" />
@@ -194,11 +206,13 @@
     <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanelRow.cs" />
     <Compile Include="Assets\Scripts\State\GameEventQueue.cs" />
     <Compile Include="Assets\Scripts\UI\Components\Tooltip.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_Button.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenuItem.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\PathModifiers.cs" />
     <Compile Include="Assets\Scripts\Components\CameraMain.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\Garrison.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Components\TextFromResources.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedBounce.cs" />
     <Compile Include="Assets\Scripts\Utils\StringResource.cs" />
@@ -206,6 +220,7 @@
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
+    <Compile Include="Assets\SPUM\Sprite_SheetExporter(Beta)\Script\SPUM_Exporter.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyMapView.cs" />
     <Compile Include="Assets\Scripts\Tilemap\BiomeType.cs" />
@@ -232,11 +247,14 @@
     <Compile Include="Assets\Scripts\UI\Army\ActionButtonsPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\Models.cs" />
     <Compile Include="Assets\Scripts\Combat\UnitAnimatorTrigger.cs" />
+    <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\SpriteSyncManager.cs" />
     <Compile Include="Assets\Scripts\Components\IHasGameObject.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatTargetInfo.cs" />
     <Compile Include="Assets\Scripts\UI\Components\FacePortrait.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DraggableUIUnit.cs" />
+    <Compile Include="Assets\SPUM\SoonsoonData\SoonsoonData.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\ArmyMoraleBar.cs" />
+    <Compile Include="Assets\SPUM\Script\SPUM_PreviewItem.cs" />
     <Compile Include="Assets\Scripts\Entities\StoredArmy.cs" />
     <Compile Include="Assets\Scripts\Utils\SingletonObject.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatStanceButton.cs" />
@@ -258,7 +276,8 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\UI\Components\TextFromResources.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimatedCharacter.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimationEventDispatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />
@@ -277,6 +296,7 @@
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\External\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\SPUM\ReadMe - 1.5.6.txt" />
     <None Include="Assets\External\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\External\AssetIcons\Demo\Demos\Docs Demo\text.txt.txt" />
     <None Include="Assets\External\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />

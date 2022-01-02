@@ -7,6 +7,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.EventSystems;
 using FlavBattle.Entities;
+using FlavBattle.Components;
 
 public class CombatUnit : MonoBehaviour, IPointerClickHandler
 {
@@ -26,6 +27,11 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     [Required]
     public MoraleIcon MoraleIcon;
+
+    [Required]
+    [Tooltip("Local position where AnimatedCharacter is instantiated.")]
+    [SerializeField]
+    private Transform _animatedCharPosition;
 
     [Required]
     public HealthBar HealthBar;
@@ -60,14 +66,14 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     [Required]
     private GameObject _skullIcon;
 
-    private bool _facingLeft = false;
-
     private Animator _animator;
     private bool _animating = false;
 
     public event EventHandler RightClicked;
 
     private AudioSource _audioSource;
+
+    private AnimatedCharacter _animatedCharacter;
 
     void Awake()
     {
@@ -91,20 +97,46 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     public void SetUnit(Unit unit, bool facingLeft)
     {
         this.Unit = unit;
-        var renderer = this.GetComponent<SpriteRenderer>();
-        renderer.sprite = unit.Data.Sprite;
-
-        _facingLeft = facingLeft;
         if (facingLeft)
         {
             // Reverse this rotation so text isn't backwards
             this._attackTotalUI.FlipText();
             this._defenseTotalUI.FlipText();
-
-            this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
         }
 
-        _animator.runtimeAnimatorController = unit.Data.Animator;
+        var renderer = this.GetComponent<SpriteRenderer>();
+        if (unit.Data.AnimatedCharacter != null)
+        {
+            // use custom AnimatedCharacter instead of animator, if included
+            renderer.sprite = null;
+            renderer.enabled = false;
+
+            var currentAnimator = this.GetComponent<Animator>();
+            currentAnimator.enabled = false;
+
+            _animatedCharacter = Instantiate(unit.Data.AnimatedCharacter, this.transform, false);
+            _animatedCharacter.transform.localPosition = _animatedCharPosition.localPosition;
+            _animator = _animatedCharacter.Animator;
+            _animatedCharacter.AnimationEventDispatcher.OnAnimationStart.AddListener(AnimationStarted);
+            _animatedCharacter.AnimationEventDispatcher.OnAnimationComplete.AddListener(AnimationEnded);
+
+            if (!facingLeft)
+            {
+                // these face left by default
+                _animatedCharacter.transform.localRotation = Quaternion.Euler(0, 180.0f, 0);
+            }
+        }
+        else
+        {
+            // use old sprite-based animations
+            renderer.sprite = unit.Data.Sprite;
+            if (facingLeft)
+            {
+                this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
+            }
+
+            _animator.runtimeAnimatorController = unit.Data.Animator;
+        }
 
         this.UpdateUIComponents();
     }
@@ -210,7 +242,14 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     /// <param name="animatorTrigger"></param>
     public void PlayAnimator(UnitAnimatorTrigger animatorTrigger)
     {
-        this._animator.SetTrigger(animatorTrigger.ToString());
+        if (_animatedCharacter != null)
+        {
+            _animatedCharacter.PlayAnimation(animatorTrigger);
+        }
+        else
+        {
+            this._animator.SetTrigger(animatorTrigger.ToString());
+        }
     }
 
     public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger)
@@ -273,13 +312,13 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     }
 
     // TRIGGERED BY ANIMATOR
-    public void AnimationStarted()
+    public void AnimationStarted(string name)
     {
         this._animating = true;
     }
 
     // TRIGGERED BY ANIMATOR
-    public void AnimationEnded()
+    public void AnimationEnded(string name)
     {
         this._animating = false;
     }
@@ -289,6 +328,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public IEnumerator WaitForAnimationEnd()
     {
+        
         var timer = 0.0f;
         while (_animating)
         {
