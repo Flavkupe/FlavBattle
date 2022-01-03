@@ -48,6 +48,9 @@ public class Draggable : MonoBehaviour, IDraggable
             transform.SetParent(TopLevelDrag.transform); 
         }
 
+        // Disable collider and set blocksRaycasts off to stop object from intercepting raycast.
+        // Collider is used for GameObjects and CanvasGroup for UI elements.
+        this.GetComponent<BoxCollider2D>().enabled = false;
         this.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         DraggedObject = this;
@@ -55,7 +58,7 @@ public class Draggable : MonoBehaviour, IDraggable
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = eventData.position;
+        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition).SetZ(0);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -66,6 +69,7 @@ public class Draggable : MonoBehaviour, IDraggable
             transform.SetParent(_startParent);
         }
 
+        this.GetComponent<BoxCollider2D>().enabled = true;
         this.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         DraggedObject = null;

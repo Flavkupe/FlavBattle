@@ -73,7 +73,7 @@ public class AnimationEventDispatcher : MonoBehaviour
             return;
         }
 
-        Debug.Log($"{name} animation start.");
+        // Debug.Log($"{name} animation start.");
         OnAnimationStart?.Invoke(name);
     }
     public void AnimationCompleteHandler(string name)
@@ -83,7 +83,7 @@ public class AnimationEventDispatcher : MonoBehaviour
             return;
         }
 
-        Debug.Log($"{name} animation complete.");
+        // Debug.Log($"{name} animation complete.");
         OnAnimationComplete?.Invoke(name);
     }
 }

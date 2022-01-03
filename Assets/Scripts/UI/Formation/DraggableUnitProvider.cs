@@ -24,6 +24,7 @@ public class DraggableUnitProvider : MonoBehaviour
     public DraggableUIUnit CreateUnit(Unit unit)
     {
         var draggable = Instantiate(Template);
+        draggable.transform.localPosition = Vector3.zero;
         draggable.SetUnit(unit);
         var tooltipSource = draggable.GetComponent<TooltipSource>();
         tooltipSource.TooltipText = unit.UnitName;

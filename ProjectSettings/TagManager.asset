@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Detector
   - Detectable
-  - 
+  - UIInteractable
   - 
   - 
   - 
@@ -73,4 +73,7 @@ TagManager:
     locked: 0
   - name: DialogBox
     uniqueID: 3416785593
+    locked: 0
+  - name: MenuUI
+    uniqueID: 2869046305
     locked: 0

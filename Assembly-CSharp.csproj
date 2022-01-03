@@ -216,6 +216,7 @@
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedBounce.cs" />
     <Compile Include="Assets\Scripts\Utils\StringResource.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimatedCharacter.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Assets\Scripts\Utils\TraceData.cs" />
     <Compile Include="Assets\Scripts\External\StarCollider2D.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimationEventDispatcher.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\ParallelRoutineSet.cs" />
     <Compile Include="Assets\Scripts\Utils\FormationUtils.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ActionButtonsPanel.cs" />
@@ -276,8 +278,7 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Components\AnimatedCharacter.cs" />
-    <Compile Include="Assets\Scripts\Components\AnimationEventDispatcher.cs" />
+    <Compile Include="Assets\Scripts\Components\SortingLayerValues.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

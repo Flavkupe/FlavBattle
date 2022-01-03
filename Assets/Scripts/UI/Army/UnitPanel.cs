@@ -35,7 +35,7 @@ public class UnitPanel : DropTarget
     public void AddUnit(Unit unit)
     {
         var draggable = DraggableProvider.GetOrCreateDraggableForUnit(unit);
-        draggable.transform.SetParent(Contents.transform);
+        draggable.transform.SetParent(Contents.transform, false);
         _units.Add(unit);
     }
 

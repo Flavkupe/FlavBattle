@@ -68,6 +68,7 @@ public class DropTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("Pointer enter");
         if (ChangeColorOnHover && Draggable.DraggedObject != null)
         {
             this.SetColor(DragHoverColor);
@@ -76,6 +77,7 @@ public class DropTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("Pointer exit");
         this.SetColor(_startColor);
     }
 }

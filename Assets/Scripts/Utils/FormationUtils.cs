@@ -164,7 +164,7 @@ public static class FormationUtils
         slot.Row = pair.Row;
         slot.Col = pair.Col;
         slot.Instance.name = pair.Row.ToString() + pair.Col.ToString();
-        slot.Instance.transform.SetParent(grid.transform);
+        slot.Instance.transform.SetParent(grid.transform, false);
         slot.Instance.transform.localPosition = localPos;
         return slot;
     }
@@ -175,7 +175,7 @@ public static class FormationUtils
         newObj.Row = pair.Row;
         newObj.Col = pair.Col;
         newObj.name = pair.Row.ToString() + pair.Col.ToString();
-        newObj.transform.SetParent(parent);
+        newObj.transform.SetParent(parent, false);
         newObj.transform.localPosition = localPos;
         return newObj;
     }

@@ -74,6 +74,7 @@ namespace FlavBattle.Entities.Data
 
         [BoxGroup("Visual")]
         [SerializeField]
+        [Required]
         private AnimatedCharacter _animatedCharacter;
         public virtual AnimatedCharacter AnimatedCharacter => _animatedCharacter;
 

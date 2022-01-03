@@ -14,19 +14,13 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     private List<IAnimatedSprite> _animatedSprites = new List<IAnimatedSprite>();
 
-    [Required]
     [SerializeField]
     private Vector3 _animatedCharacterOffset = new Vector3(0.0f, -0.15f, 0.0f);
 
-    [Required]
     [SerializeField]
     private Vector3 _animatedCharacterScale = new Vector3(0.5f, 0.5f, 1.0f);
 
-    [Required]
-    [SerializeField]
-    private AnimatedSprite _mainSprite;
-
-    private IAnimatedSprite _main;
+    private IAnimatedSprite _leaderCharacter;
 
     private CameraMain _cam;
 
@@ -71,21 +65,10 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
         }
 
         var mainUnit = army.Formation.GetOfficer(true);
-        if (mainUnit.Data.AnimatedCharacter != null)
-        {
-            _mainSprite.ToggleSpriteVisible(false);
-            var character = Instantiate(mainUnit.Data.AnimatedCharacter, this.transform, false);
-            character.transform.localPosition = _animatedCharacterOffset;
-            character.transform.localScale = _animatedCharacterScale;
-            _main = character;
-        }
-        else
-        {
-            // TODO: remove
-            _mainSprite.ToggleSpriteVisible(true);
-            _mainSprite.SetAnimations(mainUnit.Data.Animations);
-            _main = _mainSprite;
-        }
+        var character = Instantiate(mainUnit.Data.AnimatedCharacter, this.transform, false);
+        character.transform.localPosition = _animatedCharacterOffset;
+        character.transform.localScale = _animatedCharacterScale;
+        _leaderCharacter = character;
 
         SetFormation(army.Formation);
 
@@ -106,22 +89,9 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
         {
             var slot = _units[unit.Formation];
             slot.Show();
-            var sprite = slot.GetComponent<AnimatedSprite>();
-            if (unit.Data.AnimatedCharacter != null)
-            {
-                sprite.ToggleSpriteVisible(false);
-                var instance = Instantiate(unit.Data.AnimatedCharacter, slot.transform, false);
-                instance.transform.localPosition = Vector3.zero;
-                this._animatedSprites.Add(instance);
-            }
-            else
-            {
-                // TODO: remove once we have all animated chars
-                sprite.ToggleSpriteVisible(true);
-                sprite.SetAnimations(unit.Data.Animations);
-                this._animatedSprites.Add(sprite);
-            }
-            
+            var instance = Instantiate(unit.Data.AnimatedCharacter, slot.transform, false);
+            instance.transform.localPosition = Vector3.zero;
+            this._animatedSprites.Add(instance);
         }
     }
 
@@ -152,7 +122,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void SetFlippedLeft(bool flipped)
     {
-        _main.SetFlippedLeft(flipped);
+        _leaderCharacter.SetFlippedLeft(flipped);
         foreach (var sprite in this._animatedSprites)
         {
             sprite.SetFlippedLeft(flipped);
@@ -161,7 +131,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void SetIdle(bool idle)
     {
-        _main.SetIdle(idle);
+        _leaderCharacter.SetIdle(idle);
         foreach (var sprite in this._animatedSprites)
         {
             sprite.SetIdle(idle);
@@ -170,7 +140,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void SetColor(Color color)
     {
-        _main.SetColor(color);
+        _leaderCharacter.SetColor(color);
         foreach (var sprite in this._animatedSprites)
         {
             sprite.SetColor(color);
@@ -179,7 +149,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void SetSpeedModifier(float modifier)
     {
-        _main.SetSpeedModifier(modifier);
+        _leaderCharacter.SetSpeedModifier(modifier);
         foreach (var sprite in this._animatedSprites)
         {
             sprite.SetSpeedModifier(modifier);
@@ -188,7 +158,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void ToggleSpriteVisible(bool visible)
     {
-        _main.ToggleSpriteVisible(visible);
+        _leaderCharacter.ToggleSpriteVisible(visible);
         foreach (var sprite in this._animatedSprites)
         {
             sprite.ToggleSpriteVisible(visible);
@@ -197,7 +167,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void SetView(bool zoomedIn)
     {
-        _main.ToggleSpriteVisible(!zoomedIn);
+        _leaderCharacter.ToggleSpriteVisible(!zoomedIn);
         foreach (var sprite in this._animatedSprites)
         {
             sprite.ToggleSpriteVisible(zoomedIn);
@@ -208,5 +178,14 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     {
         var items = GetComponentsInChildren<WithFormation>(false);
         return items.FirstOrDefault(a => a.Matches(pair))?.transform;
+    }
+
+    public void SetSortingLayer(string layer, int value)
+    {
+        _leaderCharacter.SetSortingLayer(layer, value);
+        foreach (var sprite in this._animatedSprites)
+        {
+            sprite.SetSortingLayer(layer, value);
+        }
     }
 }

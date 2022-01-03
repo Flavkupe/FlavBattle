@@ -14,6 +14,11 @@ public interface IAnimatedSprite
 
     void SetSpeedModifier(float modifier);
     void ToggleSpriteVisible(bool visible);
+
+    /// <summary>
+    /// Sets the sorting layer to display the sprites.
+    /// </summary>
+    void SetSortingLayer(string layer, int value);
 }
 
 public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
@@ -137,6 +142,15 @@ public class AnimatedSprite : MonoBehaviour, IAnimatedSprite
         else if (_image != null)
         {
             _image.enabled = visible;
+        }
+    }
+
+    public void SetSortingLayer(string layer, int value)
+    {
+        if (SpriteRenderer != null)
+        {
+            SpriteRenderer.sortingLayerName = layer;
+            SpriteRenderer.sortingOrder = value;
         }
     }
 }

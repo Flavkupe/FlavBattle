@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace FlavBattle.Components
 {
@@ -111,6 +112,13 @@ namespace FlavBattle.Components
             var texture = AssetPreview.GetAssetPreview(this.gameObject);
             var bytes = texture.EncodeToPNG();
             File.WriteAllBytes(Path.Combine(path, name + ".png"), bytes);
+        }
+
+        public void SetSortingLayer(string layer, int value)
+        {
+            var sortingGroup = GetComponentInChildren<SortingGroup>();
+            sortingGroup.sortingLayerName = layer;
+            sortingGroup.sortingOrder = value;
         }
     }
 }
