@@ -194,7 +194,7 @@ public class CombatAbilityData : ScriptableObject
     [BoxGroup("Visuals")]
     [Tooltip("String name for animator for what character animation would look like (ie ShootBow). Left empty, does no animator animation.")]
     [SerializeField]
-    private UnitAnimatorTrigger _animatorTriggerName = UnitAnimatorTrigger.None;
+    private UnitAnimatorTrigger _animatorTriggerName = UnitAnimatorTrigger.Idle;
 
     [BoxGroup("Visuals")]
     [ShowIf("ShowAnimationProps")]

@@ -19,7 +19,7 @@ public class SPUM_Prefabs : MonoBehaviour
         switch(num)
         {
             case 0: //Idle
-            _anim.SetFloat("RunState",0f);
+            _anim.SetFloat("RunState",0.25f);
             break;
 
             case 1: //Run
@@ -32,7 +32,7 @@ public class SPUM_Prefabs : MonoBehaviour
             break;
 
             case 3: //Stun
-            _anim.SetFloat("RunState",1.0f);
+            _anim.SetFloat("RunState",0.75f);
             break;
 
             case 4: //Attack Sword
@@ -73,6 +73,10 @@ public class SPUM_Prefabs : MonoBehaviour
 
             case 10: //Block
             _anim.SetTrigger("Block");
+            break;
+
+            case 11: //Static
+            _anim.SetFloat("RunState", 0.0f);
             break;
         }
     }

@@ -24,7 +24,9 @@ public class DraggableUnitProvider : MonoBehaviour
     public DraggableUIUnit CreateUnit(Unit unit)
     {
         var draggable = Instantiate(Template);
-        draggable.transform.localPosition = Vector3.zero;
+
+        // set Z closer to camera for raycasting
+        draggable.transform.localPosition = Vector3.zero.SetZ(-1.0f);
         draggable.SetUnit(unit);
         var tooltipSource = draggable.GetComponent<TooltipSource>();
         tooltipSource.TooltipText = unit.UnitName;

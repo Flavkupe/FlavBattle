@@ -91,6 +91,6 @@ public class DropTargetUIGridTile : MonoBehaviour, IFormationGridSlot
     {
         DraggableUnit = unit;
         unit.transform.SetParent(this.transform, false);
-        unit.transform.localPosition = Vector3.zero;
+        unit.transform.localPosition = Vector3.zero.SetZ(-1.0f);
     }
 }

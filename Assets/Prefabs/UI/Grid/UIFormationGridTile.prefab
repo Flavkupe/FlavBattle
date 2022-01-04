@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -166,4 +166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _row: 0
   _col: 0
-  UnitImage: {fileID: 6616329319086869395}
+  _characterOffset: {x: 0, y: 0, z: -1}
+  _characterScale: {x: 32, y: 32, z: 1}
+  _sortingLayer:
+    Value: 1
+    Name: MenuUI

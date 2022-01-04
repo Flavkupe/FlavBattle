@@ -37,12 +37,12 @@ namespace FlavBattle.Components
         [Required]
         [SerializeField]
         private AnimationEventDispatcher _animationEventDispatcher;
-        
+
         public void PlayAnimation(UnitAnimatorTrigger trigger)
         {
             switch (trigger)
             {
-                case UnitAnimatorTrigger.None:
+                case UnitAnimatorTrigger.Idle:
                     this._prefab.PlayAnimation(0);
                     break;
                 case UnitAnimatorTrigger.ShieldBlock:
@@ -56,6 +56,9 @@ namespace FlavBattle.Components
                     break;
                 case UnitAnimatorTrigger.ShootBow:
                     this._prefab.PlayAnimation(5);
+                    break;
+                case UnitAnimatorTrigger.Static:
+                    this._prefab.PlayAnimation(11);
                     break;
             }
         }

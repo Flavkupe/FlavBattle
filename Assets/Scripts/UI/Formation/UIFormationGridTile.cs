@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using FlavBattle.Combat;
+using FlavBattle.Components;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,13 +22,30 @@ public class UIFormationGridTile : MonoBehaviour, IFormationGridSlot
     [SerializeField]
     public FormationColumn _col;
 
-    public Image UnitImage;
+    private AnimatedCharacter _character;
+
+    [SerializeField]
+    private Vector3 _characterOffset = new Vector3(0.0f, 0.0f, -1.0f);
+
+    [SerializeField]
+    private Vector3 _characterScale = new Vector3(32.0f, 32.0f, 1.0f);
+
+    [SerializeField]
+    private SortingLayerValues _sortingLayer;
 
     private Unit _unit;
 
+    private void Start()
+    {
+        
+    }
+
     public void SetColor(Color color)
     {
-        GetComponent<Image>().color = color;
+        if (_character != null)
+        {
+            _character.SetColor(color);
+        }
     }
 
     public void SetUnit(Unit unit)
@@ -34,13 +53,19 @@ public class UIFormationGridTile : MonoBehaviour, IFormationGridSlot
         this._unit = unit;
         if (unit == null)
         {
-            this.UnitImage.gameObject.SetActive(false);
-            this.UnitImage.sprite = null;
+            if (_character != null)
+            {
+                Destroy(_character.gameObject);
+                _character = null;
+            }
         }
         else
         {
-            this.UnitImage.gameObject.SetActive(true);
-            this.UnitImage.sprite = unit.Data.Sprite;
+            _character = Instantiate(unit.Data.AnimatedCharacter, this.transform, false);
+            _character.transform.localPosition = _characterOffset;
+            _character.transform.localScale = _characterScale;
+            _character.PlayAnimation(UnitAnimatorTrigger.Static);
+            _character.SetSortingLayer(_sortingLayer.Name, _sortingLayer.Value);
         }
     }
 }

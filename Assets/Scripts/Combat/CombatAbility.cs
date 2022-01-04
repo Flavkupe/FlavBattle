@@ -130,7 +130,7 @@ public class CombatAbility : MonoBehaviour
     private IEnumerator AnimatorAnimation(GameObject source)
     {
         // Play animator animation first
-        if (_data.AnimatorTrigger != UnitAnimatorTrigger.None)
+        if (_data.AnimatorTrigger != UnitAnimatorTrigger.Idle)
         {
             var combatUnit = source.GetComponent<CombatUnit>();
             if (combatUnit == null)

@@ -8,10 +8,11 @@ namespace FlavBattle.Combat
 {
     public enum UnitAnimatorTrigger
     {
-        None,
+        Idle,
         Die,
         ShootBow,
         ShieldBlock,
         Melee,
+        Static,
     }
 }

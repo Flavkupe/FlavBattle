@@ -212,7 +212,6 @@ public class ArmyEditWindow : MonoBehaviour
         _mode = mode;
         var showGarrisonPanels = mode == Mode.Garrison;
         _armyPanel.SetActive(showGarrisonPanels);
-        _unitPanel.SetActive(showGarrisonPanels);
         DeployButton.SetActive(showGarrisonPanels);
         PanelControlButtons.SetActive(showGarrisonPanels);        
     }

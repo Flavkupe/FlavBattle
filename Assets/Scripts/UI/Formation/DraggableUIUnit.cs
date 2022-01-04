@@ -27,7 +27,7 @@ public class DraggableUIUnit : Draggable, IPointerClickHandler, IPointerDownHand
 
     [Tooltip("Offset shift after unit is instantiated.")]
     [SerializeField]
-    private Vector3 _unitOffset = new Vector3(0.0f, 16.0f, 1.0f);
+    private Vector3 _unitOffset = new Vector3(0.0f, 16.0f, 0.0f);
 
     private void Update()
     {
