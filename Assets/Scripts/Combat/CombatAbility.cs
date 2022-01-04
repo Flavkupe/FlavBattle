@@ -249,7 +249,7 @@ public class CombatAbility : MonoBehaviour
         {
             // Note: since left-facing units are flipped, this should still work since "right" is
             // facing towards *their* right.
-            return target.transform.position + (target.transform.right * distance) + jitter;
+            return target.transform.position + (target.transform.right * distance * -1) + jitter;
         }
 
         // TEMP

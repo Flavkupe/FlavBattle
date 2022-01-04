@@ -25,13 +25,7 @@ public class UIFormationGridTile : MonoBehaviour, IFormationGridSlot
     private AnimatedCharacter _character;
 
     [SerializeField]
-    private Vector3 _characterOffset = new Vector3(0.0f, 0.0f, -1.0f);
-
-    [SerializeField]
-    private Vector3 _characterScale = new Vector3(32.0f, 32.0f, 1.0f);
-
-    [SerializeField]
-    private SortingLayerValues _sortingLayer;
+    private AnimatedCharacterVisuals _characterVisualProperties;
 
     private Unit _unit;
 
@@ -62,10 +56,8 @@ public class UIFormationGridTile : MonoBehaviour, IFormationGridSlot
         else
         {
             _character = Instantiate(unit.Data.AnimatedCharacter, this.transform, false);
-            _character.transform.localPosition = _characterOffset;
-            _character.transform.localScale = _characterScale;
+            _character.SetVisuals(_characterVisualProperties);
             _character.PlayAnimation(UnitAnimatorTrigger.Static);
-            _character.SetSortingLayer(_sortingLayer.Name, _sortingLayer.Value);
         }
     }
 }

@@ -121,18 +121,11 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
             _animatedCharacter.AnimationEventDispatcher.OnAnimationComplete.AddListener(AnimationEnded);
 
             // these face left by default
-            _animatedCharacter.SetFlippedLeft(facingLeft);
-        }
-        else
-        {
-            // use old sprite-based animations
-            renderer.sprite = unit.Data.Sprite;
-            if (facingLeft)
+            // note: flip CombatUnit to ensure everything else flips properly
+            if (!facingLeft)
             {
                 this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
             }
-
-            _animator.runtimeAnimatorController = unit.Data.Animator;
         }
 
         this.UpdateUIComponents();
@@ -239,14 +232,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     /// <param name="animatorTrigger"></param>
     public void PlayAnimator(UnitAnimatorTrigger animatorTrigger)
     {
-        if (_animatedCharacter != null)
-        {
-            _animatedCharacter.PlayAnimation(animatorTrigger);
-        }
-        else
-        {
-            this._animator.SetTrigger(animatorTrigger.ToString());
-        }
+        _animatedCharacter.PlayAnimation(animatorTrigger);
     }
 
     public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger)

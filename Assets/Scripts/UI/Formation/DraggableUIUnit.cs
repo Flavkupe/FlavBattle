@@ -19,15 +19,7 @@ public class DraggableUIUnit : Draggable, IPointerClickHandler, IPointerDownHand
     private AnimatedCharacter _character = null;
 
     [SerializeField]
-    private SortingLayerValues _sortingLayer;
-
-    [Tooltip("Scaling factor for units instantiated for this element")]
-    [SerializeField]
-    private Vector3 _unitScale = new Vector3(32.0f, 32.0f, 1.0f);
-
-    [Tooltip("Offset shift after unit is instantiated.")]
-    [SerializeField]
-    private Vector3 _unitOffset = new Vector3(0.0f, 16.0f, 0.0f);
+    private AnimatedCharacterVisuals _characterVisualProperties;
 
     private void Update()
     {
@@ -63,9 +55,7 @@ public class DraggableUIUnit : Draggable, IPointerClickHandler, IPointerDownHand
         }
 
         _character = Instantiate(unit.Data.AnimatedCharacter, this.transform, false);
-        _character.transform.localPosition = _unitOffset;
-        _character.transform.localScale = _unitScale;
-        _character.SetSortingLayer(_sortingLayer.Name, _sortingLayer.Value);
+        _character.SetVisuals(_characterVisualProperties);
         SetIdle(true);
     }
 

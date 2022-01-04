@@ -15,10 +15,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     private List<IAnimatedSprite> _animatedSprites = new List<IAnimatedSprite>();
 
     [SerializeField]
-    private Vector3 _animatedCharacterOffset = new Vector3(0.0f, -0.15f, 0.0f);
-
-    [SerializeField]
-    private Vector3 _animatedCharacterScale = new Vector3(0.5f, 0.5f, 1.0f);
+    private AnimatedCharacterVisuals _characterVisualProperties;
 
     private IAnimatedSprite _leaderCharacter;
 
@@ -66,8 +63,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
         var mainUnit = army.Formation.GetOfficer(true);
         var character = Instantiate(mainUnit.Data.AnimatedCharacter, this.transform, false);
-        character.transform.localPosition = _animatedCharacterOffset;
-        character.transform.localScale = _animatedCharacterScale;
+        character.SetVisuals(this._characterVisualProperties);
         _leaderCharacter = character;
 
         SetFormation(army.Formation);

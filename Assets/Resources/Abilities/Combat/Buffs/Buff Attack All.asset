@@ -32,7 +32,7 @@ MonoBehaviour:
   CharacterMoveSpeed: 0
   ComabtAnimation: {fileID: 285175196612671447, guid: 463fb0a2a08f64e41a0054921c770fa1,
     type: 3}
-  _animatorTriggerName: 0
+  _animatorTriggerName: 6
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
   WaitForCompletion: 1
@@ -58,6 +58,7 @@ MonoBehaviour:
     _command: 0
   StatusEffectDuration: 2
   StartSoundClips: []
+  PostAnimatorSoundClips: []
   PreHitSoundClips: []
   HitSoundClips: []
   EndSoundClips: []

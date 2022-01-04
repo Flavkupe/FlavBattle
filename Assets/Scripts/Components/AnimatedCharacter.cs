@@ -12,6 +12,14 @@ using UnityEngine.Rendering;
 
 namespace FlavBattle.Components
 {
+    [Serializable]
+    public class AnimatedCharacterVisuals
+    {
+        public Vector3 StartingPosition;
+        public Vector3 StartingScale;
+        public SortingLayerValues SortingLayer;
+    }
+
     /// <summary>
     /// Used for a fully animated character prefab that can be
     /// used in combat or the map, as well as any other place.
@@ -59,6 +67,9 @@ namespace FlavBattle.Components
                     break;
                 case UnitAnimatorTrigger.Static:
                     this._prefab.PlayAnimation(11);
+                    break;
+                case UnitAnimatorTrigger.SpecialJump:
+                    this._prefab.PlayAnimation(9);
                     break;
             }
         }
@@ -122,6 +133,13 @@ namespace FlavBattle.Components
             var sortingGroup = GetComponentInChildren<SortingGroup>();
             sortingGroup.sortingLayerName = layer;
             sortingGroup.sortingOrder = value;
+        }
+
+        public void SetVisuals(AnimatedCharacterVisuals visuals)
+        {
+            this.transform.localPosition = visuals.StartingPosition;
+            this.transform.localScale = visuals.StartingScale;
+            this.SetSortingLayer(visuals.SortingLayer.Name, visuals.SortingLayer.Value);
         }
     }
 }

@@ -14,5 +14,6 @@ namespace FlavBattle.Combat
         ShieldBlock,
         Melee,
         Static,
+        SpecialJump,
     }
 }

@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 6147168843245014148}
   - component: {fileID: 4331080706682306616}
   m_Layer: 5
-  m_Name: AttackFormationGridTile
+  m_Name: AttackTargetGridTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,4 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181afc441b4e36f4a9f563b8bd2d2113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitImage: {fileID: 6616329319086869395}
+  _row: 0
+  _col: 0
+  _characterOffset: {x: 0, y: 0, z: 0}
+  _characterScale: {x: 32, y: 32, z: 1}
+  _sortingLayer:
+    Value: 0
+    Name: Default

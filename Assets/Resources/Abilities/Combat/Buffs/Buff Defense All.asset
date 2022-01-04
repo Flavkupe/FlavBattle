@@ -17,7 +17,7 @@ MonoBehaviour:
     Key: ACTION_DEFENSE_NAME
   Type: 1
   Icon: {fileID: -365713202386560821, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
-  VisualEffect: 2
+  VisualEffect: 1
   ProjectileEffect: 0
   ArcHeight: {x: 0, y: 0}
   TraceDirection: 0
@@ -31,10 +31,10 @@ MonoBehaviour:
   CharacterMoveArcHeight: 0
   CharacterMoveSpeed: 0
   ComabtAnimation: {fileID: 0}
-  _animatorTriggerName: 0
+  _animatorTriggerName: 6
   CombatAnimationSpeed: 1
   CombatAnimationRepeats: 1
-  WaitForCompletion: 1
+  WaitForCompletion: 0
   CombatAnimationTarget: 1
   AnimationSequence: 2
   PreAttackAnimations:
@@ -77,7 +77,8 @@ MonoBehaviour:
     _command: 0
   StatusEffectDuration: 2
   StartSoundClips:
-  - {fileID: 8300000, guid: 1efc02899c08d114b812a420f163663a, type: 3}
+  - {fileID: 8300000, guid: 29a7ad9a61a51e248a671767108f583b, type: 3}
+  PostAnimatorSoundClips: []
   PreHitSoundClips: []
   HitSoundClips: []
   EndSoundClips: []

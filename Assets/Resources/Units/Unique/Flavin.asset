@@ -24,8 +24,9 @@ MonoBehaviour:
   _startingBlockShields: 0
   _sprite: {fileID: -458451969313610690, guid: d3f9d54fb02643e469faf3dff0f4650f, type: 3}
   _animatorOverride: {fileID: 22100000, guid: 99684bef27baed74ebb6ea3d0ff20417, type: 2}
+  _animatedCharacter: {fileID: 5556602061850598600, guid: 86b30f5bab7dbaa4ab3277e9259b6590,
+    type: 3}
   _portraits: []
-  _animations: []
   _race: {fileID: 11400000, guid: c2651d70c7acd8a4389e74d757e2258e, type: 2}
   _startingActions: []
   _defaultOfficerAbilities:
@@ -36,6 +37,7 @@ MonoBehaviour:
   - Level: 1
     Perks:
     - {fileID: 11400000, guid: 5c6d31d5cdff1ae43a73f4ff11a940e0, type: 2}
+    GetAllPerks: 0
   _startingLevel: 1
   _unitName: Flavik
   _portrait: {fileID: 21300000, guid: 8387bc92e163f492185dd04d517a7f20, type: 3}

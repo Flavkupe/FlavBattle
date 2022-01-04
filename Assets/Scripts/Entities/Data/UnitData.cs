@@ -83,12 +83,6 @@ namespace FlavBattle.Entities.Data
         private Sprite[] _portraits;
         public Sprite[] Portraits => _portraits;
 
-        [BoxGroup("Visual")]
-        [ReorderableList]
-        [SerializeField]
-        private Sprite[] _animations;
-        public virtual Sprite[] Animations => _animations;
-
         [BoxGroup("Abilities")]
         [SerializeField]
         private RaceData _race;

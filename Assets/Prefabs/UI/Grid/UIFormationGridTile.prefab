@@ -168,6 +168,12 @@ MonoBehaviour:
   _col: 0
   _characterOffset: {x: 0, y: 0, z: -1}
   _characterScale: {x: 32, y: 32, z: 1}
+  _characterVisualProperties:
+    StartingPosition: {x: 0, y: 0, z: -1}
+    StartingScale: {x: 32, y: 32, z: 1}
+    SortingLayer:
+      Value: 1
+      Name: MenuUI
   _sortingLayer:
     Value: 1
     Name: MenuUI

@@ -1407,7 +1407,7 @@ MonoBehaviour:
     BL: {fileID: 0}
     BM: {fileID: 0}
     BR: {fileID: 0}
-    OfficerPosition: 0
+    OfficerPosition: 4
   RightArmyConfig:
     Level: 1
     FL: {fileID: 11400000, guid: de52d40e10623b84eba279373322c23d, type: 2}

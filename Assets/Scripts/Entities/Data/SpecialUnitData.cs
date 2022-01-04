@@ -40,7 +40,6 @@ namespace FlavBattle.Entities.Data
         public override AnimatorOverrideController Animator => GetNonNull(base.Animator, _baseData.Animator); 
         public override Sprite Icon => GetNonNull(base.Icon, _baseData.Icon);
         public override string ClassName => GetNonEmpty(base.ClassName, _baseData.ClassName);
-        public override Sprite[] Animations => GetNonEmpty(base.Animations, _baseData.Animations);
 
         public override AnimatedCharacter AnimatedCharacter => GetNonNull(base.AnimatedCharacter, _baseData.AnimatedCharacter);
 

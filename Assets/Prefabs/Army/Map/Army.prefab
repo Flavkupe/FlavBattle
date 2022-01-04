@@ -740,6 +740,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animatedCharacterOffset: {x: 0, y: -0.15, z: 0}
   _animatedCharacterScale: {x: 0.5, y: 0.5, z: 1}
+  _characterVisualProperties:
+    StartingPosition: {x: 0, y: -0.15, z: 0}
+    StartingScale: {x: 0.5, y: 0.5, z: 1}
+    SortingLayer:
+      Value: 0
+      Name: Characters
 --- !u!1 &2111357184
 GameObject:
   m_ObjectHideFlags: 0
