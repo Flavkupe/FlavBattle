@@ -21,6 +21,10 @@ namespace FlavBattle.Tilemap
     [Serializable]
     public class TileInfo
     {
+        [SerializeField]
+        private string _name;
+        public string Name => _name;
+
         public CombatFormationSlot SlotModel => _slotModel;
 
         [SerializeField]
@@ -59,5 +63,8 @@ namespace FlavBattle.Tilemap
         /// </summary>
         [Tooltip("If true, tile is passable no matter what else is here (example: bridge)")]
         public bool OverridePassable = false;
+
+        [Tooltip("Stats that units get when they are on this tile.")]
+        public UnitStats Stats;
     }
 }

@@ -39,7 +39,7 @@ namespace FlavBattle.Entities.Modifiers
         {
             foreach (var modifier in Modifiers)
             {
-                if (modifier.Name == newModifier.Name && !modifier.AllowDuplicate)
+                if (modifier.ID == newModifier.ID && !modifier.AllowDuplicate)
                 {
                     // ignore dupes
                     return;

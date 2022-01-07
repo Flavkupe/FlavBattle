@@ -1,4 +1,5 @@
 ﻿using FlavBattle.Combat.Event;
+using FlavBattle.Entities.Modifiers;
 using FlavBattle.Tilemap;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,8 @@ public interface ICombatArmy : IArmy
     IEnumerable<IArmy> GetFlankingArmies();
 
     IEnumerable<IArmy> GetLinkedArmies();
+
+    ModifierSet GetModifiers();
 }
 
 public static class ArmyExtensions

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Hills
   m_EditorClassIdentifier: 
   Info:
+    _name: Hills
     _slotModel: {fileID: 8502142653311525639, guid: 242bb10ee02901443912933afebdd1f3,
       type: 3}
     Passable: 1
@@ -21,3 +22,10 @@ MonoBehaviour:
     _biomeType: 5
     OverrideWalk: 0
     OverridePassable: 0
+    Stats:
+      _hp: 0
+      _power: 0
+      _defense: 2
+      _speed: 0
+      _level: 1
+      _command: 0

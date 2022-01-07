@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   Info:
+    _name: Grass
     _slotModel: {fileID: 8502142653311525639, guid: 108464c13884bd3428bda49181b6bfd2,
       type: 3}
     Passable: 1
@@ -21,3 +22,10 @@ MonoBehaviour:
     _biomeType: 1
     OverrideWalk: 0
     OverridePassable: 0
+    Stats:
+      _hp: 0
+      _power: 0
+      _defense: 0
+      _speed: 0
+      _level: 1
+      _command: 0

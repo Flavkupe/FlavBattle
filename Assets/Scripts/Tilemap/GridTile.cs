@@ -144,5 +144,4 @@ namespace FlavBattle.Tilemap
             return modifiers;
         }
     }
-
 }

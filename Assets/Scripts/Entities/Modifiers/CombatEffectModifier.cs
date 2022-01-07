@@ -37,7 +37,7 @@ namespace FlavBattle.Entities.Modifiers
         // TODO
         public override bool AllowDuplicate => true;
 
-        public override string Name => _name ?? "unknown";
+        public override string ID => _name ?? "unknown";
 
         public override void Tick(ModifierTickType type)
         {

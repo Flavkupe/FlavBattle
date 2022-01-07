@@ -1,7 +1,10 @@
 ﻿using FlavBattle.Combat.Event;
 using FlavBattle.Components;
+using FlavBattle.Entities;
 using FlavBattle.Entities.Data;
+using FlavBattle.Entities.Modifiers;
 using FlavBattle.Map;
+using FlavBattle.Modifiers;
 using FlavBattle.Pathfinding;
 using FlavBattle.State;
 using FlavBattle.Tilemap;
@@ -92,6 +95,8 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
     private Vector3Int _currentTileCoords;
     private PathModifiers _cachedPathModifiers = null;
 
+    private ArmyModifierTracker _armyModifierTracker;
+
     public GridTile CurrentTileInfo => _currentTile;
     public bool IsFleeing { get; private set; } = false;
 
@@ -153,6 +158,8 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
     [SerializeField]
     private SpriteRenderer _spinningIcon;
 
+    private ArmyTracker _tracker;
+
     private bool _paused = false;
 
     void Awake()
@@ -161,6 +168,8 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
         {
             ID = Guid.NewGuid().ToString();
         }
+
+        _armyModifierTracker = GetComponent<ArmyModifierTracker>();
     }
 
     void Start()
@@ -169,7 +178,11 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
         _detectors.TileDetector.Detected += TileDetectorEntered;
         _detectors.TileDetector.Exited += TileDetectorExited;
         _detectors.ClickDetector.Clicked += HandleDetectorClicked;
+
+        _tracker = this.GetComponentInChildren<ArmyTracker>();
     }
+
+
 
     private void HandleDetectorClicked(object sender, MouseButton e)
     {
@@ -584,10 +597,9 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
 
     public IEnumerable<IArmy> GetFlankingArmies()
     {
-        var tracker = this.GetComponentInChildren<ArmyTracker>();
-        if (tracker != null)
+        if (_tracker != null)
         {
-            return tracker.GetFlankingArmies();
+            return _tracker.GetFlankingArmies();
         }
 
         return new List<IArmy>();
@@ -595,12 +607,17 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
 
     public IEnumerable<IArmy> GetLinkedArmies()
     {
-        var tracker = this.GetComponentInChildren<ArmyTracker>();
-        if (tracker != null)
+        
+        if (_tracker != null)
         {
-            return tracker.GetLinkedArmies();
+            return _tracker.GetLinkedArmies();
         }
 
         return new List<IArmy>();
+    }
+
+    public ModifierSet GetModifiers()
+    {
+        return this._armyModifierTracker.GetModifiers();
     }
 }

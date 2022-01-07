@@ -24,7 +24,7 @@ namespace FlavBattle.Entities.Modifiers
         /// </summary>
         public override bool AllowDuplicate => false;
 
-        public override string Name => "Default Modifier";
+        public override string ID => "Default Modifier";
 
         public override void Apply(UnitStatSummary summary, Unit unit)
         {
@@ -40,10 +40,7 @@ namespace FlavBattle.Entities.Modifiers
             var baseAttack = unit.Info.CurrentStats.Power;
             var moraleBonus = unit.Info.Morale.GetDefaultBonus();
 
-            var attack = baseAttack;
             summary.Tally(type, baseAttack, "Base attack");
-
-            attack += moraleBonus;
             summary.Tally(type, moraleBonus, "Morale");
 
             if (army == null)
@@ -53,12 +50,10 @@ namespace FlavBattle.Entities.Modifiers
 
             if (army.Stance == FightingStance.Offensive)
             {
-                attack += 1;
                 summary.Tally(type, 1, "Offensive stance");
             }
             else if (army.Stance == FightingStance.Defensive)
             {
-                attack -= 1;
                 summary.Tally(type, -1, "Defensive stance");
             }
         }
@@ -76,10 +71,7 @@ namespace FlavBattle.Entities.Modifiers
             var baseDefense = unit.Info.CurrentStats.Defense;
             var moraleBonus = unit.Info.Morale.GetDefaultBonus();
 
-            var defense = baseDefense;
             summary.Tally(type, baseDefense, "Base defense");
-
-            defense += moraleBonus;
             summary.Tally(type, moraleBonus, "Morale");
 
             if (army == null)
@@ -89,12 +81,10 @@ namespace FlavBattle.Entities.Modifiers
 
             if (army.Stance == FightingStance.Offensive)
             {
-                defense -= 1;
                 summary.Tally(type, -1, "Offensive stance");
             }
             else if (army.Stance == FightingStance.Defensive)
             {
-                defense += 1;
                 summary.Tally(type, 1, "Defensive stance");
             }
         }

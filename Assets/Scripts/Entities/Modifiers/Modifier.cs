@@ -10,7 +10,8 @@ namespace FlavBattle.Entities.Modifiers
     {
         Default,
         Perk,
-        Effect
+        Effect,
+        MapArmy,
     }
 
     public enum ModifierTickType
@@ -23,16 +24,27 @@ namespace FlavBattle.Entities.Modifiers
         MapTileReached,
     }
 
+    public interface IArmyModifier : IModifier
+    {
+        void UpdateModifier(ICombatArmy army);
+    }
+
     public interface IModifier
     {
-        string Name { get; }
+        /// <summary>
+        /// Used to indentify different modifiers. Can be a descriptive name.
+        /// </summary>
+        string ID { get; }
         ModifierType Type { get; }
-        void Apply(UnitStatSummary summary, Unit unit);
+
+        /// <summary>
+        /// Applies the modifier bonuses to the provided summary, possibly
+        /// using stats from the passed-in unit. Unit can be null.
+        /// </summary>
+        void Apply(UnitStatSummary summary, Unit unit = null);
         bool IsExpired { get; }
         bool AllowDuplicate { get; }
         void Tick(ModifierTickType type);
-
-
     }
 
     public abstract class ModifierBase : IModifier
@@ -40,7 +52,7 @@ namespace FlavBattle.Entities.Modifiers
         public abstract ModifierType Type { get; }
         public abstract bool IsExpired { get; }
         public abstract bool AllowDuplicate { get; }
-        public abstract string Name {get; }
+        public abstract string ID {get; }
 
         public abstract void Apply(UnitStatSummary summary, Unit unit);
 

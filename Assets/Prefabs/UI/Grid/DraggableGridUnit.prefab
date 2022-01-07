@@ -60,14 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7abad26cd3dd9843a478c5d820391ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sortingLayer:
-    Value: 1
-    Name: MenuUI
-  _unitScale: {x: 32, y: 32, z: 1}
-  _unitOffset: {x: 0, y: -16, z: -1}
   _characterVisualProperties:
-    StartingPosition: {x: 32, y: 32, z: 1}
-    StartingScale: {x: 0, y: -16, z: -1}
+    StartingPosition: {x: 0, y: -16, z: -1}
+    StartingScale: {x: 32, y: 32, z: 1}
     SortingLayer:
       Value: 1
       Name: MenuUI

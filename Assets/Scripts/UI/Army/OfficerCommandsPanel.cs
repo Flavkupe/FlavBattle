@@ -21,7 +21,7 @@ public class OfficerCommandsPanel : MonoBehaviour
             pair.SetIcon(ability.Icon);
             pair.SetText(ability.Name);
 
-            pair.transform.SetParent(Panel.transform);
+            pair.transform.SetParent(Panel.transform, false);
 
             // TODO: description tooltip
         }

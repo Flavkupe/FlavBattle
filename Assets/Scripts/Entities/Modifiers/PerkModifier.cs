@@ -23,7 +23,7 @@ namespace FlavBattle.Entities.Modifiers
         /// </summary>
         public override bool AllowDuplicate => false;
 
-        public override string Name => _data.Name;
+        public override string ID => _data.Name;
 
         public override void Apply(UnitStatSummary summary, Unit unit)
         {

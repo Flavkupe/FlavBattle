@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: River
   m_EditorClassIdentifier: 
   Info:
+    _name: River
     _slotModel: {fileID: 0}
     Passable: 0
     WalkCost: 3
@@ -20,3 +21,10 @@ MonoBehaviour:
     _biomeType: 6
     OverrideWalk: 0
     OverridePassable: 0
+    Stats:
+      _hp: 0
+      _power: 0
+      _defense: 0
+      _speed: 0
+      _level: 1
+      _command: 0

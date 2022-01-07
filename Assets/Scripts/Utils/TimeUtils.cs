@@ -259,6 +259,10 @@ public class ThrottleTimer
     private float _ticks = 1.0f;
     private float _current = 0.0f;
 
+    /// <summary>
+    /// Create a throttle timer
+    /// </summary>
+    /// <param name="ticks">How many deltaTime ticks to wait before Tick returns true and resets.</param>
     public ThrottleTimer(float ticks = 1.0f)
     {
         _ticks = ticks;

@@ -1,4 +1,5 @@
 ﻿using FlavBattle.Combat.Event;
+using FlavBattle.Entities.Modifiers;
 using FlavBattle.Tilemap;
 using System;
 using System.Collections;
@@ -36,5 +37,10 @@ public class TestArmy : ICombatArmy
     public IEnumerable<IArmy> GetLinkedArmies()
     {
         return new List<IArmy>();
+    }
+
+    public ModifierSet GetModifiers()
+    {
+        return new ModifierSet();
     }
 }
