@@ -6,10 +6,25 @@ using System.Threading.Tasks;
 
 namespace FlavBattle.Entities.Modifiers
 {
+    public class ArmyModifierSet : ModifierSet
+    {
+        public void UpdateModifiers(ICombatArmy army)
+        {
+            foreach (var modifier in this.Modifiers.OfType<IArmyModifier>())
+            {
+                modifier.UpdateModifier(army);
+            }
+        }
+    }
+
     public class ModifierSet
     {
         public List<IModifier> Modifiers { get; private set; } = new List<IModifier>();
 
+        /// <summary>
+        /// Applies each modifier to the summary, using info about the unit if
+        /// applicable for the modifier.
+        /// </summary>
         public UnitStatSummary ApplyToStatSummary(UnitStatSummary summary, Unit unit)
         {
             foreach (var modifier in Modifiers)

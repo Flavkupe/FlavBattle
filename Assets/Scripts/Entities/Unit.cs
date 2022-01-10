@@ -81,10 +81,21 @@ public class Unit : IEquatable<Unit>, IHasTraceData
         return this.Data.UnitID == other.UnitID;
     }
 
-    public UnitStatSummary GetStatSummary()
+    /// <summary>
+    /// Gets UnitStatSummary from unit Modifiers.
+    /// </summary>
+    /// <param name="includeArmy">If true, will also include modifiers from unit's Army.</param>
+    /// <returns>Summary of all applied modifiers.</returns>
+    public UnitStatSummary GetStatSummary(bool includeArmy = true)
     {
         var summary = new UnitStatSummary();
         this.Info.ModifierSet.ApplyToStatSummary(summary, this);
+        if (this.CurrentArmy != null && includeArmy)
+        {
+            var armyModifiers = this.CurrentArmy.GetModifiers();
+            summary = armyModifiers.ApplyToStatSummary(summary, this);
+        }
+
         return summary;
     }
 

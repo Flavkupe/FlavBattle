@@ -47,10 +47,15 @@ namespace FlavBattle.Entities
             }
         }
 
-        public void UpdateOverlay(UnitStatSummary summary, Morale morale, float hpPercent)
+        public void UpdateOverlay(UnitStatSummary summary)
         {
             this._powerNum.text = summary.GetTotal(UnitStatType.Power).ToString();
             this._defenseNum.text = summary.GetTotal(UnitStatType.Defense).ToString();
+        }
+
+        public void UpdateOverlay(UnitStatSummary summary, Morale morale, float hpPercent)
+        {
+            this.UpdateOverlay(summary);
             this._moraleBar.UpdateIcon(morale);
             
             // no tooltip, so don't worry about actual hp, only the ratio

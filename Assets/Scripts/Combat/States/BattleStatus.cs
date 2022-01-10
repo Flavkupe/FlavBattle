@@ -157,18 +157,6 @@ public class BattleStatus
         return null;
     }
 
-    /// <summary>
-    /// Called whenever something happens that is
-    /// expected to change combatant stats.
-    /// </summary>
-    public void UpdateCombatantStats()
-    {
-        foreach (var combatant in this.Combatants)
-        {
-            combatant.RefreshStatChanges();
-        }
-    }
-
     public void ClearCombatant(Combatant combatant)
     {
         // combatant.CombatFormationSlot.ClearContents();

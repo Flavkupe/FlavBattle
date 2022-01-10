@@ -14,7 +14,7 @@ namespace FlavBattle.Entities
     {
         private ThrottleTimer _throttle = new ThrottleTimer(1.0f);
 
-        private ModifierSet _modifiers = new ModifierSet();
+        private ArmyModifierSet _modifiers = new ArmyModifierSet();
 
         [SerializeField]
         [Required]
@@ -49,10 +49,7 @@ namespace FlavBattle.Entities
         /// </summary>
         private void UpdateModifiers()
         {
-            foreach (IArmyModifier modifier in _modifiers.Modifiers.OfType<IArmyModifier>())
-            {
-                modifier.UpdateModifier(_army);
-            }
+            _modifiers.UpdateModifiers(_army);
 
             var summary = new UnitStatSummary();
             _modifiers.ApplyToStatSummary(summary, null);

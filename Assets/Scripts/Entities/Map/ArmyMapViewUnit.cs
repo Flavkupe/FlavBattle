@@ -68,7 +68,7 @@ namespace FlavBattle.Formation
             var hp = _unit.HPRatio;
             var morale = _unit.Info.Morale;
 
-            var ownSummary = this._unit.GetStatSummary();
+            var ownSummary = this._unit.GetStatSummary(false);
             ownSummary.Apply(summary);
 
             _overlay.UpdateOverlay(ownSummary, morale, hp);

@@ -41,7 +41,7 @@ namespace FlavBattle.Entities.Modifiers
             var moraleBonus = unit.Info.Morale.GetDefaultBonus();
 
             summary.Tally(type, baseAttack, "Base attack");
-            summary.Tally(type, moraleBonus, "Morale");
+            summary.Tally(type, moraleBonus, "Unit Morale");
 
             if (army == null)
             {
@@ -72,7 +72,7 @@ namespace FlavBattle.Entities.Modifiers
             var moraleBonus = unit.Info.Morale.GetDefaultBonus();
 
             summary.Tally(type, baseDefense, "Base defense");
-            summary.Tally(type, moraleBonus, "Morale");
+            summary.Tally(type, moraleBonus, "Unit Morale");
 
             if (army == null)
             {

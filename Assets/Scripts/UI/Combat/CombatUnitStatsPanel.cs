@@ -54,6 +54,7 @@ namespace FlavBattle.UI.Combat
 
         public void SetCombatant(Combatant combatant)
         {
+            var statSummary = combatant.GetUnitStatSummary();
             _unitSprite.sprite = combatant.Unit.Data.Icon;
             _nameLabel.text = combatant.Unit.Info.Name;
 
@@ -66,8 +67,8 @@ namespace FlavBattle.UI.Combat
 
             _actionInfoPanel.SetUnit(combatant.Unit);
 
-            _attackSummaryPanel.SetSummary(combatant.StatSummary);
-            _defenseSummaryPanel.SetSummary(combatant.StatSummary);
+            _attackSummaryPanel.SetSummary(statSummary);
+            _defenseSummaryPanel.SetSummary(statSummary);
         }
 
         public void Close()

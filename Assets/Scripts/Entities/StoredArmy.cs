@@ -1,4 +1,5 @@
-﻿using FlavBattle.Tilemap;
+﻿using FlavBattle.Entities.Modifiers;
+using FlavBattle.Tilemap;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -52,5 +53,10 @@ public class StoredArmy : IArmy
         ID = Guid.NewGuid().ToString();
         Formation = data.CreateFormation(faction.Faction, this);
         Faction = faction;
+    }
+
+    public ModifierSet GetModifiers()
+    {
+        return new ModifierSet();
     }
 }

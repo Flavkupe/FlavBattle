@@ -38,22 +38,17 @@ public class Combatant
     public CombatUnit CombatUnit => CombatFormationSlot?.CurrentUnit;
 
     /// <summary>
-    /// Stat changes due to buffs and temporary combat effects
-    /// </summary>
-    private UnitStats _modifierStats = new UnitStats();
-
-    /// <summary>
-    /// Latest stat summary for unit.
-    /// </summary>
-    public UnitStatSummary StatSummary { get; private set; } = new UnitStatSummary();
-
-    /// <summary>
     /// Use this to get the current unit stats combined with stat changes.
     /// Changing this value will not change current stats! For that, use
     /// Unit.Info.CurrentStats for permanent or ApplyStatChanges for only
     /// within combat.
     /// </summary>
-    public UnitStats CombatCombinedStats => Unit.Info.CurrentStats.GetCombined(_modifierStats);
+    public UnitStats GetCombatCombinedStats() 
+    {
+        var summary = GetUnitStatSummary();
+        var modifierStats = summary.GetAccumulatedStats();
+        return Unit.Info.CurrentStats.GetCombined(modifierStats);
+    }
 
     public int UnitMoraleBonus => Unit.Info.Morale.GetDefaultBonus();
     public Morale UnitMorale => Unit.Info.Morale;
@@ -61,13 +56,12 @@ public class Combatant
     public bool IsInPlayerArmy => Allies.Faction.IsPlayerFaction;
 
     /// <summary>
-    /// Change Stats for the Combatant temporarily, just for the combat duration.
+    /// Gets the unit stats, combined with army stats as well.
     /// </summary>
-    public void RefreshStatChanges()
+    /// <returns></returns>
+    public UnitStatSummary GetUnitStatSummary()
     {
-        StatSummary = this.Unit.GetStatSummary();
-        var stats = StatSummary.GetAccumulatedStats();
-        _modifierStats = stats;
+        return this.Unit.GetStatSummary(true);
     }
 
     /// <summary>
@@ -83,7 +77,6 @@ public class Combatant
         this.Unit.Info.ModifierSet.AddModifier(modifier);
 
         // TODO add block shields for buff
-        RefreshStatChanges();
     }
 
     /// <summary>
@@ -92,26 +85,23 @@ public class Combatant
     public void ProcessTurnStart()
     {
         this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatTurnStart);
-        RefreshStatChanges();
     }
 
     public void ProcessStanceChanged()
     {
-        RefreshStatChanges();
     }
 
     public void ProcessCombatStart()
     {
+        var combinedStats = this.GetCombatCombinedStats();
+
         // Cap starting morale to army morale
         Unit.Info.Morale.Current = Math.Min(Unit.Info.Morale.Current, Allies.Morale.Current);
 
-        AddNearbyArmyBonuses();
-
         this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatStart);
-        RefreshStatChanges();
 
         // like HP, this goes on CurrentStats
-        var startingShields = _modifierStats.StartingBlockShields + Unit.Info.CurrentStats.StartingBlockShields;
+        var startingShields = combinedStats.StartingBlockShields;
         Unit.Info.CurrentStats.ActiveBlockShields = startingShields;
 
         // TODO: can we do this some other way?
@@ -135,29 +125,6 @@ public class Combatant
         for (var i = 0; i < numBlockShields; i++)
         {
             this.CombatUnit.AddBuffIcon(CombatBuffIcon.BuffType.BlockShield);
-        }
-    }
-
-    private void AddNearbyArmyBonuses()
-    {
-        var linked = this.Allies.GetLinkedArmies();
-        var flanking = this.Allies.GetFlankingArmies();
-        var linkedNum = linked.Count();
-        var flankingNum = flanking.Count();
-        if (linkedNum > 0)
-        {
-            this.AddStatBuff("Allies nearby", new UnitStats()
-            {
-                Power = linkedNum
-            });
-        }
-
-        if (flankingNum > 0)
-        {
-            this.AddStatBuff("Flanked", new UnitStats()
-            {
-                Defense = flankingNum * -1
-            });
         }
     }
 }

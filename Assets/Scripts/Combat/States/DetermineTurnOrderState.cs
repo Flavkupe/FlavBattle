@@ -28,7 +28,7 @@ namespace FlavBattle.Combat.States
 
             // Get list of combatants with instant abilities first
             var instantAbilityCombatants = allCombatants.Where(a => CombatUtils.PickAction(state, a).InstantAbility);
-            instantAbilityCombatants = instantAbilityCombatants.OrderByDescending(a => a.CombatCombinedStats.Speed);
+            instantAbilityCombatants = instantAbilityCombatants.OrderByDescending(a => a.GetCombatCombinedStats().Speed);
             foreach (var combatant in instantAbilityCombatants)
             {
                 allCombatants.Remove(combatant);
@@ -36,7 +36,7 @@ namespace FlavBattle.Combat.States
             }
 
             // Queue up rest of combatants
-            var otherCombatants = allCombatants.OrderByDescending(a => a.CombatCombinedStats.Speed);
+            var otherCombatants = allCombatants.OrderByDescending(a => a.GetCombatCombinedStats().Speed);
             foreach (var combatant in otherCombatants)
             {
                 state.TurnQueue.Enqueue(combatant);

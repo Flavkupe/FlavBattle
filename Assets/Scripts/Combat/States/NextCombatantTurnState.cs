@@ -267,8 +267,10 @@ namespace FlavBattle.Combat.States
         /// </summary>
         private void DealDirectDamageToTarget(CombatTurnActionSummary summary, Combatant attacker, Combatant target, CombatAbilityData ability)
         {
-            var defense = target.StatSummary.GetTotal(UnitStatType.Defense);
-            var attack = attacker.StatSummary.GetTotal(UnitStatType.Power);
+            var targetStatSummary = target.GetUnitStatSummary();
+            var attackerStatSummary = attacker.GetUnitStatSummary();
+            var defense = targetStatSummary.GetTotal(UnitStatType.Defense);
+            var attack = attackerStatSummary.GetTotal(UnitStatType.Power);
             attack += ability.Damage.RandomBetween();
 
             summary.Defense = defense;

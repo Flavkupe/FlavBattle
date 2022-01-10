@@ -18,6 +18,8 @@ public interface IArmy : IOwnedEntity
     GridTile CurrentTileInfo { get; }
 
     bool IsDestroyed { get; }
+
+    ModifierSet GetModifiers();
 }
 
 /// <summary>
@@ -31,8 +33,6 @@ public interface ICombatArmy : IArmy
     IEnumerable<IArmy> GetFlankingArmies();
 
     IEnumerable<IArmy> GetLinkedArmies();
-
-    ModifierSet GetModifiers();
 }
 
 public static class ArmyExtensions
