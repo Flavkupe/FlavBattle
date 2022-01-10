@@ -7,21 +7,30 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using FlavBattle.Components;
+using FlavBattle.Entities;
 
 public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 {
-    private Dictionary<FormationPair, WithFormation> _units = new Dictionary<FormationPair, WithFormation>();
+    private Dictionary<FormationPair, ArmyMapViewUnit> _units = new Dictionary<FormationPair, ArmyMapViewUnit>();
 
-    private List<IAnimatedSprite> _animatedSprites = new List<IAnimatedSprite>();
+    private IEnumerable<ArmyMapViewUnit> AllUnitSlots => _units.Values;
+
+    private IEnumerable<ArmyMapViewUnit> ActiveUnits => _units.Values.Where(a => !a.IsEmpty);
 
     [SerializeField]
     private AnimatedCharacterVisuals _characterVisualProperties;
 
-    private IAnimatedSprite _leaderCharacter;
+    private AnimatedCharacter _leaderCharacter;
 
     private CameraMain _cam;
 
     private IArmy _army;
+
+    private bool _zoomedView = false;
+
+    [SerializeField]
+    [Required]
+    private StatOverlay _overlay;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +40,27 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
         if (_units.Count == 0)
         {
             Init();
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            SetOverlayVisible(true);
+        }
+        else
+        {
+            SetOverlayVisible(false);
+        }
+    }
+
+    private void SetOverlayVisible(bool visible)
+    {
+        _overlay.SetActive(visible && !_zoomedView);
+        foreach (var unit in AllUnitSlots)
+        {
+            unit.SetOverlayVisible(visible && _zoomedView);
         }
     }
 
@@ -61,11 +91,6 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
             Init();
         }
 
-        var mainUnit = army.Formation.GetOfficer(true);
-        var character = Instantiate(mainUnit.Data.AnimatedCharacter, this.transform, false);
-        character.SetVisuals(this._characterVisualProperties);
-        _leaderCharacter = character;
-
         SetFormation(army.Formation);
 
         var zoomedIn = _cam?.IsZoomedDistance() ?? false;
@@ -74,42 +99,52 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     private void SetFormation(Formation formation)
     {
+        Clear();
+
+        var mainUnit = formation.GetOfficer(true);
+        var character = Instantiate(mainUnit.Data.AnimatedCharacter, this.transform, false);
+        character.SetVisuals(this._characterVisualProperties);
+        _leaderCharacter = character;
+
         // First hide each so only the ones in the formation
         // are later shown
-        foreach (var item in _units)
+        foreach (var item in AllUnitSlots)
         {
-            item.Value.Hide();
+            item.Clear();
+            item.Hide();
         }
 
         foreach (var unit in formation.GetUnits())
         {
             var slot = _units[unit.Formation];
             slot.Show();
-            var instance = Instantiate(unit.Data.AnimatedCharacter, slot.transform, false);
-            instance.transform.localPosition = Vector3.zero;
-            this._animatedSprites.Add(instance);
+            slot.CreateUnit(unit);
         }
     }
 
     private void Clear()
     {
-        this._animatedSprites.Clear();
-        var animatedCharacters = this.GetComponentsInChildren<AnimatedCharacter>();
-        foreach (var item in animatedCharacters)
+        if (_leaderCharacter != null)
         {
-            Destroy(item.gameObject);
+            Destroy(_leaderCharacter.gameObject);
+            _leaderCharacter = null;
+        }
+
+        foreach (var sprite in this.AllUnitSlots)
+        {
+            sprite.Clear();
         }
     }
 
     private void HandleFormationChanged(object obj, Formation e)
     {
-        SetFormation(e);   
+        SetFormation(e);
     }
 
     private void Init()
     {
         Clear();
-        foreach (var item in GetComponentsInChildren<WithFormation>(true))
+        foreach (var item in GetComponentsInChildren<ArmyMapViewUnit>(true))
         {
             var pair = item.Pair;
             _units[pair] = item;
@@ -119,7 +154,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     public void SetFlippedLeft(bool flipped)
     {
         _leaderCharacter.SetFlippedLeft(flipped);
-        foreach (var sprite in this._animatedSprites)
+        foreach (var sprite in this.AllUnitSlots)
         {
             sprite.SetFlippedLeft(flipped);
         }
@@ -128,7 +163,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     public void SetIdle(bool idle)
     {
         _leaderCharacter.SetIdle(idle);
-        foreach (var sprite in this._animatedSprites)
+        foreach (var sprite in this.AllUnitSlots)
         {
             sprite.SetIdle(idle);
         }
@@ -137,7 +172,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     public void SetColor(Color color)
     {
         _leaderCharacter.SetColor(color);
-        foreach (var sprite in this._animatedSprites)
+        foreach (var sprite in this.AllUnitSlots)
         {
             sprite.SetColor(color);
         }
@@ -146,7 +181,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     public void SetSpeedModifier(float modifier)
     {
         _leaderCharacter.SetSpeedModifier(modifier);
-        foreach (var sprite in this._animatedSprites)
+        foreach (var sprite in this.AllUnitSlots)
         {
             sprite.SetSpeedModifier(modifier);
         }
@@ -155,7 +190,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     public void ToggleSpriteVisible(bool visible)
     {
         _leaderCharacter.ToggleSpriteVisible(visible);
-        foreach (var sprite in this._animatedSprites)
+        foreach (var sprite in this.AllUnitSlots)
         {
             sprite.ToggleSpriteVisible(visible);
         }
@@ -163,8 +198,9 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void SetView(bool zoomedIn)
     {
+        _zoomedView = zoomedIn;
         _leaderCharacter.ToggleSpriteVisible(!zoomedIn);
-        foreach (var sprite in this._animatedSprites)
+        foreach (var sprite in this.AllUnitSlots)
         {
             sprite.ToggleSpriteVisible(zoomedIn);
         }
@@ -172,16 +208,28 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public Transform GetObjectAtFormationPair(FormationPair pair)
     {
-        var items = GetComponentsInChildren<WithFormation>(false);
+        var items = GetComponentsInChildren<ArmyMapViewUnit>(false);
         return items.FirstOrDefault(a => a.Matches(pair))?.transform;
     }
 
     public void SetSortingLayer(string layer, int value)
     {
         _leaderCharacter.SetSortingLayer(layer, value);
-        foreach (var sprite in this._animatedSprites)
+        foreach (var sprite in this.AllUnitSlots)
         {
             sprite.SetSortingLayer(layer, value);
+        }
+    }
+
+    public void UpdateArmyOverlay(UnitStatSummary summary)
+    {
+        // track morale and hp as well
+        var morale = this._army.Morale;
+        var hpPercent = this._army.GetHPPercent();
+        this._overlay.UpdateOverlay(summary, morale, hpPercent);
+        foreach (var unit in this.ActiveUnits)
+        {
+            unit.UpdateArmyOverlay(summary);
         }
     }
 }

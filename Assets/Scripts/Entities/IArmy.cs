@@ -57,4 +57,28 @@ public static class ArmyExtensions
 
         return army.Faction.Faction == other.Faction.Faction;
     }
+
+    /// <summary>
+    /// Gets the ratio of HP for the entire army (sum of unit
+    /// current HPs divided by sum of max HPs). Value between
+    /// 0.0 (no HP) to 1.0 (full HP).
+    /// </summary>
+    public static float GetHPPercent(this IArmy army)
+    {
+        var hpCurrent = 0;
+        var hpTotal = 0;
+        foreach (var unit in army.GetUnits())
+        {
+            hpCurrent += unit.Info.CurrentStats.HP;
+            hpTotal += unit.Info.MaxStats.HP;
+        }
+
+        var ratio = 1.0f;
+        if (hpTotal != 0)
+        {
+            ratio = (float)hpCurrent / (float)hpTotal;
+        }
+
+        return ratio;
+    }
 }

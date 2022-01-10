@@ -30,6 +30,23 @@ public class Unit : IEquatable<Unit>, IHasTraceData
     /// </summary>
     public string UnitName => Info.Name;
 
+    /// <summary>
+    /// Gets ratio of HP from 0.0 to 1.0.
+    /// </summary>
+    public float HPRatio {  
+        get
+        {
+            var maxHp = Info.MaxStats.HP;
+            var hp = Info.CurrentStats.HP;
+            if (maxHp == 0)
+            {
+                return 0;
+            }
+
+            return (float)hp / (float)maxHp;
+        } 
+    }
+
     public Unit()
     {
         ID = Guid.NewGuid().ToString();

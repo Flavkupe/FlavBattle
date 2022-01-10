@@ -137,8 +137,16 @@ namespace FlavBattle.Components
 
         public void SetVisuals(AnimatedCharacterVisuals visuals)
         {
-            this.transform.localPosition = visuals.StartingPosition;
-            this.transform.localScale = visuals.StartingScale;
+            if (!visuals.StartingPosition.Equals(Vector3.zero))
+            {
+                this.transform.localPosition = visuals.StartingPosition;
+            }
+
+            if (!visuals.StartingScale.Equals(Vector3.zero))
+            {
+                this.transform.localScale = visuals.StartingScale;
+            }
+
             this.SetSortingLayer(visuals.SortingLayer.Name, visuals.SortingLayer.Value);
         }
     }

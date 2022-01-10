@@ -98,5 +98,20 @@ namespace FlavBattle.Entities
             stats.StartingBlockShields = _totals[UnitStatType.StartingBlockShields];
             return stats;
         }
+
+        /// <summary>
+        /// Adds the info from the other UnitStatSummary,
+        /// mutating this one.
+        /// </summary>
+        /// <param name="other"></param>
+        public void Apply(UnitStatSummary other)
+        {
+            foreach (var key in this._totals.Keys.ToList())
+            {
+                _totals[key] += other._totals[key];
+            }
+
+            Items.AddRange(other.Items);
+        }
     }
 }

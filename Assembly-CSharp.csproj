@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2021.1.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="E:\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\Dialog\CombatDialogEvent.cs" />
@@ -83,6 +80,7 @@
     <Compile Include="Assets\Scripts\UI\Map\ObjectivePanel.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UnitPanel.cs" />
     <Compile Include="Assets\SPUM\Sample\Script\PlayerManager.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyModifierTracker.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\IDetectable.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatAction.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyMapSpawn.cs" />
@@ -153,6 +151,7 @@
     <Compile Include="Assets\Scripts\UI\Combat\CombatTextCallout.cs" />
     <Compile Include="Assets\Scripts\Components\CancellableAnimation.cs" />
     <Compile Include="Assets\Scripts\State\Events\IGameEvent.cs" />
+    <Compile Include="Assets\Scripts\Entities\Modifiers\MapModifier.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyManager.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ArmyEditWindow.cs" />
     <Compile Include="Assets\Scripts\Combat\Event\CombatConditionalEvent.cs" />
@@ -282,8 +281,8 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Entities\Modifiers\MapModifier.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\ArmyModifierTracker.cs" />
+    <Compile Include="Assets\Scripts\Entities\StatOverlay.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyMapViewUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

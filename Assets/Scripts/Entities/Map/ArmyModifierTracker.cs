@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace FlavBattle.Entities
 {
+    /// <summary>
+    /// Tracks and updates stats and modifiers for Army.
+    /// </summary>
     public class ArmyModifierTracker : MonoBehaviour
     {
         private ThrottleTimer _throttle = new ThrottleTimer(1.0f);
@@ -15,19 +18,13 @@ namespace FlavBattle.Entities
 
         [SerializeField]
         [Required]
+        private ArmyMapView _mapView;
+
+        [SerializeField]
+        [Required]
         private Army _army;
 
-        [SerializeField]
-        [Required]
-        private TextMeshPro _defenseNum;
 
-        [SerializeField]
-        [Required]
-        private TextMeshPro _powerNum;
-
-        [SerializeField]
-        [Required]
-        private GameObject _statVisuals;
 
         private void Awake()
         {
@@ -41,9 +38,6 @@ namespace FlavBattle.Entities
 
         void Update()
         {
-            // show indicators iff shift is held
-            _statVisuals.SetActive(Input.GetKey(KeyCode.LeftShift));
-
             if (_throttle.Tick(TimeUtils.AdjustedGameDelta))
             {
                 this.UpdateModifiers();
@@ -63,8 +57,10 @@ namespace FlavBattle.Entities
             var summary = new UnitStatSummary();
             _modifiers.ApplyToStatSummary(summary, null);
 
-            this._powerNum.text = summary.GetTotal(UnitStatType.Power).ToString();
-            this._defenseNum.text = summary.GetTotal(UnitStatType.Defense).ToString();
+            if (_mapView != null)
+            {
+                this._mapView.UpdateArmyOverlay(summary);
+            }
         }
 
         public ModifierSet GetModifiers()

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(TooltipSource))]
 public class MoraleIcon : MonoBehaviour
 {
     public ParticleSystem GainParticles;
@@ -13,6 +12,14 @@ public class MoraleIcon : MonoBehaviour
 
     [SerializeField]
     private bool _tooltipEnabled = true;
+
+    void Start()
+    {
+        if (_tooltipEnabled && !this.HasComponent<TooltipSource>())
+        {
+            Debug.LogWarning("Component does not have a tooltip source!");
+        }
+    }
 
     public void UpdateIcon(Morale morale)
     {

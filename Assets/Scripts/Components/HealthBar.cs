@@ -15,6 +15,9 @@ public class HealthBar : MonoBehaviour
 
     private bool IsBarType() => Type == BarType.Bar;
 
+    [SerializeField]
+    private bool _tooltipEnabled = true;
+
     [Tooltip("The colored graphic of the health bar")]
     public SpriteRenderer Bar;
 
@@ -92,10 +95,13 @@ public class HealthBar : MonoBehaviour
             Mask.alphaCutoff = Mathf.Max(0.01f, 1.0f - percent);
         }
 
-        var tooltip = GetComponent<TooltipSource>();
-        if (tooltip != null)
+        if (_tooltipEnabled)
         {
-            tooltip.TooltipText = hp.ToString();
+            var tooltip = GetComponent<TooltipSource>();
+            if (tooltip != null)
+            {
+                tooltip.TooltipText = hp.ToString();
+            }
         }
     }
 }
