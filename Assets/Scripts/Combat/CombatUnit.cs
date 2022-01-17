@@ -9,6 +9,11 @@ using UnityEngine.EventSystems;
 using FlavBattle.Entities;
 using FlavBattle.Components;
 
+/// <summary>
+/// Visual and audio component of the Combatant. Does not modify
+/// Unit's state, only shows graphical or audial representations
+/// of the unit in combat.
+/// </summary>
 public class CombatUnit : MonoBehaviour, IPointerClickHandler
 {
     /// <summary>
@@ -129,18 +134,6 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         }
 
         this.UpdateUIComponents();
-    }
-
-    public void TakeDamage(int damage)
-    {
-        var info = Unit.Info;
-        info.CurrentStats.HP -= damage;
-    }
-
-    public void TakeMoraleDamage(int moraleDamage)
-    {
-        var info = Unit.Info;
-        this.Unit.Info.Morale.ChangeMorale(-moraleDamage);
     }
 
     public void AddBuffIcon(CombatBuffIcon.BuffType type, int duration = 0)

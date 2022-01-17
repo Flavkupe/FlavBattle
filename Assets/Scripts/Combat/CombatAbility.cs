@@ -27,7 +27,7 @@ public class CombatAbility : MonoBehaviour
         _data = data;
     }
 
-    public Coroutine StartTargetedAbility(GameObject source, GameObject target)
+    public Coroutine StartTargetedAbility(CombatUnit source, CombatUnit target)
     {
         if (_data.VisualEffect == CombatAbilityVisual.Projectile)
         {
@@ -45,18 +45,18 @@ public class CombatAbility : MonoBehaviour
         return null;
     }
 
-    public Coroutine StartUntargetedAbility(GameObject source)
+    public Coroutine StartUntargetedAbility(CombatUnit source)
     {
         return StartCoroutine(DoFullSelfCombatAnimation(source));
     }
 
-    private IEnumerator DoFullSelfCombatAnimation(GameObject source)
+    private IEnumerator DoFullSelfCombatAnimation(CombatUnit source)
     {
         yield return AnimateTarget(source);
         Destroy(this.gameObject);
     }
 
-    private IEnumerator DoAnimation(GameObject source, GameObject target)
+    private IEnumerator DoAnimation(CombatUnit source, CombatUnit target)
     {
         var sourcePos = source.transform.position;
         var targetPos = GetTargetPos(target, _data.CharacterMoveTarget, 0.5f);
@@ -66,7 +66,7 @@ public class CombatAbility : MonoBehaviour
         {
             if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Arc)
             {
-                yield return MoveInArc(sourcePos, targetPos, source, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+                yield return MoveInArc(sourcePos, targetPos, source.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
             }
             else if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Straight)
             {
@@ -94,7 +94,7 @@ public class CombatAbility : MonoBehaviour
         {
             if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Arc)
             {
-                yield return MoveInArc(targetPos, sourcePos, source, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+                yield return MoveInArc(targetPos, sourcePos, source.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
             }
             else if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Straight)
             {
@@ -110,7 +110,7 @@ public class CombatAbility : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private IEnumerator AnimateTarget(GameObject target)
+    private IEnumerator AnimateTarget(CombatUnit target)
     {
         if (_data.ComabtAnimation != null)
         {
@@ -122,12 +122,12 @@ public class CombatAbility : MonoBehaviour
                 instance.transform.SetParent(target.transform, _data.ComabtAnimation.ScaleToTarget);
                 instance.transform.position = target.transform.position;
                 yield return animation.PlayToCompletion();
-                Destroy(instance);
+                Destroy(instance.gameObject);
             }
         }
     }
 
-    private IEnumerator AnimatorAnimation(GameObject source)
+    private IEnumerator AnimatorAnimation(CombatUnit source)
     {
         // Play animator animation first
         if (_data.AnimatorTrigger != UnitAnimatorTrigger.Idle)
@@ -146,7 +146,7 @@ public class CombatAbility : MonoBehaviour
         }
     }
 
-    private IEnumerator FireProjectile(GameObject source, GameObject target)
+    private IEnumerator FireProjectile(CombatUnit source, CombatUnit target)
     {
         yield return AnimatorAnimation(source);
 
@@ -189,7 +189,6 @@ public class CombatAbility : MonoBehaviour
         var bezier = GetArc(height, source, target);
 
         var travelled = 0.0f;
-        var starting = obj.transform.rotation;
 
         while (dist > 0 && travelled < dist)
         {
@@ -237,7 +236,10 @@ public class CombatAbility : MonoBehaviour
         }
     }
 
-    private Vector3 GetTargetPos(GameObject target, CombatAbilityCharacterMoveTarget targetPos, float distance)
+    /// <summary>
+    /// Finds position relative to target
+    /// </summary>
+    private Vector3 GetTargetPos(CombatUnit target, CombatAbilityCharacterMoveTarget targetPos, float distance)
     {
         var jitterMin = -0.1f;
         var jitterMax = 0.1f;

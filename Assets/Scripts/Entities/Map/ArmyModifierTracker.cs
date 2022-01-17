@@ -28,7 +28,8 @@ namespace FlavBattle.Entities
 
         private void Awake()
         {
-            if (_modifiers.Modifiers.Count == 0)
+            // TODO: better way to set these?
+            if (_modifiers.GetModifiers().Count() == 0)
             {
                 _modifiers.AddModifier(new RelativeArmyModifier());
                 _modifiers.AddModifier(new ArmyMoraleModifier());
@@ -52,7 +53,7 @@ namespace FlavBattle.Entities
             _modifiers.UpdateModifiers(_army);
 
             var summary = new UnitStatSummary();
-            _modifiers.ApplyToStatSummary(summary, null);
+            _modifiers.Apply(summary, null);
 
             if (_mapView != null)
             {

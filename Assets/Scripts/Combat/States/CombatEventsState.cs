@@ -5,6 +5,9 @@ using FlavBattle.State;
 
 namespace FlavBattle.Combat.States
 {
+    /// <summary>
+    /// Runs combat events like story dialog, and waits for them to complete.
+    /// </summary>
     public class CombatEventsState : BattleStateBase
     {
         private bool _runningEvents = false;

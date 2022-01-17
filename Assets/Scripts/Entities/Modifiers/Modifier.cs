@@ -8,10 +8,32 @@ namespace FlavBattle.Entities.Modifiers
 {
     public enum ModifierType
     {
+        /// <summary>
+        /// A generic modifier.
+        /// </summary>
         Default,
+
+        /// <summary>
+        /// A perk for a unit which creates a modifier effect.
+        /// </summary>
         Perk,
+
+        /// <summary>
+        /// A temporary or permanent effect like a buff or officer
+        /// action effect.
+        /// </summary>
         Effect,
+
+        /// <summary>
+        /// A modifier for an army on the map, such as a terrain bonus
+        /// or flanking bonus.
+        /// </summary>
         MapArmy,
+
+        /// <summary>
+        /// A grouping of modifiers, such as a ModifierSet
+        /// </summary>
+        Group,
     }
 
     public enum ModifierTickType

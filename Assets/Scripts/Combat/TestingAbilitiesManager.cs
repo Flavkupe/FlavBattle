@@ -16,10 +16,10 @@ public class TestingAbilitiesManager : MonoBehaviour
     public float TimeScale = 1.0f;
 
     [HideIf("ArmyMode")]
-    public GameObject Left;
+    public CombatUnit Left;
     
     [HideIf("ArmyMode")]
-    public GameObject Right;
+    public CombatUnit Right;
 
     [HideIf("ArmyMode")]
     public CombatAbilityData AbilityData;

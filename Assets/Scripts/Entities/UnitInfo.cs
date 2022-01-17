@@ -21,7 +21,7 @@ public class UnitInfo
 
     public List<PerkData> Perks = new List<PerkData>();
 
-    public ModifierSet ModifierSet { get; } = new ModifierSet();
+    public UnitModifierSet ModifierSet { get; } = new UnitModifierSet();
 
     public bool IsOfficer { get; private set; } = false;
 

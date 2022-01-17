@@ -57,6 +57,6 @@ public class StoredArmy : IArmy
 
     public ModifierSet GetModifiers()
     {
-        return new ModifierSet();
+        return new UnitModifierSet();
     }
 }

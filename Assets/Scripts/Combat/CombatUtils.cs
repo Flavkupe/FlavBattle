@@ -8,6 +8,11 @@ using UnityEngine;
 
 namespace FlavBattle.Combat
 {
+    /// <summary>
+    /// Large number of methods for processing various parts of combat.
+    /// Methods here should not perform UI operations or animations, and
+    /// should not contain IEnumerators or other awaitable functions.
+    /// </summary>
     public static class CombatUtils
     {
         /// <summary>
@@ -180,6 +185,275 @@ namespace FlavBattle.Combat
 
             // ... otherwise, get random action from the top priority possible action
             return possible.Where(a => a.Priority == maxPriority).ToList().GetRandom();
+        }
+
+        /// <summary>
+        /// Generates a summary of activity for a turn for a unit (and possibly other units like it).
+        /// </summary>
+        /// <param name="state">Battle context.</param>
+        /// <param name="combatant">The unit whose turn it is.</param>
+        /// <param name="action">If non-null, a specific action to perform. If null, unit will pick an action from its available ones.</param>
+        public static CombatTurnUnitSummary ProcessTurnForUnit(BattleStatus state, Combatant combatant, CombatAction action = null)
+        {
+            var summary = new CombatTurnUnitSummary();
+            var pickedAction = action ?? PickAction(state, combatant);
+            var targets = PickTargets(state, combatant, pickedAction.Target);
+            summary.Source = combatant;
+            summary.TargetInfo = pickedAction.Target;
+            summary.Ability = pickedAction.Ability;
+
+            var results = PerformAbilityOnCombatants(state, combatant, targets, pickedAction.Ability, pickedAction.Target);
+            summary.Results.AddRange(results);
+            return summary;
+        }
+
+        /// <summary>
+        /// Processes a combatant's turn and generates a summary of activity for the turn, using a specific pre-defined
+        /// combatant and action.
+        /// 
+        /// This overload will most likely be used to invoke a specific enqueued action such as an officer action.
+        /// </summary>
+        /// <param name="state">Battle context.</param>
+        /// <param name="combatant">The combatant that will generate the turn summary.</param>
+        /// <param name="action">The action to be performed.</param>
+        /// <returns></returns>
+        public static CombatTurnSummary ProcessTurn(BattleStatus state, Combatant combatant, CombatAction action)
+        {
+            var summary = new CombatTurnSummary();
+            var unitSummary = ProcessTurnForUnit(state, combatant, action);
+            summary.Turns.Enqueue(unitSummary);
+            return summary;
+        }
+
+
+        /// <summary>
+        /// Pre-computes, processes and generates a turn and returns a summary for a normal unit's
+        /// actions, based on the next unit in the TurnQueue.
+        /// 
+        /// For officer actions, should use the other overload.
+        /// </summary>
+        /// <returns></returns>
+        public static CombatTurnSummary ProcessTurn(BattleStatus state)
+        {
+            if (state.TurnQueue.Count == 0)
+            {
+                Debug.LogWarning("Trying to Generate turn Summary with no TurnQueue items.");
+                return null;
+            }
+
+            var current = state.GetNextCombatant();
+            var summary = new CombatTurnSummary();
+
+            var firstResult = ProcessTurnForUnit(state, current);
+            summary.Turns.Enqueue(firstResult);
+
+            // Get others with same attack to go at same time
+            Combatant next;
+            while ((next = GetMatchingCombatantForTurn(state, current, firstResult.Ability)) != null)
+            {
+                var result = ProcessTurnForUnit(state, next);
+                summary.Turns.Enqueue(result);
+            }
+
+            return summary;
+        }
+
+        /// <summary>
+        /// Gets next combatant from the same team that is expected to do the same
+        /// ability, in order to run its turn simultaneously.
+        /// </summary>
+        public static Combatant GetMatchingCombatantForTurn(BattleStatus state, Combatant first, CombatAbilityData usedAbility)
+        {
+            Combatant next = state.PeekNextLiveCombatant();
+            if (next == null)
+            {
+                return null;
+            }
+
+            if (first.Allies != next.Allies)
+            {
+                // not same team, so break now
+                return null;
+            }
+
+
+            var action = PickAction(state, next);
+            if (action.Ability.MatchesOther(usedAbility))
+            {
+                // batch with others in same team that have same attack,
+                // and dequeue the combatant
+                state.GetNextCombatant();
+                return next;
+            }
+
+            return null;
+        }
+
+        public static List<CombatTurnActionSummary> PerformAbilityOnCombatants(BattleStatus state, Combatant combatant, List<Combatant> targets, CombatAbilityData ability, CombatTargetInfo targetInfo)
+        {
+            var actions = new List<CombatTurnActionSummary>();
+            foreach (var target in targets)
+            {
+                var action = new CombatTurnActionSummary();
+                action.Source = combatant;
+                action.Ability = ability;
+                action.Target = target;
+                action.TileHighlight = targetInfo.AffectsAllies() ? Color.blue : Color.red;
+
+                // TODO?
+                var multiplier = 1.0f;
+
+                // TODO: other effects
+                if (ability.Effect.HasFlag(CombatAbilityEffect.StatusChange))
+                {
+                    var effect = ability.StatusEffect.Multiply(multiplier);
+                    target.AddStatBuff(ability.Name, effect, ability.StatusEffectDuration);
+                }
+
+                if (ability.Effect.HasFlag(CombatAbilityEffect.Withdraw))
+                {
+                    state.FleeingArmy = target.Allies;
+                }
+
+                if (ability.Effect.HasFlag(CombatAbilityEffect.Damage))
+                {
+                    DealDirectDamageToTarget(action, combatant, target, ability);
+                }
+
+                if (ability.Effect.HasFlag(CombatAbilityEffect.MoraleDown))
+                {
+                    DealMoraleDamageToTarget(action, combatant, target, ability);
+                }
+
+                var moraleDamage = action.TotalMoraleDamage;
+                if (moraleDamage > 0)
+                {
+                    DealMoraleDamageToArmy(action, combatant.Allies, target.Allies, moraleDamage);
+                }
+
+                actions.Add(action);
+            }
+
+            return actions;
+        }
+
+        /// <summary>
+        /// Damages target with direct damage. Mutates summary with results.
+        /// </summary>
+        public static void DealDirectDamageToTarget(CombatTurnActionSummary summary, Combatant attacker, Combatant target, CombatAbilityData ability)
+        {
+            var targetStatSummary = target.GetUnitStatSummary();
+            var attackerStatSummary = attacker.GetUnitStatSummary();
+            var defense = targetStatSummary.GetTotal(UnitStatType.Defense);
+            var attack = attackerStatSummary.GetTotal(UnitStatType.Power);
+            attack += ability.Damage.RandomBetween();
+
+            summary.Defense = defense;
+            summary.Attack = attack;
+            var moraleDamage = 10;
+            var selfMoraleDamage = 0;
+
+            var currentStats = target.Unit.Info.CurrentStats;
+
+            var damage = ability.Damage.RandomBetween();
+            if (attack > defense)
+            {
+                if (currentStats.ActiveMoraleShields > 0)
+                {
+                    // tank the hit due to high morale (still take morale damage)
+                    summary.MoraleBlockedAttack = true;
+                    currentStats.ActiveMoraleShields--;
+                    damage = 0;
+                }
+            }
+            else
+            {
+                summary.ResistedAttack = true;
+                if (currentStats.ActiveBlockShields > 0)
+                {
+                    // fully tank the hit
+                    summary.ShieldBlockedAttack = true;
+                    currentStats.ActiveBlockShields--;
+                    damage = 0;
+                    moraleDamage = 0;
+                    selfMoraleDamage = 5;
+                }
+                else
+                {
+                    // Halve damage and morale
+                    damage = Math.Max(1, damage / 2);
+                    moraleDamage = 5;
+                }
+            }
+
+            summary.SelfMoraleDamage = selfMoraleDamage;
+            summary.IndirectMoraleDamage = moraleDamage;
+            summary.AttackDamage = damage;
+            target.TakeDamage(damage);
+            target.TakeMoraleDamage(moraleDamage);
+            attacker.TakeMoraleDamage(selfMoraleDamage);
+        }
+
+        /// <summary>
+        /// Damages target with morale damage. Mutates summary with results.
+        /// </summary>
+        public static void DealMoraleDamageToTarget(CombatTurnActionSummary summary, Combatant attacker, Combatant target, CombatAbilityData ability)
+        {
+            // TODO: morale damage mitigation based on bravery stats and other factors
+            var moraleDamage = ability.MoraleDamage.RandomBetween();
+            summary.DirectMoraleDamage = moraleDamage;
+            target.TakeMoraleDamage(moraleDamage);
+        }
+
+        /// <summary>
+        /// Deals morale damage to entire army (target) based on factors. source is
+        /// opposing army (that is dealing morale damage). source and target can be null,
+        /// depending on attack. Mutates summary with results.
+        /// </summary>
+        public static void DealMoraleDamageToArmy(CombatTurnActionSummary summary, IArmy source, IArmy target, int unitMoraleDamage)
+        {
+            // TODO: affected by other stats
+            // TODO: should mitigate under certain conditions
+            var armyDamage = (int)Math.Max(1, (float)unitMoraleDamage / 5.0f);
+
+            if (target != null)
+            {
+                // Negative morale change for attacked army
+                target.Morale.ChangeMorale(-armyDamage);
+            }
+
+            summary.ArmyMoraleDamage = armyDamage;
+        }
+
+        /// <summary>
+        /// Clears out any units that are dead and returns a list of any
+        /// units who have died.
+        /// </summary>
+        public static List<Combatant> ProcessDeadUnits(BattleStatus state)
+        {
+            var deadUnits = new List<Combatant>();
+            foreach (var combatant in state.Combatants.ToList())
+            {
+                if (combatant.Unit.IsDead())
+                {
+                    deadUnits.Add(combatant);
+                    state.ClearCombatant(combatant);
+
+                    // get morale bonus for killing unit
+                    var roll = UnityEngine.Random.Range(5, 10);
+
+                    // Positive morale change for dead unit's enemies
+                    combatant.Enemies.Morale.ChangeMorale(roll);
+
+                    // get morale bonus for losing unit
+                    roll = UnityEngine.Random.Range(5, 10);
+
+                    // Negative morale change for dead unit's allies
+                    combatant.Allies.Morale.ChangeMorale(-roll);
+                }
+            }
+
+            return deadUnits;
         }
     }
 }

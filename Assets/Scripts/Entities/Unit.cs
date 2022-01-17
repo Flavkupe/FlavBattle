@@ -89,11 +89,11 @@ public class Unit : IEquatable<Unit>, IHasTraceData
     public UnitStatSummary GetStatSummary(bool includeArmy = true)
     {
         var summary = new UnitStatSummary();
-        this.Info.ModifierSet.ApplyToStatSummary(summary, this);
+        this.Info.ModifierSet.Apply(summary, this);
         if (this.CurrentArmy != null && includeArmy)
         {
             var armyModifiers = this.CurrentArmy.GetModifiers();
-            summary = armyModifiers.ApplyToStatSummary(summary, this);
+            armyModifiers.Apply(summary, this);
         }
 
         return summary;

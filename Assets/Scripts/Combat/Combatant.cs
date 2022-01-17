@@ -84,7 +84,7 @@ public class Combatant
     /// </summary>
     public void ProcessTurnStart()
     {
-        this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatTurnStart);
+        this.Unit.Info.ModifierSet.Tick(ModifierTickType.CombatTurnStart);
     }
 
     public void ProcessStanceChanged()
@@ -98,7 +98,7 @@ public class Combatant
         // Cap starting morale to army morale
         Unit.Info.Morale.Current = Math.Min(Unit.Info.Morale.Current, Allies.Morale.Current);
 
-        this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatStart);
+        this.Unit.Info.ModifierSet.Tick(ModifierTickType.CombatStart);
 
         // like HP, this goes on CurrentStats
         var startingShields = combinedStats.StartingBlockShields;
@@ -107,14 +107,29 @@ public class Combatant
         // TODO: can we do this some other way?
         AddBlockShieldIcons(startingShields);
 
-        // Update morale etc to match new values
-        CombatUnit.UpdateUIComponents();
+        if (CombatUnit != null)
+        {
+            // Update morale etc to match new values
+            CombatUnit.UpdateUIComponents();
+        }
     }
 
     public void ProcessCombatEnd()
     {
-        this.Unit.Info.ModifierSet.TickModifiers(ModifierTickType.CombatEnd);
+        this.Unit.Info.ModifierSet.Tick(ModifierTickType.CombatEnd);
         Unit.Info.CurrentStats.ActiveBlockShields = 0;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        var info = Unit.Info;
+        info.CurrentStats.HP -= damage;
+    }
+
+    public void TakeMoraleDamage(int moraleDamage)
+    {
+        var info = Unit.Info;
+        this.Unit.Info.Morale.ChangeMorale(-moraleDamage);
     }
 
     /// <summary>
@@ -122,6 +137,11 @@ public class Combatant
     /// </summary>
     private void AddBlockShieldIcons(int numBlockShields)
     {
+        if (CombatUnit == null)
+        {
+            return;
+        }
+
         for (var i = 0; i < numBlockShields; i++)
         {
             this.CombatUnit.AddBuffIcon(CombatBuffIcon.BuffType.BlockShield);
