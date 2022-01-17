@@ -72,7 +72,6 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     private GameObject _skullIcon;
 
     private Animator _animator;
-    private bool _animating = false;
 
     public event EventHandler RightClicked;
 
@@ -82,7 +81,6 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     void Awake()
     {
-        _animator = this.GetComponent<Animator>();
         _audioSource = this.GetComponent<AudioSource>();
     }
 
@@ -122,8 +120,6 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
             _animatedCharacter = Instantiate(unit.Data.AnimatedCharacter, this.transform, false);
             _animatedCharacter.transform.localPosition = _animatedCharPosition.localPosition;
             _animator = _animatedCharacter.Animator;
-            _animatedCharacter.AnimationEventDispatcher.OnAnimationStart.AddListener(AnimationStarted);
-            _animatedCharacter.AnimationEventDispatcher.OnAnimationComplete.AddListener(AnimationEnded);
 
             // these face left by default
             // note: flip CombatUnit to ensure everything else flips properly
@@ -167,7 +163,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     public void AnimateDeath()
     {
-        _animator.SetTrigger(UnitAnimatorTrigger.Die.ToString());
+        PlayAnimator(UnitAnimatorTrigger.Die);
         this.MoraleIcon.Hide();
         this._skullIcon.Show();
     }
@@ -225,14 +221,18 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     /// <param name="animatorTrigger"></param>
     public void PlayAnimator(UnitAnimatorTrigger animatorTrigger)
     {
-        _animatedCharacter.PlayAnimation(animatorTrigger);
+        if (_animatedCharacter != null)
+        {
+            _animatedCharacter.PlayAnimation(animatorTrigger);
+        }
     }
 
     public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger)
     {
-        this._animating = true;
         this.PlayAnimator(animatorTrigger);
+        Debug.Log($"Playing: {_animatedCharacter.IsInState(UnitAnimatorState.AttackState)}");
         yield return WaitForAnimationEnd();
+        Debug.Log($"Done Playing: {_animatedCharacter.IsInState(UnitAnimatorState.AttackState)}");
     }
 
     public IEnumerator AnimateEscape(Vector3 direction)
@@ -287,32 +287,21 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         this.MoraleIcon.Hide();
     }
 
-    // TRIGGERED BY ANIMATOR
-    public void AnimationStarted(string name)
-    {
-        this._animating = true;
-    }
-
-    // TRIGGERED BY ANIMATOR
-    public void AnimationEnded(string name)
-    {
-        this._animating = false;
-    }
-
     /// <summary>
     /// Used to wait for animator animation to complete
     /// </summary>
     public IEnumerator WaitForAnimationEnd()
     {
-        
+        // wait 2 frames for the animation state to change
+        yield return Utils.WaitUntilNextFrame(2);
+
         var timer = 0.0f;
-        while (_animating)
+        while (_animatedCharacter.IsInState(UnitAnimatorState.AttackState))
         {
             timer += Time.deltaTime;
             if (timer > 5.0f)
             {
                 Debug.LogError($" {this.Unit.Data.ClassName} attack took more than 5 seconds! Ensure animation has an AnimationEnded trigger!!");
-                _animating = false;
                 yield break;
             }
 

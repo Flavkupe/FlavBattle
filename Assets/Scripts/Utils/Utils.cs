@@ -13,6 +13,16 @@ public static class Utils
         return point;
     }
 
+    /// <summary>
+    /// Waits until the next X frames of execution.
+    /// </summary>
+    public static IEnumerator WaitUntilNextFrame(int framesToWait = 1)
+    {
+        for (var i = 0; i < framesToWait; i++)
+        {
+            yield return 0;
+        }
+    }
     public static TType MakeOfType<TType>(string name, Transform parent = null) where TType : MonoBehaviour
     {
         var obj = new GameObject(name ?? typeof(TType).Name);

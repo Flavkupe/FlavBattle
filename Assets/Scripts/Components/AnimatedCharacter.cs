@@ -46,6 +46,14 @@ namespace FlavBattle.Components
         [SerializeField]
         private AnimationEventDispatcher _animationEventDispatcher;
 
+        /// <summary>
+        /// Uses the Animator Tag to check if the state is still the same.
+        /// </summary>
+        public bool IsInState(UnitAnimatorState state)
+        {
+            return this._prefab.IsInState(state.ToString());
+        }
+
         public void PlayAnimation(UnitAnimatorTrigger trigger)
         {
             switch (trigger)

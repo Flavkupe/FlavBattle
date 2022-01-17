@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SPUM_Prefabs : MonoBehaviour
 {
@@ -13,6 +14,21 @@ public class SPUM_Prefabs : MonoBehaviour
     public bool _horse;
     public string _horseString;
 
+    /// <summary>
+    /// Checks that the current state matches the specified one.
+    /// 
+    /// NOTE: This uses Tags to check the state. Tags should be like:
+    /// AttackState
+    /// RunState
+    /// DieState
+    /// 
+    /// </summary>
+    /// <param name="stateName"></param>
+    /// <returns></returns>
+    public bool IsInState(string stateName)
+    {
+        return _anim.GetCurrentAnimatorStateInfo(0).IsTag(stateName);
+    }
 
     public void PlayAnimation (int num)
     {

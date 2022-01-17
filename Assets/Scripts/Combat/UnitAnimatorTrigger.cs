@@ -16,4 +16,11 @@ namespace FlavBattle.Combat
         Static,
         SpecialJump,
     }
+
+    public enum UnitAnimatorState
+    {
+        RunState,
+        AttackState,
+        DieState,
+    }
 }
