@@ -114,10 +114,11 @@ namespace FlavBattle.Combat.Events
                 slot = target.CombatFormationSlot;
                 slot.Highlight(tileColor ?? Color.white);
             }
-
+            
+            
             // highlight source tile
-            var sourceSlot = source.CombatFormationSlot;
-            sourceSlot.Highlight(Color.cyan);
+            //var sourceSlot = source.CombatFormationSlot;
+            //sourceSlot.Highlight(Color.cyan);
 
             //// Play animator animation first
             //if (abilityData.AnimatorTrigger != UnitAnimatorTrigger.None)
@@ -167,7 +168,7 @@ namespace FlavBattle.Combat.Events
                 slot.ResetColor();
             }
 
-            sourceSlot.ResetColor();
+            //sourceSlot.ResetColor();
         }
 
 

@@ -41,14 +41,6 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     [Required]
     public HealthBar HealthBar;
 
-    [Required]
-    [SerializeField]
-    private IconTextPair _defenseTotalUI;
-
-    [Required]
-    [SerializeField]
-    private IconTextPair _attackTotalUI;
-
     [Tooltip("Animation for blocking an attack via high morale (flying morale icon)")]
     [Required]
     [SerializeField]
@@ -71,6 +63,47 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     [Required]
     private GameObject _skullIcon;
 
+    [SerializeField]
+    [Required]
+    [Tooltip("Front position if the character is facing left")]
+    private Transform _leftFront;
+
+    [SerializeField]
+    [Required]
+    [Tooltip("Front position if the character is facing right")]
+    private Transform _rightFront;
+
+    [SerializeField]
+    [Required]
+    [Tooltip("Overlay with morale, health, etc")]
+    private StatOverlay _statOverlay;
+
+    [SerializeField]
+    [Required]
+    [Tooltip("Sword part of overlay (damage)")]
+    private GameObject _overlaySwords;
+
+    [SerializeField]
+    [Required]
+    [Tooltip("Shield part of overlay (defense)")]
+    private GameObject _overlayShield;
+
+    /// <summary>
+    /// Throttle the stat update so it doesn't need to update too often.
+    /// </summary>
+    private ThrottleTimer _statUpdateThrottle = new ThrottleTimer(1.0f);
+
+
+    /// <summary>
+    /// Position representing the front of a character
+    /// </summary>
+    public Transform Front => this._facingLeft ? _leftFront : _rightFront;
+
+    /// <summary>
+    /// Position representing the back of a character
+    /// </summary>
+    public Transform Back => this._facingLeft ? _rightFront : _leftFront;
+
     private Animator _animator;
 
     public event EventHandler RightClicked;
@@ -78,10 +111,22 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     private AudioSource _audioSource;
 
     private AnimatedCharacter _animatedCharacter;
+    /// <summary>
+    /// The AnimatedCharacter instance for this unit, Instantiated in SetUnit.
+    /// </summary>
+    public AnimatedCharacter Character => _animatedCharacter;
+
+    private bool _facingLeft;
 
     void Awake()
     {
         _audioSource = this.GetComponent<AudioSource>();
+    }
+
+    void Start()
+    {
+        _overlayShield.Hide();
+        _overlaySwords.Hide();
     }
 
     void Update()
@@ -92,20 +137,16 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            _defenseTotalUI.Hide();
-            _attackTotalUI.Hide();
+            
+            _overlayShield.Hide();
+            _overlaySwords.Hide();
         }
     }
 
     public void SetUnit(Unit unit, bool facingLeft)
     {
         this.Unit = unit;
-        if (facingLeft)
-        {
-            // Reverse this rotation so text isn't backwards
-            this._attackTotalUI.FlipText();
-            this._defenseTotalUI.FlipText();
-        }
+        _facingLeft = facingLeft;
 
         var renderer = this.GetComponent<SpriteRenderer>();
         if (unit.Data.AnimatedCharacter != null)
@@ -120,13 +161,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
             _animatedCharacter = Instantiate(unit.Data.AnimatedCharacter, this.transform, false);
             _animatedCharacter.transform.localPosition = _animatedCharPosition.localPosition;
             _animator = _animatedCharacter.Animator;
-
-            // these face left by default
-            // note: flip CombatUnit to ensure everything else flips properly
-            if (!facingLeft)
-            {
-                this.transform.rotation = Quaternion.Euler(0, 180.0f, 0);
-            }
+            _animatedCharacter.SetFlippedLeft(facingLeft);
         }
 
         this.UpdateUIComponents();
@@ -157,8 +192,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     public Coroutine AnimateFlash(Color? color = null)
     {
-        var renderer = this.GetComponent<SpriteRenderer>();
-        return StartCoroutine(renderer.FlashColor(color ?? Color.red));
+        return StartCoroutine(this._animatedCharacter.FlashColor(color ?? Color.red));
     }
 
     public void AnimateDeath()
@@ -230,9 +264,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger)
     {
         this.PlayAnimator(animatorTrigger);
-        Debug.Log($"Playing: {_animatedCharacter.IsInState(UnitAnimatorState.AttackState)}");
         yield return WaitForAnimationEnd();
-        Debug.Log($"Done Playing: {_animatedCharacter.IsInState(UnitAnimatorState.AttackState)}");
     }
 
     public IEnumerator AnimateEscape(Vector3 direction)
@@ -241,12 +273,16 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         var speed = 3.0f;
         this.HideInterface();
         StartCoroutine(this.FadeAway());
+
+        // flip direction
+        this._animatedCharacter.SetFlippedLeft(!this._facingLeft);
+        this._animatedCharacter.PlayAnimation(UnitAnimatorTrigger.Run);
         while (time < 1.5f)
         {
             var delta = TimeUtils.FullAdjustedGameDelta;
             time += delta;
-            var pos = this.transform.position;
-            this.transform.position = Vector3.MoveTowards(pos, pos + direction, speed * delta);
+            var pos = this._animatedCharacter.transform.position;
+            this._animatedCharacter.transform.position = Vector3.MoveTowards(pos, pos + direction, speed * delta);
             yield return null;
         }
     }
@@ -283,8 +319,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     public void HideInterface()
     {
-        this.HealthBar.Hide();
-        this.MoraleIcon.Hide();
+        _statOverlay.Hide();
     }
 
     /// <summary>
@@ -327,23 +362,20 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
     private void ShowAndUpdateStatUI()
     {
-        if (!_defenseTotalUI.IsShowing())
+        if (!_overlayShield.IsShowing())
         {
-            _defenseTotalUI.Show();
+            _overlayShield.Show();
         }
 
-        if (!_attackTotalUI.IsShowing())
+        if (!_overlaySwords.IsShowing())
         {
-            _attackTotalUI.Show();
+            _overlaySwords.Show();
         }
 
-        if (Unit != null)
+        if (Unit != null && _statUpdateThrottle.Tick())
         {
             var summary = Unit.GetStatSummary();
-            var def = summary.GetTotal(UnitStatType.Defense).ToString();
-            var att = summary.GetTotal(UnitStatType.Power).ToString();
-            _defenseTotalUI.SetText(def);
-            _attackTotalUI.SetText(att);
+            _statOverlay.UpdateOverlay(summary);
         }
     }
 }

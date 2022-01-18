@@ -1,6 +1,7 @@
 ﻿using FlavBattle.Combat;
 using NaughtyAttributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -60,6 +61,9 @@ namespace FlavBattle.Components
             {
                 case UnitAnimatorTrigger.Idle:
                     this._prefab.PlayAnimation(0);
+                    break;
+                case UnitAnimatorTrigger.Run:
+                    this._prefab.PlayAnimation(1);
                     break;
                 case UnitAnimatorTrigger.ShieldBlock:
                     this._prefab.PlayAnimation(10);
@@ -121,11 +125,26 @@ namespace FlavBattle.Components
             }
         }
 
+        public IEnumerator FlashColor(Color color, float speed = 8.0f)
+        {
+            var routineSet = new ParallelRoutineSet(this);
+            var children = _prefab.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var child in children)
+            {
+                routineSet.AddRoutine(new Routine(() => child.FlashColor(color, speed)));
+            }
+
+            yield return routineSet;
+        }
+
         public void ToggleSpriteVisible(bool visible)
         {
             _prefab.gameObject.SetActive(visible);
         }
 
+        /// <summary>
+        /// Saves the preview as a texture. Used in Editor only.
+        /// </summary>
         [ContextMenu("Preview to Texture")]
         private void PreviewToTexture()
         {

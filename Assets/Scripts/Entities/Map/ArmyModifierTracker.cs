@@ -42,6 +42,7 @@ namespace FlavBattle.Entities
             if (_throttle.Tick(TimeUtils.AdjustedGameDelta))
             {
                 this.UpdateModifiers();
+                this.UpdateOverlay();
             }
         }
 
@@ -51,16 +52,22 @@ namespace FlavBattle.Entities
         private void UpdateModifiers()
         {
             _modifiers.UpdateModifiers(_army);
+        }
 
-            var summary = new UnitStatSummary();
-            _modifiers.Apply(summary, null);
-
+        /// <summary>
+        /// Updates the overlay for the MapView
+        /// </summary>
+        private void UpdateOverlay()
+        {
             if (_mapView != null)
             {
-                this._mapView.UpdateArmyOverlay(summary);
+                this._mapView.UpdateArmyOverlay();
             }
         }
 
+        /// <summary>
+        /// Gets the modifiers for Army itself.
+        /// </summary>
         public ModifierSet GetModifiers()
         {
             UpdateModifiers();

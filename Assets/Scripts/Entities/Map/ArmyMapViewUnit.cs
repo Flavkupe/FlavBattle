@@ -62,15 +62,12 @@ namespace FlavBattle.Formation
         /// <summary>
         /// Updates with info from entire Army.
         /// </summary>
-        /// <param name="summary">Data summar about whole army this is part of.</param>
-        public void UpdateArmyOverlay(UnitStatSummary summary)
+        public void UpdateArmyOverlay()
         {
             var hp = _unit.HPRatio;
             var morale = _unit.Info.Morale;
 
-            var ownSummary = this._unit.GetStatSummary(false);
-            ownSummary.Apply(summary);
-
+            var ownSummary = this._unit.GetStatSummary();
             _overlay.UpdateOverlay(ownSummary, morale, hp);
         }
 

@@ -221,15 +221,27 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
         }
     }
 
-    public void UpdateArmyOverlay(UnitStatSummary summary)
+    public void UpdateArmyOverlay()
     {
         // track morale and hp as well
         var morale = this._army.Morale;
         var hpPercent = this._army.GetHPPercent();
+        var officer = this._army.GetOfficer();
+        UnitStatSummary summary;
+        if (officer == null)
+        {
+            var summaries = this._army.GetUnits(true).Select(a => a.GetStatSummary()).ToList();
+            summary = UnitStatSummary.GetHighestAttAndDef(summaries);
+        }
+        else
+        {
+            summary = officer.GetStatSummary();
+        }
+
         this._overlay.UpdateOverlay(summary, morale, hpPercent);
         foreach (var unit in this.ActiveUnits)
         {
-            unit.UpdateArmyOverlay(summary);
+            unit.UpdateArmyOverlay();
         }
     }
 }

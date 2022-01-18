@@ -113,5 +113,37 @@ namespace FlavBattle.Entities
 
             Items.AddRange(other.Items);
         }
+
+        /// <summary>
+        /// Returns UnitStatSummary from list that has the highest combined Att/Def
+        /// </summary>
+        /// <returns></returns>
+        public static UnitStatSummary GetHighestAttAndDef(IList<UnitStatSummary> summaries)
+        {
+            if (summaries.Count == 0)
+            {
+                return null;
+            }
+
+            var highest = summaries[0];
+            if (summaries.Count == 1)
+            {
+                return highest;
+            }
+
+            var highestStats = highest.GetAccumulatedStats();
+
+            for (var i = 1; i < summaries.Count; i++)
+            {
+                var currentStats = summaries[i].GetAccumulatedStats();
+                if (currentStats.Defense + currentStats.Power > highestStats.Defense + highestStats.Power)
+                {
+                    highest = summaries[i];
+                    highestStats = currentStats;
+                }
+            }
+
+            return highest;
+        }
     }
 }

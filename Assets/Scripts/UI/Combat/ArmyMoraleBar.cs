@@ -13,10 +13,23 @@ public class ArmyMoraleBar : MonoBehaviour
     [Required]
     public Image ArmyPortrait;
 
+    [SerializeField]
+    private string _propertyColorName = "_Color";
+
+    [SerializeField]
+    private Vector3 _shaderDirection;
+
+    private void Start()
+    {
+        MoraleBar.material = new Material(MoraleBar.material);
+        MoraleBar.material.SetVector("_Direction", _shaderDirection);
+    }
+
     public void UpdateMorale(Morale morale)
     {
         var color = morale.GetColor();
         MoraleBar.SetColor(color);
+        MoraleBar.materialForRendering.SetColor(_propertyColorName, color);
         MoraleBar.fillAmount = (float)morale.Current / 100.0f;
         MoraleIcon.UpdateIcon(morale);
     }

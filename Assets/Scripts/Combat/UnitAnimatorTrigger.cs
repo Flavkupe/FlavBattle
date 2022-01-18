@@ -15,6 +15,7 @@ namespace FlavBattle.Combat
         Melee,
         Static,
         SpecialJump,
+        Run,
     }
 
     public enum UnitAnimatorState

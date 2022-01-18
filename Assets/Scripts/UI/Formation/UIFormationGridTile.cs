@@ -36,6 +36,7 @@ public class UIFormationGridTile : MonoBehaviour, IFormationGridSlot
 
     public void SetColor(Color color)
     {
+        GetComponent<Image>().SetColor(color);
         if (_character != null)
         {
             _character.SetColor(color);

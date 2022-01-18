@@ -1392,8 +1392,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ArmyMode: 1
   TimeScale: 1
-  Left: {fileID: 731195046}
-  Right: {fileID: 1171478143}
+  Left: {fileID: 0}
+  Right: {fileID: 0}
   AbilityData: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
   RightToLeft: 0
   LeftArmyConfig:
@@ -1838,6 +1838,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1214563639286657538, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b899f24c679d6b4bbc323c2cb4d5744,
+        type: 3}
+    - target: {fileID: 1214563639286657538, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214563639286657538, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214563639286657538, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214563639286657538, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: c6a08ebdc0d06f64d83aa41f8de6f063, type: 2}
     - target: {fileID: 1509738965879519559, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1958,6 +1984,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -42.761963
       objectReference: {fileID: 0}
+    - target: {fileID: 4049748121108292966, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: _shaderDirection.x
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4049748121108292966, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: _shaderDirection.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4408715962798716723, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1982,6 +2018,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -58.162964
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650751601546498866, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: _shaderDirection.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4650751601546498866, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: _shaderDirection.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7276557510352088617, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
@@ -2008,6 +2054,27 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 938857345}
+    - target: {fileID: 7522047893247378518, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b899f24c679d6b4bbc323c2cb4d5744,
+        type: 3}
+    - target: {fileID: 7522047893247378518, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: c6a08ebdc0d06f64d83aa41f8de6f063, type: 2}
+    - target: {fileID: 7704035989571793419, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704035989571793419, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32b7ee9cf7a5d5d418ccf347af13e516, type: 3}
 --- !u!114 &3495426948669248302 stripped

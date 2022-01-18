@@ -95,6 +95,8 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
     private Vector3Int _currentTileCoords;
     private PathModifiers _cachedPathModifiers = null;
 
+    [SerializeField]
+    [Required]
     private ArmyModifierTracker _armyModifierTracker;
 
     public GridTile CurrentTileInfo => _currentTile;
@@ -168,8 +170,6 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
         {
             ID = Guid.NewGuid().ToString();
         }
-
-        _armyModifierTracker = GetComponent<ArmyModifierTracker>();
     }
 
     void Start()

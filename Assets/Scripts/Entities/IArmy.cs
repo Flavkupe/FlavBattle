@@ -47,6 +47,14 @@ public static class ArmyExtensions
         return army.Formation.GetUnits(liveOnly);
     }
 
+    /// <summary>
+    /// Gets the officer for the army, or null if there is no officer.
+    /// </summary>
+    public static Unit GetOfficer(this IArmy army)
+    {
+        return army.Formation.GetOfficer(false);
+    }
+
     public static bool SameFaction(this IArmy army, IArmy other)
     {
         if (army == null || other == null || 

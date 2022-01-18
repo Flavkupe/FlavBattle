@@ -52,13 +52,14 @@ public class CombatAbility : MonoBehaviour
 
     private IEnumerator DoFullSelfCombatAnimation(CombatUnit source)
     {
-        yield return AnimateTarget(source);
+        yield return AnimateTarget(source.transform);
         Destroy(this.gameObject);
     }
 
     private IEnumerator DoAnimation(CombatUnit source, CombatUnit target)
     {
-        var sourcePos = source.transform.position;
+        var character = source.Character;
+        var sourcePos = character.transform.position;
         var targetPos = GetTargetPos(target, _data.CharacterMoveTarget, 0.5f);
 
         // Move there
@@ -66,7 +67,7 @@ public class CombatAbility : MonoBehaviour
         {
             if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Arc)
             {
-                yield return MoveInArc(sourcePos, targetPos, source.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+                yield return MoveInArc(sourcePos, targetPos, character.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
             }
             else if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Straight)
             {
@@ -75,7 +76,7 @@ public class CombatAbility : MonoBehaviour
             else
             {
                 // Teleport
-                source.transform.position = targetPos;
+                character.transform.position = targetPos;
             }
         }
 
@@ -84,7 +85,7 @@ public class CombatAbility : MonoBehaviour
         yield return AnimatorAnimation(source);
 
         // Animate the character
-        var animationTarget = _data.CombatAnimationTarget == CombatAnimationTarget.Self ? source : target;
+        var animationTarget = _data.CombatAnimationTarget == CombatAnimationTarget.Self ? character.transform : target.transform;
         yield return AnimateTarget(animationTarget);
 
         TargetHit?.Invoke(this, new EventArgs());
@@ -94,7 +95,7 @@ public class CombatAbility : MonoBehaviour
         {
             if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Arc)
             {
-                yield return MoveInArc(targetPos, sourcePos, source.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+                yield return MoveInArc(targetPos, sourcePos, character.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
             }
             else if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Straight)
             {
@@ -103,14 +104,14 @@ public class CombatAbility : MonoBehaviour
             else
             {
                 // Teleport
-                source.transform.position = sourcePos;
+                character.transform.position = sourcePos;
             }
         }
 
         Destroy(this.gameObject);
     }
 
-    private IEnumerator AnimateTarget(CombatUnit target)
+    private IEnumerator AnimateTarget(Transform target)
     {
         if (_data.ComabtAnimation != null)
         {
@@ -119,8 +120,8 @@ public class CombatAbility : MonoBehaviour
                 var instance = Instantiate(_data.ComabtAnimation.Instance);
                 var animation = instance.GetComponent<IPlayableAnimation>();
                 animation.Speed *= _data.CombatAnimationSpeed;
-                instance.transform.SetParent(target.transform, _data.ComabtAnimation.ScaleToTarget);
-                instance.transform.position = target.transform.position;
+                instance.transform.SetParent(target, _data.ComabtAnimation.ScaleToTarget);
+                instance.transform.position = target.position;
                 yield return animation.PlayToCompletion();
                 Destroy(instance.gameObject);
             }
@@ -249,12 +250,10 @@ public class CombatAbility : MonoBehaviour
             0);
         if (targetPos == CombatAbilityCharacterMoveTarget.Front)
         {
-            // Note: since left-facing units are flipped, this should still work since "right" is
-            // facing towards *their* right.
-            return target.transform.position + (target.transform.right * distance * -1) + jitter;
+            return target.Front.position + jitter;
         }
 
         // TEMP
-        return  target.transform.position + (target.transform.right * distance) + jitter;
+        return  target.Back.position + jitter;
     }
 }

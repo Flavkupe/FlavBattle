@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
+    <Compile Include="Assets\Scripts\Entities\StatOverlay.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\Dialog\CombatDialogEvent.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedSpin.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
     <Compile Include="Assets\Scripts\State\Triggers\ArmyEncounterTrigger.cs" />
     <Compile Include="Assets\Scripts\Utils\Bezier.cs" />
+    <Compile Include="Assets\Scripts\Combat\Combatant.cs" />
     <Compile Include="Assets\Scripts\Utils\EnumFlagsAttribute.cs" />
     <Compile Include="Assets\Scripts\Combat\Event\ICombatGameEvent.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_PackageButton.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Assets\Scripts\Combat\TestingAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\UI\Components\NameTag.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\MoraleIcon.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyMapViewUnit.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyPreparingState.cs" />
     <Compile Include="Assets\Scripts\Utils\Enums.cs" />
@@ -165,6 +168,7 @@
     <Compile Include="Assets\Scripts\UI\Combat\UnitStatSummaryPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\States\ShowWinnerState.cs" />
     <Compile Include="Assets\Scripts\Entities\Modifiers\DefaultModifier.cs" />
+    <Compile Include="Assets\Scripts\Combat\BattleStatus.cs" />
     <Compile Include="Assets\Scripts\Entities\Formation.cs" />
     <Compile Include="Assets\Scripts\UI\Army\UIUnitPerksPanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\FactionData.cs" />
@@ -215,6 +219,7 @@
     <Compile Include="Assets\Scripts\Entities\Map\Garrison.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogManager.cs" />
     <Compile Include="Assets\Scripts\UI\Components\TextFromResources.cs" />
+    <Compile Include="Assets\Scripts\Components\AnimatedCharacterBehavior.cs" />
     <Compile Include="Assets\Scripts\UI\Army\OfficerCommandsPanel.cs" />
     <Compile Include="Assets\Scripts\Components\AnimatedBounce.cs" />
     <Compile Include="Assets\Scripts\Utils\StringResource.cs" />
@@ -228,7 +233,6 @@
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyMapView.cs" />
     <Compile Include="Assets\Scripts\Tilemap\BiomeType.cs" />
-    <Compile Include="Assets\Scripts\Combat\States\BattleStatus.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\UnitData.cs" />
     <Compile Include="Assets\Scripts\Dialog\DialogEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyIdleState.cs" />
@@ -240,7 +244,6 @@
     <Compile Include="Assets\Scripts\Tilemap\GridTile.cs" />
     <Compile Include="Assets\Scripts\Entities\Modifiers\ModifierSet.cs" />
     <Compile Include="Assets\Scripts\Tilemap\TileData.cs" />
-    <Compile Include="Assets\Scripts\Combat\States\Combatant.cs" />
     <Compile Include="Assets\FlowLayout.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
     <Compile Include="Assets\Scripts\Utils\TraceData.cs" />
@@ -281,8 +284,6 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Entities\StatOverlay.cs" />
-    <Compile Include="Assets\Scripts\Entities\Map\ArmyMapViewUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

@@ -537,6 +537,7 @@ MonoBehaviour:
     AttackRangeDetector: {fileID: 8130424245700661503}
     ClickDetector: {fileID: 246149411203339786}
     TileDetector: {fileID: 4718273400054647223}
+  _armyModifierTracker: {fileID: 9095067927798219444}
   _mapView: {fileID: 1743538751}
   _combatEvents: []
   FactionFlag: {fileID: 6903624859579811919}
