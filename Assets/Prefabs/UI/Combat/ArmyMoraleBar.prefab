@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: c6a08ebdc0d06f64d83aa41f8de6f063, type: 2}
   m_Color: {r: 0, g: 0.8207547, b: 0.227286, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -414,6 +414,7 @@ MonoBehaviour:
   MoraleBar: {fileID: 9166350127657696551}
   ArmyPortrait: {fileID: 3225312670270224344}
   _propertyColorName: _Color
+  _shaderDirection: {x: -2, y: -1, z: 0}
 --- !u!1 &4920079754823147665
 GameObject:
   m_ObjectHideFlags: 0

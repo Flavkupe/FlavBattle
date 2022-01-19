@@ -23,6 +23,8 @@ namespace FlavBattle.Tilemap
 
         Bridge,
 
+        Path,
+
         Any,
     }
 }

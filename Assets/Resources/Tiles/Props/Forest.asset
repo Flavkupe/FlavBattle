@@ -16,7 +16,7 @@ MonoBehaviour:
     _name: Forest
     _slotModel: {fileID: 0}
     Passable: 1
-    WalkCost: 2
+    WalkCost: 3
     SpecialProperty: 0
     _biomeType: 7
     OverrideWalk: 0

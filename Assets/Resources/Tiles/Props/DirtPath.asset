@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80c8c46c9bae10f4eb7de6c8264b0c96, type: 3}
-  m_Name: Grass
+  m_Name: DirtPath
   m_EditorClassIdentifier: 
   Info:
-    _name: Grass
-    _slotModel: {fileID: 8502142653311525639, guid: 108464c13884bd3428bda49181b6bfd2,
-      type: 3}
+    _name: Path
+    _slotModel: {fileID: 0}
     Passable: 1
-    WalkCost: 2
+    WalkCost: 1
     SpecialProperty: 0
-    _biomeType: 1
-    OverrideWalk: 0
-    OverridePassable: 0
+    _biomeType: 10
+    OverrideWalk: 1
+    OverridePassable: 1
     Stats:
       _hp: 0
       _power: 0
       _defense: 0
-      _speed: 0
+      _speed: 1
       _level: 1
       _command: 0

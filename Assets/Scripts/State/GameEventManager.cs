@@ -94,27 +94,19 @@ namespace FlavBattle.State
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha0))
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Slow);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Normal);
-            }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Fast);
+                TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.Normal);
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.VeryFast);
             }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                TimeUtils.GameSpeed.SetGameSpeed(GameSpeed.UltraFast);
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.BackQuote))
             {
                 TimeUtils.GameSpeed.TogglePause();
             }

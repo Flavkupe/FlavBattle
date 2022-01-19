@@ -17,7 +17,7 @@ MonoBehaviour:
     _slotModel: {fileID: 8502142653311525639, guid: a335105d1036bb342908547484276279,
       type: 3}
     Passable: 1
-    WalkCost: 3
+    WalkCost: 4
     SpecialProperty: 0
     _biomeType: 2
     OverrideWalk: 0

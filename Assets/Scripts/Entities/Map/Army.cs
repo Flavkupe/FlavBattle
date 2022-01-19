@@ -418,7 +418,6 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
             {
                 this.transform.position = this._destination.Value;
                 this._destination = null;
-                this.Animation.SetIdle(true);
             }
 
             CheckCurrentLocation();

@@ -1859,11 +1859,6 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1214563639286657538, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 2100000, guid: c6a08ebdc0d06f64d83aa41f8de6f063, type: 2}
     - target: {fileID: 1509738965879519559, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1984,16 +1979,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -42.761963
       objectReference: {fileID: 0}
-    - target: {fileID: 4049748121108292966, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
-        type: 3}
-      propertyPath: _shaderDirection.x
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4049748121108292966, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
-        type: 3}
-      propertyPath: _shaderDirection.y
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 4408715962798716723, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2023,11 +2008,6 @@ PrefabInstance:
         type: 3}
       propertyPath: _shaderDirection.x
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4650751601546498866, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
-        type: 3}
-      propertyPath: _shaderDirection.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7276557510352088617, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}

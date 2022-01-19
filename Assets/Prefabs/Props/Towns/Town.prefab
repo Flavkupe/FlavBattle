@@ -42,6 +42,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -124,6 +125,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -250,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RequiredToTake: 20
-  StartingFaction: {fileID: 0}
+  StartingFaction: {fileID: 11400000, guid: 34dfca740be53964488a04c4adc5022e, type: 2}
   RedTextTemplate: {fileID: -6760694237348889443, guid: 604884fbe425e9c488906954de8dcd6c,
     type: 3}
   BannerSprite: {fileID: 4907739761124770510}
