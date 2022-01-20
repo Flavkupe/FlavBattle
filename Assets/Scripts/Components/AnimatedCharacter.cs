@@ -103,11 +103,11 @@ namespace FlavBattle.Components
         {
             if (idle)
             {
-                this._prefab.PlayAnimation(0);
+                this.PlayAnimation(UnitAnimatorTrigger.Idle);
             }
             else
             {
-                this._prefab.PlayAnimation(1);
+                this.PlayAnimation(UnitAnimatorTrigger.Run);
             }
         }
 

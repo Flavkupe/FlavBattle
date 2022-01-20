@@ -141,14 +141,14 @@ public class UIManager : MonoBehaviour
         if (selected == null)
         {
             this.FormationPanel.Hide();
-            this.ActionButtonsPanel.Hide();
+            this.ActionButtonsPanel.SetArmy(null);
+            this.ActionButtonsPanel.SetActive(false);
         }
         else
         {
             this.FormationPanel.Show();
             this.FormationPanel.SetArmy(selected);
-
-            this.ActionButtonsPanel.Show();
+            this.ActionButtonsPanel.SetActive(true);
             this.ActionButtonsPanel.SetArmy(selected);
         }
 

@@ -66,16 +66,17 @@ namespace FlavBattle.Tilemap
         {
             var main = this.MainTile;
             var cost = main.WalkCost;
+            var overridden = main.OverrideWalk;
             foreach (var prop in this.Props)
             {
-                cost += prop.WalkCost;
-                if (main.OverrideWalk && !prop.OverrideWalk)
+                if ((overridden && prop.OverrideWalk) || (!overridden && !prop.OverrideWalk))
                 {
-                    cost = main.WalkCost;
+                    cost += prop.WalkCost;
                 }
-                else if (!main.OverrideWalk && prop.OverrideWalk)
+                else if (!overridden && prop.OverrideWalk)
                 {
                     cost = prop.WalkCost;
+                    overridden = true;
                 }
             }
 

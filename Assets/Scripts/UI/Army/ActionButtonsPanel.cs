@@ -1,24 +1,79 @@
-﻿using System;
+﻿using FlavBattle.Entities;
+using FlavBattle.UI;
+using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionButtonsPanel : MonoBehaviour
 {
-    public GameObject GarrisonButton;
+    private ArmyActions _armyActions;
 
-    private Army _army;
+    [SerializeField]
+    [Required]
+    private GameObject _actionsPanel;
+
+    [SerializeField]
+    [Required]
+    private ArmyActionButton _buttonTemplate;
+
+    private List<Tuple<IArmyAction, ArmyActionButton>> _actions = new List<Tuple<IArmyAction, ArmyActionButton>>();
 
     private void Update()
     {
-        if (_army != null)
+        if (_armyActions != null)
         {
-            GarrisonButton.SetActive(_army.IsOnGarrison);
+            foreach (var action in _actions)
+            {
+                var current = action.Item1;
+                var button = action.Item2;
+                button.SetActive(current.IsAvailable());
+                button.SetLocked(current.IsLocked());
+            }
         }
     }
 
-    public void SetArmy(Army selected)
+    public void SetArmy(Army army)
     {
-        _army = selected;
+        if (army == null)
+        {
+            this.UnsetArmyActions();
+        }
+        else
+        {
+            var actions = army.GetComponentInChildren<ArmyActions>();
+            this.SetArmyActions(actions);
+        }
+    }
+
+    public void SetArmyActions(ArmyActions selected)
+    {
+        if (_armyActions == selected)
+        {
+            return;
+        }
+
+        _armyActions = selected;
+        Clear();
+        foreach (var action in _armyActions.Actions)
+        {
+            var button = Instantiate(_buttonTemplate, this._actionsPanel.transform, false);
+            button.SetAction(action);
+            _actions.Add(new Tuple<IArmyAction, ArmyActionButton>(action, button));
+        }
+    }
+
+    public void UnsetArmyActions()
+    {
+        _armyActions = null;
+        Clear();
+    }
+
+    private void Clear()
+    {
+        _actionsPanel.transform.DestroyChildren();
+        _actions.Clear();
+
     }
 }

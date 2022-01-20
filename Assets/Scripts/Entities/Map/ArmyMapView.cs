@@ -32,6 +32,8 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     [Required]
     private StatOverlay _overlay;
 
+    private bool _idle = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -162,6 +164,7 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void SetIdle(bool idle)
     {
+        _idle = idle;
         _leaderCharacter.SetIdle(idle);
         foreach (var sprite in this.AllUnitSlots)
         {
@@ -200,9 +203,19 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
     {
         _zoomedView = zoomedIn;
         _leaderCharacter.ToggleSpriteVisible(!zoomedIn);
+
+        if (!zoomedIn)
+        {
+            _leaderCharacter.SetIdle(_idle);
+        }
+        
         foreach (var sprite in this.AllUnitSlots)
         {
             sprite.ToggleSpriteVisible(zoomedIn);
+            if (zoomedIn)
+            {
+                sprite.SetIdle(_idle);
+            }
         }
     }
 

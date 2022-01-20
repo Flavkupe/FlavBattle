@@ -30,15 +30,19 @@ public class Tooltip : MonoBehaviour
     {
         if (CameraSpace)
         {
-            this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // what this does is to calculate the position relative to viewport (0.0 thru 1.0)
+            // because the canvas is centered on 0,0 rather than having normal screen coordinates
+            var width = Camera.main.pixelWidth;
+            var height = Camera.main.pixelHeight;
+            var pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            this.transform.localPosition = new Vector3((pos.x - 0.5f) * width, (pos.y - 0.5f) * height, 10.0f);
+            this.transform.localPosition = this.transform.localPosition.ShiftY(VerticalOffset);
         }
         else
         {
             this.transform.position = Input.mousePosition;
-        }
-
-        this.transform.position = this.transform.position.ShiftY(VerticalOffset);
-        this.transform.position = this.transform.position.SetZ(0);
+            this.transform.position = this.transform.position.ShiftY(VerticalOffset);
+        }        
 
         if (_currentSource != null && !_currentSource.gameObject.activeInHierarchy)
         {

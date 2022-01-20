@@ -202,16 +202,16 @@ public class ArmyManager : MonoBehaviour, IHasTraceData
         _ui.ArmyCreated(army);
     }
 
-    public void GarrisonSelectedArmy()
+    public void GarrisonArmy(Army army)
     {
-        if (_selected != null)
+        if (army == _selected)
         {
-            var army = _selected;
             this.UnselectAll();
-            _garrisonManager.GarrisonArmy(army);
-            Destroy(army.gameObject);
-            _armies.Remove(army);
         }
+
+        _garrisonManager.GarrisonArmy(army);
+        Destroy(army.gameObject);
+        _armies.Remove(army);
     }
 
     private void HandleArmyFledMap(object sender, EventArgs e)

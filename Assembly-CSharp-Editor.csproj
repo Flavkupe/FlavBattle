@@ -876,6 +876,10 @@
       <Project>{D9D1D100-55AE-8B20-6044-4EC9AED2C8C8}</Project>
       <Name>AssetIcons-Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="AllIn1SpriteShaderAssembly.csproj">
+      <Project>{B9B1E8FC-A8C0-55C9-20CA-71979C30AF87}</Project>
+      <Name>AllIn1SpriteShaderAssembly</Name>
+    </ProjectReference>
     <ProjectReference Include="NaughtyAttributes.Editor.csproj">
       <Project>{F140D247-9B6C-89E2-7712-6130B15F31A8}</Project>
       <Name>NaughtyAttributes.Editor</Name>

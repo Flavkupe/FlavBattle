@@ -148,6 +148,7 @@
     <Compile Include="Assets\Scripts\Entities\Data\PerkData.cs" />
     <Compile Include="Assets\Scripts\External\ArcCollider2D.cs" />
     <Compile Include="Assets\Scripts\Utils\Utils.cs" />
+    <Compile Include="Assets\Scripts\UI\Components\SpeedButton.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DropTargetUIGrid.cs" />
     <Compile Include="Assets\Scripts\Components\WithFormation.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIUnitGridBase.cs" />
@@ -284,7 +285,10 @@
     <Compile Include="Assets\Scripts\Entities\UnitStatSummary.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\UI\Components\SpeedButton.cs" />
+    <Compile Include="Assets\Scripts\UI\Army\ArmyActionButton.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyActions\ArmyActions.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyActions\ArmyAction.cs" />
+    <Compile Include="Assets\Scripts\Entities\Map\ArmyActions\GarrisonAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />
@@ -1073,6 +1077,10 @@
     <ProjectReference Include="AssetIcons-Editor.csproj">
       <Project>{D9D1D100-55AE-8B20-6044-4EC9AED2C8C8}</Project>
       <Name>AssetIcons-Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="AllIn1SpriteShaderAssembly.csproj">
+      <Project>{B9B1E8FC-A8C0-55C9-20CA-71979C30AF87}</Project>
+      <Name>AllIn1SpriteShaderAssembly</Name>
     </ProjectReference>
     <ProjectReference Include="NaughtyAttributes.Editor.csproj">
       <Project>{F140D247-9B6C-89E2-7712-6130B15F31A8}</Project>
