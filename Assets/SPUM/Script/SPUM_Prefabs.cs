@@ -96,6 +96,12 @@ public class SPUM_Prefabs : MonoBehaviour
             case 11: //Static
             _anim.SetFloat("RunState", 0.0f);
             break;
+
+            case 12: //Flinch
+            _anim.SetTrigger("Attack");
+            _anim.SetFloat("AttackState", 0.0f);
+            _anim.SetFloat("NormalState", 2.0f);
+            break;
         }
     }
 }

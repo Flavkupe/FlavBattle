@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f91f1ed6b871b4cac6aa10b56445e4, type: 3}
+  m_Name: JumpAttackReturn
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 03e92acfa9936644eae9672db29b795b, type: 3}
+  _preAction: []
+  _action:
+  - Data: {fileID: 11400000, guid: 4a5dcfb15552bf946bea9702c78f1a33, type: 2}
+    Options:
+      SpeedMultiplier: 1
+      WaitForCompletion: 0
+      Subject: 0
+  - Data: {fileID: 11400000, guid: 2faf59bb94814ac47bdfb6fd5bdd8b32, type: 2}
+    Options:
+      SpeedMultiplier: 10
+      WaitForCompletion: 1
+      Subject: 0
+  - Data: {fileID: 11400000, guid: 5ce24803b0a7e2e44b86f3aa00aea115, type: 2}
+    Options:
+      SpeedMultiplier: 1
+      WaitForCompletion: 1
+      Subject: 0
+  - Data: {fileID: 11400000, guid: c91b2a42d570201439b1adb9557ea628, type: 2}
+    Options:
+      SpeedMultiplier: 1
+      WaitForCompletion: 1
+      Subject: 0
+  _postAction: []

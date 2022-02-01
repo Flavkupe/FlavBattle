@@ -47,6 +47,8 @@ namespace FlavBattle.Components
         [SerializeField]
         private AnimationEventDispatcher _animationEventDispatcher;
 
+        public event EventHandler<UnitAnimatorEvent> AnimationEvent;
+
         /// <summary>
         /// Uses the Animator Tag to check if the state is still the same.
         /// </summary>
@@ -82,6 +84,9 @@ namespace FlavBattle.Components
                     break;
                 case UnitAnimatorTrigger.SpecialJump:
                     this._prefab.PlayAnimation(9);
+                    break;
+                case UnitAnimatorTrigger.Flinch:
+                    this._prefab.PlayAnimation(12);
                     break;
             }
         }
@@ -175,6 +180,11 @@ namespace FlavBattle.Components
             }
 
             this.SetSortingLayer(visuals.SortingLayer.Name, visuals.SortingLayer.Value);
+        }
+
+        public void HandleAnimationEvent(UnitAnimatorEvent animationEvent)
+        {
+            AnimationEvent?.Invoke(this, animationEvent);
         }
     }
 }

@@ -34,7 +34,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     public MoraleIcon MoraleIcon;
 
     [Required]
-    [Tooltip("Local position where AnimatedCharacter is instantiated.")]
+    [Tooltip("Original local position where AnimatedCharacter is instantiated.")]
     [SerializeField]
     private Transform _animatedCharPosition;
 
@@ -103,6 +103,11 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     /// Position representing the back of a character
     /// </summary>
     public Transform Back => this._facingLeft ? _rightFront : _leftFront;
+
+    /// <summary>
+    /// Original position for the animated character.
+    /// </summary>
+    public Transform OriginalPos => _animatedCharPosition;
 
     private Animator _animator;
 

@@ -6,6 +6,10 @@ using System;
 
 public class Combatant
 {
+    protected Combatant()
+    {
+    }
+
     public Combatant(CombatFormationSlot slot)
     {
         CombatFormationSlot = slot;
@@ -35,7 +39,7 @@ public class Combatant
     /// <summary>
     /// Visual stuff for this unit
     /// </summary>
-    public CombatUnit CombatUnit => CombatFormationSlot?.CurrentUnit;
+    public virtual CombatUnit CombatUnit => CombatFormationSlot?.CurrentUnit;
 
     /// <summary>
     /// Use this to get the current unit stats combined with stat changes.
@@ -147,4 +151,19 @@ public class Combatant
             this.CombatUnit.AddBuffIcon(CombatBuffIcon.BuffType.BlockShield);
         }
     }
+}
+
+/// <summary>
+/// An instance of Combatant used only for direct testing purposes
+/// </summary>
+public class TestCombatant : Combatant
+{
+    public TestCombatant(CombatUnit unit)
+    {
+        _combatUnit = unit;
+    }
+
+    private CombatUnit _combatUnit;
+    public override CombatUnit CombatUnit => _combatUnit;
+
 }

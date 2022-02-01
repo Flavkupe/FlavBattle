@@ -52,6 +52,7 @@ public enum CombatAbilityCharacterMoveEffect
 public enum CombatAbilityCharacterMoveTarget
 {
     Front,
+    BackToSource,
 }
 
 public enum CombatAnimationType

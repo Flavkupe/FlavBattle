@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine;
 using NaughtyAttributes;
 using FlavBattle.Combat;
+using FlavBattle.Combat.Animation;
+using FlavBattle.Entities.Data;
 
 public class TestingAbilitiesManager : MonoBehaviour
 {
@@ -22,6 +24,12 @@ public class TestingAbilitiesManager : MonoBehaviour
     public CombatUnit Right;
 
     [HideIf("ArmyMode")]
+    public UnitData LeftChar;
+
+    [HideIf("ArmyMode")]
+    public UnitData RightChar;
+
+    [HideIf("ArmyMode")]
     public CombatAbilityData AbilityData;
 
     [HideIf("ArmyMode")]
@@ -37,14 +45,21 @@ public class TestingAbilitiesManager : MonoBehaviour
     public GameObject Thing;
 
     private TestArmy _leftArmy;
-
     private TestArmy _rightArmy;
 
     public BattleManager BattleManager;
 
+    public CombatTurnActionSummary[] Summary;
+
+    public CombatFullTurnAnimationData Animation;
+
     // Start is called before the first frame update
     void Start()
     {
+        var unitleft = UnitGenerator.MakeUnit(LeftChar, Faction.KingsMen);
+        var unitright = UnitGenerator.MakeUnit(RightChar, Faction.KingsMen);
+        this.Left.SetUnit(unitleft, false);
+        this.Right.SetUnit(unitright, true);
     }
 
     // Update is called once per frame
@@ -103,24 +118,48 @@ public class TestingAbilitiesManager : MonoBehaviour
 
         if (!ArmyMode)
         {
-            var obj = new GameObject("Ability");
-            var ability = obj.AddComponent<CombatAbility>();
+            //var obj = new GameObject("Ability");
+            //var ability = obj.AddComponent<CombatAbility>();
 
-            ability.InitData(AbilityData);
-            if (RightToLeft)
-            {
-                ability.StartTargetedAbility(Right, Left);
-            }
-            else
-            {
-                ability.StartTargetedAbility(Left, Right);
-            }
-            
+            //ability.InitData(AbilityData);
+            //if (RightToLeft)
+            //{
+            //    ability.StartTargetedAbility(Right, Left);
+            //}
+            //else
+            //{
+            //    ability.StartTargetedAbility(Left, Right);
+            //}
+
+            TestAbility();
         }
         else
         {
             InitArmy();
             BattleManager.StartCombat(_leftArmy, _rightArmy);
+        }
+    }
+
+    [ContextMenu("TestAbility")]
+    public void TestAbility()
+    {
+        var summary = new CombatTurnUnitSummary();
+        summary.Results.AddRange(this.Summary);
+        foreach (var item in summary.Results)
+        {
+            if (RightToLeft)
+            {
+                item.Source = new TestCombatant(Right);
+                item.Target = new TestCombatant(Left);
+            }
+            else
+            {
+                item.Source = new TestCombatant(Left);
+                item.Target = new TestCombatant(Right);
+            }
+
+            var anim = Animation.Create(summary);
+            StartCoroutine(anim.Do());
         }
     }
 }

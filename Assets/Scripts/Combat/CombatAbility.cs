@@ -1,4 +1,5 @@
 ﻿using FlavBattle.Combat;
+using FlavBattle.Combat.Animation;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -67,7 +68,7 @@ public class CombatAbility : MonoBehaviour
         {
             if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Arc)
             {
-                yield return MoveInArc(sourcePos, targetPos, character.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+                yield return AnimationUtils.MoveInArc(sourcePos, targetPos, character.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
             }
             else if (_data.CharacterMoveToEffect == CombatAbilityCharacterMoveEffect.Straight)
             {
@@ -95,7 +96,7 @@ public class CombatAbility : MonoBehaviour
         {
             if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Arc)
             {
-                yield return MoveInArc(targetPos, sourcePos, character.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
+                yield return AnimationUtils.MoveInArc(targetPos, sourcePos, character.gameObject, _data.CharacterMoveSpeed, _data.CharacterMoveArcHeight);
             }
             else if (_data.CharacterMoveBackEffect == CombatAbilityCharacterMoveEffect.Straight)
             {
@@ -180,48 +181,7 @@ public class CombatAbility : MonoBehaviour
     private IEnumerator FireProjectileArc(Vector3 source, Vector3 target, GameObject projectile)
     {
         var height = UnityEngine.Random.Range(_data.ArcHeight.x, _data.ArcHeight.y);
-        yield return MoveInArc(source, target, projectile, _data.ProjectileSpeed, height, _data.TraceDirection);
-    }
-
-    private IEnumerator MoveInArc(Vector3 source, Vector3 target, GameObject obj, float speed, float arcHeight, bool traceDirection = false)
-    {
-        var dist = Vector3.Distance(target, source);
-        var height = arcHeight;
-        var bezier = GetArc(height, source, target);
-
-        var travelled = 0.0f;
-
-        while (dist > 0 && travelled < dist)
-        {
-            var step = speed * TimeUtils.FullAdjustedGameDelta;
-            travelled += step;
-
-            var t = travelled / dist;
-            obj.transform.position = bezier.GetPoint(t);
-
-            if (traceDirection)
-            {
-                var direction = bezier.GetDirection(t);
-                var targetPt = obj.transform.position + direction;
-
-                obj.transform.LookAt(targetPt, Vector3.up);
-                // WHYYYYYYY????? This seems to be required for this to work
-                obj.transform.Rotate(0, 90, 180);
-            }
-
-            yield return null;
-        }
-    }
-
-    private Bezier GetArc(float height, Vector3 source, Vector3 target)
-    {
-        Vector3 arcPoint = (source + target) / 2.0f;
-        arcPoint += Vector3.up * height;
-
-        var p0 = source;
-        var p1 = arcPoint;
-        var p2 = target;
-        return new Bezier(p0, p1, p2);
+        yield return AnimationUtils.MoveInArc(source, target, projectile, _data.ProjectileSpeed, height, _data.TraceDirection);
     }
 
     private IEnumerator FireProjectileStraight(Vector3 source, Vector3 target, GameObject projectile)

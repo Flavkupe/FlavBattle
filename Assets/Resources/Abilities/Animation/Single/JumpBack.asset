@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab3ebb6296cd4a41a26e4e1d23f34fc, type: 3}
+  m_Name: JumpBack
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2944583120216345415, guid: 8bfc2f0dbb6d8b847b0dcece93b43f28, type: 3}
+  _description: Jump back from target to source
+  _waitForCompletion: 1
+  CharacterMoveToEffect: 2
+  CharacterMoveArcHeight: 1
+  CharacterMoveSpeed: 10
+  CharacterMoveTarget: 1

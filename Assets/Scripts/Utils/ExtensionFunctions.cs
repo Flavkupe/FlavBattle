@@ -131,6 +131,7 @@ public static class ExtensionFunctions
         {
             progress += speed * Time.deltaTime;
             sprite.color = Color.Lerp(sprite.color, Color.white, progress);
+            yield return null;
         }
 
         sprite.color = Color.white;

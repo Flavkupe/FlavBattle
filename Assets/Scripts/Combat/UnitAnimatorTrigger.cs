@@ -16,6 +16,7 @@ namespace FlavBattle.Combat
         Static,
         SpecialJump,
         Run,
+        Flinch,
     }
 
     public enum UnitAnimatorState
@@ -23,5 +24,10 @@ namespace FlavBattle.Combat
         RunState,
         AttackState,
         DieState,
+    }
+
+    public enum UnitAnimatorEvent
+    {
+        AttackHit = 1,
     }
 }

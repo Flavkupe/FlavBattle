@@ -550,5 +550,9 @@ public static class RoutineExtensionFunctions
 
         return Routine.Create(enumerator);
     }
-}
 
+    public static IEnumerator RunInBackground(this Routine routine, MonoBehaviour runner)
+    {
+        yield return runner.StartCoroutine(routine);
+    }
+}

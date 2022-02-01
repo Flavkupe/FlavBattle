@@ -53,6 +53,7 @@ namespace FlavBattle.Combat
     /// including the results of the action. Can be friendly
     /// effect or attack.
     /// </summary>
+    [Serializable]
     public class CombatTurnActionSummary
     {
         /// <summary>
@@ -82,30 +83,31 @@ namespace FlavBattle.Combat
         /// <summary>
         /// Morale damage caused directly by morale-affecting abilities
         /// </summary>
-        public int DirectMoraleDamage { get; set; }
+        public int DirectMoraleDamage;
 
         /// <summary>
         /// Morale damage caused by external factors
         /// </summary>
-        public int IndirectMoraleDamage { get; set; }
+        public int IndirectMoraleDamage;
 
-        public int AttackDamage { get; set; }
-        public int ArmyMoraleDamage { get; set; }
+        public int AttackDamage;
+
+        public int ArmyMoraleDamage;
 
         /// <summary>
         /// Whether attack was resisted due to def/att differences
         /// </summary>
-        public bool ResistedAttack { get; set; }
+        public bool ResistedAttack;
 
         /// <summary>
         /// Whether attack was tanked using a shield unit
         /// </summary>
-        public bool ShieldBlockedAttack { get; set; }
+        public bool ShieldBlockedAttack;
 
         /// <summary>
         /// Whether attack was tanked from high morale
         /// </summary>
-        public bool MoraleBlockedAttack { get; set; }
+        public bool MoraleBlockedAttack;
 
         /// <summary>
         /// Sum of all recorded morale damages (includes both direct and indirect)
@@ -116,7 +118,6 @@ namespace FlavBattle.Combat
         /// Morale damage suffered by attacker as a result of some action
         /// (such as opponent blocking)
         /// </summary>
-        public int SelfMoraleDamage { get; set; }
+        public int SelfMoraleDamage;
     }
-
 }
