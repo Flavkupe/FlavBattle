@@ -143,23 +143,28 @@ public class TestingAbilitiesManager : MonoBehaviour
     [ContextMenu("TestAbility")]
     public void TestAbility()
     {
+        var leftCombatant = new TestCombatant(Left);
+        var rightCombatant = new TestCombatant(Right);
+
         var summary = new CombatTurnUnitSummary();
         summary.Results.AddRange(this.Summary);
+        summary.Source = RightToLeft ? rightCombatant : leftCombatant;
+
         foreach (var item in summary.Results)
         {
             if (RightToLeft)
             {
-                item.Source = new TestCombatant(Right);
-                item.Target = new TestCombatant(Left);
+                item.Source = rightCombatant;
+                item.Target = leftCombatant;
             }
             else
             {
-                item.Source = new TestCombatant(Left);
-                item.Target = new TestCombatant(Right);
+                item.Source = leftCombatant;
+                item.Target = rightCombatant;
             }
-
-            var anim = Animation.Create(summary);
-            StartCoroutine(anim.Do());
         }
+
+        var anim = Animation.Create(summary);
+        StartCoroutine(anim.Do());
     }
 }

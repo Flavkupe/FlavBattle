@@ -13,6 +13,10 @@ namespace FlavBattle.Combat.Animation
     {
         public Color FlashColor;
 
+        public FloatingText FloatingText;
+
+        public Vector3 FloatingTextOffset = new Vector3(0.0f, 1.0f, 0.0f);
+
         public override ICombatAnimationStep Create(CombatAnimationOptions options)
         {
             return new AnimationCharDamage(this, options);
@@ -29,7 +33,15 @@ namespace FlavBattle.Combat.Animation
         {
             var subject = Options.Subject == CombatAnimationSubject.Source ? ActionSummary.Source : ActionSummary.Target;
             var character = subject.CombatUnit.Character;
-            yield return character.FlashColor(Data.FlashColor, 8.0f * Options.SpeedMultiplier);   
+
+            if (Data.FloatingText != null)
+            {
+                var text = GameObject.Instantiate(Data.FloatingText, character.transform, false);
+                text.transform.localPosition = Data.FloatingTextOffset;
+                text.SetText(ActionSummary.AttackDamage.ToString());
+            }
+
+            yield return character.FlashColor(Data.FlashColor, 8.0f * Options.SpeedMultiplier);
         }
     }
 }

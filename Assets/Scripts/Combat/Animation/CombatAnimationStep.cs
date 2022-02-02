@@ -30,6 +30,9 @@ namespace FlavBattle.Combat.Animation
         private CombatTurnActionSummary _actionSummary;
         protected CombatTurnActionSummary ActionSummary => _actionSummary;
 
+        private CombatTurnUnitSummary _fullTurnSummary;
+        protected CombatTurnUnitSummary FullTurnSummary => _fullTurnSummary;
+
         private CombatAnimationOptions _options;
         protected CombatAnimationOptions Options => _options;
 
@@ -37,6 +40,7 @@ namespace FlavBattle.Combat.Animation
         {
             _options = options;
             _actionSummary = options.Turn;
+            _fullTurnSummary = options.FullTurn;
         }
     }
 }

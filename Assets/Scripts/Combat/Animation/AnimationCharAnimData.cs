@@ -33,26 +33,46 @@ namespace FlavBattle.Combat.Animation
         }
 
         AnimatedCharacter _character;
-
+        CombatUnit _combatUnit;
         public override IEnumerator Do()
         {
             // find source position
-            var subject = Options.Subject == CombatAnimationSubject.Source ? ActionSummary.Source : ActionSummary.Target;
-            var combatUnit = subject.CombatUnit;
-            _character = combatUnit.Character;
+            var subject = FullTurnSummary.Source;
+            if (Options.Subject == CombatAnimationSubject.Target)
+            {
+                if (ActionSummary == null || ActionSummary.Target == null)
+                {
+                    Debug.LogWarning("Attempting targeted animation without target! Performing on self.");
+                }
+                else
+                {
+                    subject = ActionSummary.Target;
+                }
+            }
 
+            _combatUnit = subject.CombatUnit;
+            _character = _combatUnit.Character;
+
+            if (Options.WaitForCompletion)
+            {
+                yield return Animate();
+            }
+            else
+            {
+                _character.StartCoroutine(Animate());
+            }
+        }
+
+        private IEnumerator Animate()
+        {
             // ensure handler is only added once
             _character.AnimationEvent -= HandleAnimationEvent;
             _character.AnimationEvent += HandleAnimationEvent;
 
-            if (Options.WaitForCompletion)
-            {
-                yield return combatUnit.PlayAnimatorToCompletion(Data.Animation);
-            }
-            else
-            {
-                combatUnit.PlayAnimator(Data.Animation);
-            }
+            yield return _combatUnit.PlayAnimatorToCompletion(Data.Animation);
+
+            // always remove event
+            _character.AnimationEvent -= HandleAnimationEvent;
         }
 
         private void HandleAnimationEvent(object sender, UnitAnimatorEvent e)

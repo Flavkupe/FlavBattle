@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: JumpAttackReturn
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 03e92acfa9936644eae9672db29b795b, type: 3}
-  _preAction: []
-  _action:
+  _preAction:
   - Data: {fileID: 11400000, guid: 4a5dcfb15552bf946bea9702c78f1a33, type: 2}
     Options:
       SpeedMultiplier: 1
       WaitForCompletion: 0
       Subject: 0
+  _action:
   - Data: {fileID: 11400000, guid: 2faf59bb94814ac47bdfb6fd5bdd8b32, type: 2}
     Options:
       SpeedMultiplier: 10
@@ -30,9 +30,9 @@ MonoBehaviour:
       SpeedMultiplier: 1
       WaitForCompletion: 1
       Subject: 0
+  _postAction:
   - Data: {fileID: 11400000, guid: c91b2a42d570201439b1adb9557ea628, type: 2}
     Options:
       SpeedMultiplier: 1
       WaitForCompletion: 1
       Subject: 0
-  _postAction: []

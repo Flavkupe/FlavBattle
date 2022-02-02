@@ -1587,6 +1587,17 @@ MonoBehaviour:
     ShieldBlockedAttack: 0
     MoraleBlockedAttack: 0
     SelfMoraleDamage: 0
+  - Ability: {fileID: 0}
+    Defense: 0
+    Attack: 0
+    DirectMoraleDamage: 0
+    IndirectMoraleDamage: 0
+    AttackDamage: 3
+    ArmyMoraleDamage: 0
+    ResistedAttack: 0
+    ShieldBlockedAttack: 0
+    MoraleBlockedAttack: 0
+    SelfMoraleDamage: 0
   Animation: {fileID: 11400000, guid: a2c3aac272d6806448baa51a8922ecb8, type: 2}
 --- !u!4 &1315068696
 Transform:
@@ -2239,7 +2250,7 @@ PrefabInstance:
     - target: {fileID: 2943866804879909578, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -42.76198
+      value: -42.761963
       objectReference: {fileID: 0}
     - target: {fileID: 4408715962798716723, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
@@ -2264,7 +2275,7 @@ PrefabInstance:
     - target: {fileID: 4606476602812565161, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -58.16298
+      value: -58.162964
       objectReference: {fileID: 0}
     - target: {fileID: 4650751601546498866, guid: 32b7ee9cf7a5d5d418ccf347af13e516,
         type: 3}

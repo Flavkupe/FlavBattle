@@ -42,19 +42,29 @@ namespace FlavBattle.Combat.Animation
         public override IEnumerator Do()
         {
             // find source position
-            var source = ActionSummary.Source.CombatUnit.Character;
+            var sourceUnit = FullTurnSummary.Source.CombatUnit;
+            var source = sourceUnit.Character;
             var sourcePos = source.transform.position;
+            var originalPos = sourceUnit.OriginalPos.position;
 
             // find target position
             Vector3 targetPos;
             if (Data.CharacterMoveTarget == CombatAbilityCharacterMoveTarget.BackToSource)
             {
-                targetPos = ActionSummary.Source.CombatUnit.OriginalPos.position;
+                targetPos = originalPos;
             }
             else
             {
-                var target = ActionSummary.Target.CombatUnit;
-                targetPos = AnimationUtils.GetTargetPos(target, Data.CharacterMoveTarget, 0.5f);
+                if (ActionSummary == null || ActionSummary.Target == null)
+                {
+                    Debug.LogWarning("Attempting target animation without a target! Moveing back to source.");
+                    targetPos = originalPos;
+                }
+                else
+                {
+                    var target = ActionSummary.Target.CombatUnit;
+                    targetPos = AnimationUtils.GetTargetPos(target, Data.CharacterMoveTarget, 0.5f);
+                }
             }
 
             var speed = Data.CharacterMoveSpeed * Options.SpeedMultiplier;
