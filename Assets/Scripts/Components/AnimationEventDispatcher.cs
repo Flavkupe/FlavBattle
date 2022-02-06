@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
 using FlavBattle.Combat;
+using FlavBattle.Components;
 
 [Serializable]
 public class UnityAnimationEvent : UnityEvent<string> { };

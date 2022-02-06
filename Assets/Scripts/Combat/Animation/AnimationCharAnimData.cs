@@ -32,10 +32,15 @@ namespace FlavBattle.Combat.Animation
         {
         }
 
-        AnimatedCharacter _character;
-        CombatUnit _combatUnit;
-        public override IEnumerator Do()
+        private AnimatedCharacter _character;
+        private CombatUnit _combatUnit;
+        private int _runningExtraAnimations = 0;
+       
+
+        protected override IEnumerator DoAction()
         {
+            PlayPreSounds();
+
             // find source position
             var subject = FullTurnSummary.Source;
             if (Options.Subject == CombatAnimationSubject.Target)
@@ -61,6 +66,8 @@ namespace FlavBattle.Combat.Animation
             {
                 _character.StartCoroutine(Animate());
             }
+
+            PlayPostSounds();
         }
 
         private IEnumerator Animate()
@@ -73,6 +80,12 @@ namespace FlavBattle.Combat.Animation
 
             // always remove event
             _character.AnimationEvent -= HandleAnimationEvent;
+
+            while (_runningExtraAnimations > 0)
+            {
+                // wait for extra animations to finish
+                yield return null;
+            }
         }
 
         private void HandleAnimationEvent(object sender, UnitAnimatorEvent e)
@@ -86,10 +99,17 @@ namespace FlavBattle.Combat.Animation
             foreach (var item in followups)
             {
                 var anim = item.Animation.Create(Options);
-                _character.StartCoroutine(anim.Do());
+                _character.StartCoroutine(DoExtraAnimation(anim));
             }
 
             _character.AnimationEvent -= HandleAnimationEvent;
+        }
+
+        private IEnumerator DoExtraAnimation(ICombatAnimationStep anim)
+        {
+            _runningExtraAnimations++;
+            yield return PerformAction(anim.Do());
+            _runningExtraAnimations--;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System;
 using FlavBattle.Combat;
 using FlavBattle.Resources;
+using FlavBattle.Components;
 
 public enum CombatAbilityType
 {

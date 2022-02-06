@@ -1,10 +1,5 @@
 ﻿using NaughtyAttributes;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace FlavBattle.Combat.Animation
@@ -39,7 +34,7 @@ namespace FlavBattle.Combat.Animation
         {
         }
 
-        public override IEnumerator Do()
+        protected override IEnumerator DoAction()
         {
             // find source position
             var sourceUnit = FullTurnSummary.Source.CombatUnit;

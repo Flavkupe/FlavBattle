@@ -11,11 +11,23 @@ namespace FlavBattle.Combat.Animation
     [CreateAssetMenu(fileName = "Ability", menuName = "Custom/Abilities/Animation/Damage Flash", order = 1)]
     public class AnimationCharDamageData : CombatAnimationData
     {
+        public enum CharDamageSoundType
+        {
+            None = 1,
+
+            FromAbility = 2,
+
+            // TODO
+            FromWeapon = 3,
+        }
+
         public Color FlashColor;
 
         public FloatingText FloatingText;
 
         public Vector3 FloatingTextOffset = new Vector3(0.0f, 1.0f, 0.0f);
+
+        public CharDamageSoundType SoundType = CharDamageSoundType.FromAbility;
 
         public override ICombatAnimationStep Create(CombatAnimationOptions options)
         {
@@ -29,10 +41,20 @@ namespace FlavBattle.Combat.Animation
         {
         }
 
-        public override IEnumerator Do()
+        protected override IEnumerator DoAction()
         {
             var subject = Options.Subject == CombatAnimationSubject.Source ? ActionSummary.Source : ActionSummary.Target;
             var character = subject.CombatUnit.Character;
+
+            if (Data.SoundType == AnimationCharDamageData.CharDamageSoundType.FromAbility)
+            {
+                var hitSounds = FullTurnSummary.Ability.HitSoundClips;
+                PlaySound(hitSounds);
+            }
+            else
+            {
+                // TODO
+            }
 
             if (Data.FloatingText != null)
             {

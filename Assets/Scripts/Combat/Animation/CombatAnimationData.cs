@@ -11,6 +11,10 @@ namespace FlavBattle.Combat.Animation
         [SerializeField]
         private string _description;
 
+        public AudioClip[] PreAnimationSounds;
+
+        public AudioClip[] PostAnimationSounds;
+
         public abstract ICombatAnimationStep Create(CombatAnimationOptions options);
     }
 

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33a0804e395c58c4a8866bb386befcc7, type: 3}
-  m_Name: Damage Flash
+  m_Name: Partial Block Flash
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: bd65735d676f7a440a06fee6633d284c, type: 3}
+  Icon: {fileID: 21300000, guid: 47447d36ce39970499930bf4cbcb9731, type: 3}
   _description: Character flashes some color
   PreAnimationSounds: []
   PostAnimationSounds: []
-  FlashColor: {r: 1, g: 0, b: 0, a: 1}
+  FlashColor: {r: 0.9528302, g: 0.43596476, b: 0.43596476, a: 1}
   FloatingText: {fileID: 3278432570077837357, guid: bd72a4556e99ee74f8e067cacbe35c99,
     type: 3}
   FloatingTextOffset: {x: 0, y: 0.5, z: 0}
-  SoundType: 2
+  SoundType: 1

@@ -148,6 +148,7 @@ public class TestingAbilitiesManager : MonoBehaviour
 
         var summary = new CombatTurnUnitSummary();
         summary.Results.AddRange(this.Summary);
+        summary.Ability = summary.Results[0].Ability;
         summary.Source = RightToLeft ? rightCombatant : leftCombatant;
 
         foreach (var item in summary.Results)

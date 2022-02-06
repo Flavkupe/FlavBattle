@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FlavBattle.Combat
+﻿
+namespace FlavBattle.Components
 {
     public enum UnitAnimatorTrigger
     {
@@ -29,5 +24,6 @@ namespace FlavBattle.Combat
     public enum UnitAnimatorEvent
     {
         AttackHit = 1,
+        ProjectileFired = 2,
     }
 }

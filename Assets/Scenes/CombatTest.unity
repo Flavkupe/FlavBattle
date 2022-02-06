@@ -1545,8 +1545,8 @@ MonoBehaviour:
   TimeScale: 1
   Left: {fileID: 815873859}
   Right: {fileID: 1348166201}
-  LeftChar: {fileID: 11400000, guid: de52d40e10623b84eba279373322c23d, type: 2}
-  RightChar: {fileID: 11400000, guid: 62e04f7928a8ada4aa8662510a1baadf, type: 2}
+  LeftChar: {fileID: 11400000, guid: c0d72d44231488c49a9c40d74120b7a3, type: 2}
+  RightChar: {fileID: 11400000, guid: c0d72d44231488c49a9c40d74120b7a3, type: 2}
   AbilityData: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
   RightToLeft: 0
   LeftArmyConfig:
@@ -1576,18 +1576,7 @@ MonoBehaviour:
   Thing: {fileID: 0}
   BattleManager: {fileID: 1811466395}
   Summary:
-  - Ability: {fileID: 0}
-    Defense: 0
-    Attack: 0
-    DirectMoraleDamage: 0
-    IndirectMoraleDamage: 0
-    AttackDamage: 2
-    ArmyMoraleDamage: 0
-    ResistedAttack: 0
-    ShieldBlockedAttack: 0
-    MoraleBlockedAttack: 0
-    SelfMoraleDamage: 0
-  - Ability: {fileID: 0}
+  - Ability: {fileID: 11400000, guid: aa2a7264b794b6b44afb90fc120c653c, type: 2}
     Defense: 0
     Attack: 0
     DirectMoraleDamage: 0

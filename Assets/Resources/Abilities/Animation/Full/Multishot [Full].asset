@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f91f1ed6b871b4cac6aa10b56445e4, type: 3}
+  m_Name: Multishot [Full]
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: 16d20cb50aba0a842a42c2bfc49d0fef, type: 3}
+  _preAction: []
+  _action:
+  - Data: {fileID: 11400000, guid: 257bcc381e1e2a547abdee370ce3fa2c, type: 2}
+    Options:
+      SpeedMultiplier: 1
+      WaitForCompletion: 1
+      Subject: 0
+  - Data: {fileID: 11400000, guid: 1f39096aa837b2542b77a5626381d695, type: 2}
+    Options:
+      SpeedMultiplier: 1
+      WaitForCompletion: 1
+      Subject: 1
+  _postAction: []

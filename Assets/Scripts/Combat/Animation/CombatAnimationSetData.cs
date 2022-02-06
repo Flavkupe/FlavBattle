@@ -7,8 +7,8 @@ namespace FlavBattle.Combat.Animation
     public class CombatAnimationSetData : CombatAnimationData
     {
         [SerializeField]
-        private CombatAnimationData[] _animations;
-        public CombatAnimationData[] Animations => _animations;
+        private CombatAnimationDetails[] _animations;
+        public CombatAnimationDetails[] Animations => _animations;
 
         public override ICombatAnimationStep Create(CombatAnimationOptions options)
         {
@@ -20,24 +20,17 @@ namespace FlavBattle.Combat.Animation
     {
         private CombatAnimationOptions _options;
 
-        public CombatAnimationSet(CombatAnimationSetData data, CombatAnimationOptions options) : base(data)
+        public CombatAnimationSet(CombatAnimationSetData data, CombatAnimationOptions options) : base(data, options)
         {
             _options = options;
         }
 
-        public override IEnumerator Do()
+        protected override IEnumerator DoAction()
         {
             foreach (var item in Data.Animations)
             {
                 var anim = item.Create(_options);
-                if (_options.WaitForCompletion)
-                {
-                    yield return anim.Do();
-                }
-                else
-                {
-                    // Routine.Create(anim.Do()).RunInBackground();
-                }
+                yield return PerformAction(anim.Do());
             }
         }
     }

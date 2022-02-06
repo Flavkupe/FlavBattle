@@ -1,5 +1,6 @@
 ﻿using FlavBattle.Combat;
 using FlavBattle.Combat.Animation;
+using FlavBattle.Components;
 using System;
 using System.Collections;
 using System.Collections.Generic;

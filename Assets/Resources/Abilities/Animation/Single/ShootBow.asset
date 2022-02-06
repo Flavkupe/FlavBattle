@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfc78e9900c7e83459981c608a2dbe96, type: 3}
-  m_Name: MeleeAttack
+  m_Name: ShootBow
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: 03e92acfa9936644eae9672db29b795b, type: 3}
+  Icon: {fileID: 21300000, guid: 16d20cb50aba0a842a42c2bfc49d0fef, type: 3}
   _description: Attack with melee weapon
-  PreAnimationSounds: []
+  PreAnimationSounds:
+  - {fileID: 8300000, guid: c543a4a0e7af82f4e9a9434ef1a3fe78, type: 3}
+  - {fileID: 8300000, guid: 2cbbc258d080834448f34539c20a038e, type: 3}
   PostAnimationSounds: []
-  Animation: 4
+  Animation: 2
   Followups:
-  - Event: 1
+  - Event: 2
     Animation:
-      Data: {fileID: 11400000, guid: 1f39096aa837b2542b77a5626381d695, type: 2}
+      Data: {fileID: 11400000, guid: d560daba54bd0de4d886f919bd9ec94f, type: 2}
       Options:
         SpeedMultiplier: 1
-        WaitForCompletion: 0
+        WaitForCompletion: 1
         Subject: 1
