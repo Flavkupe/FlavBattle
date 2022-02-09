@@ -32,43 +32,60 @@ namespace FlavBattle.Combat.Animation
         }
     }
 
-    public class CombatFullTurnAnimation
+    public class CombatFullTurnAnimation : ICombatAnimationStep
     {
         private CombatTurnUnitSummary _summary;
         private CombatFullTurnAnimationData _data;
+        private CombatAnimationOptions _options;
+
         public CombatFullTurnAnimation(CombatFullTurnAnimationData data, CombatTurnUnitSummary summary)
         {
             _summary = summary;
             _data = data;
-        }
-
-        public IEnumerator Do()
-        {
-            var options = new CombatAnimationOptions()
+            _options = new CombatAnimationOptions()
             {
                 FullTurn = _summary,
             };
+        }
 
+        public CombatAnimationOptions Options => _options;
+
+        public IEnumerator Do()
+        {
             foreach (var stepData in _data.PreAction)
             {
-                var step = stepData.Create(options);
-                yield return step.Do();
+                var step = stepData.Create(_options);
+                yield return PerformAction(step, step.Options.WaitForCompletion);
             }
 
             foreach (var turn in _summary.Results)
             {
                 foreach (var stepData in _data.Action)
                 {
-                    options.Turn = turn;
-                    var step = stepData.Create(options);
-                    yield return step.Do();
+                    _options.Turn = turn;
+                    var step = stepData.Create(_options);
+                    yield return PerformAction(step, step.Options.WaitForCompletion);
                 }
             }
 
             foreach (var stepData in _data.PostAction)
             {
-                var step = stepData.Create(options);
+                var step = stepData.Create(_options);
+                yield return PerformAction(step, step.Options.WaitForCompletion);
+            }
+        }
+
+        private IEnumerator PerformAction(ICombatAnimationStep step, bool waitForCompletion)
+        {
+            
+            if (waitForCompletion)
+            {
                 yield return step.Do();
+            }
+            else
+            {
+                var actor = _summary.Source.CombatUnit;
+                actor.StartCoroutine(step.Do());
             }
         }
     }

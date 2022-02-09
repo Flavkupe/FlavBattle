@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShootBow
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 16d20cb50aba0a842a42c2bfc49d0fef, type: 3}
-  _description: Attack with melee weapon
+  _description: Attack with bow
   PreAnimationSounds:
   - {fileID: 8300000, guid: c543a4a0e7af82f4e9a9434ef1a3fe78, type: 3}
   - {fileID: 8300000, guid: 2cbbc258d080834448f34539c20a038e, type: 3}

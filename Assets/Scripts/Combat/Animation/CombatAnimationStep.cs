@@ -9,7 +9,26 @@ namespace FlavBattle.Combat.Animation
     /// </summary>
     public interface ICombatAnimationStep
     {
+        CombatAnimationOptions Options { get; }
+
         IEnumerator Do();
+    }
+
+    /// <summary>
+    /// Abstract base class for a simple class whose entire purpose is to
+    /// call Do() with some options.
+    /// </summary>
+    public abstract class AnimationStepRunnerBase : ICombatAnimationStep
+    {
+        private CombatAnimationOptions _options;
+        public CombatAnimationOptions Options => _options;
+
+        public AnimationStepRunnerBase(CombatAnimationOptions options)
+        {
+            _options = options;
+        }
+
+        public abstract IEnumerator Do();
     }
 
     public abstract class CombatAnimationStepBase<TData> : ICombatAnimationStep where TData : CombatAnimationData
@@ -21,7 +40,7 @@ namespace FlavBattle.Combat.Animation
         protected CombatTurnUnitSummary FullTurnSummary => _fullTurnSummary;
 
         private CombatAnimationOptions _options;
-        protected CombatAnimationOptions Options => _options;
+        public CombatAnimationOptions Options => _options;
 
         protected Combatant Source => FullTurnSummary.Source;
 
@@ -30,22 +49,6 @@ namespace FlavBattle.Combat.Animation
             _data = data;
             _options = options;
             _fullTurnSummary = options.FullTurn;
-        }
-
-        /// <summary>
-        /// Plays sounds before actions.
-        /// </summary>
-        protected void PlayPreSounds()
-        {
-            PlaySound(Data.PreAnimationSounds);
-        }
-
-        /// <summary>
-        /// Plays sounds after actions.
-        /// </summary>
-        protected void PlayPostSounds()
-        {
-            PlaySound(Data.PostAnimationSounds);
         }
 
         /// <summary>
@@ -75,19 +78,7 @@ namespace FlavBattle.Combat.Animation
         /// <summary>
         /// Performs a specific action.
         /// </summary>
-        protected abstract IEnumerator DoAction();
-
-        /// <summary>
-        /// Plays does configued action, while playing sounds if configured.
-        /// </summary>
-        public IEnumerator Do()
-        {
-            PlayPreSounds();
-
-            yield return DoAction();
-
-            PlayPostSounds();
-        }
+        public abstract IEnumerator Do();
 
         /// <summary>
         /// Runs the task to completion, or in parallel, depending on value
@@ -95,20 +86,8 @@ namespace FlavBattle.Combat.Animation
         /// </summary>
         protected IEnumerator PerformAction(IEnumerator action)
         {
-            if (action == null)
-            {
-                yield break;
-            }
-
-            if (Options.WaitForCompletion)
-            {
-                yield return action;
-            }
-            else
-            {
-                var source = FullTurnSummary.Source.CombatUnit;
-                source.StartCoroutine(action);
-            }
+            // just call the extension function directly
+            yield return action.PerformAction(Options);
         }
     }
 
@@ -134,6 +113,19 @@ namespace FlavBattle.Combat.Animation
         public CombatAnimationActionStepBase(TData data, CombatAnimationOptions options) : base(data, options)
         {
             _actionSummary = options.Turn;
+        }
+    }
+
+    public static class ICombatAnimationStepExtensions
+    {
+        public static IEnumerator PerformAction(this ICombatAnimationStep step)
+        {
+            if (step == null)
+            {
+                yield break;
+            }
+
+            yield return step.Do().PerformAction(step.Options);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace FlavBattle.Combat.Animation
         {
         }
 
-        protected override IEnumerator DoAction()
+        public override IEnumerator Do()
         {
             var subject = Options.Subject == CombatAnimationSubject.Source ? ActionSummary.Source : ActionSummary.Target;
             var character = subject.CombatUnit.Character;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using XNode;
 
 public static class ExtensionFunctions
 {
@@ -337,5 +338,17 @@ public static class ExtensionFunctions
         }
 
         return items[maxIndex];
+    }
+
+    public static T GetOutputPortValue<T>(this Node node, string fieldName) where T : Node
+    {
+        var output = node.GetOutputPort(fieldName)?.Connection?.node;
+        var value = output as T;
+        if (value == null)
+        {
+            Debug.LogWarning("Output value for animation is not of the correct type!");
+        }
+
+        return value;
     }
 }

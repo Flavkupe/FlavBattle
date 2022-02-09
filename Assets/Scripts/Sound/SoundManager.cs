@@ -114,6 +114,11 @@ public class SoundManager : SingletonObject<SoundManager>
 
 public static class Sounds
 {
+    public static void PlayRandom(AudioClip[] clip)
+    {
+        Play(clip.GetRandom());
+    }
+
     public static void Play(AudioClip clip)
     {
         if (SoundManager.Instance == null)

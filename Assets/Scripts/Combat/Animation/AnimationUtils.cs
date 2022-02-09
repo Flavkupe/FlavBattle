@@ -65,5 +65,32 @@ namespace FlavBattle.Combat.Animation
             // TEMP
             return target.Back.position + jitter;
         }
+
+        /// <summary>
+        /// Performs action, waiting for result if WaitForCompletion, or in the background
+        /// if WaitForCompletion is false.
+        /// </summary>
+        public static IEnumerator PerformAction(this IEnumerator action, CombatAnimationOptions options)
+        {
+            if (action == null)
+            {
+                yield break;
+            }
+
+            if (options.WaitForCompletion)
+            {
+                yield return action;
+            }
+            else
+            {
+                var source = options.FullTurn?.Source?.CombatUnit;
+                if (source == null)
+                {
+                    yield break;
+                }
+
+                source.StartCoroutine(action);
+            }
+        }
     }
 }

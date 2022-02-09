@@ -34,7 +34,7 @@ namespace FlavBattle.Combat.Animation
         {
         }
 
-        protected override IEnumerator DoAction()
+        public override IEnumerator Do()
         {
             // find source position
             var sourceUnit = FullTurnSummary.Source.CombatUnit;

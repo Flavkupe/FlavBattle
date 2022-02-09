@@ -18,11 +18,11 @@ MonoBehaviour:
   - Data: {fileID: 11400000, guid: d230409f7a6b7304b8ae5a0bdc71f533, type: 2}
     Options:
       SpeedMultiplier: 1
-      WaitForCompletion: 1
+      WaitForCompletion: 0
       Subject: 0
   - Data: {fileID: 11400000, guid: 1f39096aa837b2542b77a5626381d695, type: 2}
     Options:
       SpeedMultiplier: 1
-      WaitForCompletion: 1
+      WaitForCompletion: 0
       Subject: 1
   _postAction: []

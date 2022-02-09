@@ -40,7 +40,7 @@ namespace FlavBattle.Combat.Animation
         {
         }
 
-        protected override IEnumerator DoAction()
+        public override IEnumerator Do()
         {
 
             foreach (var condition in Data.ConditionalActions)

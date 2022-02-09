@@ -35,12 +35,10 @@ namespace FlavBattle.Combat.Animation
         private AnimatedCharacter _character;
         private CombatUnit _combatUnit;
         private int _runningExtraAnimations = 0;
-       
 
-        protected override IEnumerator DoAction()
+
+        public override IEnumerator Do()
         {
-            PlayPreSounds();
-
             // find source position
             var subject = FullTurnSummary.Source;
             if (Options.Subject == CombatAnimationSubject.Target)
@@ -66,8 +64,6 @@ namespace FlavBattle.Combat.Animation
             {
                 _character.StartCoroutine(Animate());
             }
-
-            PlayPostSounds();
         }
 
         private IEnumerator Animate()

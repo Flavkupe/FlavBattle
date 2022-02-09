@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace FlavBattle.Combat.Animation
 {
+    public interface ICombatAnimationData
+    {
+        ICombatAnimationStep Create(CombatAnimationOptions options);
+    }
+
     public abstract class CombatAnimationData : ScriptableObject
     {
         [AssetIcon]
@@ -10,10 +15,6 @@ namespace FlavBattle.Combat.Animation
 
         [SerializeField]
         private string _description;
-
-        public AudioClip[] PreAnimationSounds;
-
-        public AudioClip[] PostAnimationSounds;
 
         public abstract ICombatAnimationStep Create(CombatAnimationOptions options);
     }
@@ -30,6 +31,11 @@ namespace FlavBattle.Combat.Animation
         public CombatAnimationData Data;
         public CombatAnimationOptions Options;
 
+        /// <summary>
+        /// Combines options with the ones specified by the 
+        /// CombatAnimationDetails. FullTurn and Turn are inherited,
+        /// but the rest is overridden.
+        /// </summary>
         public ICombatAnimationStep Create(CombatAnimationOptions options)
         {
             var opts = Options.Clone();

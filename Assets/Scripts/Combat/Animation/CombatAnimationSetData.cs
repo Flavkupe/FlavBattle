@@ -25,7 +25,7 @@ namespace FlavBattle.Combat.Animation
             _options = options;
         }
 
-        protected override IEnumerator DoAction()
+        public override IEnumerator Do()
         {
             foreach (var item in Data.Animations)
             {

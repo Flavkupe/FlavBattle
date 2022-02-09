@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NaughtyAttributes;
@@ -52,6 +50,8 @@ public class TestingAbilitiesManager : MonoBehaviour
     public CombatTurnActionSummary[] Summary;
 
     public CombatFullTurnAnimationData Animation;
+
+    public CombatAnimationGraph Graph;
 
     // Start is called before the first frame update
     void Start()
@@ -165,7 +165,8 @@ public class TestingAbilitiesManager : MonoBehaviour
             }
         }
 
-        var anim = Animation.Create(summary);
+        // var anim = Animation.Create(summary);
+        var anim = Graph.GetAnimation(summary);
         StartCoroutine(anim.Do());
     }
 }

@@ -42,8 +42,14 @@ namespace FlavBattle.Combat.Animation
         {
         }
 
-        protected override IEnumerator DoAction()
+        public override IEnumerator Do()
         {
+            if (ActionSummary?.Target == null)
+            {
+                Debug.LogError($"Attempting to use untargeted projectile ability!");
+                yield break;
+            }
+
             if (Data.Projectile == null)
             {
                 Debug.LogError($"No projectile for ability");
