@@ -17,6 +17,7 @@ MonoBehaviour:
     Key: ACTION_ARROW_NAME
   Type: 0
   Icon: {fileID: -8744202859135705330, guid: 890ac31627622784db63d90992e2476a, type: 3}
+  AnimationGraph: {fileID: 11400000, guid: a1dd832e23bcee54eae7d626de49eb08, type: 2}
   VisualEffect: 0
   ProjectileEffect: 1
   ArcHeight: {x: 3, y: 5}

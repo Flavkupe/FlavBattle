@@ -38,6 +38,12 @@ namespace FlavBattle.Combat.Animation
         /// </summary>
         public ICombatAnimationStep Create(CombatAnimationOptions options)
         {
+            if (Data == null)
+            {
+                Debug.LogError($"No Data configured for animation");
+                return new AnimationStepEmptyRunner();
+            }
+
             var opts = Options.Clone();
             opts.FullTurn = options.FullTurn;
             opts.Turn = options.Turn;
@@ -60,15 +66,18 @@ namespace FlavBattle.Combat.Animation
         public CombatTurnActionSummary Turn { get; set; }
         public CombatTurnUnitSummary FullTurn { get; set; }
 
-        public CombatAnimationOptions Clone()
+        /// <summary>
+        /// Clones this, optionally setting the fullTurn or turn, if provided.
+        /// </summary>
+        public CombatAnimationOptions Clone(CombatTurnUnitSummary fullTurn = null, CombatTurnActionSummary turn = null)
         {
             return new CombatAnimationOptions()
             {
                 SpeedMultiplier = this.SpeedMultiplier,
                 WaitForCompletion = this.WaitForCompletion,
                 Subject = this.Subject,
-                Turn = this.Turn,
-                FullTurn = this.FullTurn,
+                Turn = turn ?? this.Turn,
+                FullTurn = fullTurn ?? this.FullTurn,
             };
         }
     }

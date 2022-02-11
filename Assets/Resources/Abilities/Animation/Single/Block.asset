@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 47447d36ce39970499930bf4cbcb9731, type: 3}
   _description: Block with shield
-  PreAnimationSounds:
-  - {fileID: 8300000, guid: 5bf8f685f9edafa48b0a500585408d3e, type: 3}
-  - {fileID: 8300000, guid: 08493eab01d2eb041a217703737b62bd, type: 3}
-  PostAnimationSounds: []
   Animation: 3
-  Followups: []
+  Followups:
+  - Event: 0
+    Animation:
+      Data: {fileID: 0}
+      Options:
+        SpeedMultiplier: 0
+        WaitForCompletion: 0
+        Subject: 0

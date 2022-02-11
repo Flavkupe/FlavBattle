@@ -31,6 +31,15 @@ namespace FlavBattle.Combat.Animation
         public abstract IEnumerator Do();
     }
 
+    /// <summary>
+    /// Empty runner that does nothing
+    /// </summary>
+    public class AnimationStepEmptyRunner : AnimationStepRunnerBase
+    {
+        public AnimationStepEmptyRunner() : base(null) { }
+        public override IEnumerator Do() { yield return null; }
+    }
+
     public abstract class CombatAnimationStepBase<TData> : ICombatAnimationStep where TData : CombatAnimationData
     {
         private TData _data;

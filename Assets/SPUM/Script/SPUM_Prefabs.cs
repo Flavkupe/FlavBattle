@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using FlavBattle.Components;
 
 public class SPUM_Prefabs : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class SPUM_Prefabs : MonoBehaviour
 
     public bool _horse;
     public string _horseString;
+
+    public float Speed => _anim?.speed ?? 1.0f;
 
     /// <summary>
     /// Checks that the current state matches the specified one.
@@ -30,78 +33,139 @@ public class SPUM_Prefabs : MonoBehaviour
         return _anim.GetCurrentAnimatorStateInfo(0).IsTag(stateName);
     }
 
-    public void PlayAnimation (int num)
+    public void SetSpeed(float speed = 1.0f)
+    {
+        _anim.speed = speed;
+    }
+
+    public void PlayAnimation(UnitAnimatorTrigger trigger, float speed = 1.0f)
+    {
+        SetSpeed(speed);
+        switch (trigger)
+        {
+            case UnitAnimatorTrigger.Idle:
+                _anim.SetFloat("RunState", 0.25f);
+                break;
+            case UnitAnimatorTrigger.Run:
+                _anim.SetFloat("RunState", 0.5f);
+                break;
+
+            case UnitAnimatorTrigger.Die:
+                _anim.SetTrigger("Die");
+                _anim.SetBool("EditChk", EditChk);
+                break;
+
+            case UnitAnimatorTrigger.Melee:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 0.0f);
+                _anim.SetFloat("NormalState", 0.0f);
+                break;
+
+            case UnitAnimatorTrigger.ShootBow:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 0.0f);
+                _anim.SetFloat("NormalState", 0.5f);
+                break;
+
+            case UnitAnimatorTrigger.AttackMagic:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 0.0f);
+                _anim.SetFloat("NormalState", 1.0f);
+                break;
+
+            case UnitAnimatorTrigger.SkillSword:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 1.0f);
+                _anim.SetFloat("SkillState", 0.0f);
+                break;
+
+            case UnitAnimatorTrigger.SkillBow:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 1.0f);
+                _anim.SetFloat("SkillState", 0.5f);
+                break;
+
+            case UnitAnimatorTrigger.SpecialJump:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 1.0f);
+                _anim.SetFloat("SkillState", 1.0f);
+                break;
+
+            case UnitAnimatorTrigger.ShieldBlock:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 0.0f);
+                _anim.SetFloat("NormalState", 1.5f);
+                break;
+
+            case UnitAnimatorTrigger.Flinch:
+                _anim.SetTrigger("Attack");
+                _anim.SetFloat("AttackState", 0.0f);
+                _anim.SetFloat("NormalState", 2.0f);
+                break;
+
+            case UnitAnimatorTrigger.Static:
+            default:
+                _anim.SetFloat("RunState", 0.0f);
+                break;
+        }
+    }
+
+    public void PlayAnimation(int num)
     {
         switch(num)
         {
             case 0: //Idle
-            _anim.SetFloat("RunState",0.25f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.Idle);
+                break;
 
             case 1: //Run
-            _anim.SetFloat("RunState",0.5f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.Run);
+                break;
 
             case 2: //Death
-            _anim.SetTrigger("Die");
-            _anim.SetBool("EditChk",EditChk);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.Die);
+                break;
 
             case 3: //Stun
-            _anim.SetFloat("RunState",0.75f);
-            break;
+                // TODO
+                PlayAnimation(UnitAnimatorTrigger.Stun);
+                break;
 
             case 4: //Attack Sword
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState",0.0f);
-            _anim.SetFloat("NormalState",0.0f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.Melee);
+                break;
 
             case 5: //Attack Bow
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState",0.0f);
-            _anim.SetFloat("NormalState",0.5f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.ShootBow);
+                break;
 
             case 6: //Attack Magic
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState",0.0f);
-            _anim.SetFloat("NormalState",1.0f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.AttackMagic);
+                break;
 
             case 7: //Skill Sword
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState",1.0f);
-            _anim.SetFloat("SkillState",0.0f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.SkillSword);
+                break;
 
             case 8: //Skill Bow
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState",1.0f);
-            _anim.SetFloat("SkillState",0.5f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.SkillBow);
+                break;
 
             case 9: //Skill Magic
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState",1.0f);
-            _anim.SetFloat("SkillState",1.0f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.SpecialJump);
+                break;
 
             case 10: //Block
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState", 0.0f);
-            _anim.SetFloat("NormalState", 1.5f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.ShieldBlock);
+                break;
 
             case 11: //Static
-            _anim.SetFloat("RunState", 0.0f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.Static);
+                break;
 
             case 12: //Flinch
-            _anim.SetTrigger("Attack");
-            _anim.SetFloat("AttackState", 0.0f);
-            _anim.SetFloat("NormalState", 2.0f);
-            break;
+                PlayAnimation(UnitAnimatorTrigger.Flinch);
+                break;
         }
     }
 }

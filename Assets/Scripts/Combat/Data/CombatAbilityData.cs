@@ -7,6 +7,7 @@ using System;
 using FlavBattle.Combat;
 using FlavBattle.Resources;
 using FlavBattle.Components;
+using FlavBattle.Combat.Animation;
 
 public enum CombatAbilityType
 {
@@ -129,6 +130,8 @@ public class CombatAbilityData : ScriptableObject
     public Sprite Icon;
 
     /***** Visuals ******/
+
+    public CombatAnimationGraph AnimationGraph;
 
     [BoxGroup("Visuals")]
     public CombatAbilityVisual VisualEffect;

@@ -119,5 +119,14 @@ namespace FlavBattle.Combat
         /// (such as opponent blocking)
         /// </summary>
         public int SelfMoraleDamage;
+
+        public CombatTurnActionSummary Clone()
+        {
+            var clone = (CombatTurnActionSummary)this.MemberwiseClone();
+            clone.Ability = this.Ability;
+            clone.Source = this.Source;
+            clone.Target = Target;
+            return clone;
+        }
     }
 }

@@ -26,6 +26,9 @@ namespace FlavBattle.Combat.Animation
         }
     }
 
+    /// <summary>
+    /// "Legacy" animator. Prefer to use the Graph-based animations.
+    /// </summary>
     public class AnimationCharAnim : CombatAnimationActionStepBase<AnimationCharAnimData>
     {
         public AnimationCharAnim(AnimationCharAnimData data, CombatAnimationOptions options) : base(data, options)
@@ -70,7 +73,6 @@ namespace FlavBattle.Combat.Animation
         {
             // ensure handler is only added once
             _character.AnimationEvent -= HandleAnimationEvent;
-            _character.AnimationEvent += HandleAnimationEvent;
 
             yield return _combatUnit.PlayAnimatorToCompletion(Data.Animation);
 
@@ -84,7 +86,7 @@ namespace FlavBattle.Combat.Animation
             }
         }
 
-        private void HandleAnimationEvent(object sender, UnitAnimatorEvent e)
+        private void HandleAnimationEvent(object o, UnitAnimatorEvent e)
         {
             if (_character == null)
             {
@@ -97,8 +99,6 @@ namespace FlavBattle.Combat.Animation
                 var anim = item.Animation.Create(Options);
                 _character.StartCoroutine(DoExtraAnimation(anim));
             }
-
-            _character.AnimationEvent -= HandleAnimationEvent;
         }
 
         private IEnumerator DoExtraAnimation(ICombatAnimationStep anim)

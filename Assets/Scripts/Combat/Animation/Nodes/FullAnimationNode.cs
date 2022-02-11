@@ -6,7 +6,7 @@ using XNode;
 
 namespace FlavBattle.Combat.Animation.Nodes
 {
-    [CreateNodeMenu("Animation/Full")]
+    [CreateNodeMenu("Animation/Special/Full Animation (Default)")]
     public class FullAnimationNode : Node, ICombatAnimationNode
     {
         [SerializeField]

@@ -51,7 +51,8 @@ namespace FlavBattle.Combat.Animation.Nodes
 
         protected override string NodeName => "Set";
 
-        [Output(dynamicPortList = true)] public Options[] Actions;
+        [Output(dynamicPortList = true)]
+        public Options[] Actions;
 
         public override object GetValue(NodePort port)
         {
@@ -64,7 +65,7 @@ namespace FlavBattle.Combat.Animation.Nodes
             return new Runner(options, this);
         }
 
-        public class Runner : ICombatAnimationStep
+        public class Runner : AnimationStepRunnerBase
         {
             private class NodeItem
             {
@@ -85,21 +86,31 @@ namespace FlavBattle.Combat.Animation.Nodes
                 }
             }
 
-            private CombatAnimationOptions _options;
             private AnimationSetNode _data;
-            public Runner(CombatAnimationOptions options, AnimationSetNode data)
+            public Runner(CombatAnimationOptions options, AnimationSetNode data) : base(options)
             {
-                _options = options;
                 _data = data;
             }
 
-            public CombatAnimationOptions Options => _options;
-
-            public IEnumerator Do()
+            private IEnumerator DoNodeStep(NodeItem node, CombatAnimationOptions options)
             {
-                var fullTurn = _options.FullTurn;
+                var step = node.GetStep(options);
+                yield return step.PerformAction();
+                if (_data.Stagger > 0.0f)
+                {
+                    yield return new WaitForSeconds(_data.Stagger);
+                }
+            }
+
+            public override IEnumerator Do()
+            {
+                var fullTurn = Options.FullTurn;
                 var subject = fullTurn.Source.CombatUnit;
                 var actions = _data.Actions;
+
+                var parallel = _data.SequenceType == Sequence.Parallel;
+                var routineSet = Routine.CreateEmptyRoutineSet(subject, parallel, _data.Stagger);
+
                 var nodes = new List<NodeItem>();
                 for (var i = 0; i < actions.Length; i++)
                 {
@@ -109,8 +120,6 @@ namespace FlavBattle.Combat.Animation.Nodes
                         continue;
                     }
 
-                    // value.GetStep(opts);
-
                     var node = new NodeItem(value, actions[i].Await);
                     nodes.Add(node);
                 }
@@ -119,12 +128,8 @@ namespace FlavBattle.Combat.Animation.Nodes
                 {
                     foreach (var node in nodes)
                     {
-                        var step = node.GetStep(Options);
-                        yield return step.PerformAction();
-                        if (_data.Stagger > 0.0f)
-                        {
-                            yield return new WaitForSeconds(_data.Stagger);
-                        }
+                        var routine = DoNodeStep(node, Options).ToRoutine();
+                        routineSet.AddRoutine(routine);
                     }
                 }
                 else if (_data.SubjectType == Subject.ResultsRepeated)
@@ -133,30 +138,27 @@ namespace FlavBattle.Combat.Animation.Nodes
                     {
                         foreach (var node in nodes)
                         {
-                            Options.Turn = result;
-                            var step = node.GetStep(Options);
-                            yield return step.PerformAction();
-                            if (_data.Stagger > 0.0f)
-                            {
-                                yield return new WaitForSeconds(_data.Stagger);
-                            }
+                            var opts = Options.Clone();
+                            opts.Turn = result;
+                            var routine = DoNodeStep(node, opts).ToRoutine();
+                            routineSet.AddRoutine(routine);
                         }
                     }
                 }
                 else if (_data.SubjectType == Subject.ResultsRoundRobin)
                 {
+                    var max = Math.Min(fullTurn.Results.Count, nodes.Count);
                     for (var i = 0; i < fullTurn.Results.Count; i++)
                     {
-                        var node = nodes[i % fullTurn.Results.Count];
-                        Options.Turn = fullTurn.Results[i];
-                        var step = node.GetStep(Options);
-                        yield return step.PerformAction();
-                        if (_data.Stagger > 0.0f)
-                        {
-                            yield return new WaitForSeconds(_data.Stagger);
-                        }
+                        var node = nodes[i % max];
+                        var opts = Options.Clone();
+                        opts.Turn = fullTurn.Results[i]; ;
+                        var routine = DoNodeStep(node, opts).ToRoutine();
+                        routineSet.AddRoutine(routine);
                     }
                 }
+
+                yield return routineSet;
             }
         }
     }

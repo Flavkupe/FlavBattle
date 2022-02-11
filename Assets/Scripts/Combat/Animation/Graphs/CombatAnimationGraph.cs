@@ -10,9 +10,6 @@ namespace FlavBattle.Combat.Animation
         [AssetIcon]
         public Sprite Icon;
 
-
-
-
         void OnEnable()
         {
             if (nodes.Count == 0)
@@ -29,21 +26,14 @@ namespace FlavBattle.Combat.Animation
                 FullTurn = summary,
             };
 
-            var startNode = nodes.Find(a => a is FullAnimationNode);
+            var startNode = nodes.Find(a => a is FullAnimationNode) as FullAnimationNode;
             if (startNode == null)
             {
                 Debug.LogError("Could not find starting node");
                 return null;
             }
 
-            var fullNode = startNode as FullAnimationNode;
-            if (fullNode == null)
-            {
-                Debug.LogError("Start node has wrong type.");
-                return null;
-            }
-
-            return fullNode.GetStep(options);
+            return startNode.GetStep(options);
         }
     }
 }

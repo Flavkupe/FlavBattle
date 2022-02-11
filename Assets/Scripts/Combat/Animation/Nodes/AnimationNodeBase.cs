@@ -8,12 +8,15 @@ namespace FlavBattle.Combat.Animation.Nodes
 {
     public abstract class AnimationNodeBase : Node, ICombatAnimationNode
     {
-        [Input] public AnimationNodeBase Previous;
+        [Input]
+        public AnimationNodeBase Previous;
+
+        public string Description;
 
         public override object GetValue(NodePort port)
         {
             if (port.fieldName == nameof(Previous)) return GetInputValue(nameof(Previous), Previous);
-            else return null;
+            else return base.GetValue(port);
         }
 
         protected abstract string NodeName { get; }

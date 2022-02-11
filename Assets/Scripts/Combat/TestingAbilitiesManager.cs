@@ -5,9 +5,20 @@ using NaughtyAttributes;
 using FlavBattle.Combat;
 using FlavBattle.Combat.Animation;
 using FlavBattle.Entities.Data;
+using System.Collections;
+using System.Collections.Generic;
 
 public class TestingAbilitiesManager : MonoBehaviour
 {
+    private enum TargetType
+    {
+        SingleEnemy,
+        EnemiesAll,
+        EnemiesRoundRobin,
+        AlliesAll,
+        AlliesRoundRobin,
+    }
+
     public bool ArmyMode = false;
 
     /// <summary>
@@ -28,10 +39,20 @@ public class TestingAbilitiesManager : MonoBehaviour
     public UnitData RightChar;
 
     [HideIf("ArmyMode")]
+    public UnitData[] LeftAllies;
+
+    [HideIf("ArmyMode")]
+    public UnitData[] RightAllies;
+
+    [HideIf("ArmyMode")]
     public CombatAbilityData AbilityData;
 
     [HideIf("ArmyMode")]
     public bool RightToLeft;
+
+    [HideIf("ArmyMode")]
+    [SerializeField]
+    private TargetType _targetType;
 
     [ShowIf("ArmyMode")]
     public InitialFormation LeftArmyConfig;
@@ -39,23 +60,32 @@ public class TestingAbilitiesManager : MonoBehaviour
     [ShowIf("ArmyMode")]
     public InitialFormation RightArmyConfig;
 
-
-    public GameObject Thing;
-
     private TestArmy _leftArmy;
     private TestArmy _rightArmy;
+
+    private List<CombatUnit> _leftAlliesCombatUnits = new List<CombatUnit>();
+    private List<CombatUnit> _rightAlliesCombatUnits = new List<CombatUnit>();
 
     public BattleManager BattleManager;
 
     public CombatTurnActionSummary[] Summary;
-
-    public CombatFullTurnAnimationData Animation;
 
     public CombatAnimationGraph Graph;
 
     // Start is called before the first frame update
     void Start()
     {
+        var shiftX = 0.0f;
+        foreach (var item in LeftAllies)
+        {
+            shiftX -= 1.0f;
+            var clone = GameObject.Instantiate(this.Left);
+            clone.SetUnit(UnitGenerator.MakeUnit(item, Faction.KingsMen), false);
+            clone.transform.position = clone.transform.position.ShiftX(shiftX);
+            clone.name = item.ClassName;
+            _leftAlliesCombatUnits.Add(clone);
+        }
+
         var unitleft = UnitGenerator.MakeUnit(LeftChar, Faction.KingsMen);
         var unitright = UnitGenerator.MakeUnit(RightChar, Faction.KingsMen);
         this.Left.SetUnit(unitleft, false);
@@ -110,27 +140,8 @@ public class TestingAbilitiesManager : MonoBehaviour
 
     public void DoAbility()
     {
-
-        // TEMP
-        //var positions = this.transform.GetComponentsInChildren<Transform>().Select(a => new Vector2(a.transform.position.x, a.transform.position.y)).ToArray();
-        //var furthest = Utils.MathUtils.RandomFurthestPointAway(this.Thing.transform.position, positions, 2.0f, 10);
-        //this.Thing.transform.position = furthest;
-
         if (!ArmyMode)
         {
-            //var obj = new GameObject("Ability");
-            //var ability = obj.AddComponent<CombatAbility>();
-
-            //ability.InitData(AbilityData);
-            //if (RightToLeft)
-            //{
-            //    ability.StartTargetedAbility(Right, Left);
-            //}
-            //else
-            //{
-            //    ability.StartTargetedAbility(Left, Right);
-            //}
-
             TestAbility();
         }
         else
@@ -146,26 +157,54 @@ public class TestingAbilitiesManager : MonoBehaviour
         var leftCombatant = new TestCombatant(Left);
         var rightCombatant = new TestCombatant(Right);
 
+        var resultList = new List<CombatTurnActionSummary>(this.Summary);
         var summary = new CombatTurnUnitSummary();
-        summary.Results.AddRange(this.Summary);
-        summary.Ability = summary.Results[0].Ability;
+        summary.Ability = AbilityData;
         summary.Source = RightToLeft ? rightCombatant : leftCombatant;
 
-        foreach (var item in summary.Results)
+        if (_targetType == TargetType.SingleEnemy)
         {
-            if (RightToLeft)
+            foreach (var item in resultList)
             {
-                item.Source = rightCombatant;
-                item.Target = leftCombatant;
+                var copy = item.Clone();                
+                if (RightToLeft)
+                {
+                    copy.Source = rightCombatant;
+                    copy.Target = leftCombatant;
+                }
+                else
+                {
+                    copy.Source = leftCombatant;
+                    copy.Target = rightCombatant;
+                }
+
+                summary.Results.Add(copy);
             }
-            else
+        }
+        else if (_targetType == TargetType.AlliesAll || _targetType == TargetType.EnemiesAll)
+        {
+            var units = _targetType == TargetType.AlliesAll ? _leftAlliesCombatUnits : _rightAlliesCombatUnits;
+            foreach (var item in resultList)
             {
-                item.Source = leftCombatant;
-                item.Target = rightCombatant;
+                foreach (var ally in units)
+                {
+                    var copy = item.Clone();
+                    copy.Source = leftCombatant;
+                    copy.Target = new TestCombatant(ally);
+                    summary.Results.Add(copy);
+                }
+
+                // include main char
+                if (_targetType == TargetType.AlliesAll)
+                {
+                    var selfCopy = item.Clone();
+                    selfCopy.Source = leftCombatant;
+                    selfCopy.Target = leftCombatant;
+                    summary.Results.Add(selfCopy);
+                }
             }
         }
 
-        // var anim = Animation.Create(summary);
         var anim = Graph.GetAnimation(summary);
         StartCoroutine(anim.Do());
     }

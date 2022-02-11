@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 namespace FlavBattle.Components
@@ -39,6 +40,8 @@ namespace FlavBattle.Components
         [SerializeField]
         private SPUM_Prefabs _prefab;
 
+        public float Speed => _prefab?.Speed ?? 1.0f;
+
         /// <summary>
         /// Fires events as animations start and complete
         /// </summary>
@@ -57,38 +60,9 @@ namespace FlavBattle.Components
             return this._prefab.IsInState(state.ToString());
         }
 
-        public void PlayAnimation(UnitAnimatorTrigger trigger)
+        public void PlayAnimation(UnitAnimatorTrigger trigger, float speed = 1.0f)
         {
-            switch (trigger)
-            {
-                case UnitAnimatorTrigger.Idle:
-                    this._prefab.PlayAnimation(0);
-                    break;
-                case UnitAnimatorTrigger.Run:
-                    this._prefab.PlayAnimation(1);
-                    break;
-                case UnitAnimatorTrigger.ShieldBlock:
-                    this._prefab.PlayAnimation(10);
-                    break;
-                case UnitAnimatorTrigger.Die:
-                    this._prefab.PlayAnimation(2);
-                    break;
-                case UnitAnimatorTrigger.Melee:
-                    this._prefab.PlayAnimation(4);
-                    break;
-                case UnitAnimatorTrigger.ShootBow:
-                    this._prefab.PlayAnimation(5);
-                    break;
-                case UnitAnimatorTrigger.Static:
-                    this._prefab.PlayAnimation(11);
-                    break;
-                case UnitAnimatorTrigger.SpecialJump:
-                    this._prefab.PlayAnimation(9);
-                    break;
-                case UnitAnimatorTrigger.Flinch:
-                    this._prefab.PlayAnimation(12);
-                    break;
-            }
+            this._prefab.PlayAnimation(trigger, speed);
         }
 
         public void SetFlippedLeft(bool flippedLeft)
@@ -118,7 +92,7 @@ namespace FlavBattle.Components
 
         public void SetSpeedModifier(float modifier)
         {
-            // TODO
+            this._prefab.SetSpeed(modifier);
         }
 
         public void SetColor(Color color)

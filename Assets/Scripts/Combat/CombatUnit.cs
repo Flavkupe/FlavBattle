@@ -258,18 +258,41 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     /// Plays the animator trigger without waiting for it to finish.
     /// </summary>
     /// <param name="animatorTrigger"></param>
-    public void PlayAnimator(UnitAnimatorTrigger animatorTrigger)
+    public void PlayAnimator(UnitAnimatorTrigger animatorTrigger, float speed = 1.0f)
     {
         if (_animatedCharacter != null)
         {
-            _animatedCharacter.PlayAnimation(animatorTrigger);
+            _animatedCharacter.PlayAnimation(animatorTrigger, speed);
         }
     }
 
-    public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger)
+    public IEnumerator PlayAnimatorToCompletion(UnitAnimatorTrigger animatorTrigger, float speed = 1.0f)
     {
-        this.PlayAnimator(animatorTrigger);
-        yield return WaitForAnimationEnd();
+        // TODO: other states too
+        var state = UnitAnimatorState.AttackState;
+
+        // if already in state, wait for it to finish animation
+        if (IsInAnimationState(state))
+        {
+            yield return WaitForAnimationEnd(state);
+        }
+
+        var startingSpeed = this._animatedCharacter.Speed;
+
+        this.PlayAnimator(animatorTrigger, speed);
+
+        // wait 2 frames for the animation state to change
+        yield return Utils.WaitUntilNextFrame(2);
+
+        // now actually play animation to completion
+        yield return WaitForAnimationEnd(state);
+
+        this.SetSpeed(startingSpeed);
+    }
+
+    public void SetSpeed(float speed)
+    {
+        this._animatedCharacter.SetSpeedModifier(speed);
     }
 
     public IEnumerator AnimateEscape(Vector3 direction)
@@ -330,13 +353,10 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
     /// <summary>
     /// Used to wait for animator animation to complete
     /// </summary>
-    public IEnumerator WaitForAnimationEnd()
+    public IEnumerator WaitForAnimationEnd(UnitAnimatorState state = UnitAnimatorState.AttackState)
     {
-        // wait 2 frames for the animation state to change
-        yield return Utils.WaitUntilNextFrame(2);
-
         var timer = 0.0f;
-        while (_animatedCharacter.IsInState(UnitAnimatorState.AttackState))
+        while (IsInAnimationState(state))
         {
             timer += Time.deltaTime;
             if (timer > 5.0f)
@@ -347,6 +367,11 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
 
             yield return null;
         }
+    }
+
+    public bool IsInAnimationState(UnitAnimatorState state)
+    {
+        return _animatedCharacter.IsInState(state);
     }
 
     public void PlaySound(AudioClip clip)

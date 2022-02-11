@@ -782,36 +782,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &917922360
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 917922361}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &917922361
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 917922360}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &938857343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,8 +1547,13 @@ MonoBehaviour:
   Right: {fileID: 1348166201}
   LeftChar: {fileID: 11400000, guid: 25dcf1f68664d584baeb9f29a2f09ec1, type: 2}
   RightChar: {fileID: 11400000, guid: c0d72d44231488c49a9c40d74120b7a3, type: 2}
+  LeftAllies:
+  - {fileID: 11400000, guid: 62e04f7928a8ada4aa8662510a1baadf, type: 2}
+  - {fileID: 11400000, guid: de52d40e10623b84eba279373322c23d, type: 2}
+  RightAllies: []
   AbilityData: {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
   RightToLeft: 0
+  _targetType: 3
   LeftArmyConfig:
     Level: 3
     FL: {fileID: 11400000, guid: 3a27f55de579a764a98b4eaaa14d663d, type: 2}
@@ -1603,7 +1578,6 @@ MonoBehaviour:
     BM: {fileID: 0}
     BR: {fileID: 11400000, guid: 25dcf1f68664d584baeb9f29a2f09ec1, type: 2}
     OfficerPosition: 0
-  Thing: {fileID: 0}
   BattleManager: {fileID: 1811466395}
   Summary:
   - Ability: {fileID: 11400000, guid: af529507749380d4b8ebd4323bfe9555, type: 2}
@@ -1617,8 +1591,7 @@ MonoBehaviour:
     ShieldBlockedAttack: 0
     MoraleBlockedAttack: 0
     SelfMoraleDamage: 0
-  Animation: {fileID: 11400000, guid: 07e1b3817276d8f40bbf0e0dcef91a10, type: 2}
-  Graph: {fileID: 11400000, guid: f5cfb3ac3aff37f48b68a4974c885c70, type: 2}
+  Graph: {fileID: 11400000, guid: a1dd832e23bcee54eae7d626de49eb08, type: 2}
 --- !u!4 &1315068696
 Transform:
   m_ObjectHideFlags: 0

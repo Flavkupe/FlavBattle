@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using UnityEngine;
 using XNode;
@@ -7,13 +8,12 @@ namespace FlavBattle.Combat.Animation.Nodes
 {
     /// <summary>
     /// Abstract base class for Animation Node with a single Output
-    /// to another AnimationNodeBase, and a data object.
+    /// to another AnimationNodeBase.
     /// </summary>
-    public abstract class SingleAnimationNode<TData> : AnimationNodeBase
+    public abstract class SingleAnimationNode : AnimationNodeBase
     {
-        [Output] public AnimationNodeBase Next;
-
-        public TData Data;
+        [Output]
+        public AnimationNodeBase Next;
 
         public override object GetValue(NodePort port)
         {
@@ -21,9 +21,12 @@ namespace FlavBattle.Combat.Animation.Nodes
             else return base.GetValue(port);
         }
 
-        private AnimationNodeBase GetAction(string fieldName)
+        public sealed override ICombatAnimationStep GetStep(CombatAnimationOptions options)
         {
-            return this.GetOutputPortValue<AnimationNodeBase>(fieldName);
+            var currentStep = GetAnimationStep(options);
+            var nextNode = this.GetOutputPortValue<AnimationNodeBase>(nameof(Next));
+            ICombatAnimationStep nextStep = nextNode?.GetStep(options);
+            return new Runner(options, currentStep, nextStep);
         }
 
         /// <summary>
@@ -31,14 +34,6 @@ namespace FlavBattle.Combat.Animation.Nodes
         /// for next nodes.
         /// </summary>
         protected abstract ICombatAnimationStep GetAnimationStep(CombatAnimationOptions options);
-
-        public sealed override ICombatAnimationStep GetStep(CombatAnimationOptions options)
-        {
-            var currentStep = GetAnimationStep(options);
-            var nextNode = GetAction(nameof(Next));
-            ICombatAnimationStep nextStep = nextNode?.GetStep(options);
-            return new Runner(options, currentStep, nextStep);
-        }
 
         private class Runner : AnimationStepRunnerBase
         {
@@ -55,16 +50,24 @@ namespace FlavBattle.Combat.Animation.Nodes
             {
                 if (_currentStep != null)
                 {
-                    yield return _currentStep.Do().PerformAction(Options);
+                    yield return _currentStep.PerformAction();
                 }
 
                 if (_nextStep != null)
                 {
-                    yield return _nextStep.Do().PerformAction(Options); ;
+                    yield return _nextStep.PerformAction();
                 }
             }
-
         }
+    }
+
+    /// <summary>
+    /// Abstract base class for Animation Node with a single Output
+    /// to another AnimationNodeBase, and a data object.
+    /// </summary>
+    public abstract class SingleAnimationNode<TData> : SingleAnimationNode
+    {
+        public TData Data;
     }
 
     /// <summary>
@@ -75,24 +78,25 @@ namespace FlavBattle.Combat.Animation.Nodes
     {
         public CombatAnimationOptions Options;
 
+        [ShowAssetPreview(32, 32)]
+        [SerializeField]
+        private Sprite _icon;
+
+        private void OnValidate()
+        {
+            _icon = Data?.Icon;
+        }
+
         protected override ICombatAnimationStep GetAnimationStep(CombatAnimationOptions options)
         {
-            var opts = Options.Clone();
-            opts.FullTurn = options.FullTurn;
-            opts.Turn = options.Turn;
+            if (Data == null)
+            {
+                Debug.LogError($"No Data configured for animation node '{NodeName}'");
+                return new AnimationStepEmptyRunner();
+            }
+
+            var opts = Options.Clone(options.FullTurn, options.Turn);
             return Data.Create(opts);
         }
-    }
-
-    [CreateNodeMenu("Animation/Single/Projectile")]
-    public class AnimationProjectileNode : SingleCombatAnimationDataNode<AnimationProjectileData>
-    {
-        protected override string NodeName => "Projectile";
-    }
-
-    [CreateNodeMenu("Animation/Single/CharDamage")]
-    public class AnimationCharDamageNode : SingleCombatAnimationDataNode<AnimationCharDamageData>
-    {
-        protected override string NodeName => "Damage";
     }
 }

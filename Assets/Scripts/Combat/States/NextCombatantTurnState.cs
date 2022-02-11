@@ -55,14 +55,15 @@ namespace FlavBattle.Combat.States
 
         private IEnumerator DoTurn(BattleStatus state, CombatTurnSummary summary)
         {
+
+            // Update panel as needed
+            state.BattleUIPanel.AttackStats.SetStats(summary);
+
             var preAttackAnimations = new CombatAnimationEventSequence(_owner);
             var attackAnimations = new CombatAnimationEventSequence(_owner);
             var postAnimations = new CombatAnimationEventSequence(_owner);
 
             attackAnimations.StaggerTime = _parallelStaggerTime;
-
-            // Update panel as needed
-            state.BattleUIPanel.AttackStats.SetStats(summary);
 
             foreach (var turn in summary.Turns)
             {
