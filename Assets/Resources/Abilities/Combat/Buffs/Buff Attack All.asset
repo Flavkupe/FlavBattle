@@ -17,35 +17,7 @@ MonoBehaviour:
     Key: ACTION_BUFF_ATTACK_NAME
   Type: 1
   Icon: {fileID: 9075561208994711175, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
-  VisualEffect: 1
-  ProjectileEffect: 0
-  ArcHeight: {x: 0, y: 0}
-  TraceDirection: 0
-  AnimateName: 0
-  ProjectileSpeed: 0
-  ProjectileObject: {fileID: 0}
-  CharacterMove: 0
-  CharacterMoveToEffect: 0
-  CharacterMoveBackEffect: 0
-  CharacterMoveTarget: 0
-  CharacterMoveArcHeight: 0
-  CharacterMoveSpeed: 0
-  ComabtAnimation: {fileID: 285175196612671447, guid: 463fb0a2a08f64e41a0054921c770fa1,
-    type: 3}
-  _animatorTriggerName: 6
-  CombatAnimationSpeed: 1
-  CombatAnimationRepeats: 1
-  WaitForCompletion: 1
-  CombatAnimationTarget: 1
-  AnimationSequence: 2
-  PreAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
-  PostAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
+  AnimationGraph: {fileID: 11400000, guid: 7cfb97981f0a43a4fbe83204a7fae83c, type: 2}
   Effect: 8
   Damage: {x: 0, y: 0}
   MoraleDamage: {x: 0, y: 0}
@@ -57,8 +29,4 @@ MonoBehaviour:
     _level: 0
     _command: 0
   StatusEffectDuration: 2
-  StartSoundClips: []
-  PostAnimatorSoundClips: []
-  PreHitSoundClips: []
   HitSoundClips: []
-  EndSoundClips: []

@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: 21300000, guid: 47447d36ce39970499930bf4cbcb9731, type: 3}
   _description: Character flashes some color
-  PreAnimationSounds: []
-  PostAnimationSounds: []
   FlashColor: {r: 0.9528302, g: 0.43596476, b: 0.43596476, a: 1}
   FloatingText: {fileID: 3278432570077837357, guid: bd72a4556e99ee74f8e067cacbe35c99,
     type: 3}
   FloatingTextOffset: {x: 0, y: 0.5, z: 0}
   SoundType: 1
+  Clips: []

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FlavBattle.Components;
 
 namespace FlavBattle.Combat.Animation.Nodes
 {
-    public interface ICombatAnimationNode
-    {
-        ICombatAnimationStep GetStep(CombatAnimationOptions options);
-    }
+    public interface ICombatAnimationNode : IActionNode<CombatAnimationOptions, ICombatAnimationStep> {}
 }

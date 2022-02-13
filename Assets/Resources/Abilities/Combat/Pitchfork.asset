@@ -17,34 +17,7 @@ MonoBehaviour:
     Key: ACTION_POKE_NAME
   Type: 0
   Icon: {fileID: 8489008546353363541, guid: 8902c50addbd07d47910008df2ae7591, type: 3}
-  VisualEffect: 1
-  ProjectileEffect: 0
-  ArcHeight: {x: 0, y: 0}
-  TraceDirection: 0
-  AnimateName: 0
-  ProjectileSpeed: 0
-  ProjectileObject: {fileID: 0}
-  CharacterMove: 1
-  CharacterMoveToEffect: 2
-  CharacterMoveBackEffect: 2
-  CharacterMoveTarget: 0
-  CharacterMoveArcHeight: 1
-  CharacterMoveSpeed: 15
-  ComabtAnimation: {fileID: 0}
-  _animatorTriggerName: 4
-  CombatAnimationSpeed: 1
-  CombatAnimationRepeats: 1
-  WaitForCompletion: 1
-  CombatAnimationTarget: 0
-  AnimationSequence: 0
-  PreAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
-  PostAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
+  AnimationGraph: {fileID: 11400000, guid: f92cbc023bcf1eb4b91748032205d98e, type: 2}
   Effect: 1
   Damage: {x: 2, y: 2}
   MoraleDamage: {x: 0, y: 0}
@@ -56,7 +29,4 @@ MonoBehaviour:
     _level: 1
     _command: 0
   StatusEffectDuration: 0
-  StartSoundClips: []
-  PreHitSoundClips: []
   HitSoundClips: []
-  EndSoundClips: []

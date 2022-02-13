@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace FlavBattle.Combat.Animation
 
             // TODO
             FromWeapon = 3,
+
+            Specific = 4,
         }
 
         public Color FlashColor;
@@ -28,6 +31,15 @@ namespace FlavBattle.Combat.Animation
         public Vector3 FloatingTextOffset = new Vector3(0.0f, 1.0f, 0.0f);
 
         public CharDamageSoundType SoundType = CharDamageSoundType.FromAbility;
+
+        [Tooltip("Random sound clip to play, if Specific is selected.")]
+        [ShowIf("ShowSpecificAudio")]
+        public AudioClip[] Clips;
+
+        private bool ShowSpecificAudio()
+        {
+            return SoundType == CharDamageSoundType.Specific;
+        }
 
         public override ICombatAnimationStep Create(CombatAnimationOptions options)
         {
@@ -51,6 +63,10 @@ namespace FlavBattle.Combat.Animation
                 var hitSounds = FullTurnSummary.Ability.HitSoundClips;
                 PlaySound(hitSounds);
             }
+            else if (Data.SoundType == AnimationCharDamageData.CharDamageSoundType.Specific)
+            {
+                PlaySound(Data.Clips);
+            }
             else
             {
                 // TODO
@@ -58,8 +74,8 @@ namespace FlavBattle.Combat.Animation
 
             if (Data.FloatingText != null)
             {
-                var text = GameObject.Instantiate(Data.FloatingText, character.transform, false);
-                text.transform.localPosition = Data.FloatingTextOffset;
+                var text = GameObject.Instantiate(Data.FloatingText);
+                text.transform.position = character.transform.position + Data.FloatingTextOffset;
                 text.SetText(ActionSummary.AttackDamage.ToString());
             }
 

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using FlavBattle.Combat.Events;
 using FlavBattle.Entities;
 
 namespace FlavBattle.Combat.States
@@ -59,27 +58,25 @@ namespace FlavBattle.Combat.States
             // Update panel as needed
             state.BattleUIPanel.AttackStats.SetStats(summary);
 
-            var preAttackAnimations = new CombatAnimationEventSequence(_owner);
-            var attackAnimations = new CombatAnimationEventSequence(_owner);
-            var postAnimations = new CombatAnimationEventSequence(_owner);
-
-            attackAnimations.StaggerTime = _parallelStaggerTime;
-
+            var routineSet = new ParallelRoutineSet(_owner);
+            routineSet.StaggerTime = _parallelStaggerTime;
+            
             foreach (var turn in summary.Turns)
             {
-                preAttackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.PreAttack));
-                attackAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.Ability));
-                postAnimations.AddEvent(new CombatAbilityAnimationEvent(_owner, turn, CombatAbilityAnimationEvent.AnimationType.PostAttack));
+                var animationGraph = turn.Ability.AnimationGraph;
+                if (animationGraph == null)
+                {
+                    Debug.LogError($"Animation graph is null for ability '{turn.Ability.name}'");
+                    continue;
+                }
+
+                var steps = animationGraph.GetStartStep(turn);
+
+                routineSet.AddRoutine(steps.Do().ToRoutine());
             }
 
-            // Step 2: pre-ability animations
-            yield return preAttackAnimations.Animate();
-
-            // Step 3: ability animation
-            yield return attackAnimations.Animate();
-
-            // Step 4: post ability animation
-            yield return postAnimations.Animate();
+            // do actions in parallel
+            yield return routineSet;
 
             // Step 5: check for newly dead units
             ProcessDeadUnits(state);

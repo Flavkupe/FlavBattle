@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21c589c120790b48adcd2b651e2817d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ArmyMode: 0
+  ArmyMode: 1
   TimeScale: 1
   Left: {fileID: 815873859}
   Right: {fileID: 1348166201}

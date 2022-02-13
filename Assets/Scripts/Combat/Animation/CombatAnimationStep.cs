@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Components;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,12 +8,7 @@ namespace FlavBattle.Combat.Animation
     /// <summary>
     /// A full step of a combat animation, such as attacking with a sword.
     /// </summary>
-    public interface ICombatAnimationStep
-    {
-        CombatAnimationOptions Options { get; }
-
-        IEnumerator Do();
-    }
+    public interface ICombatAnimationStep : IActionNodeGraphStep<CombatAnimationOptions> {}
 
     /// <summary>
     /// Abstract base class for a simple class whose entire purpose is to

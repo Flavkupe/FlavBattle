@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Icon: {fileID: -5633511449649818069, guid: 71830875d91553f41a9834068dee9c82, type: 3}
   _description: Misc Ability Icon
-  PreAnimationSounds: []
-  PostAnimationSounds: []
   FloatingIcon: {fileID: 285175196612671447, guid: 0e8cc6d67717bc747ab323cd8556e738,
     type: 3}
   IconType: 1
   FloatingIconOffset: {x: 0, y: 0, z: 0}
-  FloatingIconScale: 0.25
+  FloatingIconScale: 0.5

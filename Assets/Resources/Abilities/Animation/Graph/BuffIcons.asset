@@ -1,0 +1,301 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4725782180834181098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b119ac080634e4abfa317ad6eebf5b, type: 3}
+  m_Name: Full Animation
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 24, y: -136}
+  ports:
+    keys:
+    - _preActions
+    - _actions
+    - _postActions
+    values:
+    - _fieldName: _preActions
+      _node: {fileID: -4725782180834181098}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 8392948739470690133}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: _actions
+      _node: {fileID: -4725782180834181098}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 2632665701115592813}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: _postActions
+      _node: {fileID: -4725782180834181098}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  _preActions: {fileID: 0}
+  _actions: {fileID: 0}
+  _postActions: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc14c7c96d4efe0448f29de092f94a9a, type: 3}
+  m_Name: BuffIcons
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 5359817665627722701}
+  - {fileID: 8392948739470690133}
+  - {fileID: 2632665701115592813}
+  - {fileID: 6754072978741965176}
+  - {fileID: -4725782180834181098}
+  Icon: {fileID: 9075561208994711175, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
+--- !u!114 &2632665701115592813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53ca1d8fb1c818d4ea25980a078301fc, type: 3}
+  m_Name: Set
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 344, y: 24}
+  ports:
+    keys:
+    - Actions
+    - Previous
+    - Actions 0
+    values:
+    - _fieldName: Actions
+      _node: {fileID: 2632665701115592813}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationSetNode+Options[],
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 2632665701115592813}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: _actions
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: _actions
+        node: {fileID: -4725782180834181098}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Actions 0
+      _node: {fileID: 2632665701115592813}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationSetNode+Options,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 6754072978741965176}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  Previous: {fileID: 0}
+  Description: 
+  SubjectType: 1
+  SequenceType: 1
+  Stagger: 0
+  Actions:
+  - Await: 0
+--- !u!114 &5359817665627722701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78009a4967e1c6844afd7b286babf784, type: 3}
+  m_Name: Character
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 632, y: -392}
+  ports:
+    keys:
+    - EventHandlers
+    - Next
+    - Previous
+    values:
+    - _fieldName: EventHandlers
+      _node: {fileID: 5359817665627722701}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationCharAnimNode+EventInfo[],
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Next
+      _node: {fileID: 5359817665627722701}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 5359817665627722701}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Next
+        node: {fileID: 8392948739470690133}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Previous: {fileID: 0}
+  Description: 
+  Next: {fileID: 0}
+  Animation: 6
+  Options:
+    SpeedMultiplier: 1
+    WaitForCompletion: 1
+    Subject: 0
+  RunningBehavior: 0
+  EventHandlers: []
+--- !u!114 &6754072978741965176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32ed1a656940a44288ad775f38b0dfb, type: 3}
+  m_Name: Icon Float
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 632, y: 24}
+  ports:
+    keys:
+    - Next
+    - Previous
+    values:
+    - _fieldName: Next
+      _node: {fileID: 6754072978741965176}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 6754072978741965176}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Actions 0
+        node: {fileID: 2632665701115592813}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Previous: {fileID: 0}
+  Description: 
+  Next: {fileID: 0}
+  Data: {fileID: 11400000, guid: 94a533fb586e3f44e9f07bf053cad9fc, type: 2}
+  Options:
+    SpeedMultiplier: 1
+    WaitForCompletion: 1
+    Subject: 1
+  _icon: {fileID: -5633511449649818069, guid: 71830875d91553f41a9834068dee9c82, type: 3}
+--- !u!114 &8392948739470690133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df73b05937ad7ec4eaa828bf12fb8161, type: 3}
+  m_Name: Sound
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 344, y: -328}
+  ports:
+    keys:
+    - Next
+    - Previous
+    values:
+    - _fieldName: Next
+      _node: {fileID: 8392948739470690133}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 5359817665627722701}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 8392948739470690133}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: _preActions
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: _preActions
+        node: {fileID: -4725782180834181098}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Previous: {fileID: 0}
+  Description: 
+  Next: {fileID: 0}
+  Data:
+    Clips:
+    - {fileID: 8300000, guid: 29a7ad9a61a51e248a671767108f583b, type: 3}

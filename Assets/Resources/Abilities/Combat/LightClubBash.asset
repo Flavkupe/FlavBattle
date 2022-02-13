@@ -17,36 +17,7 @@ MonoBehaviour:
     Key: ACTION_BASH_NAME
   Type: 0
   Icon: {fileID: 21300000, guid: 4798087309cd04d44aed5806f1b9b362, type: 3}
-  VisualEffect: 1
-  ProjectileEffect: 1
-  ArcHeight: {x: 3, y: 5}
-  TraceDirection: 1
-  AnimateName: 0
-  ProjectileSpeed: 15
-  ProjectileObject: {fileID: 4512604984602909889, guid: 00cedd0d12508124fb8b6e994ab34423,
-    type: 3}
-  CharacterMove: 1
-  CharacterMoveToEffect: 2
-  CharacterMoveBackEffect: 2
-  CharacterMoveTarget: 0
-  CharacterMoveArcHeight: 1
-  CharacterMoveSpeed: 20
-  ComabtAnimation: {fileID: 5331656751271035678, guid: f4bc414cc9329954cbab33df89d17be2,
-    type: 3}
-  _animatorTriggerName: 0
-  CombatAnimationSpeed: 3
-  CombatAnimationRepeats: 2
-  WaitForCompletion: 1
-  CombatAnimationTarget: 0
-  AnimationSequence: 0
-  PreAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
-  PostAttackAnimations:
-    Type: 0
-    WaitForCompletion: 0
-    Animations: []
+  AnimationGraph: {fileID: 11400000, guid: f92cbc023bcf1eb4b91748032205d98e, type: 2}
   Effect: 1
   Damage: {x: 1, y: 1}
   MoraleDamage: {x: 0, y: 0}
@@ -58,12 +29,7 @@ MonoBehaviour:
     _level: 1
     _command: 0
   StatusEffectDuration: 0
-  StartSoundClips: []
-  PreHitSoundClips:
-  - {fileID: 8300000, guid: 71c22bd847644334ea2ef711b1476c8a, type: 3}
-  - {fileID: 8300000, guid: 1efc02899c08d114b812a420f163663a, type: 3}
   HitSoundClips:
   - {fileID: 8300000, guid: 71c22bd847644334ea2ef711b1476c8a, type: 3}
   - {fileID: 8300000, guid: 1efc02899c08d114b812a420f163663a, type: 3}
   - {fileID: 8300000, guid: d351fb21d5df89f4fa59baf95b534611, type: 3}
-  EndSoundClips: []

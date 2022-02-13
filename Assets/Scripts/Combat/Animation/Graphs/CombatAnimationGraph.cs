@@ -1,11 +1,12 @@
 ﻿using FlavBattle.Combat.Animation.Nodes;
+using FlavBattle.Components;
 using UnityEngine;
 using XNode;
 
 namespace FlavBattle.Combat.Animation
 {
     [CreateAssetMenu(fileName = "Graph", menuName = "Custom/Graphs/Combat Animation", order = 1)]
-    public class CombatAnimationGraph : NodeGraph
+    public class CombatAnimationGraph : ActionNodeGraph<CombatTurnUnitSummary, CombatAnimationOptions>
     {
         [AssetIcon]
         public Sprite Icon;
@@ -19,7 +20,7 @@ namespace FlavBattle.Combat.Animation
             }
         }
 
-        public ICombatAnimationStep GetAnimation(CombatTurnUnitSummary summary)
+        public override IActionNodeGraphStep<CombatAnimationOptions> GetStartStep(CombatTurnUnitSummary summary)
         {
             var options = new CombatAnimationOptions()
             {

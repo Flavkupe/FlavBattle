@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlavBattle.Components;
+using System;
 using UnityEngine;
 
 namespace FlavBattle.Combat.Animation
@@ -52,14 +53,8 @@ namespace FlavBattle.Combat.Animation
     }
 
     [Serializable]
-    public class CombatAnimationOptions
+    public class CombatAnimationOptions : ActionNodeGraphOptions
     {
-        [Tooltip("How much to affect the speed of an object")]
-        public float SpeedMultiplier = 1.0f;
-
-        [Tooltip("Whether action is synchronous or asynchronous.")]
-        public bool WaitForCompletion = true;
-
         [Tooltip("Who is the subject of the animation.")]
         public CombatAnimationSubject Subject = CombatAnimationSubject.Source;
 

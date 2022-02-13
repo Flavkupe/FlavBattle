@@ -7,6 +7,7 @@ using FlavBattle.Combat.Animation;
 using FlavBattle.Entities.Data;
 using System.Collections;
 using System.Collections.Generic;
+using FlavBattle.Components;
 
 public class TestingAbilitiesManager : MonoBehaviour
 {
@@ -205,7 +206,7 @@ public class TestingAbilitiesManager : MonoBehaviour
             }
         }
 
-        var anim = Graph.GetAnimation(summary);
+        var anim = Graph.GetStartStep(summary);
         StartCoroutine(anim.Do());
     }
 }

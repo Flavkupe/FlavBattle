@@ -17,54 +17,7 @@ MonoBehaviour:
     Key: ACTION_DEFENSE_NAME
   Type: 1
   Icon: {fileID: -365713202386560821, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
-  VisualEffect: 1
-  ProjectileEffect: 0
-  ArcHeight: {x: 0, y: 0}
-  TraceDirection: 0
-  AnimateName: 0
-  ProjectileSpeed: 0
-  ProjectileObject: {fileID: 0}
-  CharacterMove: 0
-  CharacterMoveToEffect: 0
-  CharacterMoveBackEffect: 0
-  CharacterMoveTarget: 0
-  CharacterMoveArcHeight: 0
-  CharacterMoveSpeed: 0
-  ComabtAnimation: {fileID: 0}
-  _animatorTriggerName: 6
-  CombatAnimationSpeed: 1
-  CombatAnimationRepeats: 1
-  WaitForCompletion: 0
-  CombatAnimationTarget: 1
-  AnimationSequence: 2
-  PreAttackAnimations:
-    Type: 2
-    WaitForCompletion: 1
-    Animations:
-    - Animation: {fileID: 285175196612671447, guid: 7457d0d8bdc75924cbad2d801af632ca,
-        type: 3}
-      DurationType: 0
-      Target: 0
-      Duration: 0
-    - Animation: {fileID: 750596751060774699, guid: 46376cc25405aef4ea95c2b5be3a5548,
-        type: 3}
-      DurationType: 0
-      Target: 0
-      Duration: 0
-  PostAttackAnimations:
-    Type: 2
-    WaitForCompletion: 0
-    Animations:
-    - Animation: {fileID: 750596751060774699, guid: afc8f3bbf02eca942981f5f39922be32,
-        type: 3}
-      DurationType: 0
-      Target: 1
-      Duration: 0
-    - Animation: {fileID: 285175196612671447, guid: a8584d1f80566624dacdfb1724fce93a,
-        type: 3}
-      DurationType: 0
-      Target: 1
-      Duration: 0
+  AnimationGraph: {fileID: 11400000, guid: 7cfb97981f0a43a4fbe83204a7fae83c, type: 2}
   Effect: 8
   Damage: {x: 0, y: 0}
   MoraleDamage: {x: 0, y: 0}
@@ -76,9 +29,4 @@ MonoBehaviour:
     _level: 0
     _command: 0
   StatusEffectDuration: 2
-  StartSoundClips:
-  - {fileID: 8300000, guid: 29a7ad9a61a51e248a671767108f583b, type: 3}
-  PostAnimatorSoundClips: []
-  PreHitSoundClips: []
   HitSoundClips: []
-  EndSoundClips: []

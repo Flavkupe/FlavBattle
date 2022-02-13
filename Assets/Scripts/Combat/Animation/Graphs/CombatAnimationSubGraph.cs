@@ -1,4 +1,5 @@
 ﻿using FlavBattle.Combat.Animation.Nodes;
+using FlavBattle.Components;
 using UnityEngine;
 using XNode;
 
@@ -17,23 +18,6 @@ namespace FlavBattle.Combat.Animation
                 var startNode = this.AddNode<AnimationStartNode>();
                 startNode.name = "start";
             }
-        }
-
-        public ICombatAnimationStep GetAnimation(CombatTurnUnitSummary summary)
-        {
-            var options = new CombatAnimationOptions()
-            {
-                FullTurn = summary,
-            };
-
-            var startNode = nodes.Find(a => a is FullAnimationNode) as FullAnimationNode;
-            if (startNode == null)
-            {
-                Debug.LogError("Could not find starting node");
-                return null;
-            }
-
-            return startNode.GetStep(options);
         }
 
         public ICombatAnimationStep GetStep(CombatAnimationOptions options)
