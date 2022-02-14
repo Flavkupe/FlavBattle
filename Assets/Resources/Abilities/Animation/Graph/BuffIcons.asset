@@ -56,6 +56,59 @@ MonoBehaviour:
   _preActions: {fileID: 0}
   _actions: {fileID: 0}
   _postActions: {fileID: 0}
+--- !u!114 &-4228545133239233122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c02b002cd4ce74ea256a389f2a801c, type: 3}
+  m_Name: Animation Effect
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 616, y: 24}
+  ports:
+    keys:
+    - Next
+    - Previous
+    values:
+    - _fieldName: Next
+      _node: {fileID: -4228545133239233122}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 6754072978741965176}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: -4228545133239233122}
+      _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Actions 0
+        node: {fileID: 2632665701115592813}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Previous: {fileID: 0}
+  Description: 
+  Next: {fileID: 0}
+  Data:
+    Animation: {fileID: 750596751060774699, guid: afc8f3bbf02eca942981f5f39922be32,
+      type: 3}
+    Options:
+      SpeedMultiplier: 1
+      WaitForCompletion: 0
+      Subject: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +127,7 @@ MonoBehaviour:
   - {fileID: 2632665701115592813}
   - {fileID: 6754072978741965176}
   - {fileID: -4725782180834181098}
+  - {fileID: -4228545133239233122}
   Icon: {fileID: 9075561208994711175, guid: a507ac9743142d24db5896a6ad1f16fa, type: 3}
 --- !u!114 &2632665701115592813
 MonoBehaviour:
@@ -125,7 +179,7 @@ MonoBehaviour:
         Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Previous
-        node: {fileID: 6754072978741965176}
+        node: {fileID: -4228545133239233122}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -211,7 +265,7 @@ MonoBehaviour:
   m_Name: Icon Float
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 632, y: 24}
+  position: {x: 872, y: 24}
   ports:
     keys:
     - Next
@@ -231,8 +285,8 @@ MonoBehaviour:
       _typeQualifiedName: FlavBattle.Combat.Animation.Nodes.AnimationNodeBase, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: Actions 0
-        node: {fileID: 2632665701115592813}
+      - fieldName: Next
+        node: {fileID: -4228545133239233122}
         reroutePoints: []
       _direction: 0
       _connectionType: 0

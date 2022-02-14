@@ -29,4 +29,6 @@ MonoBehaviour:
     _level: 1
     _command: 0
   StatusEffectDuration: 0
-  HitSoundClips: []
+  HitSoundClips:
+  - {fileID: 8300000, guid: 0653fce7aa8f26b4a849e48b99fbaa36, type: 3}
+  - {fileID: 8300000, guid: 3833edfc887073f4c80076e7a28bfb29, type: 3}

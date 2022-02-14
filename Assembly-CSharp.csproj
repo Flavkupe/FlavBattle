@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,10 +53,12 @@
     <UnityVersion>2021.1.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="E:\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Tilemap\TileCursor.cs" />
     <Compile Include="Assets\Scripts\Entities\StatOverlay.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationSoundNode.cs" />
-    <Compile Include="Assets\Scripts\Combat\Animation\Data\CombatAnimationSetData.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleCommandMenu.cs" />
     <Compile Include="Assets\Scripts\Dialog\CombatDialogEvent.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Data\AnimationCharDamageData.cs" />
@@ -68,7 +70,6 @@
     <Compile Include="Assets\Scripts\Instances.cs" />
     <Compile Include="Assets\Scripts\UI\Components\VisualCounter.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\BattleUIPanel.cs" />
-    <Compile Include="Assets\Scripts\Combat\CombatAnimationTree.cs" />
     <Compile Include="Assets\Scripts\Utils\ExtensionFunctions.cs" />
     <Compile Include="Assets\Scripts\State\Events\PanAndIndicateEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyTracker.cs" />
@@ -97,13 +98,14 @@
     <Compile Include="Assets\Scripts\Utils\Routines\RoutineRunner.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\AI\ArmyPatrollingState.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Combat\Event\CombatUnitAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleManager.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatFormation.cs" />
     <Compile Include="Assets\SPUM\Sprite_Editor(Beta)\Script\SpriteSync.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DraggableUnitProvider.cs" />
     <Compile Include="Assets\Scripts\Utils\GizmoLine.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\GarrisonManager.cs" />
+    <Compile Include="Assets\Scripts\Components\NodeGraph\IActionStep.cs" />
+    <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationStartNode.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitInfo.cs" />
     <Compile Include="Assets\SPUM\Script\Ect\SpritePos.cs" />
     <Compile Include="Assets\Scripts\Entities\IArmy.cs" />
@@ -114,7 +116,7 @@
     <Compile Include="Assets\SPUM\Script\SPUM_SpriteList.cs" />
     <Compile Include="Assets\Scripts\State\Triggers\ArmyEncounterTrigger.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyActions\ArmyAction.cs" />
-    <Compile Include="Assets\Scripts\Combat\Animation\Data\AnimationCharAnimData.cs" />
+    <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationSubgraphNode.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationCharAnimNode.cs" />
     <Compile Include="Assets\Scripts\Utils\Bezier.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\FullAnimationNode.cs" />
@@ -176,7 +178,6 @@
     <Compile Include="Assets\Scripts\Combat\Event\CombatConditionalEvent.cs" />
     <Compile Include="Assets\Scripts\Dialog\MapArmyDialogEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\OfficerAbilityData.cs" />
-    <Compile Include="Assets\Scripts\Combat\Event\CombatAbilityAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\Entities\Modifiers\CombatEffectModifier.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationSetNode.cs" />
     <Compile Include="Assets\Scripts\Tilemap\PropsTile.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Assets\Scripts\Entities\Modifiers\Modifier.cs" />
     <Compile Include="Assets\Scripts\Utils\ResourceHelper.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIAttackGrid.cs" />
+    <Compile Include="Assets\Scripts\Combat\Animation\Graphs\CombatAnimationSubGraph.cs" />
     <Compile Include="Assets\SPUM\Script\SPUM_HorseSpriteList.cs" />
     <Compile Include="Assets\Scripts\State\Events\SetObjectiveEvent.cs" />
     <Compile Include="Assets\Scripts\Combat\BattleDisplay.cs" />
@@ -250,7 +252,6 @@
     <Compile Include="Assets\Scripts\Combat\CombatAnimation.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyFleeingState.cs" />
     <Compile Include="Assets\Scripts\Components\SortingLayerValues.cs" />
-    <Compile Include="Assets\Scripts\Combat\CombatAbility.cs" />
     <Compile Include="Assets\Scripts\Components\Detector.cs" />
     <Compile Include="Assets\SPUM\Sprite_SheetExporter(Beta)\Script\SPUM_Exporter.cs" />
     <Compile Include="Assets\Scripts\Tilemap\WorldTile.cs" />
@@ -272,13 +273,13 @@
     <Compile Include="Assets\FlowLayout.cs" />
     <Compile Include="Assets\Scripts\Pathfinding\BFSPathfinding.cs" />
     <Compile Include="Assets\Scripts\Utils\TraceData.cs" />
+    <Compile Include="Assets\Scripts\Components\NodeGraph\ActionNodeGraph.cs" />
     <Compile Include="Assets\Scripts\External\StarCollider2D.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Data\CombatAnimationData.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\Components\AnimationEventDispatcher.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\ParallelRoutineSet.cs" />
     <Compile Include="Assets\Scripts\Utils\FormationUtils.cs" />
-    <Compile Include="Assets\Scripts\Combat\Animation\Data\AnimationConditionalData.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ActionButtonsPanel.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\Models.cs" />
     <Compile Include="Assets\Scripts\Components\UnitAnimatorTrigger.cs" />
@@ -297,7 +298,6 @@
     <Compile Include="Assets\Scripts\UI\Dragging\DropTarget.cs" />
     <Compile Include="Assets\Scripts\State\Triggers\TileTrigger.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\UIFormationGrid.cs" />
-    <Compile Include="Assets\Scripts\Combat\Event\CombatAnimationEvent.cs" />
     <Compile Include="Assets\Scripts\External\RoundedBoxCollider2D.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatUnitStatsPanel.cs" />
     <Compile Include="Assets\Scripts\Combat\States\NextCombatantTurnState.cs" />
@@ -314,9 +314,7 @@
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\SingleAnimationNode.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationStartNode.cs" />
-    <Compile Include="Assets\Scripts\Combat\Animation\Graphs\CombatAnimationSubGraph.cs" />
-    <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationSubgraphNode.cs" />
+    <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationEffectNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

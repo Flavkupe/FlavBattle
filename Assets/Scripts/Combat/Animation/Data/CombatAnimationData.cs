@@ -75,5 +75,20 @@ namespace FlavBattle.Combat.Animation
                 FullTurn = fullTurn ?? this.FullTurn,
             };
         }
+
+        public Combatant Getsubject()
+        {
+            if (Subject == CombatAnimationSubject.Target)
+            {
+                if (Turn?.Target != null)
+                {
+                    return Turn.Target;
+                }
+
+                Debug.LogError("Target selected as subject for Untargetted Animation tree! Using Source.");
+            }
+
+            return FullTurn.Source;
+        }
     }
 }
