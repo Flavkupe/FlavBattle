@@ -103,6 +103,18 @@ public class TestingAbilitiesManager : MonoBehaviour
     {
         if (ArmyMode)
         {
+            Left.Hide();
+            Right.Hide();
+            foreach (var unit in _leftAlliesCombatUnits)
+            {
+                unit.Hide();
+            }
+
+            foreach (var unit in _rightAlliesCombatUnits)
+            {
+                unit.Hide();
+            }
+
             var enemyFaction = ResourceHelper.Factions.First(a => !a.IsPlayerFaction);
             var playerFaction = ResourceHelper.Factions.First(a => a.IsPlayerFaction);
 

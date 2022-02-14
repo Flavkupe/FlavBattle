@@ -79,6 +79,13 @@ namespace FlavBattle.Combat.Animation
                 text.SetText(ActionSummary.AttackDamage.ToString());
             }
 
+            subject.CombatUnit.UpdateUIComponents();
+
+            if (subject.CombatUnit.Unit.IsDead())
+            {
+                subject.CombatUnit.AnimateDeath();
+            }
+
             yield return character.FlashColor(Data.FlashColor, 8.0f * Options.SpeedMultiplier);
         }
     }
