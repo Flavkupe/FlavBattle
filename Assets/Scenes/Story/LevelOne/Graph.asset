@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab59e9d09e67f5944b86086ed840e247, type: 3}
+  m_Name: Graph
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 7857124832848423569}
+  - {fileID: 5998745027274042709}
+  Icon: {fileID: -5633511449649818069, guid: 71830875d91553f41a9834068dee9c82, type: 3}
+--- !u!114 &5998745027274042709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aae48fe606af634f948b3a119b93fc6, type: 3}
+  m_Name: Start
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -168, y: 8}
+  ports:
+    keys:
+    - Start
+    values:
+    - _fieldName: Start
+      _node: {fileID: 5998745027274042709}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 7857124832848423569}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Start: {fileID: 0}
+--- !u!114 &7857124832848423569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5005f0ad6cde245a7a283aeafbd378, type: 3}
+  m_Name: Camera
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 152, y: -40}
+  ports:
+    keys:
+    - Next
+    - Previous
+    values:
+    - _fieldName: Next
+      _node: {fileID: 7857124832848423569}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 7857124832848423569}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Start
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: Start
+        node: {fileID: 5998745027274042709}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Next: {fileID: 0}
+  Previous: {fileID: 0}
+  _options:
+    SpeedMultiplier: 1
+    WaitForCompletion: 1
+  Description: 

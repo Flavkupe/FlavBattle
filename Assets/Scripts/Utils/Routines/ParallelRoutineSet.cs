@@ -36,6 +36,11 @@ public class ParallelRoutineSet : IRoutineSet
         return Routine.Create(() => { return this; });
     }
 
+    public void AddRoutine(IEnumerator coroutine)
+    {
+        AddRoutine(coroutine.ToRoutine());
+    }
+
     public void AddRoutine(Routine routine)
     {
         _routines.Add(routine);

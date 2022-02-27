@@ -1,0 +1,30 @@
+using System.Collections;
+
+namespace FlavBattle.State.NodeGraph.Nodes
+{
+    [CreateNodeMenu("GameEvent/Single/TODO")]
+    public class #SCRIPTNAME# : GameEventNodeSingleStepBase
+    {
+        protected override string NodeName => "TODO";
+
+        protected override IGameEventNodeGraphStep GetStepImpl(GaveEventNodeGraphOptions options)
+        {
+            return new Runner(options, this);
+        }
+
+        private class Runner : GameEventNodeRunnerBase
+        {
+            private #SCRIPTNAME# _node;
+            
+            public Runner(GaveEventNodeGraphOptions options, #SCRIPTNAME# node) : base(options)
+            {
+                _node = node;
+            }
+
+            public override IEnumerator Do()
+            {
+                // TODO
+            }
+        }
+    }
+}

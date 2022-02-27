@@ -236,6 +236,11 @@ public class ArmyMapView : MonoBehaviour, IAnimatedSprite
 
     public void UpdateArmyOverlay()
     {
+        if (this._army == null)
+        {
+            return;
+        }
+
         // track morale and hp as well
         var morale = this._army.Morale;
         var hpPercent = this._army.GetHPPercent();

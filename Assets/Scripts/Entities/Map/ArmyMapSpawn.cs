@@ -17,9 +17,6 @@ public class ArmyMapSpawn : MonoBehaviour
     [Tooltip("If true, will create a new instance from ArmyTemplate. If false, it will instead enable it. Note that if this is false, only one army can be spawned.")]
     public bool CreateNewInstance = true;
 
-    [Tooltip("Whether this is destroyed after spawning the army.")]
-    public bool DestroyOnSpawn = true;
-
     [Tooltip("Whether the army is spawned at the map start. If false, SpawnArmy must be triggered.")]
     public bool SpawnOnStart = true;
 
@@ -33,7 +30,13 @@ public class ArmyMapSpawn : MonoBehaviour
     public event EventHandler<ArmyMapSpawn> SpawnTriggered;
 
     private bool _spawned = false;
-    
+
+    /// <summary>
+    /// Gets the last spawned army object from this spawner. Returns
+    /// null if nothing has been spawned.
+    /// </summary>
+    public Army SpawnedArmy { get; private set; } 
+
     /// <summary>
     /// Triggers a spawn event based on this spawner's settings
     /// </summary>
@@ -75,6 +78,7 @@ public class ArmyMapSpawn : MonoBehaviour
         var name = unit?.UnitName ?? "Empty";
         army.name = $"Army [{name}]";
 
+        SpawnedArmy = army;
         return army;
     }
 }

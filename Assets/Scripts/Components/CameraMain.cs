@@ -40,28 +40,29 @@ namespace FlavBattle.Core
             SetSingleton(this);
         }
 
-        public IEnumerator ShiftToCombatZoom()
+        public IEnumerator ShiftToCombatZoom(float? speed = null)
         {
-            yield return ZoomTo(_combatZoomDefault);
+            yield return ZoomTo(_combatZoomDefault, speed);
         }
 
         /// <summary>
         /// View where units show up as formation on map.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator ShiftToFormationView()
+        public IEnumerator ShiftToFormationView(float? speed = null)
         {
-            yield return ZoomTo(_zoomedViewSize);
+            yield return ZoomTo(_zoomedViewSize, speed);
         }
 
-        private IEnumerator ZoomTo(float targetCamSize)
+        private IEnumerator ZoomTo(float targetCamSize, float? speed = null)
         {
+            var zoomSpeed = speed ?? _combatZoomOutSpeed;
             var wasLocked = _locked;
             SetLocked(true);
             var cam = this.GetComponent<Camera>();
             while (Mathf.Abs(targetCamSize - cam.orthographicSize) > 0.05f)
             {
-                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetCamSize, TimeUtils.FullAdjustedGameDelta * _combatZoomOutSpeed);
+                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetCamSize, TimeUtils.FullAdjustedGameDelta * zoomSpeed);
                 yield return null;
             }
 
@@ -88,11 +89,11 @@ namespace FlavBattle.Core
             }
         }
 
-        public IEnumerator PanTo(Vector3 position)
+        public IEnumerator PanTo(Vector3 position, float speed = 20.0f)
         {
             var wasLocked = _locked;
             SetLocked(true);
-            yield return this.MoveTo(position, 20.0f);
+            yield return this.MoveTo(position, speed);
 
             if (!wasLocked)
             {
