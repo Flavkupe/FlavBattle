@@ -21,6 +21,7 @@ namespace FlavBattle.State.NodeGraph.Nodes
     /// <summary>
     /// A GameEvent graph input node that returns a GameObject
     /// </summary>
+    [NodeTint("#00AA33")]
     public abstract class GameEventInputGameObjectNodeBase : GameEventInputNodeBase<GameObject>
     {
     }

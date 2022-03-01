@@ -5,6 +5,7 @@ using UnityEngine;
 namespace FlavBattle.State.NodeGraph.Nodes
 {
     [CreateNodeMenu("GameEvent/Single/Camera")]
+    [NodeTint("#0055E6")]
     public class GameEventCameraNode : GameEventNodeSingleStepBase
     {
         protected override string NodeName => "Camera";
