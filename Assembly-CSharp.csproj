@@ -156,6 +156,7 @@
     <Compile Include="Assets\Scripts\Combat\TestingAbilitiesManager.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\AnimationCharDamageNode.cs" />
     <Compile Include="Assets\Scripts\UI\Components\NameTag.cs" />
+    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\Inputs\GameEventInputUnitNode.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\MoraleIcon.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyMapViewUnit.cs" />
     <Compile Include="Assets\Scripts\Combat\CombatUnit.cs" />
@@ -164,7 +165,6 @@
     <Compile Include="Assets\Scripts\Utils\Enums.cs" />
     <Compile Include="Assets\Scripts\Entities\Data\PerkData.cs" />
     <Compile Include="Assets\Scripts\External\ArcCollider2D.cs" />
-    <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\Scripts\UI\Components\SpeedButton.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\DropTargetUIGrid.cs" />
     <Compile Include="Assets\Scripts\Components\WithFormation.cs" />
@@ -207,11 +207,13 @@
     <Compile Include="Assets\Scripts\Utils\Routines\Routine.cs" />
     <Compile Include="Assets\Scripts\UI\Formation\FormationBuilder.cs" />
     <Compile Include="Assets\Scripts\Entities\UnitStats.cs" />
+    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\Inputs\GameEventInputArmyNode.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\Town.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\CombatStancePanel.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\ArmyActions\GarrisonAction.cs" />
     <Compile Include="Assets\Scripts\Combat\WeaponAnimation.cs" />
     <Compile Include="Assets\Scripts\Components\PlayableAnimations\ParticleAnimation.cs" />
+    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\Inputs\GameEventInputNodeBase.cs" />
     <Compile Include="Assets\Scripts\Components\IconTextPair.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\PatrolPoint.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\ICombatAnimationNode.cs" />
@@ -280,7 +282,9 @@
     <Compile Include="Assets\Scripts\External\StarCollider2D.cs" />
     <Compile Include="Assets\Scripts\Combat\Animation\Data\CombatAnimationData.cs" />
     <Compile Include="Assets\Scripts\Components\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\State\NodeGraph\GameEventSceneGraph.cs" />
     <Compile Include="Assets\Scripts\Components\AnimationEventDispatcher.cs" />
+    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\GameEventDialogNode.cs" />
     <Compile Include="Assets\Scripts\Utils\Routines\ParallelRoutineSet.cs" />
     <Compile Include="Assets\Scripts\Utils\FormationUtils.cs" />
     <Compile Include="Assets\Scripts\UI\Army\ActionButtonsPanel.cs" />
@@ -317,11 +321,8 @@
     <Compile Include="Assets\Scripts\Combat\Animation\Nodes\SingleAnimationNode.cs" />
     <Compile Include="Assets\Scripts\UI\Combat\AttackStatsInfoBar.cs" />
     <Compile Include="Assets\Scripts\Entities\Map\State\ArmyMapStateController.cs" />
-    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\GameEventDialogNode.cs" />
-    <Compile Include="Assets\Scripts\State\NodeGraph\GameEventSceneGraph.cs" />
-    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\Inputs\GameEventInputNodeBase.cs" />
-    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\Inputs\GameEventInputUnitNode.cs" />
-    <Compile Include="Assets\Scripts\State\NodeGraph\Nodes\Inputs\GameEventInputArmyNode.cs" />
+    <Compile Include="Assets\Scripts\Utils\CancellableCoroutineContainer.cs" />
+    <Compile Include="Assets\Scripts\Utils\MiscUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\External\Assets_DevilsWorkShop\Low_Poly_Pixel_2D_Blocks_DevilsWorkShop_v04\License.txt" />

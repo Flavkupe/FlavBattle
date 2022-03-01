@@ -82,11 +82,11 @@ namespace FlavBattle.State
         // Start is called before the first frame update
         void Awake()
         {
-            _queue = Utils.MakeOfType<GameEventQueue>("EventQueue", this.transform);
+            _queue = MiscUtils.MakeOfType<GameEventQueue>("EventQueue", this.transform);
             _queue.AllDone += HandleAllEventsDone;
             _queue.SetCancelKey(_cancelKey);
 
-            _combatQueue = Utils.MakeOfType<GameEventQueue>("CombatEventQueue", this.transform);
+            _combatQueue = MiscUtils.MakeOfType<GameEventQueue>("CombatEventQueue", this.transform);
             _combatQueue.AllDone += HandleCombatEventsDone;
             _combatQueue.SetCancelKey(_cancelKey);
         }

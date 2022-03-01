@@ -17,7 +17,7 @@ public class TileCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var mousePos = Utils.MouseToWorldPoint();
+        var mousePos = MiscUtils.MouseToWorldPoint();
         var pos = _map.GetGridTileAtWorldPos(mousePos);
         if (pos != null)
         {

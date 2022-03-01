@@ -180,7 +180,7 @@ public class ArmyManager : MonoBehaviour, IHasTraceData
         var startTile = TileMap.GetGridTileAtWorldPos(army.transform.position);
         InitArmy(army);
         army.PutOnTile(startTile);
-        Destroy(spawn.gameObject);
+        // Destroy(spawn.gameObject);
         return army;       
     }
 

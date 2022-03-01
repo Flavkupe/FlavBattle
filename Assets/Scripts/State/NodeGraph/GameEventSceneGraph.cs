@@ -13,7 +13,11 @@ namespace FlavBattle.State.NodeGraph
         [ContextMenu("Start Events")]
         public void StartEvents()
         {
-            var input = new GaveEventNodeGraphInput();
+            var input = new GaveEventNodeGraphInput()
+            {
+                Initiator = this,
+            };
+
             var step = this.graph.GetStartStep(input);
             StartCoroutine(step.Do());
         }

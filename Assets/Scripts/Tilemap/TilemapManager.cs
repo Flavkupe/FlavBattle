@@ -42,7 +42,7 @@ public class TilemapManager : MonoBehaviour
         var leftClick = Input.GetMouseButtonDown(0);
         var rightClick = Input.GetMouseButtonDown(1);
         if (leftClick || rightClick) {
-            var point = Utils.MouseToWorldPoint();
+            var point = MiscUtils.MouseToWorldPoint();
             var tile = GetGridTileAtWorldPos(point.x, point.y);
             if (tile != null && TileClicked != null)
             {

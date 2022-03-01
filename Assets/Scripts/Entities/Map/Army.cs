@@ -517,7 +517,7 @@ public class Army : MonoBehaviour, ICombatArmy, IHasTraceData, ITrackableObject
         if (collisions.Count > 0)
         {
             var points = collisions.Select(a => a.transform.position.ToVector2()).ToArray();
-            var furthest = Utils.MathUtils.RandomFurthestPointAway(this.transform.position, points, 0.1f, 10);
+            var furthest = MiscUtils.MathUtils.RandomFurthestPointAway(this.transform.position, points, 0.1f, 10);
             this.transform.position = furthest;
         }
     }

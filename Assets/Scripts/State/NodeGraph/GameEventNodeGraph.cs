@@ -8,12 +8,22 @@ namespace FlavBattle.State.NodeGraph
     public class GaveEventNodeGraphInput
     {
         // TODO: require trigger as input
+
+        public MonoBehaviour Initiator { get; set; }
     }
 
     [Serializable]
     public class GameEventNodeGraphOptions : ActionNodeGraphOptions
     {
         public GaveEventNodeGraphInput Input;
+
+        public string Description;
+
+        /// <summary>
+        /// Whether the event can be skipped.
+        /// </summary>
+        [Tooltip("Whether the event can be skipped")]
+        public bool Skippable = false;
     }
 
     [CreateAssetMenu(fileName = "Graph", menuName = "Custom/Graphs/Game Event", order = 1)]

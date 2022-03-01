@@ -26,7 +26,7 @@ public static class ResourceHelper
             return val as TDataType[];
         }
 
-        var resources = Utils.LoadAssets<TDataType>(assetType.ToString());
+        var resources = MiscUtils.LoadAssets<TDataType>(assetType.ToString());
         _cache[assetType] = resources;
         return resources;
     }

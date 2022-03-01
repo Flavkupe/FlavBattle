@@ -123,6 +123,90 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &88207389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5005f0ad6cde245a7a283aeafbd378, type: 3}
+  m_Name: Camera
+  m_EditorClassIdentifier: 
+  graph: {fileID: 965801701}
+  position: {x: 343.8049, y: -55.16391}
+  ports:
+    keys:
+    - Target
+    - OnSkip
+    - Next
+    - Previous
+    values:
+    - _fieldName: Target
+      _node: {fileID: 88207389}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventInputGameObjectNodeBase,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Consumer
+        node: {fileID: 2121820495}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: OnSkip
+      _node: {fileID: 88207389}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 902509225}
+        reroutePoints:
+        - {x: 992, y: -112}
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Next
+      _node: {fileID: 88207389}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 1956683886}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 88207389}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Start
+        node: {fileID: 1847582554}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  OnSkip: {fileID: 0}
+  Next: {fileID: 0}
+  Previous: {fileID: 0}
+  _options:
+    SpeedMultiplier: 1
+    WaitForCompletion: 1
+    Description: A
+    Skippable: 1
+  Description: A
+  Target: {fileID: 0}
+  PanToTarget: 1
+  Zoom: 0
+  PanSpeed: 1
+  ZoomSpeed: 1
 --- !u!1001 &224914359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -144,7 +228,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 48935941, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000030517578
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 147263307, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -170,6 +254,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 277066395, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -51.30005
+      objectReference: {fileID: 0}
     - target: {fileID: 288420078, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -217,6 +305,10 @@ PrefabInstance:
     - target: {fileID: 336158779, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 351885352, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.4000244
       objectReference: {fileID: 0}
     - target: {fileID: 418163859, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -278,6 +370,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 648049944, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.3725586
+      objectReference: {fileID: 0}
+    - target: {fileID: 648049944, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.3499756
+      objectReference: {fileID: 0}
     - target: {fileID: 740078545, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -313,6 +413,10 @@ PrefabInstance:
     - target: {fileID: 820696309, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 967420656, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.4100342
       objectReference: {fileID: 0}
     - target: {fileID: 1032700884, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_UiScaleMode
@@ -362,13 +466,29 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1653890641, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -146.19995
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653890641, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -21.199951
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793261669, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.6999512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793261669, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.9000244
+      objectReference: {fileID: 0}
     - target: {fileID: 1848066655, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1848066655, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000030517578
+      value: 0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 2029525492449802525, guid: 701064a7b895a32429c64246fd29fd3c,
         type: 3}
@@ -607,23 +727,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 701064a7b895a32429c64246fd29fd3c, type: 3}
---- !u!114 &357643384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab59e9d09e67f5944b86086ed840e247, type: 3}
-  m_Name: GameObject-graph
-  m_EditorClassIdentifier: 
-  nodes:
-  - {fileID: 615905979}
-  - {fileID: 1516691696}
-  - {fileID: 1524271813}
-  Icon: {fileID: 0}
 --- !u!1001 &379159920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1016,7 +1119,7 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 456782581}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &615905979
+--- !u!114 &902509225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1025,28 +1128,103 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aae48fe606af634f948b3a119b93fc6, type: 3}
-  m_Name: start
+  m_Script: {fileID: 11500000, guid: cb5005f0ad6cde245a7a283aeafbd378, type: 3}
+  m_Name: Camera
   m_EditorClassIdentifier: 
-  graph: {fileID: 357643384}
-  position: {x: -56, y: -8}
+  graph: {fileID: 965801701}
+  position: {x: 1384, y: -72}
   ports:
     keys:
-    - Start
+    - Target
+    - OnSkip
+    - Next
+    - Previous
     values:
-    - _fieldName: Start
-      _node: {fileID: 615905979}
+    - _fieldName: Target
+      _node: {fileID: 902509225}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventInputGameObjectNodeBase,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Consumer
+        node: {fileID: 1194666724}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: OnSkip
+      _node: {fileID: 902509225}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Next
+      _node: {fileID: 902509225}
       _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Previous
-        node: {fileID: 1516691696}
+        node: {fileID: 1781368775}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  Start: {fileID: 0}
+    - _fieldName: Previous
+      _node: {fileID: 902509225}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Next
+        node: {fileID: 1956683886}
+        reroutePoints: []
+      - fieldName: OnSkip
+        node: {fileID: 88207389}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  OnSkip: {fileID: 0}
+  Next: {fileID: 0}
+  Previous: {fileID: 0}
+  _options:
+    SpeedMultiplier: 1
+    WaitForCompletion: 1
+    Description: C
+    Skippable: 0
+  Description: C
+  Target: {fileID: 0}
+  PanToTarget: 1
+  Zoom: 0
+  PanSpeed: 3
+  ZoomSpeed: 3
+--- !u!114 &965801701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab59e9d09e67f5944b86086ed840e247, type: 3}
+  m_Name: GameObject-graph
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 1847582554}
+  - {fileID: 88207389}
+  - {fileID: 1956683886}
+  - {fileID: 2121820495}
+  - {fileID: 2033136222}
+  - {fileID: 902509225}
+  - {fileID: 1194666724}
+  - {fileID: 1781368775}
+  - {fileID: 1768966410}
+  Icon: {fileID: 0}
 --- !u!1001 &1074993967
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1453,6 +1631,40 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1194666724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb136fc27751584da0af83fa9d1bc1b, type: 3}
+  m_Name: Input (Army)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 965801701}
+  position: {x: 1128, y: 72}
+  ports:
+    keys:
+    - Consumer
+    values:
+    - _fieldName: Consumer
+      _node: {fileID: 1194666724}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Target
+        node: {fileID: 902509225}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Consumer: {fileID: 0}
+  _sourceType: 1
+  Army: {fileID: 0}
+  ArmyMapSpawn: {fileID: 2056049958}
 --- !u!1 &1321340908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,6 +1693,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1482222043}
+  - {fileID: 1800872216}
+  - {fileID: 2056049957}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1582,71 +1796,63 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1482222042}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1516691696
+--- !u!114 &1482222044 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1482222042}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2368c5844f32e60479977535cc24bc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1683776337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1683776339}
+  - component: {fileID: 1683776338}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1683776338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1683776337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb5005f0ad6cde245a7a283aeafbd378, type: 3}
-  m_Name: Camera
+  m_Script: {fileID: 11500000, guid: 0dea9168c0d9bfa46b47568da3e8738b, type: 3}
+  m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 357643384}
-  position: {x: 360, y: -24}
-  ports:
-    keys:
-    - Next
-    - Previous
-    - Target
-    values:
-    - _fieldName: Next
-      _node: {fileID: 1516691696}
-      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Previous
-      _node: {fileID: 1516691696}
-      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Start
-        node: {fileID: 615905979}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Target
-      _node: {fileID: 1516691696}
-      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventInputGameObjectNodeBase,
-        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Consumer
-        node: {fileID: 1524271813}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Next: {fileID: 0}
-  Previous: {fileID: 0}
-  _options:
-    SpeedMultiplier: 1
-    WaitForCompletion: 1
-  Description: 
-  Target: {fileID: 0}
-  PanToTarget: 1
-  Zoom: 1
-  PanSpeed: 10
-  ZoomSpeed: 4
---- !u!114 &1524271813
+  graph: {fileID: 965801701}
+--- !u!4 &1683776339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683776337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7034334, y: -1.3616244, z: -1.8789389}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1768966410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1658,19 +1864,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb136fc27751584da0af83fa9d1bc1b, type: 3}
   m_Name: Input (Army)
   m_EditorClassIdentifier: 
-  graph: {fileID: 357643384}
-  position: {x: 24, y: 120}
+  graph: {fileID: 965801701}
+  position: {x: 1640, y: 56}
   ports:
     keys:
     - Consumer
     values:
     - _fieldName: Consumer
-      _node: {fileID: 1524271813}
+      _node: {fileID: 1768966410}
       _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Target
-        node: {fileID: 1516691696}
+        node: {fileID: 1781368775}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -1679,7 +1885,225 @@ MonoBehaviour:
   Consumer: {fileID: 0}
   _sourceType: 1
   Army: {fileID: 0}
-  ArmyMapSpawn: {fileID: 1930203165}
+  ArmyMapSpawn: {fileID: 1800872217}
+--- !u!114 &1781368775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb5005f0ad6cde245a7a283aeafbd378, type: 3}
+  m_Name: Camera
+  m_EditorClassIdentifier: 
+  graph: {fileID: 965801701}
+  position: {x: 1880, y: -88}
+  ports:
+    keys:
+    - Target
+    - OnSkip
+    - Next
+    - Previous
+    values:
+    - _fieldName: Target
+      _node: {fileID: 1781368775}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventInputGameObjectNodeBase,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Consumer
+        node: {fileID: 1768966410}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: OnSkip
+      _node: {fileID: 1781368775}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Next
+      _node: {fileID: 1781368775}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 1781368775}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Next
+        node: {fileID: 902509225}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  OnSkip: {fileID: 0}
+  Next: {fileID: 0}
+  Previous: {fileID: 0}
+  _options:
+    SpeedMultiplier: 1
+    WaitForCompletion: 1
+    Description: 
+    Skippable: 0
+  Description: 
+  Target: {fileID: 0}
+  PanToTarget: 1
+  Zoom: 0
+  PanSpeed: 4
+  ZoomSpeed: 4
+--- !u!1001 &1800872215
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1321340909}
+    m_Modifications:
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895129791608282858, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 3895129791608282858, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerSpawn (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: Faction
+      value: 
+      objectReference: {fileID: 11400000, guid: 4187b72d4f35d7040b3fd8bda20ec0ab,
+        type: 2}
+    - target: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: Formation
+      value: 
+      objectReference: {fileID: 11400000, guid: 62113436f59ed62499d1c55b8ee66337,
+        type: 2}
+    - target: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: _startingMorale
+      value: 80
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 75dc5054435026c4ba51d196a8e1a4a7, type: 3}
+--- !u!4 &1800872216 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1800872215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1800872217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1800872215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2368c5844f32e60479977535cc24bc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1847582554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aae48fe606af634f948b3a119b93fc6, type: 3}
+  m_Name: start
+  m_EditorClassIdentifier: 
+  graph: {fileID: 965801701}
+  position: {x: 88, y: -40}
+  ports:
+    keys:
+    - Start
+    values:
+    - _fieldName: Start
+      _node: {fileID: 1847582554}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 88207389}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Start: {fileID: 0}
 --- !u!1001 &1923732371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1755,62 +2179,120 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1923732371}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1930203165 stripped
+--- !u!114 &1956683886
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1482222042}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2368c5844f32e60479977535cc24bc39, type: 3}
-  m_Name: 
+  m_Script: {fileID: 11500000, guid: cb5005f0ad6cde245a7a283aeafbd378, type: 3}
+  m_Name: Camera
   m_EditorClassIdentifier: 
---- !u!1 &2007669914
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2007669916}
-  - component: {fileID: 2007669915}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2007669915
+  graph: {fileID: 965801701}
+  position: {x: 872, y: -56}
+  ports:
+    keys:
+    - Target
+    - OnSkip
+    - Next
+    - Previous
+    values:
+    - _fieldName: Target
+      _node: {fileID: 1956683886}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventInputGameObjectNodeBase,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Consumer
+        node: {fileID: 2033136222}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: OnSkip
+      _node: {fileID: 1956683886}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Next
+      _node: {fileID: 1956683886}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Previous
+        node: {fileID: 902509225}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Previous
+      _node: {fileID: 1956683886}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Next
+        node: {fileID: 88207389}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  OnSkip: {fileID: 0}
+  Next: {fileID: 0}
+  Previous: {fileID: 0}
+  _options:
+    SpeedMultiplier: 1
+    WaitForCompletion: 1
+    Description: B
+    Skippable: 0
+  Description: B
+  Target: {fileID: 0}
+  PanToTarget: 1
+  Zoom: 0
+  PanSpeed: 2
+  ZoomSpeed: 2
+--- !u!114 &2033136222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2007669914}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dea9168c0d9bfa46b47568da3e8738b, type: 3}
-  m_Name: 
+  m_Script: {fileID: 11500000, guid: 1cb136fc27751584da0af83fa9d1bc1b, type: 3}
+  m_Name: Input (Army)
   m_EditorClassIdentifier: 
-  graph: {fileID: 357643384}
---- !u!4 &2007669916
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2007669914}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.41686118, y: -0.5654858, z: -0.53591543}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  graph: {fileID: 965801701}
+  position: {x: 616, y: 88}
+  ports:
+    keys:
+    - Consumer
+    values:
+    - _fieldName: Consumer
+      _node: {fileID: 2033136222}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Target
+        node: {fileID: 1956683886}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Consumer: {fileID: 0}
+  _sourceType: 1
+  Army: {fileID: 0}
+  ArmyMapSpawn: {fileID: 1800872217}
 --- !u!1 &2040098143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1845,6 +2327,150 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2056049956
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1321340909}
+    m_Modifications:
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3895129791608282858, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 3895129791608282858, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: m_Name
+      value: PlayerSpawn (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: Faction
+      value: 
+      objectReference: {fileID: 11400000, guid: 4187b72d4f35d7040b3fd8bda20ec0ab,
+        type: 2}
+    - target: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: Formation
+      value: 
+      objectReference: {fileID: 11400000, guid: 62113436f59ed62499d1c55b8ee66337,
+        type: 2}
+    - target: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+        type: 3}
+      propertyPath: _startingMorale
+      value: 80
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 75dc5054435026c4ba51d196a8e1a4a7, type: 3}
+--- !u!4 &2056049957 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3628525192299759015, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2056049956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2056049958 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5611611007796467746, guid: 75dc5054435026c4ba51d196a8e1a4a7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2056049956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2368c5844f32e60479977535cc24bc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2121820495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb136fc27751584da0af83fa9d1bc1b, type: 3}
+  m_Name: Input (Army)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 965801701}
+  position: {x: 88, y: 88}
+  ports:
+    keys:
+    - Consumer
+    values:
+    - _fieldName: Consumer
+      _node: {fileID: 2121820495}
+      _typeQualifiedName: FlavBattle.State.NodeGraph.Nodes.GameEventNodeBase, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Target
+        node: {fileID: 88207389}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Consumer: {fileID: 0}
+  _sourceType: 1
+  Army: {fileID: 0}
+  ArmyMapSpawn: {fileID: 1482222044}
 --- !u!1839735485 &8137468993654633788
 Tilemap:
   m_ObjectHideFlags: 0

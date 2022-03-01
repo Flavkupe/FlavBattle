@@ -127,7 +127,7 @@ public class TraceWindow : EditorWindow
     private void GetTrace()
     {
         _traces.Clear();
-        var items = Utils.FindOfType<IHasTraceData>();
+        var items = MiscUtils.FindOfType<IHasTraceData>();
         foreach (var item in items)
         {
             var trace = item.GetTrace();

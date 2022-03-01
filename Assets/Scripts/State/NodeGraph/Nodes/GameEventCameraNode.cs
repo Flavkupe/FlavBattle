@@ -56,23 +56,33 @@ namespace FlavBattle.State.NodeGraph.Nodes
                 }
 
                 var cam = Camera.main.GetComponent<CameraMain>();
-                var routines = new ParallelRoutineSet(cam);
 
+                // TODO: make these parallel... somehow
                 if (_node.PanToTarget)
                 {
-                    routines.AddRoutine(cam.PanTo(target.transform.position, _node.PanSpeed));
+                    yield return cam.PanTo(target.transform.position, _node.PanSpeed);
                 }
 
                 if (_node.Zoom == ZoomMode.ZoomIn)
                 {
-                    routines.AddRoutine(cam.ShiftToFormationView(_node.ZoomSpeed));
+                    yield return cam.ShiftToFormationView(_node.ZoomSpeed);
                 }
                 else if (_node.Zoom == ZoomMode.ZoomOut)
                 {
-                    routines.AddRoutine(cam.ShiftToCombatZoom(_node.ZoomSpeed));
+                    yield return cam.ShiftToCombatZoom(_node.ZoomSpeed);
+                }
+            }
+
+            public override IEnumerator OnSkipped()
+            {
+                var cam = Camera.main.GetComponent<CameraMain>();
+                var target = _node.GetTarget();
+                if (_node.PanToTarget && target != null)
+                {
+                    cam.transform.position = cam.transform.position.SetXY(target.transform.position);
                 }
 
-                yield return routines;
+                yield return null;
             }
         }
     }

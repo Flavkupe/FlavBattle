@@ -282,7 +282,7 @@ public class CombatUnit : MonoBehaviour, IPointerClickHandler
         this.PlayAnimator(animatorTrigger, speed);
 
         // wait 2 frames for the animation state to change
-        yield return Utils.WaitUntilNextFrame(2);
+        yield return MiscUtils.WaitUntilNextFrame(2);
 
         // now actually play animation to completion
         yield return WaitForAnimationEnd(state);

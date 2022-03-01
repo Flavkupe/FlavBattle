@@ -76,6 +76,11 @@ public static class ExtensionFunctions
         return new Vector3(x, y, vector.z);
     }
 
+    public static Vector3 SetXY(this Vector3 vector, Vector3 other)
+    {
+        return new Vector3(other.x, other.y, vector.z);
+    }
+
     public static Vector3 ShiftX(this Vector3 vector, float x)
     {
         return new Vector3(vector.x + x, vector.y, vector.z);
@@ -98,13 +103,14 @@ public static class ExtensionFunctions
 
     public static IEnumerator MoveTo(this MonoBehaviour obj, Vector3 target, float speed = 10.0f, AccelOption accel = AccelOption.None)
     {
-        var distLeft = Vector3.Distance(obj.transform.position, target);
         target = target.SetZ(obj.transform.position.z);
+        var distLeft = Vector3.Distance(obj.transform.position, target);
         while (distLeft > 0.0f)
         {
             var step = speed * TimeUtils.GameSpeed.GetAdjustedDeltaTime(accel);
             distLeft -= step;
             obj.transform.position = Vector3.MoveTowards(obj.transform.position, target, step);
+
             yield return null;
         }
 
